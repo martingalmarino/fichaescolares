@@ -4,6 +4,7 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import TarjetaLamina from '../../components/TarjetaLamina.astro';
 import HojaLamina from '../../islands/HojaLamina';
 import { fechasDe, laminaPorSlug, nombreCategoria, publicadas, relacionadas } from '../../data/laminas';
+import { metaLamina } from '../../lib/meta';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 export function getStaticPaths() {
@@ -21,6 +22,7 @@ const lamina = laminaPorSlug(Astro.props.slug);
 if (!lamina) throw new Error(`Lámina no publicada: ${Astro.props.slug}`);
 const otras = relacionadas(lamina);
 const fechas = fechasDe(lamina);
+const meta = metaLamina(lamina);
 const sitio = Astro.site ?? new URL(Astro.url.origin);
 const url = new URL(`/laminas/${lamina.slug}/`, sitio).href;
 const imagen = new URL(lamina.svg, sitio).href;
@@ -30,6 +32,7 @@ const jsonLd = {
 		{
 			'@type': 'CreativeWork',
 			name: lamina.titulo,
+			description: meta.description,
 			url,
 			educationalUse: 'Lámina para colorear',
 			isAccessibleForFree: true,
@@ -59,7 +62,7 @@ const jsonLd = {
 };
 ---
 
-<BaseLayout title={`${lamina.titulo} para colorear e imprimir | Aulita`} description={lamina.alt} image="/og/laminas.svg" jsonLd={jsonLd}>
+<BaseLayout title={meta.title} description={meta.description} image="/og/laminas.svg" jsonLd={jsonLd}>
 	<article class="mx-auto max-w-6xl px-4 py-8">
 		<Breadcrumbs
 			items={[
@@ -87,6 +90,31 @@ const jsonLd = {
 
 		<section class="no-print mx-auto mt-12 max-w-3xl text-base leading-relaxed text-texto">
 			<h2 class="text-2xl font-bold tracking-tight text-azul">Cómo usarla en el aula</h2>
+			{lamina.intro?.trim() ? <p class="mt-4">{lamina.intro}</p> : null}
+			<p class="mt-4">Imprimila en A4, en vertical y sin márgenes. El trazo es negro sobre fondo blanco, así que gasta poca tinta.</p>
+			{
+				fechas.length > 0 ? (
+					<p class="mt-4">
+						Sirve para{' '}
+						{fechas.map((fecha, indice) => (
+							<>
+								{indice > 0 ? (indice === fechas.length - 1 ? ' y ' : ', ') : ''}
+								{fecha.ficha ? (
+									<a class="text-celeste underline" href={fecha.ficha}>
+										{fecha.etiqueta}
+									</a>
+								) : (
+									fecha.etiqueta
+								)}
+							</>
+						))}
+						.
+					</p>
+				) : (
+					<p class="mt-4">Sirve para actos patrios y para la cartelera del aula.</p>
+				)
+			}
+			<h3 class="mt-8 text-xl font-bold text-azul">Ideas para el aula</h3>
 			<p class="mt-4">
 				Imprimí una hoja por estudiante, en blanco y negro. Antes de colorear, nombrá lo que se ve y dejá que el grupo diga de qué fecha se trata. El título y la consigna de arriba se pueden cambiar para la actividad del día.
 			</p>

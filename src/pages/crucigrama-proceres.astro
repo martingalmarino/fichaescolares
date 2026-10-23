@@ -3,6 +3,7 @@ import AfiliadosUtiles from '../components/AfiliadosUtiles.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import EnlacesFechas from '../components/EnlacesFechas.astro';
 import CrucigramaGenerator from '../islands/CrucigramaGenerator';
+import { metaEstaticas } from '../lib/meta';
 import { fichaJsonLd } from '../lib/seo';
 import { toSeed } from '../lib/prng';
 import BaseLayout from '../layouts/BaseLayout.astro';
@@ -10,11 +11,11 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 const requested = Astro.url.searchParams.get('e');
 const seedParam = Astro.url.searchParams.get('s');
 const initialSeed = seedParam && /^\d+$/.test(seedParam) ? toSeed(Number(seedParam)) : null;
-const descripcion = 'Armá un crucigrama de próceres argentinos, con pistas propias, en A4 y sin registro.';
+const descripcion = metaEstaticas.crucigrama.description;
 ---
 
 <BaseLayout
-	title="Crucigrama de próceres para imprimir (gratis, A4) | Aulita"
+	title={metaEstaticas.crucigrama.title}
 	description={descripcion}
 	image="/og/crucigrama.svg"
 	jsonLd={fichaJsonLd('Crucigrama de próceres', descripcion, '/crucigrama-proceres/')}

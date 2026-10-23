@@ -4,6 +4,7 @@ import Breadcrumbs from '../components/Breadcrumbs.astro';
 import EnlacesFechas from '../components/EnlacesFechas.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import SopaGenerator from '../islands/SopaGenerator.tsx';
+import { metaEstaticas } from '../lib/meta';
 import { toSeed } from '../lib/prng';
 
 const requested = Astro.url.searchParams.get('e');
@@ -12,8 +13,8 @@ const initialSeed = seedParam && /^\d+$/.test(seedParam) ? toSeed(Number(seedPar
 ---
 
 <BaseLayout
-	title="Sopa de letras de efemérides para imprimir (gratis, A4) | Aulita"
-	description="Armá una sopa de letras del calendario escolar argentino, en A4 y sin registro. Elegí la fecha, la dificultad y guardala como PDF."
+	title={metaEstaticas.sopa.title}
+	description={metaEstaticas.sopa.description}
 >
 	<article class="mx-auto max-w-7xl px-4 py-8">
 		<Breadcrumbs

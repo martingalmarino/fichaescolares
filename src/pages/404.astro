@@ -1,8 +1,9 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { metaEstaticas } from '../lib/meta';
 ---
 
-<BaseLayout title="Página no encontrada | Aulita" description="Esa dirección no existe en Aulita.">
+<BaseLayout title={metaEstaticas.noEncontrada.title} description={metaEstaticas.noEncontrada.description} noindex>
 	<section class="mx-auto max-w-3xl px-4 py-16">
 		<h1 class="text-3xl font-bold text-azul">No encontramos esa página</h1>
 		<p class="mt-4 leading-relaxed text-muted">El enlace puede estar viejo. Volvé al inicio o entrá a un generador.</p>

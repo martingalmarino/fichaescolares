@@ -3,6 +3,7 @@ import Breadcrumbs from '../../../components/Breadcrumbs.astro';
 import TarjetaMapa from '../../../components/TarjetaMapa.astro';
 import { mapasDeProvincia, type MapaIgn } from '../../../data/mapas';
 import { provincias } from '../../../data/provincias';
+import { metaMapasProvincias } from '../../../lib/meta';
 import BaseLayout from '../../../layouts/BaseLayout.astro';
 
 const secciones = provincias.map((provincia) => {
@@ -23,12 +24,10 @@ const secciones = provincias.map((provincia) => {
 		grupos: nombres.map((nombre) => ({ nombre, mapas: porNombre.get(nombre) ?? [] })),
 	};
 });
+const meta = metaMapasProvincias();
 ---
 
-<BaseLayout
-	title="Mapas de las provincias para imprimir | Aulita"
-	description="Mapas políticos, físicos, mudos y satelitales de las 24 provincias, con Gran Buenos Aires e Islas Malvinas en su provincia."
->
+<BaseLayout title={meta.title} description={meta.description}>
 	<article class="mx-auto max-w-6xl px-4 py-8">
 		<Breadcrumbs
 			items={[

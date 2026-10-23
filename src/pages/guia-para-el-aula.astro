@@ -1,11 +1,12 @@
 ---
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { metaEstaticas } from '../lib/meta';
 
-const descripcion = 'Cómo combinar sopa, crucigrama, caligrafía, láminas y cuentas en una semana patria, con adaptaciones y ahorro de tinta.';
+const descripcion = metaEstaticas.guia.description;
 ---
 
-<BaseLayout title="Guía para el aula | Aulita" description={descripcion} image="/og/guia.svg">
+<BaseLayout title={metaEstaticas.guia.title} description={descripcion} image="/og/guia.svg">
 	<article class="mx-auto max-w-3xl px-4 py-8 text-base leading-relaxed">
 		<Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: 'Guía para el aula' }]} />
 		<h1 class="mt-4 text-3xl font-bold tracking-tight text-azul sm:text-4xl">Guía para el aula</h1>

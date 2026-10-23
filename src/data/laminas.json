@@ -9,6 +9,7 @@
     ],
     "dificultad": "simple",
     "alt": "Sol de Mayo con rostro y rayos rectos y ondulados, dibujo lineal para colorear",
+    "intro": "",
     "estado": "publicar",
     "origen": "ilustración generada con IA, editada",
     "svg": "/laminas/sol-de-mayo.svg"
@@ -23,6 +24,7 @@
     ],
     "dificultad": "simple",
     "alt": "Escarapela con pliegues circulares, dibujo lineal para colorear",
+    "intro": "",
     "estado": "publicar",
     "origen": "ilustración generada con IA, editada",
     "svg": "/laminas/escarapela.svg"
@@ -36,6 +38,7 @@
     ],
     "dificultad": "detallada",
     "alt": "Cabildo colonial con torre y arcos y personas de época en la plaza, para colorear",
+    "intro": "",
     "estado": "revisar",
     "origen": "ilustración generada con IA, editada",
     "svg": "/laminas/cabildo.svg"
@@ -50,6 +53,7 @@
     ],
     "dificultad": "simple",
     "alt": "Bandera argentina flameando en su mástil con el Sol de Mayo, para colorear",
+    "intro": "",
     "estado": "publicar",
     "origen": "ilustración generada con IA, editada",
     "svg": "/laminas/bandera.svg"
@@ -63,6 +67,7 @@
     ],
     "dificultad": "media",
     "alt": "Escudo nacional argentino con sol, gorro frigio, manos y laureles, para colorear",
+    "intro": "",
     "estado": "revisar",
     "origen": "ilustración generada con IA, editada",
     "svg": "/laminas/escudo-nacional.svg"
@@ -76,6 +81,7 @@
     ],
     "dificultad": "media",
     "alt": "Fachada de la Casa Histórica de Tucumán con columnas salomónicas, para colorear",
+    "intro": "",
     "estado": "revisar",
     "origen": "ilustración generada con IA, editada",
     "svg": "/laminas/casa-de-tucuman.svg"
@@ -90,6 +96,7 @@
     ],
     "dificultad": "media",
     "alt": "Granadero con morrión y sable montado a caballo, para colorear",
+    "intro": "",
     "estado": "publicar",
     "origen": "ilustración generada con IA, editada",
     "svg": "/laminas/granadero.svg"
@@ -103,6 +110,7 @@
     ],
     "dificultad": "detallada",
     "alt": "Ejército de San Martín cruzando la cordillera a caballo y en mula, para colorear",
+    "intro": "",
     "estado": "publicar",
     "origen": "ilustración generada con IA, editada",
     "svg": "/laminas/cruce-de-los-andes.svg"
@@ -117,6 +125,7 @@
     ],
     "dificultad": "media",
     "alt": "Dama colonial con peineta, mantilla y abanico, para colorear",
+    "intro": "",
     "estado": "publicar",
     "origen": "ilustración generada con IA, editada",
     "svg": "/laminas/dama-con-peineta.svg"
@@ -130,6 +139,7 @@
     ],
     "dificultad": "media",
     "alt": "Aguatero con su carro y tonel tirado por un caballo, para colorear",
+    "intro": "",
     "estado": "publicar",
     "origen": "ilustración generada con IA, editada",
     "svg": "/laminas/aguatero.svg"
@@ -143,6 +153,7 @@
     ],
     "dificultad": "media",
     "alt": "Vendedora colonial con canasta de empanadas, para colorear",
+    "intro": "",
     "estado": "publicar",
     "origen": "ilustración generada con IA, editada",
     "svg": "/laminas/vendedora-de-empanadas.svg"
@@ -157,6 +168,7 @@
     ],
     "dificultad": "media",
     "alt": "Carreta de ruedas grandes tirada por bueyes, para colorear",
+    "intro": "",
     "estado": "publicar",
     "origen": "ilustración generada con IA, editada",
     "svg": "/laminas/carreta.svg"
@@ -170,6 +182,7 @@
     ],
     "dificultad": "media",
     "alt": "Farolero colonial encendiendo un farol con su escalera, para colorear",
+    "intro": "",
     "estado": "publicar",
     "origen": "ilustración generada con IA, editada",
     "svg": "/laminas/farolero.svg"
@@ -183,6 +196,7 @@
     ],
     "dificultad": "simple",
     "alt": "Niño tamborilero con uniforme y tambor, para colorear",
+    "intro": "",
     "estado": "publicar",
     "origen": "ilustración generada con IA, editada",
     "svg": "/laminas/tamborcito.svg"
@@ -197,6 +211,7 @@
     ],
     "dificultad": "simple",
     "alt": "Fuente con empanadas y pastelitos criollos, para colorear",
+    "intro": "",
     "estado": "publicar",
     "origen": "ilustración generada con IA, editada",
     "svg": "/laminas/empanadas-y-pastelitos.svg"
@@ -210,6 +225,7 @@
     ],
     "dificultad": "simple",
     "alt": "Hornero, ave nacional, junto a su nido de barro, para colorear",
+    "intro": "",
     "estado": "revisar",
     "origen": "ilustración generada con IA, editada",
     "svg": "/laminas/hornero.svg"
@@ -223,6 +239,7 @@
     ],
     "dificultad": "simple",
     "alt": "Rama de ceibo, flor nacional, para colorear",
+    "intro": "",
     "estado": "revisar",
     "origen": "ilustración generada con IA, editada",
     "svg": "/laminas/flor-de-ceibo.svg"
@@ -236,6 +253,7 @@
     ],
     "dificultad": "media",
     "alt": "Gaucho con sombrero y poncho tomando mate, para colorear",
+    "intro": "",
     "estado": "publicar",
     "origen": "ilustración generada con IA, editada",
     "svg": "/laminas/gaucho-con-mate.svg"
@@ -250,6 +268,7 @@
     ],
     "dificultad": "simple",
     "alt": "Mate con bombilla y pava, para colorear",
+    "intro": "",
     "estado": "publicar",
     "origen": "ilustración generada con IA, editada",
     "svg": "/laminas/mate-y-pava.svg"
@@ -263,6 +282,7 @@
     ],
     "dificultad": "simple",
     "alt": "Guitarra criolla apoyada sobre un poncho, para colorear",
+    "intro": "",
     "estado": "publicar",
     "origen": "ilustración generada con IA, editada",
     "svg": "/laminas/guitarra-y-poncho.svg"

@@ -3,6 +3,7 @@ import Anuncio from '../../components/Anuncio.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import TarjetaMapa from '../../components/TarjetaMapa.astro';
 import { archivoMapa, mapas, mapasRelacionados, nombreCategoria, nombreTipo, type MapaIgn } from '../../data/mapas';
+import { metaMapa } from '../../lib/meta';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 export function getStaticPaths() {
@@ -17,13 +18,14 @@ interface Props {
 }
 
 const { mapa } = Astro.props;
+const meta = metaMapa(mapa);
 const otros = mapasRelacionados(mapa);
 const pdf = mapa.pdf ? archivoMapa(mapa.slug, 'pdf') : null;
 const jpg = archivoMapa(mapa.slug, 'jpg');
 const grupo = mapa.provinciaNombre ?? nombreCategoria(mapa.categoria);
 ---
 
-<BaseLayout title={`${mapa.titulo} | Aulita`} description={`${mapa.titulo}. ${nombreTipo(mapa.tipo)}, ${mapa.tamano}, ${mapa.gradoSugerido}. Fuente: Instituto Geográfico Nacional.`}>
+<BaseLayout title={meta.title} description={meta.description}>
 	<article class="mx-auto max-w-6xl px-4 py-8">
 		<Breadcrumbs
 			items={[

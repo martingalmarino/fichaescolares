@@ -4,11 +4,12 @@ import { efemerides } from '../../data/efemerides';
 import ProximasEfemerides from '../../islands/ProximasEfemerides';
 import { MESES_SLUG, efemeridesDelMes, fechaArgentina, nombreMes, proximasEfemerides, slugDeMes } from '../../lib/calendario';
 import { itemListJsonLd } from '../../lib/seo';
+import { metaCalendario } from '../../lib/meta';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 const hoy = fechaArgentina(new Date());
 const proximas = proximasEfemerides(efemerides, new Date(), 4);
-const descripcion = `Calendario ${hoy.anio} de efemérides argentinas para docentes y familias. Feriados, actos escolares y conmemoraciones, con las fechas móviles ya resueltas.`;
+const meta = metaCalendario(hoy.anio);
 const sitio = Astro.site ?? new URL(Astro.url.origin);
 const jsonLd = itemListJsonLd(
 	`Calendario de efemérides ${hoy.anio}`,
@@ -19,7 +20,7 @@ const jsonLd = itemListJsonLd(
 );
 ---
 
-<BaseLayout title={`Calendario de efemérides ${hoy.anio} | Aulita`} description={descripcion} jsonLd={jsonLd}>
+<BaseLayout title={meta.title} description={meta.description} jsonLd={jsonLd}>
 	<div class="mx-auto max-w-6xl px-4 py-8">
 		<h1 class="text-3xl font-bold tracking-tight text-azul sm:text-4xl">Calendario de efemérides</h1>
 		<p class="mt-3 max-w-3xl text-base leading-relaxed text-muted">

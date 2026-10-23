@@ -1,11 +1,12 @@
 ---
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { metaEstaticas } from '../lib/meta';
 ---
 
 <BaseLayout
-	title="Acerca de | Aulita"
-	description="Aulita es un sitio para docentes y familias. Explica quién lo usa, qué fuentes consulta y qué no promete."
+	title={metaEstaticas.acerca.title}
+	description={metaEstaticas.acerca.description}
 	image="/og/home.svg"
 >
 	<article class="mx-auto max-w-3xl px-4 py-8 text-base leading-relaxed">
@@ -19,7 +20,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 		</p>
 		<h2 class="mt-8 text-2xl font-bold text-azul">De dónde salen los datos</h2>
 		<p class="mt-3">
-			Las efemérides y las biografías citan páginas de argentina.gob.ar, normas y, en algunas fechas, educ.ar. Esas direcciones están en los archivos del proyecto y se resumen en Créditos cuando corresponden a una obra de terceros. Si una página oficial no precisa un dato, el archivo no lo completa. Por eso algunas biografías no tienen fecha de nacimiento o de muerte.
+			Los mapas escolares salen del Instituto Geográfico Nacional y se publican con licencia CC BY-SA 4.0. Las efemérides y las biografías citan páginas de argentina.gob.ar, normas y, en algunas fechas, educ.ar. Esas direcciones están en los archivos del proyecto y se resumen en Créditos cuando corresponden a una obra de terceros. Si una página oficial no precisa un dato, el archivo no lo completa. Por eso algunas biografías no tienen fecha de nacimiento o de muerte.
 		</p>
 		<p class="mt-4">
 			Las láminas son ilustraciones generadas con IA y editadas por Aulita. La ficha de una provincia muestra la capital, la región, la superficie, la población, la flor, el árbol, la bandera y el escudo cuando cada uno tiene fuente. La flor y el árbol salen de la ley provincial que los declara. La silueta usa los límites de Natural Earth y la licencia está en Créditos.

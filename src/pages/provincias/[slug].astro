@@ -4,6 +4,7 @@ import TarjetaMapa from '../../components/TarjetaMapa.astro';
 import { mapasDeProvincia } from '../../data/mapas';
 import { provincias, type Provincia } from '../../data/provincias';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { htmlProvincia, metaProvincia } from '../../lib/meta';
 import { semillaDeFicha, sopaDeFicha } from '../../lib/sopa-ficha';
 
 export function getStaticPaths() {
@@ -45,12 +46,12 @@ const datos = [
 	provincia.flor ? ['Flor', provincia.flor] : null,
 	provincia.arbol ? ['Árbol', provincia.arbol] : null,
 ].filter((dato): dato is [string, string] => Boolean(dato));
-const descripcion = provincia.capital
-	? `Ficha de ${provincia.nombre} para imprimir. Capital: ${provincia.capital}.`
-	: `Ficha de ${provincia.nombre} para imprimir.`;
+const descripcion = metaProvincia(provincia, mapasProvincia.length > 0).description;
+const titulo = metaProvincia(provincia, mapasProvincia.length > 0).title;
+const parrafo = htmlProvincia(provincia, mapasProvincia.length > 0);
 ---
 
-<BaseLayout title={`${provincia.nombre}: ficha para imprimir | Aulita`} description={descripcion}>
+<BaseLayout title={titulo} description={descripcion}>
 	<article class="mx-auto max-w-3xl px-4 py-8">
 		<Breadcrumbs
 			items={[
@@ -117,6 +118,10 @@ const descripcion = provincia.capital
 				)
 			}
 		</div>
+		<section class="no-print mt-8 max-w-3xl text-base leading-relaxed text-texto">
+			<h2 class="text-2xl font-bold tracking-tight text-azul">Sobre {provincia.nombre}</h2>
+			<p class="mt-4" set:html={parrafo} />
+		</section>
 		<section class="no-print mt-8 text-sm leading-relaxed text-muted">
 			<h2 class="text-lg font-semibold text-azul">Fuentes</h2>
 			<ul class="mt-2 space-y-1">
@@ -151,7 +156,7 @@ const descripcion = provincia.capital
 		</section>
 		{
 			mapasProvincia.length > 0 && (
-				<section class="no-print mt-10">
+				<section id="mapas-provincia" class="no-print mt-10">
 					<h2 class="text-2xl font-bold tracking-tight text-azul">Mapas de {provincia.nombre} para imprimir</h2>
 					<p class="mt-2 text-sm leading-relaxed text-muted">Láminas del Instituto Geográfico Nacional, en PDF, para imprimir en A4.</p>
 					<ul class="mt-4 grid gap-4 sm:grid-cols-2">

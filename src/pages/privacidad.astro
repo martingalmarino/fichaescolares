@@ -1,11 +1,12 @@
 ---
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { metaEstaticas } from '../lib/meta';
 ---
 
 <BaseLayout
-	title="Privacidad | Aulita"
-	description="Cookies, Google Analytics, publicidad y la Ley 25.326. El sitio está dirigido a docentes y familias, no a menores de 13 años."
+	title={metaEstaticas.privacidad.title}
+	description={metaEstaticas.privacidad.description}
 >
 	<article class="mx-auto max-w-3xl px-4 py-8 text-base leading-relaxed">
 		<Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: 'Privacidad' }]} />

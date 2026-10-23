@@ -1,16 +1,37 @@
 ---
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Preguntas from '../../components/Preguntas.astro';
 import { provincias } from '../../data/provincias';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import { metaProvinciasIndice } from '../../lib/meta';
+import { faqJsonLd } from '../../lib/seo';
+
+const meta = metaProvinciasIndice();
+const preguntas = [
+	{
+		q: '¿Cuántas provincias tiene Argentina?',
+		a: '23 provincias y la Ciudad Autónoma de Buenos Aires, que es la capital del país.',
+	},
+	{
+		q: '¿Las fichas son gratis?',
+		a: 'Sí. Se imprimen en A4 o se guardan como PDF desde el navegador, sin registro.',
+	},
+	{
+		q: '¿Para qué grado sirven?',
+		a: 'Se usan sobre todo en 3.º y 4.º grado, cuando se estudia la provincia, y en 5.º y 6.º para repasar el país.',
+	},
+	{
+		q: '¿Dónde consigo el mapa de mi provincia con departamentos?',
+		a: 'En <a class="text-celeste underline" href="/mapas/provincias/">Mapas de las provincias</a>, con mapas oficiales del IGN.',
+	},
+];
+const preguntasTexto = preguntas.map((item) => ({ q: item.q, a: item.a.replace(/<[^>]+>/g, '') }));
 ---
 
-<BaseLayout
-	title="Fichas por provincia para imprimir | Aulita"
-	description="Fichas provinciales para imprimir, con silueta para colorear, capital y datos para completar."
->
+<BaseLayout title={meta.title} description={meta.description} jsonLd={faqJsonLd(preguntasTexto)}>
 	<article class="mx-auto max-w-6xl px-4 py-8">
 		<Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: 'Provincias' }]} />
-		<h1 class="mt-4 text-3xl font-bold tracking-tight text-azul sm:text-4xl">Fichas por provincia</h1>
+		<h1 class="mt-4 text-3xl font-bold tracking-tight text-azul sm:text-4xl">Fichas de las provincias argentinas para imprimir</h1>
 		<p class="mt-3 max-w-3xl leading-relaxed text-muted">
 			Cada ficha trae la silueta para colorear, la capital para marcar y los datos para completar. La flor, el árbol, la bandera y el escudo se suman cuando tienen fuente.
 		</p>
@@ -29,5 +50,12 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 				</ul>
 			)
 		}
+		<section class="mt-12 max-w-3xl text-base leading-relaxed text-texto">
+			<h2 class="text-2xl font-bold tracking-tight text-azul">Para el aula y la casa</h2>
+			<p class="mt-4">
+				Acá están las fichas de las 23 provincias argentinas y de la Ciudad de Buenos Aires, listas para imprimir gratis en A4. Cada una trae la silueta para colorear, su capital cuando la ficha la muestra y casilleros para completar la superficie, la población y, si figura con fuente, la flor y el árbol provincial. Sirven para trabajar las provincias de Argentina y sus capitales en 3.º y 4.º grado, cuando se estudia la provincia propia, o para repasar en casa. Los datos salen de fuentes oficiales, y en cada ficha encontrás el mapa de esa provincia del Instituto Geográfico Nacional.
+			</p>
+		</section>
+		<Preguntas preguntas={preguntas} />
 	</article>
 </BaseLayout>

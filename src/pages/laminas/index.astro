@@ -2,9 +2,32 @@
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import FiltroLaminas from '../../islands/FiltroLaminas';
 import { categorias, claveFecha, dificultades, opcionesEfemeride, publicadas } from '../../data/laminas';
+import { metaLaminasIndice } from '../../lib/meta';
+import { faqJsonLd } from '../../lib/seo';
 import BaseLayout from '../../layouts/BaseLayout.astro';
+import Preguntas from '../../components/Preguntas.astro';
 
-const descripcion = 'Láminas patrias en trazo negro para colorear e imprimir en A4. Para docentes y familias, sin registro.';
+const meta = metaLaminasIndice();
+const del25 = publicadas.filter((lamina) => lamina.efemerides.some((fecha) => fecha.toLocaleLowerCase('es-AR') === '25 de mayo'));
+const preguntas = [
+	{
+		q: '¿Qué láminas sirven para el 25 de Mayo?',
+		a: `Los personajes coloniales, la escarapela y el Sol de Mayo: ${del25.map((lamina) => `<a class="text-celeste underline" href="/laminas/${lamina.slug}/">${lamina.titulo}</a>`).join(', ')}.`,
+	},
+	{
+		q: '¿Se pueden imprimir en blanco y negro?',
+		a: 'Sí, están pensadas para eso: trazo negro sobre fondo blanco.',
+	},
+	{
+		q: '¿Tienen derechos de autor?',
+		a: 'Son ilustraciones generadas con IA y editadas por Aulita. El detalle está en <a class="text-celeste underline" href="/creditos/">Créditos</a>.',
+	},
+	{
+		q: '¿Puedo imprimir varias?',
+		a: 'Sí. Abrí cada lámina e imprimila. No hay un botón para imprimirlas todas juntas.',
+	},
+];
+const preguntasTexto = preguntas.map((item) => ({ q: item.q, a: item.a.replace(/<[^>]+>/g, '') }));
 const tarjetas = publicadas.map((lamina) => ({
 	slug: lamina.slug,
 	titulo: lamina.titulo,
@@ -20,7 +43,7 @@ const adsense = import.meta.env.PUBLIC_ADSENSE_CLIENT ?? '';
 const adsenseSlot = import.meta.env.PUBLIC_ADSENSE_SLOT_HUB ?? import.meta.env.PUBLIC_ADSENSE_SLOT ?? '';
 ---
 
-<BaseLayout title="Láminas patrias para colorear e imprimir | Aulita" description={descripcion} image="/og/laminas.svg">
+<BaseLayout title={meta.title} description={meta.description} image="/og/laminas.svg" jsonLd={faqJsonLd(preguntasTexto)}>
 	<article class="mx-auto max-w-6xl px-4 py-8">
 		<Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: 'Láminas para colorear' }]} />
 		<h1 class="no-print mt-4 text-3xl font-bold tracking-tight text-azul sm:text-4xl">Láminas patrias para colorear e imprimir</h1>
@@ -41,5 +64,12 @@ const adsenseSlot = import.meta.env.PUBLIC_ADSENSE_SLOT_HUB ?? import.meta.env.P
 				adsenseSlot={adsenseSlot}
 			/>
 		</div>
+		<section class="no-print mt-12 max-w-3xl text-base leading-relaxed text-texto">
+			<h2 class="text-2xl font-bold tracking-tight text-azul">Láminas patrias para colorear</h2>
+			<p class="mt-4">
+				Estas láminas patrias para colorear están dibujadas en trazo negro, así que gastan poca tinta y se imprimen gratis en A4. Hay símbolos patrios, como la escarapela, la bandera y el Sol de Mayo, y personajes coloniales, como el aguatero, el farolero, la vendedora de empanadas o la dama con peineta. Son los dibujos que más se piden para el 25 de Mayo, el 9 de Julio y el 17 de agosto. Cada lámina tiene su página propia para imprimirla sola, y desde cada efeméride del calendario encontrás las que le corresponden. Las pueden usar docentes para armar la cartelera o el acto, o familias para la tarea en casa.
+			</p>
+		</section>
+		<Preguntas preguntas={preguntas} />
 	</article>
 </BaseLayout>

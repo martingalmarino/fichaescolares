@@ -2,9 +2,10 @@
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import FiltroMapas from '../../islands/FiltroMapas';
 import { archivoMapa, categoriasMapa, mapas, tiposMapa } from '../../data/mapas';
+import { metaMapasIndice } from '../../lib/meta';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
-const descripcion = 'Mapas escolares oficiales del Instituto Geográfico Nacional para imprimir en A4. Argentina, provincias, América, el mundo y mapas temáticos.';
+const meta = metaMapasIndice();
 const tarjetas = mapas.map((mapa) => ({
 	slug: mapa.slug,
 	titulo: mapa.titulo,
@@ -19,7 +20,7 @@ const tarjetas = mapas.map((mapa) => ({
 }));
 ---
 
-<BaseLayout title="Mapas escolares para imprimir | Aulita" description={descripcion} image="/og/home.svg">
+<BaseLayout title={meta.title} description={meta.description} image="/og/home.svg">
 	<article class="mx-auto max-w-6xl px-4 py-8">
 		<Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: 'Imprimibles', href: '/mapas/' }, { label: 'Mapas' }]} />
 		<h1 class="mt-4 text-3xl font-bold tracking-tight text-azul sm:text-4xl">Mapas escolares para imprimir</h1>

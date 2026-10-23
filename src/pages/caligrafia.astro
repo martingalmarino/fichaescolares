@@ -5,16 +5,17 @@ import AfiliadosUtiles from '../components/AfiliadosUtiles.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import EnlacesFechas from '../components/EnlacesFechas.astro';
 import CaligrafiaGenerator from '../islands/CaligrafiaGenerator';
+import { metaEstaticas } from '../lib/meta';
 import { fichaJsonLd } from '../lib/seo';
 import { toSeed } from '../lib/prng';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 const seedParam = Astro.url.searchParams.get('s');
 const initialSeed = seedParam && /^\d+$/.test(seedParam) ? toSeed(Number(seedParam)) : null;
-const descripcion = 'Generá una pauta de caligrafía en cursiva o imprenta, con frases en dominio público, lista para imprimir en A4.';
+const descripcion = metaEstaticas.caligrafia.description;
 ---
 
-<BaseLayout title="Caligrafía escolar para imprimir (gratis, A4) | Aulita" description={descripcion} image="/og/caligrafia.svg" jsonLd={fichaJsonLd('Caligrafía', descripcion, '/caligrafia/')}>
+<BaseLayout title={metaEstaticas.caligrafia.title} description={descripcion} image="/og/caligrafia.svg" jsonLd={fichaJsonLd('Caligrafía', descripcion, '/caligrafia/')}>
 	<article class="mx-auto max-w-7xl px-4 py-8">
 		<Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: 'Generadores', href: '/#generadores' }, { label: 'Caligrafía' }]} />
 		<h1 class="no-print mt-4 text-3xl font-bold tracking-tight text-azul sm:text-4xl">Pauta de caligrafía</h1>

@@ -29,6 +29,8 @@ export interface Lamina {
 	efemerides: string[];
 	dificultad: (typeof dificultades)[number]['id'];
 	alt: string;
+	/** Texto propio de la lámina. Vacío hasta que se redacte. */
+	intro?: string;
 	estado: 'publicar' | 'revisar';
 	origen: string;
 	svg: string;
@@ -110,7 +112,8 @@ function cargar(valor: unknown): Lamina {
 	if (!Array.isArray(item.efemerides) || item.efemerides.some((fecha) => !partirFecha(fecha))) {
 		throw new Error(`Fecha inválida en ${item.slug}`);
 	}
-	return { ...item, ...medidas(item.svg) };
+	if (item.intro != null && typeof item.intro !== 'string') throw new Error(`Intro inválida en ${item.slug}`);
+	return { ...item, intro: item.intro ?? '', ...medidas(item.svg) };
 }
 
 const todas = crudas.map(cargar);

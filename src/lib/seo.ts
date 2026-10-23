@@ -51,6 +51,18 @@ export function eventoEfemeride(entrada: {
 	};
 }
 
+export function faqJsonLd(preguntas: { q: string; a: string }[]) {
+	return {
+		'@context': 'https://schema.org',
+		'@type': 'FAQPage',
+		mainEntity: preguntas.map((item) => ({
+			'@type': 'Question',
+			name: item.q,
+			acceptedAnswer: { '@type': 'Answer', text: item.a },
+		})),
+	};
+}
+
 export function fichaJsonLd(nombre: string, descripcion: string, path: string) {
 	return {
 		'@context': 'https://schema.org',

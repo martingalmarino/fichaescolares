@@ -3,16 +3,17 @@ import AfiliadosUtiles from '../components/AfiliadosUtiles.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import EnlacesFechas from '../components/EnlacesFechas.astro';
 import OperacionesGenerator from '../islands/OperacionesGenerator';
+import { metaEstaticas } from '../lib/meta';
 import { fichaJsonLd } from '../lib/seo';
 import { toSeed } from '../lib/prng';
 import BaseLayout from '../layouts/BaseLayout.astro';
 
 const seedParam = Astro.url.searchParams.get('s');
 const initialSeed = seedParam && /^\d+$/.test(seedParam) ? toSeed(Number(seedParam)) : null;
-const descripcion = 'Generá tablas y cuentas de suma, resta, multiplicación o división, con hoja de respuestas, en A4.';
+const descripcion = metaEstaticas.tablas.description;
 ---
 
-<BaseLayout title="Tablas y operaciones para imprimir (gratis, A4) | Aulita" description={descripcion} image="/og/operaciones.svg" jsonLd={fichaJsonLd('Tablas y operaciones', descripcion, '/tablas-y-operaciones/')}>
+<BaseLayout title={metaEstaticas.tablas.title} description={descripcion} image="/og/operaciones.svg" jsonLd={fichaJsonLd('Tablas y operaciones', descripcion, '/tablas-y-operaciones/')}>
 	<article class="mx-auto max-w-7xl px-4 py-8">
 		<Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: 'Generadores', href: '/#generadores' }, { label: 'Tablas y operaciones' }]} />
 		<h1 class="no-print mt-4 text-3xl font-bold tracking-tight text-azul sm:text-4xl">Tablas y operaciones</h1>

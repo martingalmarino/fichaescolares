@@ -3,9 +3,10 @@ import Breadcrumbs from '../components/Breadcrumbs.astro';
 import creditos from '../data/creditos.json';
 import { provincias } from '../data/provincias';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { metaEstaticas } from '../lib/meta';
 ---
 
-<BaseLayout title="Créditos y licencias | Aulita" description="Fuentes de letra, licencias SIL OFL y el origen de los datos y los dibujos de Aulita.">
+<BaseLayout title={metaEstaticas.creditos.title} description={metaEstaticas.creditos.description}>
 	<article class="mx-auto max-w-3xl px-4 py-8 text-base leading-relaxed">
 		<Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: 'Créditos' }]} />
 		<h1 class="mt-4 text-3xl font-bold tracking-tight text-azul">Créditos</h1>
@@ -47,7 +48,7 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 			}
 		<h2 class="mt-8 text-2xl font-bold text-azul">Datos</h2>
 		<p class="mt-3">
-			Las siluetas provinciales salen de Natural Earth, en dominio público. La capital, la superficie y la población de una ficha citan la fuente que figura al pie. La flor y el árbol citan la ley provincial. La bandera y el escudo, cuando la ficha los muestra, quedan abajo con su licencia. Las efemérides y las pistas de próceres guardan sus URLs en los archivos de datos.
+			Los mapas escolares son del Instituto Geográfico Nacional y se publican con licencia CC BY-SA 4.0. Cada ficha de mapa indica la fuente. Las siluetas provinciales salen de Natural Earth, en dominio público. La capital, la superficie y la población de una ficha citan la fuente que figura al pie. La flor y el árbol citan la ley provincial. La bandera y el escudo, cuando la ficha los muestra, quedan abajo con su licencia. Las efemérides y las pistas de próceres guardan sus URLs en los archivos de datos.
 		</p>
 		<h2 class="mt-8 text-2xl font-bold text-azul">Frases de caligrafía</h2>
 		<p class="mt-3">

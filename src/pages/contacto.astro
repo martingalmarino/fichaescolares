@@ -2,9 +2,10 @@
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import sitio from '../data/sitio.json';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { metaEstaticas } from '../lib/meta';
 ---
 
-<BaseLayout title="Contacto | Aulita" description="Cómo escribir a Aulita. El sitio es para docentes y familias.">
+<BaseLayout title={metaEstaticas.contacto.title} description={metaEstaticas.contacto.description}>
 	<article class="mx-auto max-w-3xl px-4 py-8 text-base leading-relaxed">
 		<Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: 'Contacto' }]} />
 		<h1 class="mt-4 text-3xl font-bold tracking-tight text-azul">Contacto</h1>
