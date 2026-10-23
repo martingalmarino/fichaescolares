@@ -82,7 +82,7 @@
 		"resumen": "El 25 de mayo de 1810 dejó el cargo el virrey Cisneros y quedó formada la Primera Junta, con Cornelio Saavedra como presidente. Mariano Moreno y Juan José Paso fueron sus secretarios. El feriado se llama Día de la Revolución de Mayo.",
 		"vocabulario": ["CABILDO", "JUNTA", "VIRREY", "PATRIA", "PUEBLO", "SAAVEDRA", "MORENO", "FRENCH", "BERUTI", "LIBERTAD", "MAYO", "REVOLUCIÓN"],
 		"proceres": ["cornelio-saavedra", "mariano-moreno", "manuel-belgrano"],
-		"laminas": ["cabildo", "escarapela"],
+		"laminas": ["sol-de-mayo", "escarapela", "dama-con-peineta", "aguatero", "vendedora-de-empanadas", "carreta", "farolero", "empanadas-y-pastelitos"],
 		"fuentes": [
 			"https://www.argentina.gob.ar/noticias/25-de-mayo-de-1810-dia-de-la-revolucion-de-mayo-y-primer-gobierno-patrio",
 			"https://www.argentina.gob.ar/normativa/nacional/ley-27399-281835/texto"
@@ -100,7 +100,7 @@
 		"resumen": "Manuel Belgrano murió el 20 de junio de 1820. La ley 12.361 declaró esa fecha Día de la Bandera, y el calendario de feriados la nombra Paso a la Inmortalidad del General Don Manuel Belgrano. Las fichas salen con el 20 de junio.",
 		"vocabulario": ["BANDERA", "BELGRANO", "CELESTE", "BLANCO", "SOL", "JUNIO", "PATRIA", "LIBERTAD", "ESCUELA", "ROSARIO"],
 		"proceres": ["manuel-belgrano"],
-		"laminas": ["bandera"],
+		"laminas": ["bandera", "sol-de-mayo"],
 		"fuentes": [
 			"https://www.argentina.gob.ar/normativa/nacional/ley-12361-232587/texto",
 			"https://www.argentina.gob.ar/normativa/nacional/ley-27399-281835/texto",
@@ -119,7 +119,7 @@
 		"resumen": "El 9 de julio es el Día de la Independencia en la ley de feriados. Educ.ar lo presenta como el día de la declaración de la Independencia. Las fichas usan esa fecha fija.",
 		"vocabulario": ["INDEPENDENCIA", "TUCUMÁN", "JULIO", "CONGRESO", "LIBERTAD", "PATRIA", "PROVINCIAS", "ACTA", "UNIÓN", "PUEBLO"],
 		"proceres": [],
-		"laminas": ["casa-de-tucuman"],
+		"laminas": ["dama-con-peineta", "empanadas-y-pastelitos"],
 		"fuentes": [
 			"https://www.argentina.gob.ar/normativa/nacional/ley-27399-281835/texto",
 			"https://www.educ.ar/recursos/159169/calendario-de-efemerides-educar"
@@ -137,7 +137,7 @@
 		"resumen": "José de San Martín murió el 17 de agosto de 1850. El feriado lleva el nombre de su paso a la inmortalidad y es trasladable: si el asueto se corre de día, las fichas igual salen con el 17 de agosto.",
 		"vocabulario": ["SAN MARTÍN", "LIBERTADOR", "ANDES", "GRANADEROS", "AGOSTO", "PATRIA", "LIBERTAD", "CRUCE", "EJÉRCITO", "AMÉRICA"],
 		"proceres": ["jose-de-san-martin"],
-		"laminas": [],
+		"laminas": ["granadero", "cruce-de-los-andes"],
 		"fuentes": [
 			"https://www.argentina.gob.ar/noticias/17-de-agosto-de-1850-paso-la-inmortalidad-del-general-jose-de-san-martin",
 			"https://www.argentina.gob.ar/normativa/nacional/ley-27399-281835/texto"
@@ -206,7 +206,7 @@
 		"resumen": "La ley 21.154 instituyó el 10 de noviembre como Día de la Tradición en todo el país y llamó cuna a San Martín, en Buenos Aires. Una página oficial de Cultura dice que Hernández nació en 1834 y que esa fecha recuerda su natalicio.",
 		"vocabulario": ["TRADICIÓN", "GAUCHO", "PAYADA", "HERNÁNDEZ", "FIERRO", "PAMPA", "MATE", "CABALLO", "CAMPO", "NOVIEMBRE"],
 		"proceres": ["jose-hernandez"],
-		"laminas": [],
+		"laminas": ["carreta", "gaucho-con-mate", "mate-y-pava", "guitarra-y-poncho"],
 		"fuentes": [
 			"https://www.argentina.gob.ar/normativa/nacional/ley-21154-231404/texto",
 			"https://www.argentina.gob.ar/noticias/jose-hernandez-y-la-inmortalidad-de-la-gauchesca"

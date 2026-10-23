@@ -1,0 +1,270 @@
+[
+  {
+    "slug": "sol-de-mayo",
+    "titulo": "Sol de Mayo",
+    "categoria": "simbolos-patrios",
+    "efemerides": [
+      "25 de mayo",
+      "20 de junio"
+    ],
+    "dificultad": "simple",
+    "alt": "Sol de Mayo con rostro y rayos rectos y ondulados, dibujo lineal para colorear",
+    "estado": "publicar",
+    "origen": "ilustración generada con IA, editada",
+    "svg": "/laminas/sol-de-mayo.svg"
+  },
+  {
+    "slug": "escarapela",
+    "titulo": "Escarapela argentina",
+    "categoria": "simbolos-patrios",
+    "efemerides": [
+      "18 de mayo",
+      "25 de mayo"
+    ],
+    "dificultad": "simple",
+    "alt": "Escarapela con pliegues circulares, dibujo lineal para colorear",
+    "estado": "publicar",
+    "origen": "ilustración generada con IA, editada",
+    "svg": "/laminas/escarapela.svg"
+  },
+  {
+    "slug": "cabildo",
+    "titulo": "Cabildo de Buenos Aires",
+    "categoria": "25-de-mayo",
+    "efemerides": [
+      "25 de mayo"
+    ],
+    "dificultad": "detallada",
+    "alt": "Cabildo colonial con torre y arcos y personas de época en la plaza, para colorear",
+    "estado": "revisar",
+    "origen": "ilustración generada con IA, editada",
+    "svg": "/laminas/cabildo.svg"
+  },
+  {
+    "slug": "bandera",
+    "titulo": "Bandera argentina",
+    "categoria": "simbolos-patrios",
+    "efemerides": [
+      "20 de junio",
+      "27 de febrero"
+    ],
+    "dificultad": "simple",
+    "alt": "Bandera argentina flameando en su mástil con el Sol de Mayo, para colorear",
+    "estado": "publicar",
+    "origen": "ilustración generada con IA, editada",
+    "svg": "/laminas/bandera.svg"
+  },
+  {
+    "slug": "escudo-nacional",
+    "titulo": "Escudo nacional",
+    "categoria": "simbolos-patrios",
+    "efemerides": [
+      "12 de marzo"
+    ],
+    "dificultad": "media",
+    "alt": "Escudo nacional argentino con sol, gorro frigio, manos y laureles, para colorear",
+    "estado": "revisar",
+    "origen": "ilustración generada con IA, editada",
+    "svg": "/laminas/escudo-nacional.svg"
+  },
+  {
+    "slug": "casa-de-tucuman",
+    "titulo": "Casa de Tucumán",
+    "categoria": "9-de-julio",
+    "efemerides": [
+      "9 de julio"
+    ],
+    "dificultad": "media",
+    "alt": "Fachada de la Casa Histórica de Tucumán con columnas salomónicas, para colorear",
+    "estado": "revisar",
+    "origen": "ilustración generada con IA, editada",
+    "svg": "/laminas/casa-de-tucuman.svg"
+  },
+  {
+    "slug": "granadero",
+    "titulo": "Granadero a caballo",
+    "categoria": "san-martin",
+    "efemerides": [
+      "17 de agosto",
+      "3 de febrero"
+    ],
+    "dificultad": "media",
+    "alt": "Granadero con morrión y sable montado a caballo, para colorear",
+    "estado": "publicar",
+    "origen": "ilustración generada con IA, editada",
+    "svg": "/laminas/granadero.svg"
+  },
+  {
+    "slug": "cruce-de-los-andes",
+    "titulo": "Cruce de los Andes",
+    "categoria": "san-martin",
+    "efemerides": [
+      "17 de agosto"
+    ],
+    "dificultad": "detallada",
+    "alt": "Ejército de San Martín cruzando la cordillera a caballo y en mula, para colorear",
+    "estado": "publicar",
+    "origen": "ilustración generada con IA, editada",
+    "svg": "/laminas/cruce-de-los-andes.svg"
+  },
+  {
+    "slug": "dama-con-peineta",
+    "titulo": "Dama antigua con peineta",
+    "categoria": "25-de-mayo",
+    "efemerides": [
+      "25 de mayo",
+      "9 de julio"
+    ],
+    "dificultad": "media",
+    "alt": "Dama colonial con peineta, mantilla y abanico, para colorear",
+    "estado": "publicar",
+    "origen": "ilustración generada con IA, editada",
+    "svg": "/laminas/dama-con-peineta.svg"
+  },
+  {
+    "slug": "aguatero",
+    "titulo": "Aguatero colonial",
+    "categoria": "25-de-mayo",
+    "efemerides": [
+      "25 de mayo"
+    ],
+    "dificultad": "media",
+    "alt": "Aguatero con su carro y tonel tirado por un caballo, para colorear",
+    "estado": "publicar",
+    "origen": "ilustración generada con IA, editada",
+    "svg": "/laminas/aguatero.svg"
+  },
+  {
+    "slug": "vendedora-de-empanadas",
+    "titulo": "Vendedora de empanadas",
+    "categoria": "25-de-mayo",
+    "efemerides": [
+      "25 de mayo"
+    ],
+    "dificultad": "media",
+    "alt": "Vendedora colonial con canasta de empanadas, para colorear",
+    "estado": "publicar",
+    "origen": "ilustración generada con IA, editada",
+    "svg": "/laminas/vendedora-de-empanadas.svg"
+  },
+  {
+    "slug": "carreta",
+    "titulo": "Carreta colonial",
+    "categoria": "25-de-mayo",
+    "efemerides": [
+      "25 de mayo",
+      "10 de noviembre"
+    ],
+    "dificultad": "media",
+    "alt": "Carreta de ruedas grandes tirada por bueyes, para colorear",
+    "estado": "publicar",
+    "origen": "ilustración generada con IA, editada",
+    "svg": "/laminas/carreta.svg"
+  },
+  {
+    "slug": "farolero",
+    "titulo": "Farolero",
+    "categoria": "25-de-mayo",
+    "efemerides": [
+      "25 de mayo"
+    ],
+    "dificultad": "media",
+    "alt": "Farolero colonial encendiendo un farol con su escalera, para colorear",
+    "estado": "publicar",
+    "origen": "ilustración generada con IA, editada",
+    "svg": "/laminas/farolero.svg"
+  },
+  {
+    "slug": "tamborcito",
+    "titulo": "Tamborcito de Tacuarí",
+    "categoria": "san-martin",
+    "efemerides": [
+      "9 de marzo"
+    ],
+    "dificultad": "simple",
+    "alt": "Niño tamborilero con uniforme y tambor, para colorear",
+    "estado": "publicar",
+    "origen": "ilustración generada con IA, editada",
+    "svg": "/laminas/tamborcito.svg"
+  },
+  {
+    "slug": "empanadas-y-pastelitos",
+    "titulo": "Empanadas y pastelitos",
+    "categoria": "tradiciones",
+    "efemerides": [
+      "25 de mayo",
+      "9 de julio"
+    ],
+    "dificultad": "simple",
+    "alt": "Fuente con empanadas y pastelitos criollos, para colorear",
+    "estado": "publicar",
+    "origen": "ilustración generada con IA, editada",
+    "svg": "/laminas/empanadas-y-pastelitos.svg"
+  },
+  {
+    "slug": "hornero",
+    "titulo": "Hornero y su nido",
+    "categoria": "naturaleza",
+    "efemerides": [
+      "5 de octubre"
+    ],
+    "dificultad": "simple",
+    "alt": "Hornero, ave nacional, junto a su nido de barro, para colorear",
+    "estado": "revisar",
+    "origen": "ilustración generada con IA, editada",
+    "svg": "/laminas/hornero.svg"
+  },
+  {
+    "slug": "flor-de-ceibo",
+    "titulo": "Flor de ceibo",
+    "categoria": "naturaleza",
+    "efemerides": [
+      "22 de noviembre"
+    ],
+    "dificultad": "simple",
+    "alt": "Rama de ceibo, flor nacional, para colorear",
+    "estado": "revisar",
+    "origen": "ilustración generada con IA, editada",
+    "svg": "/laminas/flor-de-ceibo.svg"
+  },
+  {
+    "slug": "gaucho-con-mate",
+    "titulo": "Gaucho con mate",
+    "categoria": "tradiciones",
+    "efemerides": [
+      "10 de noviembre"
+    ],
+    "dificultad": "media",
+    "alt": "Gaucho con sombrero y poncho tomando mate, para colorear",
+    "estado": "publicar",
+    "origen": "ilustración generada con IA, editada",
+    "svg": "/laminas/gaucho-con-mate.svg"
+  },
+  {
+    "slug": "mate-y-pava",
+    "titulo": "Mate y pava",
+    "categoria": "tradiciones",
+    "efemerides": [
+      "10 de noviembre",
+      "30 de noviembre"
+    ],
+    "dificultad": "simple",
+    "alt": "Mate con bombilla y pava, para colorear",
+    "estado": "publicar",
+    "origen": "ilustración generada con IA, editada",
+    "svg": "/laminas/mate-y-pava.svg"
+  },
+  {
+    "slug": "guitarra-y-poncho",
+    "titulo": "Guitarra y poncho",
+    "categoria": "tradiciones",
+    "efemerides": [
+      "10 de noviembre"
+    ],
+    "dificultad": "simple",
+    "alt": "Guitarra criolla apoyada sobre un poncho, para colorear",
+    "estado": "publicar",
+    "origen": "ilustración generada con IA, editada",
+    "svg": "/laminas/guitarra-y-poncho.svg"
+  }
+]

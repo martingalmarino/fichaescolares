@@ -1,0 +1,45 @@
+---
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import FiltroLaminas from '../../islands/FiltroLaminas';
+import { categorias, claveFecha, dificultades, opcionesEfemeride, publicadas } from '../../data/laminas';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const descripcion = 'Láminas patrias en trazo negro para colorear e imprimir en A4. Para docentes y familias, sin registro.';
+const tarjetas = publicadas.map((lamina) => ({
+	slug: lamina.slug,
+	titulo: lamina.titulo,
+	categoria: lamina.categoria,
+	fechas: lamina.efemerides.map((texto) => claveFecha(texto)),
+	dificultad: lamina.dificultad,
+	alt: lamina.alt,
+	svg: lamina.svg,
+	ancho: lamina.ancho,
+	alto: lamina.alto,
+}));
+const adsense = import.meta.env.PUBLIC_ADSENSE_CLIENT ?? '';
+const adsenseSlot = import.meta.env.PUBLIC_ADSENSE_SLOT_HUB ?? import.meta.env.PUBLIC_ADSENSE_SLOT ?? '';
+---
+
+<BaseLayout title="Láminas patrias para colorear e imprimir" description={descripcion} image="/og/laminas.svg">
+	<article class="mx-auto max-w-6xl px-4 py-8">
+		<Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: 'Láminas para colorear' }]} />
+		<h1 class="no-print mt-4 text-3xl font-bold tracking-tight text-azul sm:text-4xl">Láminas patrias para colorear e imprimir</h1>
+		<p class="no-print mt-3 max-w-3xl text-base leading-relaxed text-muted">
+			Dibujos en trazo negro, listos para imprimir en A4 y colorear en el aula o en casa. Elegí el tema, la fecha o la dificultad. El título y la consigna se cambian en cada hoja.
+		</p>
+		<div class="mt-8">
+			<FiltroLaminas
+				client:load
+				tarjetas={tarjetas}
+				categorias={categorias.map((item) => ({ id: item.id, nombre: item.nombre }))}
+				efemerides={opcionesEfemeride().map((item) => ({ id: item.clave, nombre: item.etiqueta }))}
+				dificultades={dificultades.map((item) => ({ id: item.id, nombre: item.nombre }))}
+				inicialCategoria={Astro.url.searchParams.get('categoria') ?? ''}
+				inicialEfemeride={Astro.url.searchParams.get('efemeride') ?? ''}
+				inicialDificultad={Astro.url.searchParams.get('dificultad') ?? ''}
+				adsense={adsense}
+				adsenseSlot={adsenseSlot}
+			/>
+		</div>
+	</article>
+</BaseLayout>

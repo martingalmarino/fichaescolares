@@ -3,6 +3,15 @@
 	margin: 12mm;
 }
 
+@page lamina {
+	size: A4 portrait;
+	margin: 10mm;
+}
+
+.hoja-lamina {
+	page: lamina;
+}
+
 @media print {
 	header,
 	footer,
@@ -37,6 +46,20 @@
 
 	.solutions {
 		break-before: page;
+	}
+
+	.hoja-lamina.a4 {
+		height: 277mm !important;
+		max-height: 277mm;
+		overflow: hidden;
+		padding: 0 !important;
+	}
+
+	.hoja-lamina input,
+	.hoja-lamina textarea {
+		border: 0 !important;
+		background: transparent !important;
+		box-shadow: none !important;
 	}
 
 	* {

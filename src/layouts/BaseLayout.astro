@@ -21,6 +21,7 @@ const sitio = Astro.site ?? new URL(Astro.url.origin);
 const canonical = new URL(Astro.url.pathname, sitio).href;
 const imagen = new URL(image, sitio).href;
 const gaId = import.meta.env.PUBLIC_GA_ID ?? '';
+const adsense = import.meta.env.PUBLIC_ADSENSE_CLIENT ?? '';
 
 const sitioLd = {
 	'@context': 'https://schema.org',
@@ -62,6 +63,16 @@ const sitioLd = {
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
 		<title>{title}</title>
+		{
+			adsense && (
+				<script
+					is:inline
+					async
+					src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${adsense}`}
+					crossorigin="anonymous"
+				/>
+			)
+		}
 		<script type="application/ld+json" set:html={JSON.stringify(sitioLd)} />
 		{jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
 		<script>

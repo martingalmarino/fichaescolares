@@ -10,6 +10,12 @@ export default defineConfig({
 	output: 'static',
 	trailingSlash: 'always',
 	integrations: [preact(), sitemap()],
+	redirects: {
+		'/laminas-para-colorear/': {
+			status: 301,
+			destination: '/laminas/',
+		},
+	},
 	vite: {
 		plugins: [tailwindcss()],
 	},

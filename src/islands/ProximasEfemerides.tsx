@@ -23,7 +23,11 @@ export default function ProximasEfemerides({ iniciales, todas }: Props) {
 					</span>
 					<h3 class="mt-3 text-base font-semibold leading-snug text-azul">{fecha.nombre}</h3>
 					<p class="mt-1 flex-1 text-sm leading-relaxed text-muted">{fecha.linea}</p>
-					<a href={`/sopa-de-letras/?e=${fecha.slug}`} class="mt-4 inline-flex items-center gap-1 text-sm font-medium text-celeste hover:underline">
+					<a href={`/efemerides/${fecha.slug}/`} class="mt-4 inline-flex items-center gap-1 text-sm font-medium text-celeste hover:underline">
+						Ver la fecha
+						<span aria-hidden="true">→</span>
+					</a>
+					<a href={`/sopa-de-letras/?e=${fecha.slug}`} class="mt-1 inline-flex items-center gap-1 text-sm font-medium text-celeste hover:underline">
 						Crear fichas
 						<span aria-hidden="true">→</span>
 					</a>

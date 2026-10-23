@@ -91,10 +91,10 @@ export function NombreFecha() {
 	);
 }
 
-export function PreviewFrame({ children, solution = false }: { children: ComponentChildren; solution?: boolean }) {
+export function PreviewFrame({ children, solution = false, className = '' }: { children: ComponentChildren; solution?: boolean; className?: string }) {
 	return (
 		<div class="preview-frame w-full min-w-0">
-			<div class={`a4 bg-white text-azul shadow-card ${solution ? 'solutions' : ''}`}>{children}</div>
+			<div class={`a4 bg-white text-azul shadow-card ${solution ? 'solutions' : ''} ${className}`}>{children}</div>
 		</div>
 	);
 }

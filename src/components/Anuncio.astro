@@ -1,0 +1,27 @@
+---
+interface Props {
+	slot?: string;
+}
+
+const cliente = import.meta.env.PUBLIC_ADSENSE_CLIENT ?? '';
+const slot = Astro.props.slot || import.meta.env.PUBLIC_ADSENSE_SLOT || '';
+---
+
+{
+	cliente && (
+		<aside class="ad no-print print:hidden my-8" aria-label="Anuncio">
+			<ins
+				class="adsbygoogle"
+				style="display:block"
+				data-ad-client={cliente}
+				data-ad-slot={slot || undefined}
+				data-ad-format="auto"
+				data-full-width-responsive="true"
+			/>
+			<script is:inline>
+				window.adsbygoogle = window.adsbygoogle || [];
+				window.adsbygoogle.push({});
+			</script>
+		</aside>
+	)
+}

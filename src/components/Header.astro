@@ -1,9 +1,11 @@
 ---
 import Logo from './Logo.astro';
 
-const links = [
+const antes = [
 	{ label: 'Inicio', href: '/' },
 	{ label: 'Generadores', href: '/#generadores' },
+];
+const despues = [
 	{ label: 'Efemérides', href: '/#efemerides' },
 	{ label: 'Provincias', href: '/provincias/' },
 	{ label: 'Guía para el aula', href: '/guia-para-el-aula/' },
@@ -20,7 +22,24 @@ const links = [
 		</a>
 		<nav class="flex flex-wrap items-center gap-x-1 gap-y-0.5 text-sm" aria-label="Principal">
 			{
-				links.map((link) => (
+				antes.map((link) => (
+					<a href={link.href} class="inline-flex min-h-11 items-center rounded-md px-2 text-muted transition-colors hover:text-azul">
+						{link.label}
+					</a>
+				))
+			}
+			<details class="relative">
+				<summary class="inline-flex min-h-11 cursor-pointer items-center rounded-md px-2 text-muted transition-colors hover:text-azul">
+					Imprimibles
+				</summary>
+				<div class="z-20 min-w-56 rounded-card border border-borde bg-white p-2 shadow-card sm:absolute sm:left-0 sm:top-full">
+					<a class="flex min-h-11 items-center rounded-md px-3 text-sm text-azul hover:bg-celeste-50" href="/laminas/">
+						Láminas para colorear
+					</a>
+				</div>
+			</details>
+			{
+				despues.map((link) => (
 					<a href={link.href} class="inline-flex min-h-11 items-center rounded-md px-2 text-muted transition-colors hover:text-azul">
 						{link.label}
 					</a>
