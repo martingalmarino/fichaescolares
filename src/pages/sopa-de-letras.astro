@@ -3,7 +3,6 @@ import AfiliadosUtiles from '../components/AfiliadosUtiles.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import EnlacesFechas from '../components/EnlacesFechas.astro';
 import BaseLayout from '../layouts/BaseLayout.astro';
-import { efemerides, etiquetaFecha } from '../data/efemerides';
 import SopaGenerator from '../islands/SopaGenerator.tsx';
 import { toSeed } from '../lib/prng';
 
@@ -105,20 +104,6 @@ const initialSeed = seedParam && /^\d+$/.test(seedParam) ? toSeed(Number(seedPar
 				de este generador son las conmemoraciones fijas del calendario escolar; cuando un feriado se
 				traslada, la ficha sigue el día en que se recuerda el hecho, no el lunes o el viernes en que
 				cae el asueto.
-			</p>
-			<p class="mt-4">
-				Estas son las fechas que podés armar ahora:{' '}
-				{
-					efemerides.flatMap((item, index) => {
-						const link = (
-							<a class="text-celeste hover:underline" href={`/sopa-de-letras/?e=${item.slug}`}>{etiquetaFecha(item.dia, item.mes, item.nombre)}</a>
-						);
-						if (index === 0) return [link];
-						const separator = index === efemerides.length - 1 ? ' y ' : ', ';
-						return [separator, link];
-					})
-				}
-				.
 			</p>
 		</section>
 		<AfiliadosUtiles />
