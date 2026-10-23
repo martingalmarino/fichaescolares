@@ -1,5 +1,6 @@
 ---
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import ListaFeriados from '../../components/ListaFeriados.astro';
 import Preguntas from '../../components/Preguntas.astro';
 import { calendarioDe } from '../../data/calendario-escolar';
 import { provincias } from '../../data/provincias';
@@ -10,7 +11,6 @@ import {
 	LEY_FERIADOS,
 	actualizadoVisible,
 	confirmadas,
-	etiquetaFeriado,
 	fechaActualizado,
 	fechaTarjeta,
 	notaPuentes,
@@ -82,8 +82,41 @@ const jsonLd = {
 			{oficiales} de 24 provincias con calendario oficial
 		</p>
 		<h2 class="mt-10 text-2xl font-bold tracking-tight text-azul">Fechas clave por provincia</h2>
-		<div class="mt-4 overflow-x-auto rounded-card border border-borde bg-white">
-			<table class="min-w-[40rem] w-full text-left text-sm">
+		<ul class="no-print mt-4 grid gap-3 lg:hidden">
+			{
+				filas.map((fila) => (
+					<li class="rounded-card border border-borde bg-white p-4">
+						<a class="text-base font-semibold text-azul hover:text-celeste" href={`/calendario-escolar-${anio}/${fila.provincia.slug}/`}>
+							{nombreCalendario(fila.provincia)}
+						</a>
+						<dl class="mt-3 grid grid-cols-2 gap-3 text-sm">
+							<div>
+								<dt class="text-xs font-semibold uppercase tracking-wide text-muted">Inicio</dt>
+								<dd class="mt-1 text-azul">{fechaTarjeta(fila.jurisdiccion.inicio)}</dd>
+							</div>
+							<div>
+								<dt class="text-xs font-semibold uppercase tracking-wide text-muted">Fin</dt>
+								<dd class="mt-1 text-azul">{fechaTarjeta(fila.jurisdiccion.fin)}</dd>
+							</div>
+							<div class="col-span-2">
+								<dt class="text-xs font-semibold uppercase tracking-wide text-muted">Vacaciones de invierno</dt>
+								<dd class="mt-1 text-azul">{rangoTarjeta(fila.jurisdiccion.invierno.desde, fila.jurisdiccion.invierno.hasta)}</dd>
+							</div>
+							<div>
+								<dt class="text-xs font-semibold uppercase tracking-wide text-muted">Estado</dt>
+								<dd class="mt-1">
+									<span class:list={['inline-flex rounded-full px-2 py-0.5 text-xs font-medium', fila.jurisdiccion.estado === 'oficial' ? 'bg-celeste-50 text-celeste' : 'bg-sol-50 text-sol']}>
+										{fila.jurisdiccion.estado === 'oficial' ? 'oficial' : 'a confirmar'}
+									</span>
+								</dd>
+							</div>
+						</dl>
+					</li>
+				))
+			}
+		</ul>
+		<div class="tabla-provincias mt-4 hidden overflow-x-auto rounded-card border border-borde bg-white lg:block">
+			<table class="w-full text-left text-sm">
 				<thead class="bg-celeste-50 text-azul">
 					<tr>
 						<th class="px-4 py-3 font-semibold">Provincia</th>
@@ -98,7 +131,7 @@ const jsonLd = {
 						filas.map((fila) => (
 							<tr class="border-t border-borde">
 								<th class="px-4 py-3 font-medium" scope="row">
-									<a class="text-celeste hover:underline" href={`/calendario-escolar-${anio}/${fila.provincia.slug}/`}>
+									<a class="inline-flex min-h-11 items-center text-azul hover:text-celeste hover:underline" href={`/calendario-escolar-${anio}/${fila.provincia.slug}/`}>
 										{nombreCalendario(fila.provincia)}
 									</a>
 								</th>
@@ -119,20 +152,10 @@ const jsonLd = {
 		<section id="feriados" class="mt-12">
 			<h2 class="text-2xl font-bold tracking-tight text-azul">Feriados nacionales {anio}</h2>
 			<p class="mt-2 max-w-3xl text-sm leading-relaxed text-muted">
-				Los fija la <a class="text-celeste underline" href={LEY_FERIADOS} rel="noopener noreferrer">Ley 27.399</a>. El detalle de cada fecha está en las <a class="text-celeste underline" href="/efemerides/">efemérides</a>.
-				{notaPuentes(anio)}
+				Los fija la <a class="text-celeste underline" href={LEY_FERIADOS} rel="noopener">Ley 27.399</a>. Cada fecha abre su ficha en las <a class="text-celeste underline" href="/efemerides/">efemérides</a>.
 			</p>
-			<ul class="mt-4 grid gap-2 text-sm sm:grid-cols-2">
-				{
-					feriados.map((feriado) => (
-						<li>
-							<a class="text-celeste hover:underline" href={`/efemerides/${feriado.slug}/`}>
-								{etiquetaFeriado(feriado)} · {feriado.titulo}
-							</a>
-						</li>
-					))
-				}
-			</ul>
+			{notaPuentes(anio) && <p class="mt-1 max-w-3xl text-sm leading-relaxed text-muted">{notaPuentes(anio)}</p>}
+			<ListaFeriados feriados={feriados} />
 		</section>
 		<section class="mt-12 max-w-3xl">
 			<h2 class="text-2xl font-bold tracking-tight text-azul">¿Quién define el calendario escolar?</h2>

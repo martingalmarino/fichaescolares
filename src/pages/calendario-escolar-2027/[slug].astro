@@ -1,6 +1,7 @@
 ---
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import CalendarioAnual from '../../components/CalendarioAnual.astro';
+import ListaFeriados from '../../components/ListaFeriados.astro';
 import Preguntas from '../../components/Preguntas.astro';
 import { calendarioDe, jurisdiccionDe, type Jurisdiccion } from '../../data/calendario-escolar';
 import { efemerides } from '../../data/efemerides';
@@ -11,7 +12,6 @@ import { faqJsonLd } from '../../lib/seo';
 import {
 	LEY_FERIADOS,
 	actualizadoVisible,
-	etiquetaFeriado,
 	fechaActualizado,
 	fechaTarjeta,
 	fraseProvincia,
@@ -194,20 +194,10 @@ const tarjetas = [
 		<section id="feriados" class="no-print mt-12">
 			<h2 class="text-2xl font-bold tracking-tight text-azul">Feriados {anio} en {nombre}</h2>
 			<p class="mt-2 max-w-3xl text-sm leading-relaxed text-muted">
-				Feriados nacionales según la <a class="text-celeste underline" href={LEY_FERIADOS} rel="noopener noreferrer">Ley 27.399</a>.
-				{notaPuentes(anio)}
+				Feriados nacionales según la <a class="text-celeste underline" href={LEY_FERIADOS} rel="noopener">Ley 27.399</a>.
 			</p>
-			<ul class="mt-4 space-y-2 text-sm leading-relaxed">
-				{
-					feriados.map((feriado) => (
-						<li>
-							<a class="text-celeste hover:underline" href={`/efemerides/${feriado.slug}/`}>
-								{etiquetaFeriado(feriado)} · {feriado.titulo}
-							</a>
-						</li>
-					))
-				}
-			</ul>
+			{notaPuentes(anio) && <p class="mt-1 max-w-3xl text-sm leading-relaxed text-muted">{notaPuentes(anio)}</p>}
+			<ListaFeriados feriados={feriados} />
 			{
 				jurisdiccion.feriadosProvinciales.length > 0 ? (
 					<ul class="mt-4 space-y-2 text-sm">

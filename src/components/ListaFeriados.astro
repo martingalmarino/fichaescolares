@@ -1,0 +1,36 @@
+---
+import { isoDe, type FeriadoCalculado } from '../lib/calendario';
+import { etiquetaFeriado } from '../lib/texto-calendario';
+
+interface Props {
+	feriados: FeriadoCalculado[];
+}
+
+const { feriados } = Astro.props;
+const meses = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'];
+---
+
+<ul class="mt-4 grid gap-3 lg:grid-cols-2">
+	{
+		feriados.map((feriado) => (
+			<li>
+				<a
+					class="flex min-h-11 items-center gap-3 rounded-card border border-borde bg-white p-3 hover:border-celeste focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-azul"
+					href={`/efemerides/${feriado.slug}/`}
+				>
+					<time
+						class="flex w-14 shrink-0 flex-col items-center rounded-md bg-sol-50 py-1.5 leading-none text-azul"
+						datetime={isoDe(feriado.anio, feriado.mes, feriado.dia)}
+					>
+						<span class="text-lg font-bold">{feriado.dia}</span>
+						<span class="mt-1 text-[11px] font-semibold uppercase tracking-wide">{meses[feriado.mes - 1]}</span>
+					</time>
+					<span class="min-w-0">
+						<span class="block font-semibold text-azul">{feriado.titulo}</span>
+						<span class="mt-0.5 block text-sm leading-snug text-muted">{etiquetaFeriado(feriado)}</span>
+					</span>
+				</a>
+			</li>
+		))
+	}
+</ul>

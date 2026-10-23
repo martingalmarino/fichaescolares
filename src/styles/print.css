@@ -41,6 +41,10 @@
 		padding-bottom: 0 !important;
 	}
 
+	.tabla-provincias {
+		display: block !important;
+	}
+
 	.preview-frame {
 		container-type: normal;
 		max-width: none;
