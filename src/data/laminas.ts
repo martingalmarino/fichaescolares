@@ -1,4 +1,4 @@
-import { readFileSync } from 'node:fs';
+import { existsSync, readFileSync } from 'node:fs';
 import { dirname, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import crudas from './laminas.json';
@@ -45,7 +45,18 @@ export interface FechaLamina {
 	sopa: string | null;
 }
 
-const raiz = join(dirname(fileURLToPath(import.meta.url)), '../..');
+function raizDelProyecto(): string {
+	let dir = dirname(fileURLToPath(import.meta.url));
+	for (let i = 0; i < 8; i++) {
+		if (existsSync(join(dir, 'public', 'laminas'))) return dir;
+		const padre = dirname(dir);
+		if (padre === dir) break;
+		dir = padre;
+	}
+	throw new Error('No encuentro public/laminas desde el módulo de datos');
+}
+
+const raiz = raizDelProyecto();
 
 function medidas(svgPublico: string): { ancho: number; alto: number } {
 	const archivo = join(raiz, 'public', svgPublico.replace(/^\//, ''));
