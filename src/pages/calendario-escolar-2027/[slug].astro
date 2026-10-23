@@ -1,0 +1,260 @@
+---
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import CalendarioAnual from '../../components/CalendarioAnual.astro';
+import Preguntas from '../../components/Preguntas.astro';
+import { calendarioDe, jurisdiccionDe, type Jurisdiccion } from '../../data/calendario-escolar';
+import { efemerides } from '../../data/efemerides';
+import { provincias, type Provincia } from '../../data/provincias';
+import { MESES_SLUG, efemeridesDelMes, fechaDiaMes, feriadosDelAnio, isoDe, nombreMes } from '../../lib/calendario';
+import { h1CalendarioProvincia, metaCalendarioProvincia, nombreCalendario } from '../../lib/meta';
+import { faqJsonLd } from '../../lib/seo';
+import {
+	LEY_FERIADOS,
+	actualizadoVisible,
+	etiquetaFeriado,
+	fechaActualizado,
+	fechaTarjeta,
+	fraseProvincia,
+	marcasReceso,
+	ministerioDe,
+	notaPuentes,
+	preguntasProvincia,
+	provinciasVecinas,
+	rangoTarjeta,
+	textoPlano,
+} from '../../lib/texto-calendario';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export function getStaticPaths() {
+	const calendario = calendarioDe(2027);
+	return provincias.map((provincia) => ({
+		params: { slug: provincia.slug },
+		props: { provincia, jurisdiccion: jurisdiccionDe(calendario, provincia.slug) },
+	}));
+}
+
+interface Props {
+	provincia: Provincia;
+	jurisdiccion: Jurisdiccion;
+}
+
+const calendario = calendarioDe(2027);
+const { provincia, jurisdiccion } = Astro.props;
+const anio = calendario.anio;
+const meta = metaCalendarioProvincia(provincia, jurisdiccion, anio);
+const h1 = h1CalendarioProvincia(provincia, anio);
+const nombre = nombreCalendario(provincia);
+const actualizado = actualizadoVisible(calendario, jurisdiccion);
+const preguntas = preguntasProvincia(provincia, jurisdiccion, anio);
+const sitio = Astro.site ?? new URL('https://www.aulita.com.ar');
+const url = new URL(meta.ruta, sitio).href;
+const indice = new URL(`/calendario-escolar-${anio}/`, sitio).href;
+const feriados = feriadosDelAnio(anio).map((feriado) => ({
+	...feriado,
+	iso: isoDe(feriado.anio, feriado.mes, feriado.dia),
+}));
+const meses = MESES_SLUG.map((slug, indiceMes) => ({
+	slug,
+	nombre: nombreMes(indiceMes + 1),
+	fechas: efemeridesDelMes(efemerides, indiceMes + 1, anio),
+})).filter((mes) => mes.fechas.length > 0);
+const vecinas = provinciasVecinas(provincia.slug);
+const ficha =
+	provincia.slug === 'caba' ? `${nombre === 'CABA' ? 'Ciudad de Buenos Aires' : nombre}: mapa y datos` : `${nombre}: mapa, capital y datos`;
+const webPage: Record<string, unknown> = {
+	'@type': 'WebPage',
+	name: meta.title,
+	url,
+	inLanguage: 'es-AR',
+	dateModified: actualizado,
+	isPartOf: { '@type': 'WebSite', name: 'Aulita', url: new URL('/', sitio).href },
+	about: { '@type': 'AdministrativeArea', name: provincia.nombre },
+};
+if (jurisdiccion.fuente) {
+	webPage.citation = jurisdiccion.fuente;
+	webPage.isBasedOn = jurisdiccion.fuente;
+}
+const faq = faqJsonLd(preguntas.map((item) => ({ q: item.q, a: textoPlano(item.a) })));
+const jsonLd = {
+	'@context': 'https://schema.org',
+	'@graph': [
+		webPage,
+		{
+			'@type': 'BreadcrumbList',
+			itemListElement: [
+				{ '@type': 'ListItem', position: 1, name: 'Inicio', item: new URL('/', sitio).href },
+				{ '@type': 'ListItem', position: 2, name: `Calendario escolar ${anio}`, item: indice },
+				{ '@type': 'ListItem', position: 3, name: nombre, item: url },
+			],
+		},
+		{ '@type': 'FAQPage', mainEntity: faq.mainEntity },
+	],
+};
+const tarjetas = [
+	{ etiqueta: 'Inicio de clases', valor: fechaTarjeta(jurisdiccion.inicio) },
+	{ etiqueta: 'Vacaciones de invierno', valor: rangoTarjeta(jurisdiccion.invierno.desde, jurisdiccion.invierno.hasta) },
+	{ etiqueta: 'Fin del ciclo lectivo', valor: fechaTarjeta(jurisdiccion.fin) },
+];
+---
+
+<BaseLayout title={meta.title} description={meta.description} image={`/og/calendario-escolar-${anio}.svg`} jsonLd={jsonLd}>
+	<article class="mx-auto max-w-6xl px-4 py-8">
+		<div class="no-print">
+			<Breadcrumbs
+				items={[
+					{ label: 'Inicio', href: '/' },
+					{ label: `Calendario escolar ${anio}`, href: `/calendario-escolar-${anio}/` },
+					{ label: nombre },
+				]}
+			/>
+		</div>
+		<div class="hoja-calendario mt-4">
+			<h1 class="text-3xl font-bold tracking-tight text-azul sm:text-4xl">{h1}</h1>
+			<p class="no-print mt-3 max-w-3xl text-base leading-relaxed text-texto" set:html={fraseProvincia(provincia, jurisdiccion, anio)} />
+			<p class="no-print mt-2 text-sm text-muted">
+				Actualizado el <time datetime={actualizado}>{fechaActualizado(actualizado)}</time>
+			</p>
+			{
+				jurisdiccion.estado === 'a-confirmar' ? (
+					<p class="no-print mt-4 rounded-card border border-sol bg-sol-50 px-4 py-3 text-sm leading-relaxed text-azul">
+						El {ministerioDe(provincia)} todavía no publicó el calendario {anio}. Mientras tanto te mostramos los feriados nacionales.
+					</p>
+				) : (
+					jurisdiccion.fuente && (
+						<p class="no-print mt-4 text-sm text-muted">
+							Fuente oficial:{' '}
+							<a class="text-celeste underline" href={jurisdiccion.fuente} rel="noopener noreferrer">
+								{ministerioDe(provincia)}
+							</a>
+						</p>
+					)
+				)
+			}
+			<h2 class="sr-only">Fechas clave {anio}</h2>
+			<ul class="fechas-clave mt-6 grid gap-3 sm:grid-cols-3">
+				{
+					tarjetas.map((tarjeta) => (
+						<li class="rounded-card border border-borde bg-white px-4 py-3">
+							<p class="text-xs font-semibold uppercase tracking-wide text-muted">{tarjeta.etiqueta}</p>
+							<p class="mt-1 text-lg font-bold text-azul">{tarjeta.valor}</p>
+						</li>
+					))
+				}
+			</ul>
+			<div class="mt-10 flex flex-wrap items-center justify-between gap-3">
+				<h2 class="text-2xl font-bold tracking-tight text-azul">Calendario {anio} mes por mes</h2>
+				<button id="imprimir-calendario" type="button" class="no-print inline-flex min-h-11 items-center rounded-control bg-azul px-4 text-sm font-semibold text-white">
+					Imprimir en A4
+				</button>
+			</div>
+			<div class="mt-4">
+				<CalendarioAnual
+					anio={anio}
+					nacionales={feriados.map((feriado) => ({ iso: feriado.iso, nombre: feriado.noLaborable ? `${feriado.titulo} (día no laborable)` : feriado.titulo }))}
+					provinciales={jurisdiccion.feriadosProvinciales.map((feriado) => ({ iso: feriado.fecha, nombre: feriado.nombre }))}
+					recesos={marcasReceso(jurisdiccion)}
+					inicio={jurisdiccion.inicio}
+					fin={jurisdiccion.fin}
+				/>
+			</div>
+		</div>
+		{
+			jurisdiccion.notas && (
+				<p class="no-print mt-4 text-sm leading-relaxed text-muted">{jurisdiccion.notas}</p>
+			)
+		}
+		<section class="no-print mt-12">
+			<h2 class="text-2xl font-bold tracking-tight text-azul">Efemérides escolares {anio} por mes</h2>
+			<p class="mt-2 max-w-3xl text-sm leading-relaxed text-muted">
+				Están en su día conmemorativo, con ficha para imprimir. Si el asueto se traslada, la fecha del feriado figura en la lista de abajo.
+			</p>
+			<div class="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+				{
+					meses.map((mes) => (
+						<section class="rounded-card border border-borde bg-white p-4">
+							<h3 class="font-semibold text-azul">
+								<a class="hover:text-celeste" href={`/efemerides/${mes.slug}/`}>
+									{mes.nombre}
+								</a>
+							</h3>
+							<ul class="mt-2 space-y-1 text-sm">
+								{mes.fechas.map((fecha) => (
+									<li>
+										<a class="text-celeste hover:underline" href={`/efemerides/${fecha.slug}/`}>
+											{fechaDiaMes(fecha.dia, fecha.mes)} · {fecha.titulo}
+										</a>
+									</li>
+								))}
+							</ul>
+						</section>
+					))
+				}
+			</div>
+		</section>
+		<section id="feriados" class="no-print mt-12">
+			<h2 class="text-2xl font-bold tracking-tight text-azul">Feriados {anio} en {nombre}</h2>
+			<p class="mt-2 max-w-3xl text-sm leading-relaxed text-muted">
+				Feriados nacionales según la <a class="text-celeste underline" href={LEY_FERIADOS} rel="noopener noreferrer">Ley 27.399</a>.
+				{notaPuentes(anio)}
+			</p>
+			<ul class="mt-4 space-y-2 text-sm leading-relaxed">
+				{
+					feriados.map((feriado) => (
+						<li>
+							<a class="text-celeste hover:underline" href={`/efemerides/${feriado.slug}/`}>
+								{etiquetaFeriado(feriado)} · {feriado.titulo}
+							</a>
+						</li>
+					))
+				}
+			</ul>
+			{
+				jurisdiccion.feriadosProvinciales.length > 0 ? (
+					<ul class="mt-4 space-y-2 text-sm">
+						{jurisdiccion.feriadosProvinciales.map((feriado) => (
+							<li>
+								{fechaTarjeta(feriado.fecha)} · {feriado.nombre} (feriado provincial)
+							</li>
+						))}
+					</ul>
+				) : (
+					<p class="mt-4 text-sm text-muted">Todavía no hay feriados provinciales cargados para {nombre}.</p>
+				)
+			}
+		</section>
+		<div class="no-print">
+			<Preguntas preguntas={preguntas} />
+		</div>
+		<section class="no-print mt-12">
+			<h2 class="text-2xl font-bold tracking-tight text-azul">Ver también</h2>
+			<ul class="mt-4 flex flex-wrap gap-2 text-sm">
+				<li><a class="inline-flex min-h-11 items-center rounded-control border border-borde bg-white px-3 text-celeste hover:border-celeste" href={`/provincias/${provincia.slug}/`}>{ficha}</a></li>
+				<li><a class="inline-flex min-h-11 items-center rounded-control border border-borde bg-white px-3 text-celeste hover:border-celeste" href={`/calendario-escolar-${anio}/`}>Calendario escolar {anio} de todas las provincias</a></li>
+				{
+					vecinas.map((vecina) => (
+						<li>
+							<a class="inline-flex min-h-11 items-center rounded-control border border-borde bg-white px-3 text-celeste hover:border-celeste" href={`/calendario-escolar-${anio}/${vecina.slug}/`}>
+								Calendario escolar {anio} en {nombreCalendario(vecina)}
+							</a>
+						</li>
+					))
+				}
+				<li><a class="inline-flex min-h-11 items-center rounded-control border border-borde bg-white px-3 text-celeste hover:border-celeste" href="/efemerides/">Efemérides</a></li>
+				<li><a class="inline-flex min-h-11 items-center rounded-control border border-borde bg-white px-3 text-celeste hover:border-celeste" href="/mapas/">Mapas escolares</a></li>
+			</ul>
+		</section>
+	</article>
+</BaseLayout>
+
+<script define:vars={{ titulo: h1 }}>
+	document.getElementById('imprimir-calendario')?.addEventListener('click', () => {
+		const anterior = document.title;
+		document.title = titulo;
+		const restaurar = () => {
+			document.title = anterior;
+			window.removeEventListener('afterprint', restaurar);
+		};
+		window.addEventListener('afterprint', restaurar);
+		window.print();
+	});
+</script>

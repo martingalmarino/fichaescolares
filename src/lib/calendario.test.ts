@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import efemerides from '../data/efemerides.json';
 import proceres from '../data/proceres.json';
 import { validarDatos } from '../data/schemas';
-import { efemeridesCercanas, efemeridesDelMes, fechaArgentina, fechaDelAnio, mesDeSlug, pascua, proximasEfemerides } from './calendario';
+import { efemeridesCercanas, efemeridesDelMes, fechaArgentina, fechaDelAnio, feriadosDelAnio, mesDeSlug, pascua, proximasEfemerides, puentesDelAnio, trasladarFeriado } from './calendario';
 
 const muestra = [
 	{ slug: '20-de-noviembre', dia: 20, mes: 11 },
@@ -92,6 +92,42 @@ describe('proximasEfemerides', () => {
 		expect(fechaArgentina(medianocheUtc)).toEqual({ anio: 2026, mes: 12, dia: 31 });
 		const proximas = proximasEfemerides(efemerides, medianocheUtc, 1);
 		expect(proximas[0]).toMatchObject({ slug: '1-de-enero', dia: 1, mes: 1, anio: 2027 });
+	});
+});
+
+describe('feriadosDelAnio', () => {
+	it('traslada martes y miércoles al lunes anterior, y jueves y viernes al lunes siguiente', () => {
+		expect(trasladarFeriado(2027, 8, 17)).toEqual({ dia: 16, mes: 8, trasladado: true });
+		expect(trasladarFeriado(2027, 6, 17)).toEqual({ dia: 21, mes: 6, trasladado: true });
+		expect(trasladarFeriado(2027, 10, 12)).toEqual({ dia: 11, mes: 10, trasladado: true });
+		expect(trasladarFeriado(2027, 11, 20)).toEqual({ dia: 20, mes: 11, trasladado: false });
+		expect(trasladarFeriado(2027, 5, 25)).toEqual({ dia: 24, mes: 5, trasladado: true });
+	});
+
+	it('arma los feriados nacionales de 2027 y deja los inamovibles en su día', () => {
+		expect(puentesDelAnio(2027)).toEqual([]);
+		expect(feriadosDelAnio(2027).map((feriado) => `${feriado.anio}-${String(feriado.mes).padStart(2, '0')}-${String(feriado.dia).padStart(2, '0')} ${feriado.slug}`)).toEqual([
+			'2027-01-01 1-de-enero',
+			'2027-02-08 carnaval',
+			'2027-02-09 carnaval',
+			'2027-03-24 24-de-marzo',
+			'2027-03-25 jueves-santo',
+			'2027-03-26 viernes-santo',
+			'2027-04-02 2-de-abril',
+			'2027-05-01 1-de-mayo',
+			'2027-05-25 25-de-mayo',
+			'2027-06-20 20-de-junio',
+			'2027-06-21 17-de-junio',
+			'2027-07-09 9-de-julio',
+			'2027-08-16 17-de-agosto',
+			'2027-10-11 12-de-octubre',
+			'2027-11-20 20-de-noviembre',
+			'2027-12-08 8-de-diciembre',
+			'2027-12-25 25-de-diciembre',
+		]);
+		const guemes = feriadosDelAnio(2027).find((feriado) => feriado.slug === '17-de-junio');
+		expect(guemes?.trasladadoDesde).toEqual({ dia: 17, mes: 6 });
+		expect(feriadosDelAnio(2027).find((feriado) => feriado.slug === '25-de-mayo')?.trasladadoDesde).toBeNull();
 	});
 });
 

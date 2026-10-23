@@ -1,3 +1,4 @@
+import { calendarios, type Jurisdiccion } from '../data/calendario-escolar';
 import type { Efemeride } from '../data/efemerides';
 import { efemerides } from '../data/efemerides';
 import type { Lamina } from '../data/laminas';
@@ -403,6 +404,63 @@ export function htmlProvincia(provincia: Provincia, tieneMapa: boolean): string 
 	return partes.join(' ');
 }
 
+export function nombreCalendario(provincia: Provincia): string {
+	if (provincia.slug === 'caba') return 'CABA';
+	if (provincia.nombre.startsWith('Tierra del Fuego')) return 'Tierra del Fuego';
+	return provincia.nombre;
+}
+
+export function lugarCalendario(provincia: Provincia): string {
+	if (provincia.slug === 'caba') return 'la Ciudad de Buenos Aires';
+	if (provincia.slug === 'buenos-aires') return 'la provincia de Buenos Aires';
+	return nombreCalendario(provincia);
+}
+
+export function h1CalendarioProvincia(provincia: Provincia, anio: number): string {
+	if (provincia.slug === 'caba') return `Calendario escolar ${anio} en la Ciudad de Buenos Aires`;
+	if (provincia.slug === 'buenos-aires') return `Calendario escolar ${anio} en la provincia de Buenos Aires`;
+	return `Calendario escolar ${anio} en ${nombreCalendario(provincia)}`;
+}
+
+function diaMesCorto(iso: string): string {
+	const [, mes, dia] = iso.split('-').map(Number);
+	return `${dia}/${mes}`;
+}
+
+function encajarCalendario(variantes: string[]): string {
+	const preciso = variantes.filter((texto) => texto.length >= MIN_DESCRIPCION && texto.length <= 155).sort((a, b) => b.length - a.length)[0];
+	return preciso ?? encajar(variantes);
+}
+
+export function metaCalendarioEscolar(anio: number): MetaPagina {
+	return {
+		ruta: `/calendario-escolar-${anio}/`,
+		title: `Calendario escolar ${anio} Argentina por provincia`,
+		description: `Calendario escolar ${anio} de las 24 jurisdicciones: inicio de clases, vacaciones de invierno, fin del ciclo y feriados. Actualizado con fuentes oficiales.`,
+	};
+}
+
+export function metaCalendarioProvincia(provincia: Provincia, jurisdiccion: Jurisdiccion, anio: number): MetaPagina {
+	const corto = nombreCalendario(provincia);
+	const largo = `Calendario escolar ${anio} ${corto}: inicio y vacaciones`;
+	const conMarca = `Calendario escolar ${anio} ${corto} | Aulita`;
+	const title = dentro(largo, MAX_TITULO) ? largo : dentro(conMarca, MAX_TITULO) ? conMarca : `Calendario escolar ${anio} ${corto}`;
+	const lugar = lugarCalendario(provincia);
+	const description =
+		jurisdiccion.estado === 'oficial' && jurisdiccion.inicio && jurisdiccion.fin && jurisdiccion.invierno.desde && jurisdiccion.invierno.hasta
+			? encajarCalendario([
+					`Clases ${anio} en ${lugar}: inicio el ${diaMesCorto(jurisdiccion.inicio)}, vacaciones de invierno del ${diaMesCorto(jurisdiccion.invierno.desde)} al ${diaMesCorto(jurisdiccion.invierno.hasta)} y fin el ${diaMesCorto(jurisdiccion.fin)}. Calendario mes por mes con feriados para imprimir.`,
+					`Clases ${anio} en ${lugar}: inicio el ${diaMesCorto(jurisdiccion.inicio)}, vacaciones de invierno del ${diaMesCorto(jurisdiccion.invierno.desde)} al ${diaMesCorto(jurisdiccion.invierno.hasta)} y fin el ${diaMesCorto(jurisdiccion.fin)}.`,
+				])
+			: encajarCalendario([
+					`¿Cuándo empiezan las clases ${anio} en ${lugar}? Inicio, vacaciones de invierno, fin del ciclo y feriados ${anio}. Fechas oficiales apenas se publiquen.`,
+					`¿Cuándo empiezan las clases ${anio} en ${lugar}? Inicio, vacaciones de invierno y feriados ${anio}. Fechas oficiales apenas se publiquen.`,
+					`¿Cuándo empiezan las clases ${anio} en ${lugar}? Inicio, vacaciones de invierno y fin del ciclo. Fechas oficiales apenas se publiquen.`,
+					`Inicio de clases ${anio} en ${lugar}, vacaciones de invierno y fin del ciclo. Las fechas oficiales se publican apenas el ministerio las confirme.`,
+				]);
+	return { ruta: `/calendario-escolar-${anio}/${provincia.slug}/`, title, description };
+}
+
 export function todasLasMetas(desde = new Date()): MetaPagina[] {
 	const hoy = fechaArgentina(desde);
 	const meses = MESES_SLUG.map((slug) => {
@@ -421,5 +479,9 @@ export function todasLasMetas(desde = new Date()): MetaPagina[] {
 		...mapas.map((mapa) => metaMapa(mapa)),
 		...publicadas.map((lamina) => metaLamina(lamina)),
 		...provincias.map((provincia) => metaProvincia(provincia, mapas.some((mapa) => mapa.provincia?.replaceAll('_', '-') === provincia.slug))),
+		...calendarios.flatMap((calendario) => [
+			metaCalendarioEscolar(calendario.anio),
+			...provincias.map((provincia) => metaCalendarioProvincia(provincia, calendario.jurisdicciones[provincia.slug]!, calendario.anio)),
+		]),
 	];
 }

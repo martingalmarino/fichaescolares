@@ -4,7 +4,8 @@ import { publicadas } from '../data/laminas';
 import { mapas } from '../data/mapas';
 import { provincias } from '../data/provincias';
 import { MESES_SLUG, efemeridesDelMes, fechaArgentina, mesDeSlug, pascua } from './calendario';
-import { MAX_DESCRIPCION, MAX_TITULO, MIN_DESCRIPCION, contarPalabras, htmlProvincia, introMes, metaEfemeride, metaLamina, metaMapa, metaProvincia, todasLasMetas } from './meta';
+import { calendarioDe } from '../data/calendario-escolar';
+import { MAX_DESCRIPCION, MAX_TITULO, MIN_DESCRIPCION, contarPalabras, h1CalendarioProvincia, htmlProvincia, introMes, metaCalendarioEscolar, metaCalendarioProvincia, metaEfemeride, metaLamina, metaMapa, metaProvincia, todasLasMetas } from './meta';
 
 describe('títulos y descripciones', () => {
 	const metas = todasLasMetas(new Date('2026-10-23T12:00:00-03:00'));
@@ -22,6 +23,8 @@ describe('títulos y descripciones', () => {
 		expect(metas.filter((meta) => meta.ruta.startsWith('/laminas/') && meta.ruta !== '/laminas/')).toHaveLength(publicadas.length);
 		expect(metas.filter((meta) => meta.ruta.startsWith('/provincias/') && meta.ruta !== '/provincias/')).toHaveLength(provincias.length);
 		expect(metas.filter((meta) => meta.ruta.startsWith('/efemerides/') && !MESES_SLUG.some((mes) => meta.ruta === `/efemerides/${mes}/`) && meta.ruta !== '/efemerides/')).toHaveLength(efemerides.length);
+		expect(metas.filter((meta) => meta.ruta.startsWith('/calendario-escolar-2027/'))).toHaveLength(25);
+		expect(rutas.has('/calendario-escolar-2027/cordoba/')).toBe(true);
 	});
 
 	it('no pasa el largo y no repite title ni description', () => {
@@ -84,6 +87,31 @@ describe('títulos y descripciones', () => {
 			expect(palabras, slug).toBeGreaterThanOrEqual(80);
 			expect(palabras, slug).toBeLessThanOrEqual(120);
 		}
+	});
+
+	it('arma los títulos del calendario escolar 2027', () => {
+		expect(metaCalendarioEscolar(2027).title).toBe('Calendario escolar 2027 Argentina por provincia');
+		expect(metaCalendarioEscolar(2027).description.length).toBeLessThanOrEqual(155);
+		const calendario = calendarioDe(2027);
+		const esperado = new Map<string, string>([
+			['buenos-aires', 'Calendario escolar 2027 Buenos Aires: inicio y vacaciones'],
+			['caba', 'Calendario escolar 2027 CABA: inicio y vacaciones'],
+			['cordoba', 'Calendario escolar 2027 Córdoba: inicio y vacaciones'],
+			['santiago-del-estero', 'Calendario escolar 2027 Santiago del Estero | Aulita'],
+			['tierra-del-fuego', 'Calendario escolar 2027 Tierra del Fuego | Aulita'],
+			['tucuman', 'Calendario escolar 2027 Tucumán: inicio y vacaciones'],
+		]);
+		for (const provincia of provincias) {
+			const meta = metaCalendarioProvincia(provincia, calendario.jurisdicciones[provincia.slug]!, 2027);
+			expect(meta.title.length, meta.title).toBeLessThanOrEqual(60);
+			expect(h1CalendarioProvincia(provincia, 2027).startsWith('Calendario escolar 2027 en ')).toBe(true);
+			const titulo = esperado.get(provincia.slug);
+			if (titulo) expect(meta.title).toBe(titulo);
+			expect(meta.description.length, `${meta.ruta} ${meta.description}`).toBeGreaterThanOrEqual(140);
+			expect(meta.description.length, `${meta.ruta} ${meta.description}`).toBeLessThanOrEqual(155);
+		}
+		expect(h1CalendarioProvincia(provincias.find((provincia) => provincia.slug === 'caba')!, 2027)).toBe('Calendario escolar 2027 en la Ciudad de Buenos Aires');
+		expect(h1CalendarioProvincia(provincias.find((provincia) => provincia.slug === 'buenos-aires')!, 2027)).toBe('Calendario escolar 2027 en la provincia de Buenos Aires');
 	});
 
 	it('deja el párrafo de cada provincia entre 80 y 100 palabras', () => {

@@ -1,5 +1,6 @@
 ---
 import BloqueMes from '../../components/BloqueMes.astro';
+import { calendarioVigente } from '../../data/calendario-escolar';
 import { efemerides } from '../../data/efemerides';
 import ProximasEfemerides from '../../islands/ProximasEfemerides';
 import { MESES_SLUG, efemeridesDelMes, fechaArgentina, nombreMes, proximasEfemerides, slugDeMes } from '../../lib/calendario';
@@ -25,6 +26,11 @@ const jsonLd = itemListJsonLd(
 		<h1 class="text-3xl font-bold tracking-tight text-azul sm:text-4xl">Calendario de efemérides</h1>
 		<p class="mt-3 max-w-3xl text-base leading-relaxed text-muted">
 			Las fechas de {hoy.anio} para el aula y la casa. Los feriados trasladables figuran en su día conmemorativo.
+		</p>
+		<p class="mt-4">
+			<a class="inline-flex min-h-11 items-center rounded-control border border-celeste bg-celeste-50 px-4 text-sm font-semibold text-azul" href={`/calendario-escolar-${calendarioVigente.anio}/`}>
+				Calendario escolar {calendarioVigente.anio} por provincia
+			</a>
 		</p>
 		<nav class="mt-6 flex flex-wrap gap-2 text-sm" aria-label="Meses">
 			{

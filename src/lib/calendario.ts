@@ -1,6 +1,10 @@
+import { efemerides } from '../data/efemerides';
+
 export const MESES_CORTOS = ['ENE', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SEP', 'OCT', 'NOV', 'DIC'] as const;
 
 const MESES = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];
+const MESES_MIN = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
+const DIAS_SEMANA = ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'];
 export const MESES_SLUG = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'] as const;
 const ZONA = 'America/Argentina/Buenos_Aires';
 const NOTA_TRASLADABLE = 'El feriado puede trasladarse.';
@@ -71,6 +75,25 @@ export function chipFecha(dia: number, mes: number): string {
 
 export function textoFecha(dia: number, mes: number, anio: number): string {
 	return `${dia} de ${MESES[mes - 1] ?? ''} de ${anio}`;
+}
+
+export function isoDe(anio: number, mes: number, dia: number): string {
+	return `${anio}-${String(mes).padStart(2, '0')}-${String(dia).padStart(2, '0')}`;
+}
+
+export function partesIso(iso: string): { anio: number; mes: number; dia: number } {
+	const [anio, mes, dia] = iso.split('-').map(Number);
+	return { anio: anio ?? 0, mes: mes ?? 0, dia: dia ?? 0 };
+}
+
+/** «lunes 1 de marzo de 2027», en hora UTC para que la fecha no corra. */
+export function fechaCompleta(anio: number, mes: number, dia: number): string {
+	const semana = DIAS_SEMANA[new Date(Date.UTC(anio, mes - 1, dia)).getUTCDay()] ?? '';
+	return `${semana} ${dia} de ${MESES_MIN[mes - 1] ?? ''} de ${anio}`;
+}
+
+export function fechaDiaMes(dia: number, mes: number): string {
+	return `${dia} de ${MESES_MIN[mes - 1] ?? ''}`;
 }
 
 export function fechaArgentina(instante: Date): { anio: number; mes: number; dia: number } {
@@ -184,6 +207,60 @@ export function efemeridesDelMes<T extends FechaConmemorativa>(lista: T[], mes: 
 
 export function proximaOcurrencia<T extends FechaConmemorativa>(item: T, desde: Date): FechaLista<T> | null {
 	return proximasEfemerides([item], desde, 1)[0] ?? null;
+}
+
+/**
+ * Traslado de feriados de la ley 27.399.
+ * Martes o miércoles → lunes anterior. Jueves o viernes → lunes siguiente.
+ * Sábado, domingo y lunes quedan en su día.
+ */
+export function trasladarFeriado(anio: number, mes: number, dia: number): { dia: number; mes: number; trasladado: boolean } {
+	const semana = new Date(Date.UTC(anio, mes - 1, dia)).getUTCDay();
+	const delta = semana === 2 ? -1 : semana === 3 ? -2 : semana === 4 ? 4 : semana === 5 ? 3 : 0;
+	if (delta === 0) return { dia, mes, trasladado: false };
+	return { ...sumarDias(anio, mes, dia, delta), trasladado: true };
+}
+
+export interface FeriadoCalculado {
+	slug: string;
+	nombre: string;
+	titulo: string;
+	dia: number;
+	mes: number;
+	anio: number;
+	trasladadoDesde: { dia: number; mes: number } | null;
+	noLaborable: boolean;
+}
+
+/** Feriados nacionales del año, con el traslado ya aplicado. No incluye puentes sin decreto. */
+export function feriadosDelAnio(anio: number): FeriadoCalculado[] {
+	const salida: FeriadoCalculado[] = [];
+	for (const item of efemerides) {
+		const juevesSanto = item.slug === 'jueves-santo';
+		if (!item.feriado.es && !juevesSanto) continue;
+		const fechas =
+			item.slug === 'carnaval'
+				? [sumarDias(anio, pascua(anio).mes, pascua(anio).dia, -48), sumarDias(anio, pascua(anio).mes, pascua(anio).dia, -47)]
+				: ocurrenciasDelAnio(item, anio).map((fecha) => ({ dia: fecha.dia, mes: fecha.mes }));
+		for (const fecha of fechas) {
+			const traslado = item.feriado.regla === 'trasladable' ? trasladarFeriado(anio, fecha.mes, fecha.dia) : { dia: fecha.dia, mes: fecha.mes, trasladado: false };
+			salida.push({
+				slug: item.slug,
+				nombre: item.nombre,
+				titulo: item.titulo,
+				dia: traslado.dia,
+				mes: traslado.mes,
+				anio,
+				trasladadoDesde: traslado.trasladado ? { dia: fecha.dia, mes: fecha.mes } : null,
+				noLaborable: juevesSanto,
+			});
+		}
+	}
+	return salida.sort((a, b) => a.mes - b.mes || a.dia - b.dia || a.slug.localeCompare(b.slug, 'es'));
+}
+
+export function puentesDelAnio(anio: number): { dia: number; mes: number }[] {
+	return DIAS_TURISTICOS[anio] ?? [];
 }
 
 export function efemeridesCercanas<T extends FechaConmemorativa & { slug: string }>(lista: T[], slug: string, desde: Date, radio = 2): FechaLista<T>[] {

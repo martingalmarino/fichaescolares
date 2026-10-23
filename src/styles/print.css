@@ -13,6 +13,15 @@
 	margin: 10mm;
 }
 
+@page calendario {
+	size: A4 landscape;
+	margin: 8mm;
+}
+
+.print-solo {
+	display: none;
+}
+
 .hoja-lamina {
 	page: lamina;
 }
@@ -67,6 +76,67 @@
 		padding: 0 !important;
 		margin: 0 !important;
 		overflow: visible !important;
+	}
+
+	.hoja-calendario {
+		page: calendario;
+	}
+
+	.hoja-calendario h1 {
+		margin: 0;
+		font-size: 14pt;
+		line-height: 1.2;
+	}
+
+	.hoja-calendario h2 {
+		margin: 2mm 0 1mm;
+		font-size: 11pt;
+	}
+
+	.hoja-calendario .fechas-clave {
+		display: grid;
+		grid-template-columns: repeat(3, 1fr);
+		gap: 2mm;
+		margin-top: 2mm;
+	}
+
+	.hoja-calendario .fechas-clave li {
+		padding: 1.5mm 2mm;
+	}
+
+	.hoja-calendario .fechas-clave p {
+		margin: 0;
+		font-size: 8pt;
+	}
+
+	.calendario-meses {
+		display: grid !important;
+		grid-template-columns: repeat(4, minmax(0, 1fr)) !important;
+		gap: 1.5mm !important;
+		margin-top: 1.5mm !important;
+	}
+
+	.calendario-meses > section {
+		break-inside: avoid;
+		padding: 1mm !important;
+	}
+
+	.calendario-meses h3 {
+		font-size: 8pt;
+		margin: 0;
+	}
+
+	.calendario-meses span {
+		font-size: 6.5pt !important;
+		aspect-ratio: auto;
+		height: 3.4mm;
+	}
+
+	.print-solo {
+		display: block !important;
+		margin-top: 1.5mm;
+		font-size: 8pt;
+		text-align: center;
 	}
 
 	.hoja-mapa img {

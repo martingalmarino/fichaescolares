@@ -1,10 +1,11 @@
 ---
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import TarjetaMapa from '../../components/TarjetaMapa.astro';
+import { calendarioVigente } from '../../data/calendario-escolar';
 import { mapasDeProvincia } from '../../data/mapas';
 import { provincias, type Provincia } from '../../data/provincias';
 import BaseLayout from '../../layouts/BaseLayout.astro';
-import { htmlProvincia, metaProvincia } from '../../lib/meta';
+import { htmlProvincia, metaProvincia, nombreCalendario } from '../../lib/meta';
 import { semillaDeFicha, sopaDeFicha } from '../../lib/sopa-ficha';
 
 export function getStaticPaths() {
@@ -121,6 +122,15 @@ const parrafo = htmlProvincia(provincia, mapasProvincia.length > 0);
 		<section class="no-print mt-8 max-w-3xl text-base leading-relaxed text-texto">
 			<h2 class="text-2xl font-bold tracking-tight text-azul">Sobre {provincia.nombre}</h2>
 			<p class="mt-4" set:html={parrafo} />
+		</section>
+		<section class="no-print mt-8 rounded-card border border-borde bg-white p-5">
+			<h2 class="text-2xl font-bold tracking-tight text-azul">Calendario escolar {calendarioVigente.anio} en {nombreCalendario(provincia)}</h2>
+			<p class="mt-2 text-sm leading-relaxed text-muted">
+				Inicio de clases, vacaciones de invierno, fin del ciclo y feriados {calendarioVigente.anio}. Las fechas provinciales aparecen cuando el ministerio las publica.
+			</p>
+			<a class="mt-3 inline-flex min-h-11 items-center text-sm font-semibold text-celeste hover:underline" href={`/calendario-escolar-${calendarioVigente.anio}/${provincia.slug}/`}>
+				Ver el calendario escolar {calendarioVigente.anio} en {nombreCalendario(provincia)}
+			</a>
 		</section>
 		<section class="no-print mt-8 text-sm leading-relaxed text-muted">
 			<h2 class="text-lg font-semibold text-azul">Fuentes</h2>

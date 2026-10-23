@@ -1,0 +1,318 @@
+{
+	"anio": 2027,
+	"actualizado": "2026-10-23",
+	"jurisdicciones": {
+		"buenos-aires": {
+			"estado": "a-confirmar",
+			"inicio": null,
+			"invierno": {
+				"desde": null,
+				"hasta": null
+			},
+			"fin": null,
+			"fuente": null,
+			"notas": null,
+			"feriadosProvinciales": [],
+			"sinClases": []
+		},
+		"caba": {
+			"estado": "a-confirmar",
+			"inicio": null,
+			"invierno": {
+				"desde": null,
+				"hasta": null
+			},
+			"fin": null,
+			"fuente": null,
+			"notas": null,
+			"feriadosProvinciales": [],
+			"sinClases": []
+		},
+		"catamarca": {
+			"estado": "a-confirmar",
+			"inicio": null,
+			"invierno": {
+				"desde": null,
+				"hasta": null
+			},
+			"fin": null,
+			"fuente": null,
+			"notas": null,
+			"feriadosProvinciales": [],
+			"sinClases": []
+		},
+		"chaco": {
+			"estado": "a-confirmar",
+			"inicio": null,
+			"invierno": {
+				"desde": null,
+				"hasta": null
+			},
+			"fin": null,
+			"fuente": null,
+			"notas": null,
+			"feriadosProvinciales": [],
+			"sinClases": []
+		},
+		"chubut": {
+			"estado": "a-confirmar",
+			"inicio": null,
+			"invierno": {
+				"desde": null,
+				"hasta": null
+			},
+			"fin": null,
+			"fuente": null,
+			"notas": null,
+			"feriadosProvinciales": [],
+			"sinClases": []
+		},
+		"cordoba": {
+			"estado": "a-confirmar",
+			"inicio": null,
+			"invierno": {
+				"desde": null,
+				"hasta": null
+			},
+			"fin": null,
+			"fuente": null,
+			"notas": null,
+			"feriadosProvinciales": [],
+			"sinClases": []
+		},
+		"corrientes": {
+			"estado": "a-confirmar",
+			"inicio": null,
+			"invierno": {
+				"desde": null,
+				"hasta": null
+			},
+			"fin": null,
+			"fuente": null,
+			"notas": null,
+			"feriadosProvinciales": [],
+			"sinClases": []
+		},
+		"entre-rios": {
+			"estado": "a-confirmar",
+			"inicio": null,
+			"invierno": {
+				"desde": null,
+				"hasta": null
+			},
+			"fin": null,
+			"fuente": null,
+			"notas": null,
+			"feriadosProvinciales": [],
+			"sinClases": []
+		},
+		"formosa": {
+			"estado": "a-confirmar",
+			"inicio": null,
+			"invierno": {
+				"desde": null,
+				"hasta": null
+			},
+			"fin": null,
+			"fuente": null,
+			"notas": null,
+			"feriadosProvinciales": [],
+			"sinClases": []
+		},
+		"jujuy": {
+			"estado": "a-confirmar",
+			"inicio": null,
+			"invierno": {
+				"desde": null,
+				"hasta": null
+			},
+			"fin": null,
+			"fuente": null,
+			"notas": null,
+			"feriadosProvinciales": [],
+			"sinClases": []
+		},
+		"la-pampa": {
+			"estado": "a-confirmar",
+			"inicio": null,
+			"invierno": {
+				"desde": null,
+				"hasta": null
+			},
+			"fin": null,
+			"fuente": null,
+			"notas": null,
+			"feriadosProvinciales": [],
+			"sinClases": []
+		},
+		"la-rioja": {
+			"estado": "a-confirmar",
+			"inicio": null,
+			"invierno": {
+				"desde": null,
+				"hasta": null
+			},
+			"fin": null,
+			"fuente": null,
+			"notas": null,
+			"feriadosProvinciales": [],
+			"sinClases": []
+		},
+		"mendoza": {
+			"estado": "a-confirmar",
+			"inicio": null,
+			"invierno": {
+				"desde": null,
+				"hasta": null
+			},
+			"fin": null,
+			"fuente": null,
+			"notas": null,
+			"feriadosProvinciales": [],
+			"sinClases": []
+		},
+		"misiones": {
+			"estado": "a-confirmar",
+			"inicio": null,
+			"invierno": {
+				"desde": null,
+				"hasta": null
+			},
+			"fin": null,
+			"fuente": null,
+			"notas": null,
+			"feriadosProvinciales": [],
+			"sinClases": []
+		},
+		"neuquen": {
+			"estado": "a-confirmar",
+			"inicio": null,
+			"invierno": {
+				"desde": null,
+				"hasta": null
+			},
+			"fin": null,
+			"fuente": null,
+			"notas": null,
+			"feriadosProvinciales": [],
+			"sinClases": []
+		},
+		"rio-negro": {
+			"estado": "a-confirmar",
+			"inicio": null,
+			"invierno": {
+				"desde": null,
+				"hasta": null
+			},
+			"fin": null,
+			"fuente": null,
+			"notas": null,
+			"feriadosProvinciales": [],
+			"sinClases": []
+		},
+		"salta": {
+			"estado": "a-confirmar",
+			"inicio": null,
+			"invierno": {
+				"desde": null,
+				"hasta": null
+			},
+			"fin": null,
+			"fuente": null,
+			"notas": null,
+			"feriadosProvinciales": [],
+			"sinClases": []
+		},
+		"san-juan": {
+			"estado": "a-confirmar",
+			"inicio": null,
+			"invierno": {
+				"desde": null,
+				"hasta": null
+			},
+			"fin": null,
+			"fuente": null,
+			"notas": null,
+			"feriadosProvinciales": [],
+			"sinClases": []
+		},
+		"san-luis": {
+			"estado": "a-confirmar",
+			"inicio": null,
+			"invierno": {
+				"desde": null,
+				"hasta": null
+			},
+			"fin": null,
+			"fuente": null,
+			"notas": null,
+			"feriadosProvinciales": [],
+			"sinClases": []
+		},
+		"santa-cruz": {
+			"estado": "a-confirmar",
+			"inicio": null,
+			"invierno": {
+				"desde": null,
+				"hasta": null
+			},
+			"fin": null,
+			"fuente": null,
+			"notas": null,
+			"feriadosProvinciales": [],
+			"sinClases": []
+		},
+		"santa-fe": {
+			"estado": "a-confirmar",
+			"inicio": null,
+			"invierno": {
+				"desde": null,
+				"hasta": null
+			},
+			"fin": null,
+			"fuente": null,
+			"notas": null,
+			"feriadosProvinciales": [],
+			"sinClases": []
+		},
+		"santiago-del-estero": {
+			"estado": "a-confirmar",
+			"inicio": null,
+			"invierno": {
+				"desde": null,
+				"hasta": null
+			},
+			"fin": null,
+			"fuente": null,
+			"notas": null,
+			"feriadosProvinciales": [],
+			"sinClases": []
+		},
+		"tierra-del-fuego": {
+			"estado": "a-confirmar",
+			"inicio": null,
+			"invierno": {
+				"desde": null,
+				"hasta": null
+			},
+			"fin": null,
+			"fuente": null,
+			"notas": null,
+			"feriadosProvinciales": [],
+			"sinClases": []
+		},
+		"tucuman": {
+			"estado": "a-confirmar",
+			"inicio": null,
+			"invierno": {
+				"desde": null,
+				"hasta": null
+			},
+			"fin": null,
+			"fuente": null,
+			"notas": null,
+			"feriadosProvinciales": [],
+			"sinClases": []
+		}
+	}
+}

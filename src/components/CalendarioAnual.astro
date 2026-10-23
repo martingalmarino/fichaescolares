@@ -1,0 +1,119 @@
+---
+import { fechaCompleta, nombreMes, partesIso } from '../lib/calendario';
+
+interface Marca {
+	iso: string;
+	nombre: string;
+}
+
+interface Props {
+	anio: number;
+	nacionales: Marca[];
+	provinciales: Marca[];
+	recesos: Marca[];
+	inicio: string | null;
+	fin: string | null;
+}
+
+const { anio, nacionales, provinciales, recesos, inicio, fin } = Astro.props;
+
+const porDia = new Map<string, { nombres: string[]; fondo: 'nacional' | 'provincial' | 'receso' | null; extremo: boolean }>();
+
+function sumar(iso: string, nombre: string, fondo: 'nacional' | 'provincial' | 'receso') {
+	const actual = porDia.get(iso) ?? { nombres: [], fondo: null, extremo: false };
+	actual.nombres.push(nombre);
+	if (actual.fondo !== 'nacional' && (fondo === 'nacional' || actual.fondo == null || (fondo === 'provincial' && actual.fondo === 'receso'))) {
+		actual.fondo = fondo;
+	}
+	porDia.set(iso, actual);
+}
+
+for (const dia of recesos) sumar(dia.iso, dia.nombre, 'receso');
+for (const dia of provinciales) sumar(dia.iso, dia.nombre, 'provincial');
+for (const dia of nacionales) sumar(dia.iso, dia.nombre, 'nacional');
+for (const iso of [inicio, fin]) {
+	if (!iso) continue;
+	const actual = porDia.get(iso) ?? { nombres: [], fondo: null, extremo: false };
+	actual.extremo = true;
+	actual.nombres.push(iso === inicio ? 'Inicio de clases' : 'Fin del ciclo lectivo');
+	porDia.set(iso, actual);
+}
+
+const meses = Array.from({ length: 12 }, (_, indice) => {
+	const mes = indice + 1;
+	const primero = new Date(Date.UTC(anio, mes - 1, 1));
+	const offset = (primero.getUTCDay() + 6) % 7;
+	const cantidad = new Date(Date.UTC(anio, mes, 0)).getUTCDate();
+	const celdas: ({ dia: number; iso: string } | null)[] = Array.from({ length: offset }, () => null);
+	for (let dia = 1; dia <= cantidad; dia += 1) {
+		const iso = `${anio}-${String(mes).padStart(2, '0')}-${String(dia).padStart(2, '0')}`;
+		celdas.push({ dia, iso });
+	}
+	while (celdas.length % 7 !== 0) celdas.push(null);
+	return { mes, nombre: nombreMes(mes), celdas };
+});
+
+const letras = ['L', 'M', 'M', 'J', 'V', 'S', 'D'];
+
+function etiqueta(iso: string): string {
+	const { anio: anioDia, mes, dia } = partesIso(iso);
+	const marca = porDia.get(iso);
+	const base = fechaCompleta(anioDia, mes, dia);
+	if (!marca || marca.nombres.length === 0) return base;
+	return `${base}. ${marca.nombres.join('. ')}`;
+}
+
+function clases(iso: string): string {
+	const { dia, mes } = partesIso(iso);
+	const semana = new Date(Date.UTC(anio, mes - 1, dia)).getUTCDay();
+	const finde = semana === 0 || semana === 6;
+	const marca = porDia.get(iso);
+	const fondo =
+		marca?.fondo === 'nacional'
+			? 'bg-sol font-semibold text-azul'
+			: marca?.fondo === 'provincial'
+				? 'bg-celeste font-semibold text-white'
+				: marca?.fondo === 'receso'
+					? 'bg-celeste-100 font-semibold text-azul'
+					: finde
+						? 'text-muted'
+						: 'text-azul';
+	const extremo = marca?.extremo ? 'ring-2 ring-inset ring-azul' : '';
+	return `flex aspect-square items-center justify-center rounded-sm text-[10px] leading-none sm:text-[11px] ${fondo} ${extremo}`;
+}
+---
+
+<div>
+	<ul class="mb-4 flex flex-wrap gap-x-4 gap-y-2 text-xs text-muted">
+		<li class="inline-flex items-center gap-1.5"><span class="size-3 rounded-sm bg-sol" aria-hidden="true"></span> Feriado nacional</li>
+		<li class="inline-flex items-center gap-1.5"><span class="size-3 rounded-sm bg-celeste" aria-hidden="true"></span> Feriado provincial</li>
+		<li class="inline-flex items-center gap-1.5"><span class="size-3 rounded-sm bg-celeste-100" aria-hidden="true"></span> Receso o sin clases</li>
+		<li class="inline-flex items-center gap-1.5"><span class="size-3 rounded-sm ring-2 ring-inset ring-azul" aria-hidden="true"></span> Inicio o fin de clases</li>
+	</ul>
+	<div class="calendario-meses grid gap-3 sm:grid-cols-2 lg:grid-cols-4">
+		{
+			meses.map((mes) => (
+				<section class="rounded-card border border-borde bg-white p-2">
+					<h3 class="px-1 text-sm font-semibold text-azul">{mes.nombre}</h3>
+					<div class="mt-1 grid grid-cols-7 text-center" role="grid" aria-label={mes.nombre}>
+						{letras.map((letra) => (
+							<span class="py-1 text-[10px] font-medium text-muted" aria-hidden="true">
+								{letra}
+							</span>
+						))}
+						{mes.celdas.map((celda) =>
+							celda ? (
+								<span class={clases(celda.iso)} title={etiqueta(celda.iso)} aria-label={etiqueta(celda.iso)} role="gridcell">
+									{celda.dia}
+								</span>
+							) : (
+								<span aria-hidden="true"></span>
+							),
+						)}
+					</div>
+				</section>
+			))
+		}
+	</div>
+	<p class="print-solo mt-2 text-center text-xs text-muted">aulita.com.ar</p>
+</div>

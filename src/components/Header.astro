@@ -1,4 +1,5 @@
 ---
+import { calendarioVigente } from '../data/calendario-escolar';
 import Logo from './Logo.astro';
 
 const antes = [
@@ -7,6 +8,7 @@ const antes = [
 ];
 const despues = [
 	{ label: 'Efemérides', href: '/efemerides/' },
+	{ label: `Calendario ${calendarioVigente.anio}`, href: `/calendario-escolar-${calendarioVigente.anio}/` },
 	{ label: 'Provincias', href: '/provincias/' },
 	{ label: 'Guía para el aula', href: '/guia-para-el-aula/' },
 ];
