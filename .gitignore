@@ -15,6 +15,7 @@ pnpm-debug.log*
 
 # environment variables
 .env
+.env.local
 .env.production
 
 # macOS-specific files
@@ -22,3 +23,8 @@ pnpm-debug.log*
 
 # jetbrains setting folder
 .idea/
+
+# Mapas del IGN. Se publican en Vercel Blob, no en el repo.
+public/mapas/
+.vercel
+.env*

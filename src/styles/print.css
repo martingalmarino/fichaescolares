@@ -8,6 +8,11 @@
 	margin: 10mm;
 }
 
+@page mapa {
+	size: A4;
+	margin: 10mm;
+}
+
 .hoja-lamina {
 	page: lamina;
 }
@@ -53,6 +58,22 @@
 		max-height: 277mm;
 		overflow: hidden;
 		padding: 0 !important;
+	}
+
+	.hoja-mapa {
+		page: mapa;
+		border: 0 !important;
+		box-shadow: none !important;
+		padding: 0 !important;
+		margin: 0 !important;
+		overflow: visible !important;
+	}
+
+	.hoja-mapa img {
+		max-height: none !important;
+		width: 100%;
+		height: 270mm;
+		object-fit: contain;
 	}
 
 	.hoja-lamina input,

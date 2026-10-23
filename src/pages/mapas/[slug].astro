@@ -1,0 +1,114 @@
+---
+import Anuncio from '../../components/Anuncio.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import TarjetaMapa from '../../components/TarjetaMapa.astro';
+import { archivoMapa, mapas, mapasRelacionados, nombreCategoria, nombreTipo, type MapaIgn } from '../../data/mapas';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export function getStaticPaths() {
+	return mapas.map((mapa) => ({
+		params: { slug: mapa.slug },
+		props: { mapa },
+	}));
+}
+
+interface Props {
+	mapa: MapaIgn;
+}
+
+const { mapa } = Astro.props;
+const otros = mapasRelacionados(mapa);
+const pdf = mapa.pdf ? archivoMapa(mapa.slug, 'pdf') : null;
+const jpg = archivoMapa(mapa.slug, 'jpg');
+const grupo = mapa.provinciaNombre ?? nombreCategoria(mapa.categoria);
+---
+
+<BaseLayout title={`${mapa.titulo} | Aulita`} description={`${mapa.titulo}. ${nombreTipo(mapa.tipo)}, ${mapa.tamano}, ${mapa.gradoSugerido}. Fuente: Instituto Geográfico Nacional.`}>
+	<article class="mx-auto max-w-6xl px-4 py-8">
+		<Breadcrumbs
+			items={[
+				{ label: 'Inicio', href: '/' },
+				{ label: 'Imprimibles', href: '/mapas/' },
+				{ label: 'Mapas', href: '/mapas/' },
+				{ label: mapa.titulo },
+			]}
+		/>
+		<h1 class="no-print mt-4 text-3xl font-bold tracking-tight text-azul sm:text-4xl">{mapa.titulo}</h1>
+		<div class="no-print mt-4 flex flex-wrap gap-2">
+			{
+				pdf && (
+					<a class="rounded-control bg-sol px-4 py-2.5 text-sm font-semibold text-azul" href={pdf} download={`${mapa.slug}.pdf`}>
+						Descargar PDF
+					</a>
+				)
+			}
+			<button id="imprimir-mapa" type="button" class="rounded-control border border-borde px-4 py-2.5 text-sm font-semibold text-azul">Imprimir A4</button>
+		</div>
+		{
+			mapa.tamano === 'A3' && (
+				<p class="no-print mt-4 max-w-3xl rounded-card border border-borde bg-white px-4 py-3 text-sm leading-relaxed text-azul">
+					Este mapa es tamaño A3. Al imprimirlo en A4 la impresora lo reduce y conserva las proporciones; activá 'Ajustar a la página'.
+				</p>
+			)
+		}
+		<div class="hoja-mapa mt-6 overflow-hidden rounded-card border border-borde bg-white p-3 shadow-card sm:p-6">
+			<img src={jpg} alt={mapa.titulo} width={mapa.ancho} height={mapa.alto} class="mx-auto h-auto max-h-[80vh] w-full object-contain" />
+		</div>
+		<Anuncio />
+		<dl class="no-print mt-8 grid gap-4 text-sm sm:grid-cols-2 lg:grid-cols-3">
+			<div>
+				<dt class="font-semibold text-azul">Grado sugerido</dt>
+				<dd class="mt-1 text-muted">{mapa.gradoSugerido}</dd>
+			</div>
+			<div>
+				<dt class="font-semibold text-azul">Tipo</dt>
+				<dd class="mt-1 text-muted">{nombreTipo(mapa.tipo)}</dd>
+			</div>
+			<div>
+				<dt class="font-semibold text-azul">Tamaño</dt>
+				<dd class="mt-1 text-muted">{mapa.tamano}</dd>
+			</div>
+			{
+				mapa.anio && (
+					<div>
+						<dt class="font-semibold text-azul">Año de edición</dt>
+						<dd class="mt-1 text-muted">{mapa.anio}</dd>
+					</div>
+				)
+			}
+			<div>
+				<dt class="font-semibold text-azul">Fuente</dt>
+				<dd class="mt-1">
+					<a class="text-celeste underline" href={mapa.fuenteUrl}>{mapa.fuente}</a>
+				</dd>
+			</div>
+		</dl>
+		{
+			otros.length > 0 && (
+				<section class="no-print mt-12">
+					<h2 class="text-2xl font-bold tracking-tight text-azul">Otros mapas de {grupo}</h2>
+					<ul class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+						{otros.map((otro) => (
+							<li>
+								<TarjetaMapa mapa={otro} />
+							</li>
+						))}
+					</ul>
+				</section>
+			)
+		}
+	</article>
+</BaseLayout>
+
+<script define:vars={{ titulo: mapa.titulo }}>
+	document.getElementById('imprimir-mapa')?.addEventListener('click', () => {
+		const anterior = document.title;
+		document.title = titulo;
+		const restaurar = () => {
+			document.title = anterior;
+			window.removeEventListener('afterprint', restaurar);
+		};
+		window.addEventListener('afterprint', restaurar);
+		window.print();
+	});
+</script>

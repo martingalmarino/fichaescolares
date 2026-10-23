@@ -16,6 +16,7 @@ const errores = validarDatos(leer('efemerides.json'), leer('proceres.json'), { a
 	provincias: publicarProvincias(leer('provincias.fuente.json'), siluetas),
 	afiliados: leer('afiliados.json'),
 	creditos: leer('creditos.json'),
+	mapas: leer('mapas-ign.json'),
 });
 
 if (errores.length > 0) {

@@ -1,0 +1,71 @@
+---
+import Breadcrumbs from '../../../components/Breadcrumbs.astro';
+import TarjetaMapa from '../../../components/TarjetaMapa.astro';
+import { mapasDeProvincia, type MapaIgn } from '../../../data/mapas';
+import { provincias } from '../../../data/provincias';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+
+const secciones = provincias.map((provincia) => {
+	const porNombre = new Map<string, MapaIgn[]>();
+	for (const mapa of mapasDeProvincia(provincia.slug)) {
+		const nombre = mapa.provinciaNombre ?? provincia.nombre;
+		const grupo = porNombre.get(nombre) ?? [];
+		grupo.push(mapa);
+		porNombre.set(nombre, grupo);
+	}
+	const nombres = [...porNombre.keys()].sort((a, b) => {
+		if (a === provincia.nombre) return -1;
+		if (b === provincia.nombre) return 1;
+		return a.localeCompare(b, 'es');
+	});
+	return {
+		provincia,
+		grupos: nombres.map((nombre) => ({ nombre, mapas: porNombre.get(nombre) ?? [] })),
+	};
+});
+---
+
+<BaseLayout
+	title="Mapas de las provincias para imprimir | Aulita"
+	description="Mapas políticos, físicos, mudos y satelitales de las 24 provincias, con Gran Buenos Aires e Islas Malvinas en su provincia."
+>
+	<article class="mx-auto max-w-6xl px-4 py-8">
+		<Breadcrumbs
+			items={[
+				{ label: 'Inicio', href: '/' },
+				{ label: 'Imprimibles', href: '/mapas/' },
+				{ label: 'Mapas', href: '/mapas/' },
+				{ label: 'Provincias' },
+			]}
+		/>
+		<h1 class="mt-4 text-3xl font-bold tracking-tight text-azul sm:text-4xl">Mapas de las provincias para imprimir</h1>
+		<p class="mt-3 max-w-3xl leading-relaxed text-muted">
+			Cada provincia tiene su mapa político, físico, mudo y satelital del Instituto Geográfico Nacional. Gran Buenos Aires está con Buenos Aires. Islas Malvinas e Isla Grande están con Tierra del Fuego.
+		</p>
+		<div class="mt-10 space-y-12">
+			{
+				secciones.map(({ provincia, grupos }) => (
+					<section id={provincia.slug} aria-labelledby={`provincia-${provincia.slug}`}>
+						<h2 id={`provincia-${provincia.slug}`} class="text-2xl font-bold tracking-tight text-azul">
+							<a class="hover:underline" href={`/provincias/${provincia.slug}/`}>
+								{provincia.nombre}
+							</a>
+						</h2>
+						{grupos.map((grupo) => (
+							<div class="mt-4">
+								{grupos.length > 1 && <h3 class="text-lg font-semibold text-azul">{grupo.nombre}</h3>}
+								<ul class="mt-3 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+									{grupo.mapas.map((mapa) => (
+										<li>
+											<TarjetaMapa mapa={mapa} />
+										</li>
+									))}
+								</ul>
+							</div>
+						))}
+					</section>
+				))
+			}
+		</div>
+	</article>
+</BaseLayout>

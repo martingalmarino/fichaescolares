@@ -1,5 +1,7 @@
 ---
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import TarjetaMapa from '../../components/TarjetaMapa.astro';
+import { mapasDeProvincia } from '../../data/mapas';
 import { provincias, type Provincia } from '../../data/provincias';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 import { semillaDeFicha, sopaDeFicha } from '../../lib/sopa-ficha';
@@ -22,6 +24,7 @@ interface Pieza {
 }
 
 const { provincia } = Astro.props;
+const mapasProvincia = mapasDeProvincia(provincia.slug);
 const sopa = provincia.palabras ? sopaDeFicha(provincia.palabras, semillaDeFicha(provincia.slug)) : null;
 const piezas: Pieza[] = [];
 if (provincia.bandera) piezas.push({ etiqueta: '', nombre: 'Bandera', src: provincia.bandera.src });
@@ -146,6 +149,21 @@ const descripcion = provincia.capital
 				Imprimila en A4. La silueta se colorea{provincia.capital ? ' y la capital se marca sobre ese contorno' : ''}. Los renglones de abajo se completan con los datos de la ficha.
 			</p>
 		</section>
+		{
+			mapasProvincia.length > 0 && (
+				<section class="no-print mt-10">
+					<h2 class="text-2xl font-bold tracking-tight text-azul">Mapas de {provincia.nombre} para imprimir</h2>
+					<p class="mt-2 text-sm leading-relaxed text-muted">Láminas del Instituto Geográfico Nacional, en PDF, para imprimir en A4.</p>
+					<ul class="mt-4 grid gap-4 sm:grid-cols-2">
+						{mapasProvincia.map((mapa) => (
+							<li>
+								<TarjetaMapa mapa={mapa} />
+							</li>
+						))}
+					</ul>
+				</section>
+			)
+		}
 	</article>
 </BaseLayout>
 

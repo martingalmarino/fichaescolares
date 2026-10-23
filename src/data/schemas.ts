@@ -169,6 +169,73 @@ export const creditoSchema = z.object({
 	archivo: z.string().min(2),
 });
 
+const categoriaMapa = z.enum(['argentina', 'provincia', 'america', 'mundo', 'tematico']);
+const tipoMapa = z.enum(['politico', 'fisico', 'mudo', 'satelital', 'tematico', 'fisico-politico', 'carta-topografica']);
+
+export const mapaIgnSchema = z
+	.object({
+		slug,
+		titulo: z.string().min(3),
+		categoria: categoriaMapa,
+		tipo: tipoMapa,
+		provincia: z
+			.string()
+			.regex(/^[a-z]+(?:_[a-z]+)*$/)
+			.nullable(),
+		provinciaNombre: z.string().min(3).nullable(),
+		gradoSugerido: z.string().min(3),
+		tamano: z.enum(['A4', 'A3']),
+		anio: z.number().int().min(1900).max(2100).nullable(),
+		archivoOriginal: z.string().min(3),
+		pdf: z.string().url().nullable(),
+		jpg: z.string().url(),
+		jpgMiniatura: z.string().url(),
+		descargaOriginal: z.string().url(),
+		licencia: z.literal('CC BY-SA 4.0'),
+		licenciaUrl: z.string().url(),
+		fuente: z.string().min(3),
+		fuenteUrl: z.string().url(),
+		creditText: z.string().min(10),
+		tamanoVerificado: z.boolean(),
+		ancho: z.number().int().positive(),
+		alto: z.number().int().positive(),
+		thumbAncho: z.number().int().positive(),
+		thumbAlto: z.number().int().positive(),
+	})
+	.superRefine((mapa, contexto) => {
+		if ((mapa.provincia == null) !== (mapa.provinciaNombre == null)) {
+			contexto.addIssue({
+				code: 'custom',
+				path: ['provincia'],
+				message: 'provincia y provinciaNombre van juntos, o los dos en null',
+			});
+		}
+		if (mapa.categoria === 'provincia' && mapa.provincia == null) {
+			contexto.addIssue({
+				code: 'custom',
+				path: ['provincia'],
+				message: 'un mapa de provincia necesita el id de la provincia',
+			});
+		}
+	});
+
+export const mapasIgnSchema = z
+	.object({
+		generado: fecha,
+		fuente: z.string().url(),
+		total: z.number().int().positive(),
+		mapas: z.array(mapaIgnSchema).min(1),
+	})
+	.superRefine((catalogo, contexto) => {
+		if (catalogo.total !== catalogo.mapas.length) {
+			contexto.addIssue({
+				code: 'custom',
+				path: ['total'],
+				message: `total dice ${catalogo.total} y hay ${catalogo.mapas.length} mapas`,
+			});
+		}
+	});
+
 export const frasesSchema = z.array(fraseSchema).min(1);
 export const provinciasSchema = z.array(provinciaSchema);
 export const afiliadosSchema = z.array(afiliadoSchema);
@@ -207,6 +274,7 @@ export interface DatosExtra {
 	provincias: unknown;
 	afiliados: unknown;
 	creditos: unknown;
+	mapas?: unknown;
 }
 
 export function validarDatos(
@@ -254,6 +322,11 @@ export function validarDatos(
 					}
 				}
 			}
+		}
+		if (extras.mapas !== undefined) {
+			const mapasParseados = mapasIgnSchema.safeParse(extras.mapas);
+			if (!mapasParseados.success) errores.push(...mensajes('mapas-ign.json', mapasParseados.error));
+			else errores.push(...slugsRepetidos(mapasParseados.data.mapas.map((mapa) => mapa.slug), 'mapas-ign.json'));
 		}
 	}
 

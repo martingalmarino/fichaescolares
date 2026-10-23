@@ -1,0 +1,33 @@
+---
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import FiltroMapas from '../../islands/FiltroMapas';
+import { archivoMapa, categoriasMapa, mapas, tiposMapa } from '../../data/mapas';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const descripcion = 'Mapas escolares oficiales del Instituto Geográfico Nacional para imprimir en A4. Argentina, provincias, América, el mundo y mapas temáticos.';
+const tarjetas = mapas.map((mapa) => ({
+	slug: mapa.slug,
+	titulo: mapa.titulo,
+	categoria: mapa.categoria,
+	tipo: mapa.tipo,
+	tipoNombre: tiposMapa.find((item) => item.id === mapa.tipo)?.nombre ?? mapa.tipo,
+	tamano: mapa.tamano,
+	grado: mapa.gradoSugerido,
+	src: archivoMapa(mapa.slug, 'thumb'),
+	ancho: mapa.thumbAncho,
+	alto: mapa.thumbAlto,
+}));
+---
+
+<BaseLayout title="Mapas escolares para imprimir | Aulita" description={descripcion} image="/og/home.svg">
+	<article class="mx-auto max-w-6xl px-4 py-8">
+		<Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: 'Imprimibles', href: '/mapas/' }, { label: 'Mapas' }]} />
+		<h1 class="mt-4 text-3xl font-bold tracking-tight text-azul sm:text-4xl">Mapas escolares para imprimir</h1>
+		<p class="mt-3 max-w-3xl text-base leading-relaxed text-muted">
+			Láminas oficiales del Instituto Geográfico Nacional: políticos, físicos, mudos y satelitales. Se descargan en PDF y se imprimen en A4. También están agrupados <a class="text-celeste underline" href="/mapas/provincias/">por provincia</a>.
+		</p>
+		<div class="mt-8">
+			<FiltroMapas client:load tarjetas={tarjetas} categorias={categoriasMapa.map((item) => ({ id: item.id, nombre: item.nombre }))} tipos={tiposMapa.map((item) => ({ id: item.id, nombre: item.nombre }))} />
+		</div>
+	</article>
+</BaseLayout>
