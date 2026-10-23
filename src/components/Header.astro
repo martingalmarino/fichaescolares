@@ -10,11 +10,11 @@ const despues = [
 	{ label: 'Provincias', href: '/provincias/' },
 	{ label: 'Guía para el aula', href: '/guia-para-el-aula/' },
 ];
-const movil = [
-	...antes,
+const imprimibles = [
 	{ label: 'Láminas para colorear', href: '/laminas/' },
-	...despues,
+	{ label: 'Mapas escolares', href: '/mapas/' },
 ];
+const movil = [...antes, ...imprimibles, ...despues];
 ---
 
 <header class="sticky top-0 z-40 border-b border-borde bg-white">
@@ -53,9 +53,13 @@ const movil = [
 						Imprimibles
 					</summary>
 					<div class="absolute left-0 top-full z-20 min-w-56 rounded-card border border-borde bg-white p-2 shadow-card">
-						<a class="flex min-h-11 items-center rounded-md px-3 text-sm text-azul hover:bg-celeste-50" href="/laminas/">
-							Láminas para colorear
-						</a>
+						{
+							imprimibles.map((link) => (
+								<a class="flex min-h-11 items-center rounded-md px-3 text-sm text-azul hover:bg-celeste-50" href={link.href}>
+									{link.label}
+								</a>
+							))
+						}
 					</div>
 				</details>
 				{

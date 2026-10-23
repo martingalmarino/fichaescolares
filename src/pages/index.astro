@@ -50,6 +50,12 @@ const generadores = [
 		href: '/laminas/',
 	},
 	{
+		nombre: 'Mapas escolares para imprimir',
+		texto: 'Mapas oficiales del IGN: Argentina, provincias, América y el mundo.',
+		icon: 'mapas' as const,
+		href: '/mapas/',
+	},
+	{
 		nombre: 'Tablas y operaciones',
 		texto: 'Cuentas aleatorias por nivel, con hoja de respuestas.',
 		icon: 'tablas' as const,
@@ -180,6 +186,26 @@ const checks = ['Formato A4', 'Con hoja de soluciones', 'Contenido argentino'];
 					</p>
 				</div>
 			</div>
+		</div>
+	</section>
+
+	<section class="border-b border-borde bg-white">
+		<div class="mx-auto max-w-6xl px-4 py-6">
+			<a
+				href="/mapas/"
+				class="flex flex-col gap-4 rounded-card border border-celeste bg-celeste-50 p-5 shadow-card transition hover:border-azul sm:flex-row sm:items-center sm:justify-between"
+			>
+				<div class="flex items-start gap-4">
+					<ToolIcon name="mapas" />
+					<div>
+						<h2 class="text-xl font-bold tracking-tight text-azul">Mapas escolares para imprimir</h2>
+						<p class="mt-1 max-w-xl text-sm leading-relaxed text-muted">
+							Mapas oficiales del Instituto Geográfico Nacional: Argentina, las 24 provincias, América y el mundo. Políticos, físicos, mudos y satelitales, listos para imprimir en A4.
+						</p>
+					</div>
+				</div>
+				<span class="inline-flex shrink-0 items-center justify-center rounded-control bg-sol px-4 py-2.5 text-sm font-semibold text-azul">Ver mapas</span>
+			</a>
 		</div>
 	</section>
 
