@@ -1,0 +1,33 @@
+@import 'tailwindcss';
+@config '../../tailwind.config.mjs';
+
+:root {
+	--celeste: #4aa3df;
+	--celeste-50: #eef7fd;
+	--celeste-100: #d6ecfa;
+	--azul: #1d3557;
+	--sol: #f4a531;
+	--sol-50: #fff4e2;
+	--texto: #1f2937;
+	--muted: #6b7280;
+	--borde: #e5e7eb;
+	--bg: #fbfdff;
+}
+
+html {
+	scroll-behavior: smooth;
+}
+
+body {
+	background: var(--bg);
+	color: var(--texto);
+	font-family: Inter, system-ui, sans-serif;
+}
+
+summary {
+	list-style: none;
+}
+
+summary::-webkit-details-marker {
+	display: none;
+}

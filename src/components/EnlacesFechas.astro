@@ -1,0 +1,32 @@
+---
+import { efemerides, etiquetaFecha } from '../data/efemerides';
+
+interface Props {
+	herramienta?: string;
+}
+
+const { herramienta = 'sopa-de-letras' } = Astro.props;
+---
+
+<nav class="no-print mx-auto mt-10 max-w-3xl" aria-label="Efemérides">
+	<h2 class="text-xl font-bold text-azul">Armar otra fecha</h2>
+	<ul class="mt-3 flex flex-wrap gap-2 text-sm">
+		{
+			efemerides.map((item) => (
+				<li>
+					<a class="inline-flex rounded-control border border-borde bg-white px-2 py-1 text-celeste hover:border-celeste" href={`/${herramienta}/?e=${item.slug}`}>
+						{etiquetaFecha(item.dia, item.mes, item.nombre)}
+					</a>
+				</li>
+			))
+		}
+	</ul>
+	<p class="mt-4 text-sm text-muted">
+		También podés pasar a
+		<a class="text-celeste hover:underline" href="/crucigrama-proceres/">crucigrama</a>,
+		<a class="text-celeste hover:underline" href="/caligrafia/">caligrafía</a>,
+		<a class="text-celeste hover:underline" href="/laminas-para-colorear/">láminas</a>,
+		<a class="text-celeste hover:underline" href="/tablas-y-operaciones/">cuentas</a>
+		o al <a class="text-celeste hover:underline" href="/provincias/">índice de provincias</a>.
+	</p>
+</nav>

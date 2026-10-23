@@ -1,0 +1,34 @@
+---
+import afiliados from '../data/afiliados.json';
+
+const publicados = afiliados.filter((item) => item.url.startsWith('http'));
+---
+
+{
+	publicados.length > 0 && (
+		<aside class="no-print mx-auto mt-10 max-w-3xl">
+			<h2 class="text-xl font-bold text-azul">Útiles para imprimir</h2>
+			<p class="mt-2 text-sm text-muted">Enlaces de afiliado. Si comprás desde acá, la tienda puede dejarnos una comisión, sin costo extra para vos.</p>
+			<ul class="mt-4 grid gap-3 sm:grid-cols-2">
+				{publicados.map((item) => (
+					<li class="rounded-card border border-borde bg-white p-4">
+						<a href={item.url} rel="sponsored nofollow" class="font-semibold text-azul hover:underline" data-afiliado={item.id}>
+							{item.nombre}
+						</a>
+						<p class="mt-1 text-sm text-muted">{item.detalle}</p>
+					</li>
+				))}
+			</ul>
+		</aside>
+	)
+}
+
+<script>
+	document.querySelectorAll<HTMLAnchorElement>('a[data-afiliado]').forEach((enlace) => {
+		enlace.addEventListener('click', () => {
+			const item = enlace.dataset.afiliado;
+			if (!item || localStorage.getItem('fp-consent') !== 'granted' || typeof window.gtag !== 'function') return;
+			window.gtag('event', 'affiliate_click', { item });
+		});
+	});
+</script>

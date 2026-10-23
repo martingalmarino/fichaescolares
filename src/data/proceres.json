@@ -1,0 +1,185 @@
+[
+	{
+		"slug": "jose-de-san-martin",
+		"nombre": "José de San Martín",
+		"nacimiento": "1778-02-25",
+		"fallecimiento": "1850-08-17",
+		"pistas": [
+			"Nació en Yapeyú el 25 de febrero de 1778.",
+			"Murió en Francia el 17 de agosto de 1850.",
+			"Cruzó los Andes en 1817 al frente de su ejército.",
+			"Estuvo al frente de los Granaderos a Caballo.",
+			"Sus campañas siguieron por Chile y el Perú."
+		],
+		"palabras": ["YAPEYU", "FRANCIA", "ANDES", "GRANADEROS", "PERU"],
+		"fuentes": [
+			"https://www.argentina.gob.ar/noticias/245-anos-del-nacimiento-de-jose-de-san-martin",
+			"https://www.argentina.gob.ar/noticias/17-de-agosto-de-1850-paso-la-inmortalidad-del-general-jose-de-san-martin"
+		],
+		"verificado": true
+	},
+	{
+		"slug": "manuel-belgrano",
+		"nombre": "Manuel Belgrano",
+		"nacimiento": "1770-06-03",
+		"fallecimiento": "1820-06-20",
+		"pistas": [
+			"Nació en Buenos Aires el 3 de junio de 1770.",
+			"Murió el 20 de junio de 1820, a los 50 años.",
+			"Murió en la casa donde había nacido.",
+			"La ley 12.361 fijó el día de su muerte como Día de la Bandera.",
+			"Fue vocal de la Primera Junta."
+		],
+		"palabras": ["BUENOS AIRES", "JUNIO", "CASA", "BANDERA", "JUNTA"],
+		"fuentes": [
+			"https://www.argentina.gob.ar/noticias/nacimiento-de-manuel-belgrano-3-de-junio-de-1770",
+			"https://www.argentina.gob.ar/noticias/20-de-junio-fallecimiento-del-general-manuel-belgrano-20-de-junio-de-1820-la-evocacion-del",
+			"https://www.argentina.gob.ar/normativa/nacional/ley-12361-232587/texto",
+			"https://www.argentina.gob.ar/noticias/25-de-mayo-de-1810-dia-de-la-revolucion-de-mayo-y-primer-gobierno-patrio"
+		],
+		"verificado": true
+	},
+	{
+		"slug": "domingo-faustino-sarmiento",
+		"nombre": "Domingo Faustino Sarmiento",
+		"nacimiento": "1811-02-15",
+		"fallecimiento": "1888-09-11",
+		"pistas": [
+			"Nació en San Juan el 15 de febrero de 1811.",
+			"Murió en Asunción el 11 de septiembre de 1888.",
+			"Fue presidente entre 1868 y 1874.",
+			"El 11 de septiembre se recuerda a maestras y maestros."
+		],
+		"palabras": ["SAN JUAN", "ASUNCION", "PRESIDENTE", "MAESTRO"],
+		"fuentes": [
+			"https://www.argentina.gob.ar/noticias/domingo-faustino-sarmiento-la-escuela-como-pilar-de-la-nacion",
+			"https://www.educ.ar/recursos/154313/11-de-septiembre-dia-de-las-maestras-y-los-maestros"
+		],
+		"verificado": true
+	},
+	{
+		"slug": "martin-miguel-de-guemes",
+		"nombre": "Martín Miguel de Güemes",
+		"nacimiento": "1785-02-08",
+		"fallecimiento": "1821-06-17",
+		"pistas": [
+			"Nació en Salta el 8 de febrero de 1785.",
+			"Murió el 17 de junio de 1821.",
+			"Lo hirieron el 7 de junio de 1821.",
+			"Condujo a los gauchos del norte."
+		],
+		"palabras": ["SALTA", "JUNIO", "HERIDO", "GAUCHOS"],
+		"fuentes": [
+			"https://www.argentina.gob.ar/noticias/236deg-aniversario-del-natalicio-del-general-martin-miguel-de-guemes",
+			"https://www.argentina.gob.ar/noticias/el-genio-militar-la-valentia-y-la-audacia-del-general-martin-miguel-de-guemes"
+		],
+		"verificado": true
+	},
+	{
+		"slug": "mariano-moreno",
+		"nombre": "Mariano Moreno",
+		"nacimiento": null,
+		"fallecimiento": null,
+		"pistas": [
+			"Fue secretario de la Primera Junta.",
+			"Estudió abogacía en la Universidad de Chuquisaca.",
+			"Creó la Gazeta de Buenos Aires."
+		],
+		"palabras": ["SECRETARIO", "ABOGADO", "GACETA"],
+		"fuentes": [
+			"https://www.argentina.gob.ar/noticias/25-de-mayo-de-1810-dia-de-la-revolucion-de-mayo-y-primer-gobierno-patrio",
+			"https://www.argentina.gob.ar/noticias/abogados-en-la-revolucion-de-mayo-un-aporte-fundamental"
+		],
+		"verificado": true
+	},
+	{
+		"slug": "cornelio-saavedra",
+		"nombre": "Cornelio Saavedra",
+		"nacimiento": null,
+		"fallecimiento": null,
+		"pistas": [
+			"Presidió la Primera Junta.",
+			"Esa Junta quedó formada el 25 de mayo de 1810.",
+			"El Regimiento de Patricios acompañó la formación de la Junta."
+		],
+		"palabras": ["PRESIDENTE", "MAYO", "PATRICIOS"],
+		"fuentes": [
+			"https://www.argentina.gob.ar/noticias/25-de-mayo-de-1810-dia-de-la-revolucion-de-mayo-y-primer-gobierno-patrio"
+		],
+		"verificado": true
+	},
+	{
+		"slug": "juana-azurduy",
+		"nombre": "Juana Azurduy",
+		"nacimiento": "1780-07-12",
+		"fallecimiento": "1862-05-25",
+		"pistas": [
+			"Nació el 12 de julio de 1780 en Toroca, cerca de Potosí.",
+			"Murió en Jujuy el 25 de mayo de 1862.",
+			"Se casó con Padilla en 1805.",
+			"En 1816 fue teniente coronel.",
+			"Bolívar la nombró coronel el 1 de abril de 1825."
+		],
+		"palabras": ["TOROCA", "JUJUY", "PADILLA", "TENIENTE", "CORONEL"],
+		"fuentes": [
+			"https://www.argentina.gob.ar/secretariageneral/museo-casa-rosada/medallas-de-las-patricias-argentina/juana-azurduy-de-padilla",
+			"https://www.argentina.gob.ar/noticias/quien-fue-juana-azurduy"
+		],
+		"verificado": true
+	},
+	{
+		"slug": "guillermo-brown",
+		"nombre": "Guillermo Brown",
+		"nacimiento": "1777-06-22",
+		"fallecimiento": "1857-03-03",
+		"pistas": [
+			"Nació en Foxford el 22 de junio de 1777.",
+			"Foxford está en Irlanda.",
+			"Murió el 3 de marzo de 1857.",
+			"La Armada lo recuerda como su primer almirante."
+		],
+		"palabras": ["FOXFORD", "IRLANDA", "MARZO", "ALMIRANTE"],
+		"fuentes": [
+			"https://www.argentina.gob.ar/armada/historia-naval/heroes-navales/almirante-guillermo-brown"
+		],
+		"verificado": true
+	},
+	{
+		"slug": "jose-hernandez",
+		"nombre": "José Hernández",
+		"nacimiento": "1834-11-10",
+		"fallecimiento": "1886-10-21",
+		"pistas": [
+			"Nació en 1834 en los caseríos de Perdriel.",
+			"El 10 de noviembre conmemora su natalicio.",
+			"Murió el 21 de octubre de 1886.",
+			"Publicó El gaucho Martín Fierro en 1872 y La vuelta en 1879.",
+			"La ley 21.154 llama cuna a San Martín, en Buenos Aires."
+		],
+		"palabras": ["PERDRIEL", "NOVIEMBRE", "OCTUBRE", "FIERRO", "SAN MARTIN"],
+		"fuentes": [
+			"https://www.argentina.gob.ar/noticias/jose-hernandez-y-la-inmortalidad-de-la-gauchesca",
+			"https://www.argentina.gob.ar/normativa/nacional/ley-21154-231404/texto"
+		],
+		"verificado": true
+	},
+	{
+		"slug": "bernardino-rivadavia",
+		"nombre": "Bernardino Rivadavia",
+		"nacimiento": null,
+		"fallecimiento": null,
+		"pistas": [
+			"Asumió el 6 de julio de 1826.",
+			"El 24 de diciembre de 1821 organizó la Policía de Estado.",
+			"Una página oficial lo llama primer presidente argentino.",
+			"Se le atribuye la supresión de los cabildos."
+		],
+		"palabras": ["JULIO", "POLICIA", "PRESIDENTE", "CABILDO"],
+		"fuentes": [
+			"https://www.argentina.gob.ar/noticias/9-de-julio-dia-de-la-independencia-2",
+			"https://www.argentina.gob.ar/seguridad/pfa/historia",
+			"https://www.argentina.gob.ar/secretariageneral/museo-casa-rosada/caos-caudillismo-y-confederacion"
+		],
+		"verificado": true
+	}
+]

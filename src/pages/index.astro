@@ -1,0 +1,250 @@
+---
+import AdSlot from '../components/AdSlot.astro';
+import ToolIcon from '../components/ToolIcon.astro';
+import { efemerides } from '../data/efemerides';
+import ProximasEfemerides from '../islands/ProximasEfemerides';
+import { proximasEfemerides } from '../lib/calendario';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const letras = [
+	'CABILDO RNT',
+	'PXJUNTA QES',
+	'ARASOL WZCV',
+	'TRPVIRREYH',
+	'REVOLUCION',
+	'IGR DPELNAS',
+	'AMAYO UELQZ',
+].map((fila) => fila.replace(/\s/g, '').split(''));
+
+const banco = ['CABILDO', 'JUNTA', 'REVOLUCIÓN', 'MAYO', 'VIRREY'];
+const proximas = proximasEfemerides(efemerides, new Date(), 4);
+
+const generadores = [
+	{
+		nombre: 'Sopa de letras',
+		texto: 'Por efeméride, con 3 niveles de dificultad y soluciones.',
+		icon: 'sopa' as const,
+		href: '/sopa-de-letras/',
+	},
+	{
+		nombre: 'Crucigrama de próceres',
+		texto: 'Pistas automáticas sobre San Martín, Belgrano, Sarmiento y más.',
+		icon: 'crucigrama' as const,
+		href: '/crucigrama-proceres/',
+	},
+	{
+		nombre: 'Caligrafía',
+		texto: 'Cursiva e imprenta, con trazos y textos propios.',
+		icon: 'caligrafia' as const,
+		href: '/caligrafia/',
+	},
+	{
+		nombre: 'Ficha por provincia',
+		texto: 'Capital, mapa, símbolos y actividades de las 24 jurisdicciones.',
+		icon: 'provincia' as const,
+		href: '/provincias/',
+	},
+	{
+		nombre: 'Láminas para colorear',
+		texto: 'Escarapela, Cabildo, Casa de Tucumán, con título editable.',
+		icon: 'laminas' as const,
+		href: '/laminas-para-colorear/',
+	},
+	{
+		nombre: 'Tablas y operaciones',
+		texto: 'Cuentas aleatorias por nivel, con hoja de respuestas.',
+		icon: 'tablas' as const,
+		href: '/tablas-y-operaciones/',
+	},
+];
+
+const preguntas = [
+	{
+		q: '¿Es gratis?',
+		a: 'Sí. Todas las fichas son gratuitas y no hace falta registrarse.',
+		abierta: true,
+	},
+	{
+		q: '¿Cómo la guardo en PDF?',
+		a: 'En el generador, tocá Descargar PDF y elegí “Guardar como PDF” como destino de impresión. La hoja sale en A4.',
+	},
+	{
+		q: '¿Sigue los contenidos de la escuela argentina?',
+		a: 'Sí. Las fechas, el vocabulario y los próceres corresponden al calendario escolar argentino: Revolución de Mayo, Independencia, Día de la Bandera y el resto de las efemérides fijas.',
+	},
+	{
+		q: '¿En qué tamaño se imprimen?',
+		a: 'En A4. La vista previa muestra la hoja a escala y, al imprimir, quedan afuera el menú y los espacios de publicidad.',
+	},
+	{
+		q: '¿Puedo incluir la hoja de soluciones?',
+		a: 'Sí. En la sopa de letras y en el crucigrama podés sumar la hoja de soluciones. Sale en una página aparte, para que la uses vos en el aula.',
+	},
+	{
+		q: '¿Para quién es este sitio?',
+		a: 'Para docentes de nivel inicial y primario, maestras particulares y familias. Las fichas se llevan al aula; el sitio está pensado para adultos.',
+	},
+];
+
+const checks = ['Formato A4', 'Con hoja de soluciones', 'Contenido argentino'];
+---
+
+<BaseLayout
+	title="Fichas escolares argentinas para imprimir | Fichas Patrias"
+	description="Generá fichas en A4 sobre efemérides, próceres y provincias. Sopa de letras, crucigrama, caligrafía y láminas. Gratis y sin registro."
+	jsonLd={{
+		'@context': 'https://schema.org',
+		'@type': 'FAQPage',
+		mainEntity: preguntas.map((item) => ({
+			'@type': 'Question',
+			name: item.q,
+			acceptedAnswer: { '@type': 'Answer', text: item.a },
+		})),
+	}}
+>
+	<section class="bg-celeste-50">
+		<div
+			class="mx-auto grid max-w-6xl items-center gap-10 px-4 py-12 lg:grid-cols-[minmax(0,1.1fr)_minmax(0,0.9fr)] lg:py-16"
+		>
+			<div>
+				<p
+					class="inline-flex rounded-full bg-sol-50 px-3 py-1 text-xs font-medium text-sol"
+				>
+					Gratis · Sin registro · Listo para imprimir
+				</p>
+				<h1
+					class="mt-4 max-w-xl text-4xl font-bold leading-[1.15] tracking-tight text-azul sm:text-5xl"
+				>
+					Fichas escolares argentinas en un minuto
+				</h1>
+				<p class="mt-4 max-w-xl text-base leading-relaxed text-muted sm:text-lg">
+					Generá sopas de letras, crucigramas, caligrafía y láminas sobre efemérides, próceres
+					y provincias. Pensado para docentes y familias.
+				</p>
+				<div class="mt-6 flex flex-wrap items-center gap-3">
+					<a
+						href="/sopa-de-letras/"
+						class="inline-flex items-center rounded-control bg-sol px-4 py-2.5 text-sm font-semibold text-azul shadow-sm transition hover:brightness-95"
+					>
+						Crear una ficha
+					</a>
+					<a
+						href="#efemerides"
+						class="inline-flex items-center rounded-control border border-borde bg-white px-4 py-2.5 text-sm font-semibold text-texto shadow-sm transition hover:border-celeste-100"
+					>
+						Ver calendario escolar
+					</a>
+				</div>
+				<ul class="mt-5 flex flex-wrap gap-x-4 gap-y-2 text-sm text-muted">
+					{
+						checks.map((item) => (
+							<li class="inline-flex items-center gap-1.5">
+								<svg
+									xmlns="http://www.w3.org/2000/svg"
+									viewBox="0 0 16 16"
+									class="size-3.5 text-celeste"
+									aria-hidden="true"
+								>
+									<path
+										d="M3 8.2 6.2 11.5 13 4.5"
+										fill="none"
+										stroke="currentColor"
+										stroke-width="1.8"
+										stroke-linecap="round"
+										stroke-linejoin="round"
+									/>
+								</svg>
+								{item}
+							</li>
+						))
+					}
+				</ul>
+			</div>
+
+			<div class="mx-auto w-full max-w-md lg:justify-self-end">
+				<div
+					class="rotate-1 rounded-card border border-borde bg-white p-4 shadow-[0_16px_40px_rgba(29,53,87,0.1)]"
+				>
+					<p class="text-sm font-semibold text-azul">Sopa de letras · 25 de Mayo</p>
+					<div
+						class="mt-3 grid grid-cols-10 gap-px rounded-md bg-borde p-px text-center text-[10px] font-semibold leading-5 tracking-wide text-azul sm:text-[11px]"
+						aria-hidden="true"
+					>
+						{
+							letras.flat().map((letra) => (
+								<span class="bg-white">{letra}</span>
+							))
+						}
+					</div>
+					<p class="mt-3 text-[10px] font-medium uppercase tracking-wide text-muted sm:text-[11px]">
+						{banco.join(' · ')}
+					</p>
+				</div>
+			</div>
+		</div>
+	</section>
+
+	<div class="mx-auto max-w-6xl px-4 py-8">
+		<AdSlot variant="leaderboard" />
+	</div>
+
+	<section id="efemerides" class="scroll-mt-6">
+		<div class="mx-auto max-w-6xl px-4 py-6">
+			<h2 class="text-2xl font-bold tracking-tight text-azul">Próximas efemérides</h2>
+			<p class="mt-2 text-muted">Elegí una fecha y generá fichas con su vocabulario.</p>
+			<ProximasEfemerides client:load iniciales={proximas} todas={efemerides} />
+		</div>
+	</section>
+
+	<section id="generadores" class="scroll-mt-6">
+		<div class="mx-auto max-w-6xl px-4 py-8">
+			<h2 class="text-2xl font-bold tracking-tight text-azul">Generadores</h2>
+			<p class="mt-2 text-muted">Todos imprimen en A4 y se pueden guardar como PDF.</p>
+			<ul class="mt-6 grid gap-4 md:grid-cols-2 lg:grid-cols-3">
+				{
+					generadores.map((herramienta) => (
+						<li>
+							<a
+								href={herramienta.href}
+								class="block h-full rounded-card border border-borde bg-white p-5 shadow-card transition hover:border-celeste"
+							>
+								<ToolIcon name={herramienta.icon} />
+								<h3 class="mt-4 text-base font-semibold text-azul">{herramienta.nombre}</h3>
+								<p class="mt-1 text-sm leading-relaxed text-muted">{herramienta.texto}</p>
+							</a>
+						</li>
+					))
+				}
+			</ul>
+		</div>
+	</section>
+
+	<div class="mx-auto max-w-6xl px-4 py-4">
+		<AdSlot variant="adaptable" />
+	</div>
+
+	<section class="mx-auto max-w-6xl px-4 py-10" aria-labelledby="faq-titulo">
+		<h2 id="faq-titulo" class="text-2xl font-bold tracking-tight text-azul">Preguntas frecuentes</h2>
+		<p class="mt-2 text-muted">Lo que más nos consultan docentes y familias.</p>
+		<div class="mt-6 overflow-hidden rounded-card border border-borde bg-white">
+			{
+				preguntas.map((item) => (
+					<details class="group border-b border-borde last:border-b-0" open={item.abierta} data-q={item.q}>
+						<summary class="flex cursor-pointer items-center gap-3 px-4 py-4 text-sm font-semibold text-azul sm:text-base">
+							<svg
+								xmlns="http://www.w3.org/2000/svg"
+								viewBox="0 0 16 16"
+								class="size-3.5 shrink-0 text-muted transition-transform group-open:rotate-90"
+								aria-hidden="true"
+							>
+								<path d="M6 3.5 11 8 6 12.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
+							</svg>
+							{item.q}
+						</summary>
+						<p class="px-4 pb-4 pl-10 text-sm leading-relaxed text-muted">{item.a}</p>
+					</details>
+				))
+			}
+		</div>
+	</section>
+</BaseLayout>

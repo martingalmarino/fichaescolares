@@ -1,0 +1,32 @@
+---
+interface Props {
+	variant: 'leaderboard' | 'adaptable' | 'rectangle' | 'skyscraper';
+}
+
+const { variant } = Astro.props;
+
+const label = {
+	leaderboard: 'Publicidad · 728×90',
+	adaptable: 'Publicidad · Adaptable',
+	rectangle: 'Publicidad · 300×250',
+	skyscraper: 'Publicidad · 160×600',
+}[variant];
+
+const size = {
+	leaderboard: 'flex h-[90px] w-full max-w-[728px]',
+	adaptable: 'flex h-[180px] w-full',
+	rectangle: 'flex h-[250px] w-full max-w-[300px]',
+	skyscraper: 'hidden h-[600px] w-[160px] shrink-0 xl:flex',
+}[variant];
+---
+
+<div
+	class:list={[
+		'ad no-print items-center justify-center rounded-card border border-dashed border-borde bg-[#f3f5f7] text-center text-[11px] font-medium uppercase tracking-[0.14em] text-muted',
+		size,
+	]}
+	role="complementary"
+	aria-label="Espacio publicitario"
+>
+	{label}
+</div>

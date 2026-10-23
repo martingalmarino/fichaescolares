@@ -1,0 +1,26 @@
+[
+	{
+		"id": "resma",
+		"nombre": "Resma A4",
+		"detalle": "Para imprimir las fichas.",
+		"url": ""
+	},
+	{
+		"id": "cuaderno",
+		"nombre": "Cuaderno de caligrafía",
+		"detalle": "Para seguir la pauta a mano.",
+		"url": ""
+	},
+	{
+		"id": "lapices",
+		"nombre": "Lápices de colores",
+		"detalle": "Para las láminas.",
+		"url": ""
+	},
+	{
+		"id": "plastificadora",
+		"nombre": "Plastificadora",
+		"detalle": "Para reutilizar una ficha en el aula.",
+		"url": ""
+	}
+]

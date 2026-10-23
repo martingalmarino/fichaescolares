@@ -1,0 +1,27 @@
+[
+	{
+		"id": "himno-oid",
+		"texto": "Oíd, mortales, el grito sagrado: libertad, libertad, libertad.",
+		"origen": "Himno Nacional Argentino. Letra de Vicente López y Planes, en dominio público."
+	},
+	{
+		"id": "himno-laureles",
+		"texto": "Sean eternos los laureles que supimos conseguir.",
+		"origen": "Estribillo del Himno Nacional Argentino. Letra de Vicente López y Planes, en dominio público."
+	},
+	{
+		"id": "fierro-cantar",
+		"texto": "Aquí me pongo a cantar al compás de la vigüela.",
+		"origen": "El gaucho Martín Fierro, de José Hernández, publicado en 1872. Dominio público."
+	},
+	{
+		"id": "propia-bandera",
+		"texto": "La bandera se iza con respeto y se pliega con cuidado.",
+		"origen": "Frase propia de Fichas Patrias."
+	},
+	{
+		"id": "propia-aula",
+		"texto": "En el aula se escucha, se pregunta y se vuelve a intentar.",
+		"origen": "Frase propia de Fichas Patrias."
+	}
+]

@@ -1,0 +1,56 @@
+---
+import AfiliadosUtiles from '../components/AfiliadosUtiles.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import EnlacesFechas from '../components/EnlacesFechas.astro';
+import CrucigramaGenerator from '../islands/CrucigramaGenerator';
+import { fichaJsonLd } from '../lib/seo';
+import { toSeed } from '../lib/prng';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const requested = Astro.url.searchParams.get('e');
+const seedParam = Astro.url.searchParams.get('s');
+const initialSeed = seedParam && /^\d+$/.test(seedParam) ? toSeed(Number(seedParam)) : null;
+const descripcion = 'Armá un crucigrama de próceres argentinos, con pistas propias, en A4 y sin registro.';
+---
+
+<BaseLayout
+	title="Crucigrama de próceres para imprimir (gratis, A4)"
+	description={descripcion}
+	image="/og/crucigrama.svg"
+	jsonLd={fichaJsonLd('Crucigrama de próceres', descripcion, '/crucigrama-proceres/')}
+>
+	<article class="mx-auto max-w-7xl px-4 py-8">
+		<Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: 'Generadores', href: '/#generadores' }, { label: 'Crucigrama' }]} />
+		<h1 class="no-print mt-4 text-3xl font-bold tracking-tight text-azul sm:text-4xl">Crucigrama de próceres</h1>
+		<p class="no-print mt-3 max-w-3xl leading-relaxed text-muted">
+			Un crucigrama se arma cruzando palabras que comparten una letra. Elegís los próceres o una efeméride, la cantidad y si la hoja muestra pistas numeradas o un banco de palabras. La misma semilla reconstruye la misma grilla.
+		</p>
+		<div class="mt-6">
+			<CrucigramaGenerator client:load initialSeed={initialSeed} initialSlug={requested} />
+		</div>
+		<section class="no-print mx-auto mt-12 max-w-3xl text-base leading-relaxed">
+			<h2 class="text-2xl font-bold text-azul">Cómo usarlo en el aula</h2>
+			<p class="mt-4">
+				El crucigrama sirve después de haber contado quién es cada persona, no antes. Las pistas están redactadas para esta ficha y cada una corresponde a una sola palabra. Si una palabra no entra en la grilla, el panel lo avisa: podés bajar la cantidad, sacar un prócer o generar otra semilla. La hoja de soluciones sale en la página siguiente, para corregir sin resolver el crucigrama delante del grupo.
+			</p>
+			<p class="mt-4">
+				En primer ciclo conviene seis palabras, pistas cortas y el banco a la vista. El trabajo es ubicar letras, no adivinar un dato que todavía no se vio. Leé las pistas en voz alta y dejá el nombre del prócer escrito en el pizarrón. En segundo ciclo funcionan ocho o diez palabras y las pistas numeradas, separadas en horizontales y verticales. Una consigna útil es pedir que, al terminar, elijan una pista y la expliquen con sus palabras.
+			</p>
+			<p class="mt-4">
+				En tercer ciclo se puede llegar a doce palabras y mezclar dos o tres biografías de la misma fecha. La efeméride del selector trae los próceres asociados a esa fecha cuando los hay. Si la fecha no tiene próceres en el archivo, el panel deja la elección manual. Eso evita inventar un vínculo que los datos no registran.
+			</p>
+			<h2 class="mt-8 text-xl font-bold text-azul">Qué mirar antes de imprimir</h2>
+			<p class="mt-3">
+				Revisá que el título nombre el tema de la clase y que el campo de nombre quede si vas a recoger las hojas. Imprimí en blanco y negro: los casilleros se leen sin color. “Descargar PDF” abre el cuadro de impresión; el destino tiene que ser “Guardar como PDF”. El enlace con la semilla se puede mandar a otra persona para que obtenga la misma ficha.
+			</p>
+			<p class="mt-4">
+				Las palabras salen de las biografías verificadas del sitio. Si un dato no está en esas fichas, no aparece como pista. Moreno, Saavedra y Rivadavia, por ejemplo, no tienen fecha de nacimiento ni de muerte en el archivo, y las pistas no las agregan. Conviene decirlo en el aula si alguien pregunta por un año que la ficha no trae.
+			</p>
+			<p class="mt-4">
+				Para una secuencia de la semana patria, el crucigrama puede ir el segundo día, después de una sopa de letras con el mismo vocabulario. El tercer día se usa una lámina o una frase de caligrafía. Así la misma fecha se trabaja con tres soportes y no se repite la misma consigna.
+			</p>
+		</section>
+		<AfiliadosUtiles />
+		<EnlacesFechas herramienta="crucigrama-proceres" />
+	</article>
+</BaseLayout>

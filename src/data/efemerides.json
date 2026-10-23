@@ -1,0 +1,254 @@
+[
+	{
+		"slug": "24-de-marzo",
+		"dia": 24,
+		"mes": 3,
+		"nombre": "Día Nacional de la Memoria por la Verdad y la Justicia",
+		"titulo": "Día de la Memoria",
+		"tema": "la memoria, la verdad y la justicia",
+		"linea": "Recuerda a las víctimas del proceso iniciado en 1976.",
+		"resumen": "La ley 25.633 fijó el 24 de marzo para recordar a las víctimas del proceso que empezó ese día de 1976. El calendario de feriados lo nombra Día Nacional de la Memoria por la Verdad y la Justicia. En las fichas usamos esa fecha, la conmemorativa.",
+		"vocabulario": ["MEMORIA", "VERDAD", "JUSTICIA", "DERECHOS", "DEMOCRACIA", "PAZ", "NUNCA MÁS", "IDENTIDAD", "ABRAZO", "ESCUELA"],
+		"proceres": [],
+		"laminas": [],
+		"fuentes": [
+			"https://www.argentina.gob.ar/normativa/nacional/ley-25633-77081/texto",
+			"https://www.argentina.gob.ar/normativa/nacional/ley-27399-281835/texto"
+		],
+		"verificado": true
+	},
+	{
+		"slug": "2-de-abril",
+		"dia": 2,
+		"mes": 4,
+		"nombre": "Día del Veterano y de los Caídos en la Guerra de Malvinas",
+		"titulo": "Malvinas",
+		"tema": "Malvinas y quienes combatieron",
+		"linea": "Recuerda a veteranos y caídos de la Guerra de Malvinas.",
+		"resumen": "El 2 de abril es el Día del Veterano y de los Caídos en la Guerra de Malvinas. Así lo nombra el calendario de feriados, y la ley 25.370 ya lo había instituido como homenaje a quienes combatieron. La fecha de las fichas es el 2 de abril.",
+		"vocabulario": ["MALVINAS", "VETERANO", "ISLAS", "SOBERANÍA", "ATLÁNTICO", "BANDERA", "ABRIL", "PATRIA", "HÉROE", "MEMORIA"],
+		"proceres": [],
+		"laminas": [],
+		"fuentes": [
+			"https://www.argentina.gob.ar/normativa/nacional/ley-25370-65442",
+			"https://www.argentina.gob.ar/normativa/nacional/ley-27399-281835/texto"
+		],
+		"verificado": true
+	},
+	{
+		"slug": "1-de-mayo",
+		"dia": 1,
+		"mes": 5,
+		"nombre": "Día del Trabajo",
+		"titulo": "Día del Trabajo",
+		"tema": "el trabajo y sus derechos",
+		"linea": "El calendario oficial de feriados lo nombra Día del Trabajo.",
+		"resumen": "En la ley de feriados, el 1 de mayo es el Día del Trabajo. El portal educativo también lo presenta como Día Internacional del Trabajador. Para las fichas usamos el nombre del calendario oficial.",
+		"vocabulario": ["TRABAJO", "MAYO", "DERECHOS", "OFICIO", "JORNADA", "SALARIO", "DESCANSO", "HUELGA", "OBRERO", "SINDICATO"],
+		"proceres": [],
+		"laminas": [],
+		"fuentes": [
+			"https://www.argentina.gob.ar/normativa/nacional/ley-27399-281835/texto",
+			"https://www.educ.ar/recursos/159169/calendario-de-efemerides-educar"
+		],
+		"verificado": true
+	},
+	{
+		"slug": "18-de-mayo",
+		"dia": 18,
+		"mes": 5,
+		"nombre": "Día de la Escarapela",
+		"titulo": "La escarapela",
+		"tema": "la escarapela argentina",
+		"linea": "Fecha escolar de la escarapela, fijada en el siglo XX.",
+		"resumen": "El 18 de mayo es el Día de la Escarapela en el calendario escolar. Educ.ar recuerda que el Consejo Nacional de Educación fijó esa conmemoración en 1935 y que el pedido de Belgrano para usarla fue el 18 de febrero de 1812. No mezclamos las dos fechas.",
+		"vocabulario": ["ESCARAPELA", "CELESTE", "BLANCO", "BELGRANO", "CINTA", "PECHO", "PATRIA", "MAYO", "INSIGNIA", "COCARDA"],
+		"proceres": ["manuel-belgrano"],
+		"laminas": ["escarapela"],
+		"fuentes": [
+			"https://www.educ.ar/recursos/70213/18-de-mayo-dia-de-la-escarapela",
+			"https://www.argentina.gob.ar/derechoshumanos/actividades/conmemoraciones"
+		],
+		"verificado": true
+	},
+	{
+		"slug": "25-de-mayo",
+		"dia": 25,
+		"mes": 5,
+		"nombre": "Día de la Revolución de Mayo",
+		"titulo": "La Semana de Mayo",
+		"tema": "la Revolución de Mayo",
+		"linea": "El 25 de mayo de 1810 se formó la Primera Junta.",
+		"resumen": "El 25 de mayo de 1810 dejó el cargo el virrey Cisneros y quedó formada la Primera Junta, con Cornelio Saavedra como presidente. Mariano Moreno y Juan José Paso fueron sus secretarios. El feriado se llama Día de la Revolución de Mayo.",
+		"vocabulario": ["CABILDO", "JUNTA", "VIRREY", "PATRIA", "PUEBLO", "SAAVEDRA", "MORENO", "FRENCH", "BERUTI", "LIBERTAD", "MAYO", "REVOLUCIÓN"],
+		"proceres": ["cornelio-saavedra", "mariano-moreno", "manuel-belgrano"],
+		"laminas": ["cabildo", "escarapela"],
+		"fuentes": [
+			"https://www.argentina.gob.ar/noticias/25-de-mayo-de-1810-dia-de-la-revolucion-de-mayo-y-primer-gobierno-patrio",
+			"https://www.argentina.gob.ar/normativa/nacional/ley-27399-281835/texto"
+		],
+		"verificado": true
+	},
+	{
+		"slug": "20-de-junio",
+		"dia": 20,
+		"mes": 6,
+		"nombre": "Paso a la Inmortalidad del General Don Manuel Belgrano",
+		"titulo": "Día de la Bandera",
+		"tema": "la bandera argentina",
+		"linea": "Recuerda a Manuel Belgrano, muerto el 20 de junio de 1820.",
+		"resumen": "Manuel Belgrano murió el 20 de junio de 1820. La ley 12.361 declaró esa fecha Día de la Bandera, y el calendario de feriados la nombra Paso a la Inmortalidad del General Don Manuel Belgrano. Las fichas salen con el 20 de junio.",
+		"vocabulario": ["BANDERA", "BELGRANO", "CELESTE", "BLANCO", "SOL", "JUNIO", "PATRIA", "LIBERTAD", "ESCUELA", "ROSARIO"],
+		"proceres": ["manuel-belgrano"],
+		"laminas": ["bandera"],
+		"fuentes": [
+			"https://www.argentina.gob.ar/normativa/nacional/ley-12361-232587/texto",
+			"https://www.argentina.gob.ar/normativa/nacional/ley-27399-281835/texto",
+			"https://www.argentina.gob.ar/noticias/20-de-junio-fallecimiento-del-general-manuel-belgrano-20-de-junio-de-1820-la-evocacion-del"
+		],
+		"verificado": true
+	},
+	{
+		"slug": "9-de-julio",
+		"dia": 9,
+		"mes": 7,
+		"nombre": "Día de la Independencia",
+		"titulo": "Día de la Independencia",
+		"tema": "la declaración de la Independencia",
+		"linea": "El calendario de feriados lo llama Día de la Independencia.",
+		"resumen": "El 9 de julio es el Día de la Independencia en la ley de feriados. Educ.ar lo presenta como el día de la declaración de la Independencia. Las fichas usan esa fecha fija.",
+		"vocabulario": ["INDEPENDENCIA", "TUCUMÁN", "JULIO", "CONGRESO", "LIBERTAD", "PATRIA", "PROVINCIAS", "ACTA", "UNIÓN", "PUEBLO"],
+		"proceres": [],
+		"laminas": ["casa-de-tucuman"],
+		"fuentes": [
+			"https://www.argentina.gob.ar/normativa/nacional/ley-27399-281835/texto",
+			"https://www.educ.ar/recursos/159169/calendario-de-efemerides-educar"
+		],
+		"verificado": true
+	},
+	{
+		"slug": "17-de-agosto",
+		"dia": 17,
+		"mes": 8,
+		"nombre": "Paso a la Inmortalidad del General Don José de San Martín",
+		"titulo": "San Martín",
+		"tema": "San Martín y el cruce de los Andes",
+		"linea": "Recuerda la muerte de San Martín, el 17 de agosto de 1850.",
+		"resumen": "José de San Martín murió el 17 de agosto de 1850. El feriado lleva el nombre de su paso a la inmortalidad y es trasladable: si el asueto se corre de día, las fichas igual salen con el 17 de agosto.",
+		"vocabulario": ["SAN MARTÍN", "LIBERTADOR", "ANDES", "GRANADEROS", "AGOSTO", "PATRIA", "LIBERTAD", "CRUCE", "EJÉRCITO", "AMÉRICA"],
+		"proceres": ["jose-de-san-martin"],
+		"laminas": [],
+		"fuentes": [
+			"https://www.argentina.gob.ar/noticias/17-de-agosto-de-1850-paso-la-inmortalidad-del-general-jose-de-san-martin",
+			"https://www.argentina.gob.ar/normativa/nacional/ley-27399-281835/texto"
+		],
+		"verificado": true
+	},
+	{
+		"slug": "11-de-septiembre",
+		"dia": 11,
+		"mes": 9,
+		"nombre": "Día de las Maestras y los Maestros",
+		"titulo": "Día de las maestras y los maestros",
+		"tema": "el Día de las maestras y los maestros",
+		"linea": "Recuerda a Sarmiento, muerto en Asunción en 1888.",
+		"resumen": "El 11 de septiembre es el Día de las Maestras y los Maestros. Educ.ar lo vincula con la muerte de Domingo Faustino Sarmiento, el 11 de septiembre de 1888 en Asunción. No es el 11 de noviembre.",
+		"vocabulario": ["MAESTRO", "SARMIENTO", "ESCUELA", "ALUMNO", "LIBRO", "AULA", "SEPTIEMBRE", "ENSEÑAR", "LÁPIZ", "TAREA"],
+		"proceres": ["domingo-faustino-sarmiento"],
+		"laminas": [],
+		"fuentes": [
+			"https://www.educ.ar/recursos/154313/11-de-septiembre-dia-de-las-maestras-y-los-maestros",
+			"https://www.argentina.gob.ar/noticias/domingo-faustino-sarmiento-la-escuela-como-pilar-de-la-nacion"
+		],
+		"verificado": true
+	},
+	{
+		"slug": "21-de-septiembre",
+		"dia": 21,
+		"mes": 9,
+		"nombre": "Día del Estudiante",
+		"titulo": "Día del Estudiante",
+		"tema": "el Día del Estudiante",
+		"linea": "Figura en el calendario oficial de conmemoraciones.",
+		"resumen": "El calendario oficial de conmemoraciones incluye el 21 de septiembre como Día del Estudiante. También lista ese día el Día Internacional de la Paz. No agregamos un origen que esas páginas no cuentan.",
+		"vocabulario": ["ESTUDIANTE", "ESCUELA", "AULA", "LIBRO", "SEPTIEMBRE", "JUVENTUD", "ESTUDIO", "APRENDER", "DERECHO", "EDUCACIÓN"],
+		"proceres": [],
+		"laminas": [],
+		"fuentes": ["https://www.argentina.gob.ar/derechoshumanos/actividades/conmemoraciones"],
+		"verificado": true
+	},
+	{
+		"slug": "12-de-octubre",
+		"dia": 12,
+		"mes": 10,
+		"nombre": "Día del Respeto a la Diversidad Cultural",
+		"titulo": "Diversidad cultural",
+		"tema": "el respeto a la diversidad cultural",
+		"linea": "El decreto 1584/2010 le dio este nombre al 12 de octubre.",
+		"resumen": "El decreto 1584/2010 y la ley de feriados llaman al 12 de octubre Día del Respeto a la Diversidad Cultural. El asueto puede trasladarse; la ficha queda en el 12 de octubre, que es la fecha conmemorativa.",
+		"vocabulario": ["DIVERSIDAD", "CULTURA", "PUEBLOS", "RESPETO", "OCTUBRE", "AMÉRICA", "LENGUA", "MEMORIA", "COMUNIDAD", "RAÍZ"],
+		"proceres": [],
+		"laminas": [],
+		"fuentes": [
+			"https://www.argentina.gob.ar/normativa/nacional/decreto-1584-2010-174389/texto",
+			"https://www.argentina.gob.ar/normativa/nacional/ley-27399-281835/texto"
+		],
+		"verificado": true
+	},
+	{
+		"slug": "10-de-noviembre",
+		"dia": 10,
+		"mes": 11,
+		"nombre": "Día de la Tradición",
+		"titulo": "Día de la Tradición",
+		"tema": "la tradición argentina",
+		"linea": "El 10 de noviembre recuerda el natalicio de José Hernández.",
+		"resumen": "La ley 21.154 instituyó el 10 de noviembre como Día de la Tradición en todo el país y llamó cuna a San Martín, en Buenos Aires. Una página oficial de Cultura dice que Hernández nació en 1834 y que esa fecha recuerda su natalicio.",
+		"vocabulario": ["TRADICIÓN", "GAUCHO", "PAYADA", "HERNÁNDEZ", "FIERRO", "PAMPA", "MATE", "CABALLO", "CAMPO", "NOVIEMBRE"],
+		"proceres": ["jose-hernandez"],
+		"laminas": [],
+		"fuentes": [
+			"https://www.argentina.gob.ar/normativa/nacional/ley-21154-231404/texto",
+			"https://www.argentina.gob.ar/noticias/jose-hernandez-y-la-inmortalidad-de-la-gauchesca"
+		],
+		"verificado": true
+	},
+	{
+		"slug": "20-de-noviembre",
+		"dia": 20,
+		"mes": 11,
+		"nombre": "Día de la Soberanía Nacional",
+		"titulo": "Soberanía Nacional",
+		"tema": "la soberanía nacional",
+		"linea": "Recuerda la Batalla de la Vuelta de Obligado, en 1845.",
+		"resumen": "El 20 de noviembre es el Día de la Soberanía Nacional. Recuerda la Batalla de la Vuelta de Obligado, en 1845, en un recodo del Paraná, en San Pedro. El feriado es trasladable; la ficha usa el 20 de noviembre.",
+		"vocabulario": ["SOBERANÍA", "OBLIGADO", "PARANÁ", "NOVIEMBRE", "RÍO", "BATALLA", "PATRIA", "CADENAS", "DEFENSA", "ORILLA"],
+		"proceres": [],
+		"laminas": [],
+		"fuentes": [
+			"https://www.argentina.gob.ar/noticias/dia-de-la-soberania-nacional",
+			"https://www.argentina.gob.ar/noticias/20-de-noviembre-dia-de-la-soberania-nacional-3",
+			"https://www.argentina.gob.ar/normativa/nacional/ley-27399-281835/texto"
+		],
+		"verificado": true
+	},
+	{
+		"slug": "10-de-diciembre",
+		"dia": 10,
+		"mes": 12,
+		"nombre": "Día de la Restauración de la Democracia",
+		"titulo": "Democracia y derechos",
+		"tema": "el regreso de la democracia y los derechos humanos",
+		"linea": "La ley 26.323 recuerda el regreso de la democracia en 1983.",
+		"resumen": "La ley 26.323 incorporó al calendario escolar el Día de la Restauración de la Democracia, el 10 de diciembre, por la asunción de 1983. El calendario de conmemoraciones también llama a esa fecha Día de los Derechos Humanos. Las fichas mencionan las dos.",
+		"vocabulario": ["DERECHOS", "HUMANOS", "DICIEMBRE", "DIGNIDAD", "PAZ", "LIBERTAD", "IGUALDAD", "DEMOCRACIA", "PERSONA", "JUSTICIA"],
+		"proceres": [],
+		"laminas": [],
+		"fuentes": [
+			"https://www.argentina.gob.ar/normativa/nacional/ley-26323-135915/texto",
+			"https://www.argentina.gob.ar/noticias/10-de-diciembre-dia-de-la-restauracion-de-la-democracia",
+			"https://www.argentina.gob.ar/derechoshumanos/actividades/conmemoraciones"
+		],
+		"verificado": true
+	}
+]

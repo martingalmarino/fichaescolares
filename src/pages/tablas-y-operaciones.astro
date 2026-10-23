@@ -1,0 +1,50 @@
+---
+import AfiliadosUtiles from '../components/AfiliadosUtiles.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import EnlacesFechas from '../components/EnlacesFechas.astro';
+import OperacionesGenerator from '../islands/OperacionesGenerator';
+import { fichaJsonLd } from '../lib/seo';
+import { toSeed } from '../lib/prng';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const seedParam = Astro.url.searchParams.get('s');
+const initialSeed = seedParam && /^\d+$/.test(seedParam) ? toSeed(Number(seedParam)) : null;
+const descripcion = 'Generá tablas y cuentas de suma, resta, multiplicación o división, con hoja de respuestas, en A4.';
+---
+
+<BaseLayout title="Tablas y operaciones para imprimir (gratis, A4)" description={descripcion} image="/og/operaciones.svg" jsonLd={fichaJsonLd('Tablas y operaciones', descripcion, '/tablas-y-operaciones/')}>
+	<article class="mx-auto max-w-7xl px-4 py-8">
+		<Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: 'Generadores', href: '/#generadores' }, { label: 'Tablas y operaciones' }]} />
+		<h1 class="no-print mt-4 text-3xl font-bold tracking-tight text-azul sm:text-4xl">Tablas y operaciones</h1>
+		<p class="no-print mt-3 max-w-3xl leading-relaxed text-muted">
+			Las cuentas salen de una semilla. La misma dirección repite la misma hoja. Podés evitar que la suma se lleve y que la resta pida prestado, y pedir divisiones exactas o con resto.
+		</p>
+		<div class="mt-6">
+			<OperacionesGenerator client:load initialSeed={initialSeed} />
+		</div>
+		<section class="no-print mx-auto mt-12 max-w-3xl text-base leading-relaxed">
+			<h2 class="text-2xl font-bold text-azul">Cómo usarla en el aula</h2>
+			<p class="mt-4">
+				Esta ficha es de cálculo. No reemplaza una clase de efemérides: se puede dejar para el tramo de matemática de la misma jornada o para una tarea corta. El tipo “tablas” arma productos del 1 al 10. La suma y la resta respetan el rango que escribas. Si desmarcás “llevarse o pedir prestado”, cada dígito se resuelve solo: en la suma no hay resultado parcial de 10 o más, y en la resta cada cifra del minuendo alcanza. La división, por defecto, es exacta. Si marcás resto, el resto es menor que el divisor.
+			</p>
+			<p class="mt-4">
+				En primer ciclo, doce cuentas horizontales y números chicos se leen mejor. El formato vertical ayuda cuando ya se encolumnan las cifras. En segundo ciclo se puede subir el rango y permitir llevarse. En tercer ciclo, la división con resto y treinta o cuarenta cuentas sirven como práctica, no como prueba única. La hoja de respuestas va en otra página para que la corrección no quede a la vista.
+			</p>
+			<p class="mt-4">
+				“Generar otra” cambia la semilla y, con ella, los números. Si ya repartiste una versión, no la mezcles con la siguiente: el enlace de cada hoja es distinto. Imprimí en blanco y negro. “Descargar PDF” abre el cuadro de impresión y hay que elegir “Guardar como PDF”. El título de la ficha queda como nombre del archivo.
+			</p>
+			<h2 class="mt-8 text-xl font-bold text-azul">Límites de la hoja</h2>
+			<p class="mt-3">
+				No hay resultados negativos. Si el rango es imposible para la consigna, por ejemplo restas sin pedir prestado con números que no se pueden armar, la lista puede traer menos cuentas que las pedidas. Conviene ampliar el rango o permitir la dificultad y volver a mirar la vista previa antes de imprimir.
+			</p>
+			<p class="mt-4">
+				Las preferencias de tipo y formato se guardan en este navegador. No hay cuenta de usuario. Si otra persona abre el enlace con la semilla, ve la misma hoja aunque no comparta esas preferencias guardadas: la semilla manda en los números.
+			</p>
+			<p class="mt-4">
+				Para una tarea, doce o dieciséis cuentas alcanzan. Cuarenta cuentas sirven como práctica de un grupo que ya resuelve solo y necesita tiempo, no como primera hoja del tema. Dejá la hoja de respuestas en tu carpeta, no en el reverso de la misma fotocopia, si el papel es fino y la cuenta se transparenta. Si vas a diferenciar, generá dos semillas: una con el rango bajo y sin llevarse, otra con el rango alto. Anotá en el margen cuál enlace corresponde a cada grupo para no mezclar las correcciones.
+			</p>
+		</section>
+		<AfiliadosUtiles />
+		<EnlacesFechas />
+	</article>
+</BaseLayout>

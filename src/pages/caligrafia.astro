@@ -1,0 +1,52 @@
+---
+import '@fontsource/andika/latin-400.css';
+import '@fontsource/playwrite-ar/latin-400.css';
+import AfiliadosUtiles from '../components/AfiliadosUtiles.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import EnlacesFechas from '../components/EnlacesFechas.astro';
+import CaligrafiaGenerator from '../islands/CaligrafiaGenerator';
+import { fichaJsonLd } from '../lib/seo';
+import { toSeed } from '../lib/prng';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const seedParam = Astro.url.searchParams.get('s');
+const initialSeed = seedParam && /^\d+$/.test(seedParam) ? toSeed(Number(seedParam)) : null;
+const descripcion = 'Generá una pauta de caligrafía en cursiva o imprenta, con frases en dominio público, lista para imprimir en A4.';
+---
+
+<BaseLayout title="Caligrafía escolar para imprimir (gratis, A4)" description={descripcion} image="/og/caligrafia.svg" jsonLd={fichaJsonLd('Caligrafía', descripcion, '/caligrafia/')}>
+	<article class="mx-auto max-w-7xl px-4 py-8">
+		<Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: 'Generadores', href: '/#generadores' }, { label: 'Caligrafía' }]} />
+		<h1 class="no-print mt-4 text-3xl font-bold tracking-tight text-azul sm:text-4xl">Pauta de caligrafía</h1>
+		<p class="no-print mt-3 max-w-3xl leading-relaxed text-muted">
+			La cursiva usa Playwrite AR, pensada para la escritura escolar argentina. La imprenta usa Andika. Las dos tienen licencia SIL Open Font License. Podés calcar, copiar o alternar un renglón y otro.
+		</p>
+		<div class="mt-6">
+			<CaligrafiaGenerator client:load initialSeed={initialSeed} />
+		</div>
+		<section class="no-print mx-auto mt-12 max-w-3xl text-base leading-relaxed">
+			<h2 class="text-2xl font-bold text-azul">Cómo usarla en el aula</h2>
+			<p class="mt-4">
+				Una pauta sirve para un momento corto de escritura, no para ocupar la hora. Elegí una frase que el grupo ya pueda leer. Las frases precargadas son versos del Himno, un verso de Martín Fierro o textos propios de este sitio. El origen queda anotado al lado del selector y también en Créditos. Si escribís un texto propio, usá una oración que hayas redactado vos: la herramienta no revisa derechos de autor.
+			</p>
+			<p class="mt-4">
+				En primer ciclo, la pauta grande y el modo calcar ayudan a seguir el trazo gris. La pauta doble marca base, media, ascendentes y descendentes. La simple deja dos líneas y alcanza cuando el grupo ya no necesita la altura de las letras altas. El margen rojo ordena el arranque de cada renglón. En segundo ciclo funciona el modo mixto: un renglón con modelo y el siguiente vacío. En tercer ciclo, la pauta chica y el modo copiar piden más control, con la frase visible una sola vez en el pizarrón.
+			</p>
+			<p class="mt-4">
+				Si alguien escribe con letra grande, subí el tamaño antes de imprimir. Menos renglones dejan más aire y evitan que la hoja se vea apretada. Cuatro a seis renglones alcanzan para una entrada. Ocho o más sirven cuando el objetivo es la repetición del mismo trazo.
+			</p>
+			<h2 class="mt-8 text-xl font-bold text-azul">Impresión</h2>
+			<p class="mt-3">
+				La vista previa está en A4. Imprimí en blanco y negro: el gris del modo calcar se sigue viendo y se gasta menos tinta. “Descargar PDF” abre la impresión del navegador y hay que elegir “Guardar como PDF”. La semilla queda en el enlace por si querés repetir la misma hoja, aunque en esta ficha el texto no depende del azar.
+			</p>
+			<p class="mt-4">
+				No uses esta pauta para evaluar velocidad. Sirve para mirar la forma de la letra, el apoyo en el renglón y si se respetan mayúsculas y puntos. Una devolución de una oración alcanza. 				Si el grupo va a colorear después, la caligrafía puede ser el pie de una lámina, con la misma frase en las dos hojas.
+			</p>
+			<p class="mt-4">
+				Guardá la hoja del modelo y otra en blanco. La primera sirve para mostrar el trazo en el escritorio; la segunda es la que se entrega. Si el grupo es grande, imprimí el modo copiar y proyectá o escribí la frase una sola vez. Así no se gasta tinta gris en cada copia y el renglón queda libre para la letra de cada estudiante. Revisá también que la frase entre en el ancho: una oración muy larga se corta en el borde. En ese caso, partila en dos frases o bajá un punto el tamaño de la pauta antes de imprimir la tanda.
+			</p>
+		</section>
+		<AfiliadosUtiles />
+		<EnlacesFechas herramienta="caligrafia" />
+	</article>
+</BaseLayout>

@@ -1,0 +1,96 @@
+---
+interface Props {
+	name: 'sopa' | 'crucigrama' | 'caligrafia' | 'provincia' | 'laminas' | 'tablas';
+}
+
+const { name } = Astro.props;
+---
+
+<span
+	class="flex size-10 items-center justify-center rounded-control bg-celeste-50 text-celeste"
+	aria-hidden="true"
+>
+	{
+		name === 'sopa' && (
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="size-5" fill="none">
+				<path
+					d="M4 4h4.5v4.5H4V4Zm11.5 0H20v4.5h-4.5V4ZM4 15.5h4.5V20H4v-4.5Zm11.5 0H20V20h-4.5v-4.5ZM9.75 9.75h4.5v4.5h-4.5v-4.5Z"
+					stroke="currentColor"
+					stroke-width="1.6"
+				/>
+			</svg>
+		)
+	}
+	{
+		name === 'crucigrama' && (
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="size-5" fill="none">
+				<path
+					d="M4 8h7V4h4v4h5v4h-5v8h-4v-8H4V8Z"
+					stroke="currentColor"
+					stroke-width="1.6"
+					stroke-linejoin="round"
+				/>
+			</svg>
+		)
+	}
+	{
+		name === 'caligrafia' && (
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="size-5" fill="none">
+				<path
+					d="M4 19c2.2-4 4.2-8.5 5.2-13.2.2-.8 1.3-.8 1.5 0C12 12 15 16.5 20 19"
+					stroke="currentColor"
+					stroke-width="1.6"
+					stroke-linecap="round"
+				/>
+				<path d="M8 19h8" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" />
+			</svg>
+		)
+	}
+	{
+		name === 'provincia' && (
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="size-5" fill="none">
+				<path
+					d="M12 21s6-5.2 6-10a6 6 0 1 0-12 0c0 4.8 6 10 6 10Z"
+					stroke="currentColor"
+					stroke-width="1.6"
+				/>
+				<circle cx="12" cy="11" r="1.8" fill="currentColor" />
+			</svg>
+		)
+	}
+	{
+		name === 'laminas' && (
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="size-5" fill="none">
+				<rect
+					x="4"
+					y="5"
+					width="16"
+					height="14"
+					rx="2"
+					stroke="currentColor"
+					stroke-width="1.6"
+				/>
+				<circle cx="9" cy="10" r="1.4" fill="currentColor" />
+				<path
+					d="M4 16.5 9 13l3 2.5 3-2 5 3"
+					stroke="currentColor"
+					stroke-width="1.6"
+					stroke-linejoin="round"
+				/>
+			</svg>
+		)
+	}
+	{
+		name === 'tablas' && (
+			<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" class="size-5" fill="none">
+				<circle cx="12" cy="12" r="8" stroke="currentColor" stroke-width="1.6" />
+				<path
+					d="M12 8v8M8 12h8"
+					stroke="currentColor"
+					stroke-width="1.6"
+					stroke-linecap="round"
+				/>
+			</svg>
+		)
+	}
+</span>

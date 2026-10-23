@@ -1,0 +1,44 @@
+---
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import creditos from '../data/creditos.json';
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout title="Créditos y licencias | Fichas Patrias" description="Fuentes de letra, licencias SIL OFL y el origen de los datos y los dibujos de Fichas Patrias.">
+	<article class="mx-auto max-w-3xl px-4 py-8 text-base leading-relaxed">
+		<Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: 'Créditos' }]} />
+		<h1 class="mt-4 text-3xl font-bold tracking-tight text-azul">Créditos</h1>
+		<p class="mt-4">
+			Las fichas usan pocas obras de terceros. Las que sí entran están listadas con autor, licencia y enlace. Los trazos de las láminas y los textos de ayuda son de este sitio.
+		</p>
+		<ul class="mt-6 space-y-4">
+			{
+				creditos.map((item) => (
+					<li class="rounded-card border border-borde bg-white p-4">
+						<h2 class="text-lg font-semibold text-azul">{item.nombre}</h2>
+						<p class="mt-1">{item.autor}</p>
+						<p class="text-sm text-muted">{item.licencia}</p>
+						<p class="mt-2 text-sm">
+							<a class="text-celeste underline" href={item.enlace}>{item.enlace}</a>
+						</p>
+						<p class="mt-1 text-sm text-muted">Copia de la licencia: {item.archivo}</p>
+					</li>
+				))
+			}
+		</ul>
+		<h2 class="mt-8 text-2xl font-bold text-azul">Datos</h2>
+		<p class="mt-3">
+			Los nombres de las 24 jurisdicciones salen de la API Georef, con fuente IGN. La capital, la superficie y la población de cada ficha provincial se copian de la página de esa provincia en argentina.gob.ar cuando el HTML las publica. Cada ficha enlaza esa página. Las efemérides y las pistas de próceres guardan sus URLs en los archivos de datos. No hay fotos de terceros.
+		</p>
+		<h2 class="mt-8 text-2xl font-bold text-azul">Frases de caligrafía</h2>
+		<p class="mt-3">
+			Los versos del Himno corresponden a la letra de Vicente López y Planes, en dominio público. El verso de Martín Fierro es de José Hernández, publicado en 1872, también en dominio público. El resto de las frases precargadas está escrito para este sitio y figura como frase propia en el selector.
+		</p>
+		<p class="mt-4">
+			Playwrite AR y Andika se distribuyen con la SIL Open Font License 1.1. El texto de cada licencia está en el sitio, en las rutas indicadas arriba. Inter, la letra de la interfaz, tiene la misma licencia.
+		</p>
+		<p class="mt-4">
+			Si agregás una foto, un mapa o un escudo, tiene que entrar en esta lista antes de publicarse: autor, licencia y enlace al archivo. Una imagen de la que no podamos decir eso no se usa, aunque se vea en otro sitio de fichas. Los trazos de la escarapela, la bandera, el sol, el Cabildo y la Casa de Tucumán no están en la lista porque son dibujos de este proyecto, no una obra ajena.
+		</p>
+	</article>
+</BaseLayout>

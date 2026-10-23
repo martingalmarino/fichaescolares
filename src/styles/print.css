@@ -1,0 +1,39 @@
+@page {
+	size: A4;
+	margin: 12mm;
+}
+
+@media print {
+	header,
+	footer,
+	nav,
+	.no-print,
+	.ad,
+	.panel {
+		display: none !important;
+	}
+
+	.preview-slot {
+		height: auto !important;
+		overflow: visible !important;
+	}
+
+	.a4 {
+		position: static !important;
+		width: auto !important;
+		min-height: 0 !important;
+		height: auto !important;
+		box-shadow: none;
+		transform: none !important;
+		padding: 0;
+	}
+
+	.solutions {
+		break-before: page;
+	}
+
+	* {
+		-webkit-print-color-adjust: exact;
+		print-color-adjust: exact;
+	}
+}

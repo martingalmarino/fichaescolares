@@ -1,0 +1,89 @@
+---
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { provincias, type Provincia } from '../../data/provincias';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export function getStaticPaths() {
+	return provincias.map((provincia) => ({
+		params: { slug: provincia.slug },
+		props: { provincia },
+	}));
+}
+
+interface Props {
+	provincia: Provincia;
+}
+
+const { provincia } = Astro.props;
+const descripcion = provincia.capital
+	? `Ficha de ${provincia.nombre}. Capital: ${provincia.capital}. Datos copiados de la página oficial.`
+	: `Ficha de ${provincia.nombre}. La página oficial no lista una capital distinta de la ciudad.`;
+---
+
+<BaseLayout title={`${provincia.nombre}: ficha para imprimir | Fichas Patrias`} description={descripcion}>
+	<article class="mx-auto max-w-3xl px-4 py-8">
+		<Breadcrumbs
+			items={[
+				{ label: 'Inicio', href: '/' },
+				{ label: 'Provincias', href: '/provincias/' },
+				{ label: provincia.nombre },
+			]}
+		/>
+		<div class="no-print mt-4 flex flex-wrap gap-2">
+			<button id="imprimir-ficha" type="button" class="rounded-control bg-sol px-4 py-2.5 text-sm font-semibold text-azul">Imprimir</button>
+			<a class="rounded-control border border-borde px-4 py-2.5 text-sm" href="/provincias/">Volver al índice</a>
+		</div>
+		<div class="a4 mt-6 rounded-card border border-borde bg-white p-6 text-azul shadow-card">
+			<h1 class="text-3xl font-bold">{provincia.nombre}</h1>
+			<dl class="mt-4 space-y-2 text-base">
+				<div><dt class="font-semibold">Capital</dt><dd>{provincia.capital ?? 'La página oficial no publica una capital distinta.'}</dd></div>
+				<div><dt class="font-semibold">Región</dt><dd>{provincia.region ?? 'Sin región política citada en la ficha.'}</dd></div>
+				<div><dt class="font-semibold">Superficie</dt><dd>{provincia.superficie ?? 'Sin dato en la página consultada.'}</dd></div>
+				<div><dt class="font-semibold">Población</dt><dd>{provincia.poblacion ?? 'Sin dato en la página consultada.'}</dd></div>
+			</dl>
+			<p class="mt-4 text-sm leading-relaxed">
+				No hay silueta: este sitio todavía no cita un archivo geográfico con licencia. La flor, el árbol, la bandera y el escudo quedan vacíos por el mismo motivo.
+			</p>
+			<h2 class="mt-6 text-xl font-bold">Para completar</h2>
+			<ol class="mt-2 list-decimal space-y-2 pl-5 text-sm">
+				<li>Nombre: ______________________________ Fecha: ___/___/______</li>
+				<li>Capital: ______________________________</li>
+				<li>Uní con una flecha el nombre de la jurisdicción y su capital, si la ficha la trae.</li>
+				{provincia.datos_para_investigar.map((dato) => <li>{dato}</li>)}
+			</ol>
+		</div>
+		<section class="no-print mt-8 text-sm leading-relaxed text-muted">
+			<h2 class="text-lg font-semibold text-azul">Fuentes</h2>
+			<ul class="mt-2 space-y-1">
+				{provincia.fuentes.map((fuente) => (
+					<li><a class="text-celeste underline" href={fuente}>{fuente}</a></li>
+				))}
+			</ul>
+			<h2 class="mt-8 text-lg font-semibold text-azul">Cómo usar la ficha de {provincia.nombre}</h2>
+			<p class="mt-2">
+				Imprimila en A4, en blanco y negro, y dejá la lista de fuentes en tu carpeta: no hace falta que viaje en la fotocopia del estudiante. La actividad pide completar la capital solo si la ficha la trae. Si el casillero dice que la página oficial no publica una capital distinta, no la inventes en el pizarrón. La superficie y la población se leen como están escritas, con el censo que figura al lado, sin redondearlas en la corrección.
+			</p>
+			<p class="mt-2">
+				Las tres consignas de investigar mandan a mirar otra fuente, no a copiar un dato que esta hoja no tiene. El escudo, la bandera y un mapa preciso quedan para esa búsqueda. Después se puede volver a la sopa de letras o al crucigrama si la semana incluye una fecha patria, sin mezclar la jurisdicción con un prócer que el archivo no vincula.
+			</p>
+			<p class="mt-4">
+				Otras fichas: <a class="text-celeste underline" href="/sopa-de-letras/">sopa de letras</a>,
+				<a class="text-celeste underline" href="/crucigrama-proceres/">crucigrama</a>,
+				<a class="text-celeste underline" href="/guia-para-el-aula/">guía para el aula</a>.
+			</p>
+		</section>
+	</article>
+</BaseLayout>
+
+<script define:vars={{ titulo: provincia.nombre }}>
+	document.getElementById('imprimir-ficha')?.addEventListener('click', () => {
+		const anterior = document.title;
+		document.title = titulo;
+		const restaurar = () => {
+			document.title = anterior;
+			window.removeEventListener('afterprint', restaurar);
+		};
+		window.addEventListener('afterprint', restaurar);
+		window.print();
+	});
+</script>

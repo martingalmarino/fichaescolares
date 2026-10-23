@@ -1,0 +1,31 @@
+---
+import Logo from './Logo.astro';
+
+const links = [
+	{ label: 'Inicio', href: '/' },
+	{ label: 'Generadores', href: '/#generadores' },
+	{ label: 'Efemérides', href: '/#efemerides' },
+	{ label: 'Provincias', href: '/provincias/' },
+	{ label: 'Guía para el aula', href: '/guia-para-el-aula/' },
+];
+---
+
+<header class="border-b border-borde bg-white">
+	<div
+		class="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-4 sm:flex-row sm:items-center sm:justify-between"
+	>
+		<a href="/" class="flex items-center gap-2.5">
+			<Logo />
+			<span class="text-lg font-semibold tracking-tight text-azul">Fichas Patrias</span>
+		</a>
+		<nav class="flex flex-wrap items-center gap-x-5 gap-y-2 text-sm" aria-label="Principal">
+			{
+				links.map((link) => (
+					<a href={link.href} class="text-muted transition-colors hover:text-azul">
+						{link.label}
+					</a>
+				))
+			}
+		</nav>
+	</div>
+</header>

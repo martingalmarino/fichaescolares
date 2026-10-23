@@ -1,0 +1,127 @@
+---
+import AfiliadosUtiles from '../components/AfiliadosUtiles.astro';
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import EnlacesFechas from '../components/EnlacesFechas.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { efemerides, etiquetaFecha } from '../data/efemerides';
+import SopaGenerator from '../islands/SopaGenerator.tsx';
+import { toSeed } from '../lib/prng';
+
+const requested = Astro.url.searchParams.get('e');
+const seedParam = Astro.url.searchParams.get('s');
+const initialSeed = seedParam && /^\d+$/.test(seedParam) ? toSeed(Number(seedParam)) : null;
+---
+
+<BaseLayout
+	title="Sopa de letras de efemérides para imprimir (gratis, A4)"
+	description="Armá una sopa de letras del calendario escolar argentino, en A4 y sin registro. Elegí la fecha, la dificultad y guardala como PDF."
+>
+	<article class="mx-auto max-w-7xl px-4 py-8">
+		<Breadcrumbs
+			items={[
+				{ label: 'Inicio', href: '/' },
+				{ label: 'Generadores', href: '/#generadores' },
+				{ label: 'Sopa de letras' },
+			]}
+		/>
+		<h1 class="no-print mt-4 text-3xl font-bold tracking-tight text-azul sm:text-4xl">
+			Sopa de letras por efeméride
+		</h1>
+		<p class="no-print mt-3 max-w-3xl text-base leading-relaxed text-muted">
+			Elegí una fecha del calendario escolar, el tamaño y la dificultad. La ficha sale en A4, con el
+			banco de palabras y, si la marcás, la hoja de soluciones en la página siguiente.
+		</p>
+
+		<div class="mt-6">
+			<SopaGenerator client:load initialSlug={requested} initialSeed={initialSeed} />
+		</div>
+
+		<section class="no-print mx-auto mt-12 max-w-3xl text-base leading-relaxed text-texto">
+			<h2 class="text-2xl font-bold tracking-tight text-azul">Cómo usarla en el aula</h2>
+			<p class="mt-4">
+				Una sopa de letras de una efeméride sirve para que el grupo reconozca el vocabulario de la
+				fecha antes de leer un texto, armar una cartelera o conversar sobre lo que se conmemora. No
+				reemplaza la explicación: la prepara. Cada hoja se imprime en A4, con el título que escribas,
+				el listado de palabras y, si lo dejás activo, una segunda página donde las palabras quedan
+				marcadas para corregir sin rehacer la grilla.
+			</p>
+			<p class="mt-4">
+				La semilla de la ficha viaja en el enlace. Si compartís esa dirección, otra persona obtiene
+				la misma disposición de letras. “Generar otra” cambia solo el armado y conserva la efeméride,
+				el tamaño y la dificultad que ya elegiste.
+			</p>
+
+			<h2 class="mt-8 text-xl font-bold text-azul">Variantes por grado</h2>
+			<p class="mt-3">
+				En primer ciclo conviene la grilla de 10, la dificultad fácil y las palabras solo hacia la
+				derecha y hacia abajo. Las mayúsculas se leen mejor cuando la letra cursiva todavía no está
+				afirmada. Antes de repartir la hoja, leé el banco en voz alta y dejá las palabras a la vista:
+				el trabajo es encontrarlas, no adivinarlas de memoria.
+			</p>
+			<p class="mt-4">
+				En segundo ciclo funcionan bien el tamaño 12 o 14 y la dificultad media, que suma la
+				diagonal. Una consigna simple es pedir que, al marcar cada palabra, escriban al dorso una
+				oración con ella. Así la ficha deja de ser solo un juego de búsqueda y vuelve al tema de la
+				fecha.
+			</p>
+			<p class="mt-4">
+				En tercer ciclo se puede pasar a 14 o 16, a la dificultad difícil y, si el grupo ya resolvió
+				otras fichas, a las diagonales inversas. Una variante es tapar el banco durante unos minutos
+				y preguntar qué palabras esperan encontrar. Después se destapa la lista y se completa la
+				grilla. Sirve para repasar vocabulario que ya se trabajó, no para presentar un tema nuevo.
+			</p>
+
+			<h2 class="mt-8 text-xl font-bold text-azul">Ideas para la semana patria</h2>
+			<ul class="mt-3 list-disc space-y-2 pl-5">
+				<li>
+					Entrada breve: diez minutos, en parejas, y una puesta en común de dos palabras que el grupo
+					quiera explicar.
+				</li>
+				<li>
+					Estación de la cartelera: la sopa queda en una mesa mientras otro grupo copia una frase o
+					arma el título de la muestra.
+				</li>
+				<li>
+					Copia para casa: la hoja viaja con el nombre y la fecha completos. La corrección se hace
+					con la página de soluciones, sin buscar de nuevo cada palabra.
+				</li>
+				<li>
+					Adaptación: menos palabras, grilla chica, mayúsculas y dificultad fácil. Si hace falta más
+					aire, desactivá la hoja de soluciones en la copia del aula y guardala solo para vos.
+				</li>
+			</ul>
+			<p class="mt-4">
+				Para ahorrar tinta, imprimí en blanco y negro. La grilla no depende del color: el celeste de
+				las soluciones es una ayuda visual, y las letras se leen igual en escala de grises. En el
+				cuadro de impresión del navegador se puede elegir “Guardar como PDF” si preferís mandar el
+				archivo en lugar de imprimir en el momento.
+			</p>
+
+			<h2 class="mt-8 text-xl font-bold text-azul">Qué mirar antes de imprimir</h2>
+			<p class="mt-3">
+				Revisá el título, la cantidad de palabras y que ninguna haya quedado afuera. Si una palabra es
+				más larga que la grilla, la página lo avisa: subí el tamaño o generá otra disposición. El
+				campo de nombre y fecha ocupa el margen de arriba y ayuda a ordenar los trabajos. Las fechas
+				de este generador son las conmemoraciones fijas del calendario escolar; cuando un feriado se
+				traslada, la ficha sigue el día en que se recuerda el hecho, no el lunes o el viernes en que
+				cae el asueto.
+			</p>
+			<p class="mt-4">
+				Estas son las fechas que podés armar ahora:{' '}
+				{
+					efemerides.flatMap((item, index) => {
+						const link = (
+							<a class="text-celeste hover:underline" href={`/sopa-de-letras/?e=${item.slug}`}>{etiquetaFecha(item.dia, item.mes, item.nombre)}</a>
+						);
+						if (index === 0) return [link];
+						const separator = index === efemerides.length - 1 ? ' y ' : ', ';
+						return [separator, link];
+					})
+				}
+				.
+			</p>
+		</section>
+		<AfiliadosUtiles />
+		<EnlacesFechas herramienta="sopa-de-letras" />
+	</article>
+</BaseLayout>

@@ -1,0 +1,44 @@
+---
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+---
+
+<BaseLayout
+	title="Privacidad | Fichas Patrias"
+	description="Cookies, Google Analytics, publicidad y la Ley 25.326. El sitio está dirigido a docentes y familias, no a menores de 13 años."
+>
+	<article class="mx-auto max-w-3xl px-4 py-8 text-base leading-relaxed">
+		<Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: 'Privacidad' }]} />
+		<h1 class="mt-4 text-3xl font-bold tracking-tight text-azul">Privacidad</h1>
+		<p class="mt-4">
+			Fichas Patrias es un sitio para adultos: docentes y familias. No está dirigido a menores de 13 años. No pedimos nombre, edad ni correo para generar una ficha. No hay registro.
+		</p>
+		<h2 class="mt-8 text-2xl font-bold text-azul">Qué se guarda en el navegador</h2>
+		<p class="mt-3">
+			Las opciones de cada herramienta y la decisión del aviso de cookies se guardan en el almacenamiento local de tu navegador. Eso no viaja a un servidor nuestro. Podés borrar esos datos desde la configuración del navegador.
+		</p>
+		<h2 class="mt-8 text-2xl font-bold text-azul">Medición y publicidad</h2>
+		<p class="mt-3">
+			Si aceptás el aviso, y cuando haya un identificador de Google Analytics configurado, el sitio carga la medición de visitas. Los eventos registran qué herramienta se usó, si se regeneró una ficha, si se pidió imprimir o el PDF, si se mostraron soluciones y si se abrió una pregunta frecuente. No describen el contenido de un texto que hayas escrito en la caligrafía.
+		</p>
+		<p class="mt-4">
+			Los espacios marcados como publicidad están reservados para Google AdSense u otro aviso. Hoy pueden verse vacíos. Cuando la publicidad esté activa, Google puede usar cookies. Cómo usa Google los datos de los sitios y las aplicaciones está explicado en
+			<a class="text-celeste underline" href="https://policies.google.com/technologies/partner-sites">esta página de Google</a>.
+			El tratamiento de datos personales en la Argentina se rige por la
+			<a class="text-celeste underline" href="https://www.argentina.gob.ar/normativa/nacional/ley-25326-64790/texto">Ley 25.326</a>.
+		</p>
+		<p class="mt-4">
+			Si rechazás el aviso, no cargamos Analytics. Los anuncios, cuando existan, también dependen de esa elección en la medida en que el navegador y la red lo permitan. El aviso se puede volver a ver borrando el dato <span class="font-medium">fp-consent</span> del almacenamiento local.
+		</p>
+		<h2 class="mt-8 text-2xl font-bold text-azul">Enlaces de afiliado</h2>
+		<p class="mt-3">
+			Algunas páginas pueden mostrar útiles con enlace a una tienda. Esos enlaces llevan la marca de afiliado y <span class="font-medium">rel="sponsored"</span>. Si no hay una dirección cargada, el bloque no se muestra. Comprar desde ahí es opcional.
+		</p>
+		<p class="mt-4">
+			Para escribirnos, usá la página de contacto. No uses el formulario de una ficha para mandar datos de estudiantes: las fichas no envían el nombre escrito en la hoja a ningún servidor.
+		</p>
+		<p class="mt-4">
+			El aviso de la parte inferior no es un muro: se puede rechazar y seguir armando fichas. No vendemos listas de correos porque no las pedimos. Si más adelante se activa AdSense, el archivo ads.txt del sitio tiene que llevar el identificador real del editor. Hasta entonces esa línea queda comentada para no declarar una relación con Google que no existe.
+		</p>
+	</article>
+</BaseLayout>

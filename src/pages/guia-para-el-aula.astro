@@ -1,0 +1,44 @@
+---
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const descripcion = 'Cómo combinar sopa, crucigrama, caligrafía, láminas y cuentas en una semana patria, con adaptaciones y ahorro de tinta.';
+---
+
+<BaseLayout title="Guía para el aula | Fichas Patrias" description={descripcion} image="/og/guia.svg">
+	<article class="mx-auto max-w-3xl px-4 py-8 text-base leading-relaxed">
+		<Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: 'Guía para el aula' }]} />
+		<h1 class="mt-4 text-3xl font-bold tracking-tight text-azul sm:text-4xl">Guía para el aula</h1>
+		<p class="mt-4">
+			Esta guía explica cómo armar una secuencia con las fichas del sitio. El sitio está pensado para docentes y familias. Las hojas se llevan al aula; la lectura de las instrucciones queda de este lado.
+		</p>
+		<h2 class="mt-8 text-2xl font-bold text-azul">Una fecha, varios soportes</h2>
+		<p class="mt-3">
+			Elegí una efeméride del calendario y no la cambies a mitad de semana. El primer día puede ser una sopa de letras fácil, con el banco a la vista, para reconocer palabras. El segundo, un crucigrama corto con los próceres de esa fecha, si el archivo los tiene. El tercero, una lámina o una frase en la pauta de caligrafía. Las cuentas quedan para el tramo de matemática: no hace falta disfrazarlas de efeméride.
+		</p>
+		<p class="mt-4">
+			Cuando un feriado se traslada de día, la ficha sigue la fecha conmemorativa. El 17 de agosto, el 12 de octubre y el 20 de noviembre se imprimen en ese día, aunque el asueto caiga un lunes o un viernes. Conviene decirlo al armar la cartelera, para que la fecha escrita coincida con lo que se recuerda.
+		</p>
+		<h2 class="mt-8 text-2xl font-bold text-azul">Por ciclo</h2>
+		<p class="mt-3">
+			En inicial y primer ciclo usá grillas chicas, pauta grande, trazos gruesos y pocas palabras. Leé las consignas en voz alta. El campo de nombre ayuda a devolver cada hoja. En segundo ciclo se puede subir el tamaño, usar pistas numeradas y pedir una oración con una palabra encontrada. En tercer ciclo entran las diagonales inversas, más palabras y la división con resto, siempre después de haber visto el tema.
+		</p>
+		<p class="mt-4">
+			Si hace falta letra más grande, en la sopa bajá el tamaño de la grilla en lugar de achicar la tipografía a mano: menos celdas dejan letras más grandes en la hoja. En caligrafía, la pauta grande cumple el mismo papel. Menos renglones y menos cuentas evitan una hoja saturada.
+		</p>
+		<h2 class="mt-8 text-2xl font-bold text-azul">Imprimir sin gastar de más</h2>
+		<p class="mt-3">
+			Todas las fichas salen en A4. El menú, la publicidad y el panel de opciones no se imprimen. Elegí blanco y negro en el cuadro del navegador. El celeste de las soluciones y el gris de la caligrafía se ven en escala de grises. “Descargar PDF” es la misma impresión, con destino “Guardar como PDF”. El título de la ficha queda como nombre del archivo.
+		</p>
+		<p class="mt-4">
+			La semilla viaja en el enlace. Si mandás esa dirección, otra persona obtiene la misma sopa, el mismo crucigrama o las mismas cuentas. Guardá el enlace de la versión que ya repartiste. “Generar otra” crea una hoja distinta.
+		</p>
+		<h2 class="mt-8 text-2xl font-bold text-azul">Qué datos usa la ficha</h2>
+		<p class="mt-3">
+			Las fechas y las pistas salen de archivos con fuente. Si un dato no está verificado, no se publica. Las provincias que no tienen capital en una página oficial no aparecen. Los dibujos son esquemas propios, no mapas ni escudos. Si una familia pregunta por un año que la ficha no trae, es mejor decir que no está en el material que completar el hueco de memoria.
+		</p>
+		<p class="mt-4">
+			Las páginas de cada herramienta explican variantes y límites. Esta guía no agrega hechos históricos: ordena el uso. Para el origen de las frases y de las fuentes de letra, está Créditos. Para cookies y audiencia, Privacidad y Acerca.
+		</p>
+	</article>
+</BaseLayout>

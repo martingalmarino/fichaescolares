@@ -1,0 +1,89 @@
+---
+import '@fontsource/inter/latin-400.css';
+import '@fontsource/inter/latin-500.css';
+import '@fontsource/inter/latin-600.css';
+import '@fontsource/inter/latin-700.css';
+import '../styles/global.css';
+import '../styles/print.css';
+import Footer from '../components/Footer.astro';
+import Header from '../components/Header.astro';
+import Consentimiento from '../islands/Consentimiento';
+
+interface Props {
+	title: string;
+	description: string;
+	image?: string;
+	jsonLd?: unknown;
+}
+
+const { title, description, image = '/og/home.svg', jsonLd } = Astro.props;
+const sitio = Astro.site ?? new URL(Astro.url.origin);
+const canonical = new URL(Astro.url.pathname, sitio).href;
+const imagen = new URL(image, sitio).href;
+const gaId = import.meta.env.PUBLIC_GA_ID ?? '';
+
+const sitioLd = {
+	'@context': 'https://schema.org',
+	'@graph': [
+		{
+			'@type': 'WebSite',
+			name: 'Fichas Patrias',
+			url: new URL('/', sitio).href,
+			inLanguage: 'es-AR',
+			description: 'Fichas escolares argentinas para docentes y familias.',
+		},
+		{
+			'@type': 'Organization',
+			name: 'Fichas Patrias',
+			url: new URL('/', sitio).href,
+		},
+	],
+};
+---
+
+<!doctype html>
+<html lang="es-AR">
+	<head>
+		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1" />
+		<meta name="generator" content={Astro.generator} />
+		<meta name="description" content={description} />
+		<link rel="canonical" href={canonical} />
+		<meta property="og:type" content="website" />
+		<meta property="og:locale" content="es_AR" />
+		<meta property="og:title" content={title} />
+		<meta property="og:description" content={description} />
+		<meta property="og:url" content={canonical} />
+		<meta property="og:image" content={imagen} />
+		<meta name="twitter:card" content="summary_large_image" />
+		<meta name="twitter:title" content={title} />
+		<meta name="twitter:description" content={description} />
+		<meta name="twitter:image" content={imagen} />
+		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+		<link rel="icon" href="/favicon.ico" />
+		<title>{title}</title>
+		<script type="application/ld+json" set:html={JSON.stringify(sitioLd)} />
+		{jsonLd && <script type="application/ld+json" set:html={JSON.stringify(jsonLd)} />}
+		<script>
+			document.addEventListener(
+				'toggle',
+				(event) => {
+					const details = event.target;
+					if (!(details instanceof HTMLDetailsElement) || !details.open) return;
+					const pregunta = details.dataset.q;
+					if (!pregunta || localStorage.getItem('fp-consent') !== 'granted' || typeof window.gtag !== 'function') return;
+					window.gtag('event', 'faq_open', { q: pregunta });
+				},
+				true,
+			);
+		</script>
+	</head>
+	<body class="min-h-screen bg-bg font-sans text-texto antialiased">
+		<Header />
+		<main>
+			<slot />
+		</main>
+		<Footer />
+		<Consentimiento client:load gaId={gaId} />
+	</body>
+</html>

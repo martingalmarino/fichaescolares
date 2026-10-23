@@ -1,0 +1,23 @@
+[
+	{
+		"nombre": "Inter",
+		"autor": "Rasmus Andersson",
+		"licencia": "SIL Open Font License 1.1",
+		"enlace": "https://fonts.google.com/specimen/Inter",
+		"archivo": "/fonts/LICENSES/Inter-OFL.txt"
+	},
+	{
+		"nombre": "Playwrite AR",
+		"autor": "Google Fonts",
+		"licencia": "SIL Open Font License 1.1",
+		"enlace": "https://fonts.google.com/specimen/Playwrite+AR",
+		"archivo": "/fonts/LICENSES/PlaywriteAR-OFL.txt"
+	},
+	{
+		"nombre": "Andika",
+		"autor": "SIL International",
+		"licencia": "SIL Open Font License 1.1",
+		"enlace": "https://software.sil.org/andika/",
+		"archivo": "/fonts/LICENSES/Andika-OFL.txt"
+	}
+]

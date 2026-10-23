@@ -1,0 +1,17 @@
+# Fichas Patrias
+
+Sitio para docentes y familias. Genera fichas imprimibles en A4 sobre el calendario escolar argentino, próceres y provincias. No está dirigido a menores de 13 años.
+
+## Herramientas
+
+- https://fichaspatrias.vercel.app/sopa-de-letras/ Sopa de letras por efeméride, con soluciones.
+- https://fichaspatrias.vercel.app/crucigrama-proceres/ Crucigrama con pistas de próceres.
+- https://fichaspatrias.vercel.app/caligrafia/ Pauta de cursiva o imprenta.
+- https://fichaspatrias.vercel.app/laminas-para-colorear/ Láminas en trazo propio.
+- https://fichaspatrias.vercel.app/tablas-y-operaciones/ Tablas y cuentas con respuestas.
+- https://fichaspatrias.vercel.app/provincias/ Fichas de jurisdicciones con capital publicada en una página oficial.
+- https://fichaspatrias.vercel.app/guia-para-el-aula/ Cómo combinar las fichas en una semana patria.
+
+## Fuentes
+
+Los datos citan páginas de argentina.gob.ar, normas nacionales, educ.ar cuando corresponde y la API Georef (IGN) para los nombres de las jurisdicciones. El detalle está en cada ficha y en /creditos/.
