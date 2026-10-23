@@ -12,6 +12,7 @@ export default function ColorearGenerator({ initialSeed, initialLamina }: Props)
 	const { seed, ready } = useSemilla(initialSeed);
 	const inicial = laminas.some((item) => item.id === initialLamina) ? (initialLamina as LaminaId) : 'escarapela';
 	const [lamina, setLamina] = useState<LaminaId>(inicial);
+	const [listaParaUrl, setListaParaUrl] = useState(false);
 	const [titulo, setTitulo] = useState('Lámina para colorear');
 	const [grosor, setGrosor] = useState(1.6);
 	const [renglones, setRenglones] = useState(3);
@@ -20,11 +21,15 @@ export default function ColorearGenerator({ initialSeed, initialLamina }: Props)
 
 	useEffect(() => {
 		if (!ready) return;
-		const params = new URLSearchParams(window.location.search);
-		const desde = params.get('l');
-		if (laminas.some((item) => item.id === desde)) setLamina(desde as LaminaId);
+		const desde = new URLSearchParams(window.location.search).get('l');
+		if (desde && laminas.some((item) => item.id === desde)) setLamina(desde as LaminaId);
+		setListaParaUrl(true);
+	}, [ready]);
+
+	useEffect(() => {
+		if (!ready || !listaParaUrl) return;
 		escribirUrl(seed, { l: lamina });
-	}, [ready, seed, lamina]);
+	}, [ready, listaParaUrl, seed, lamina]);
 
 	return (
 		<MarcoGenerador
@@ -56,7 +61,7 @@ export default function ColorearGenerator({ initialSeed, initialLamina }: Props)
 					<label class="mt-4 block text-sm font-medium text-azul" for="grosor">
 						Grosor de línea
 					</label>
-					<input id="grosor" type="range" min={1} max={3} step={0.4} value={grosor} class="mt-1.5 w-full" onChange={(event) => setGrosor(Number(event.currentTarget.value))} />
+					<input id="grosor" type="range" min={1} max={3} step={0.2} value={grosor} class="mt-1.5 w-full" onChange={(event) => setGrosor(Number(event.currentTarget.value))} />
 					<label class="mt-4 block text-sm font-medium text-azul" for="lineas">
 						Renglones para escribir: {renglones}
 					</label>
@@ -72,7 +77,7 @@ export default function ColorearGenerator({ initialSeed, initialLamina }: Props)
 					<div>
 						{nombre && <NombreFecha />}
 						<h2 class="text-center text-[22px] font-bold">{titulo.trim() || 'Lámina'}</h2>
-						<svg viewBox="0 0 160 150" class="mx-auto mt-4 h-auto w-full max-w-[150mm]" role="img" aria-label={titulo}>
+						<svg viewBox="0 0 160 150" class="mx-auto mt-4 block h-auto w-full max-w-[min(100%,150mm)]" role="img" aria-label={titulo}>
 							<TrazoLamina id={lamina} grosor={grosor} />
 						</svg>
 						<div class="mt-6 space-y-4">

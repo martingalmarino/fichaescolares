@@ -1,7 +1,7 @@
-import { useEffect, useMemo, useState } from 'preact/hooks';
+import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
 import frases from '../data/frases.json';
 import { track } from '../lib/analytics';
-import { altoDeRenglon, altoDeX, lineasDePauta, muestraTexto, type ModoCaligrafia, type Pauta, type TipoPauta } from '../lib/handwriting';
+import { altoDeRenglon, altoDeX, lineasDePauta, muestraTexto, tamanoDeTrazo, type ModoCaligrafia, type Pauta, type TipoPauta } from '../lib/handwriting';
 import { MarcoGenerador, NombreFecha, PreviewFrame, escribirUrl, useImprimir, useSemilla } from './preview';
 
 interface Props {
@@ -170,8 +170,32 @@ function PautaHoja({
 	const x = altoDeX(pauta);
 	const alto = altoDeRenglon(tipo, x);
 	const ancho = 680;
+	const margen = 36;
+	const limite = ancho - 8;
 	const lineas = lineasDePauta(tipo, x);
 	const familia = letra === 'cursiva' ? 'Playwrite AR' : 'Andika';
+	const baseTexto = tipo === 'doble' ? (lineas[2] ?? x * 2.5) : (lineas[1] ?? x * 2);
+	const estimado = tamanoDeTrazo(frase, x, letra === 'cursiva', ancho - margen - 16);
+	const muestra = useRef<SVGTextElement>(null);
+	const [fontSize, setFontSize] = useState(estimado);
+
+	useEffect(() => {
+		let vivo = true;
+		const medir = () => {
+			const node = muestra.current;
+			if (!node || !vivo) return;
+			node.setAttribute('font-size', String(estimado));
+			const caja = node.getBBox();
+			const fin = caja.x + caja.width;
+			const siguiente = fin > limite && caja.width > 0 ? Math.max(4, (estimado * (limite - caja.x)) / caja.width) : estimado;
+			setFontSize((actual) => (Math.abs(actual - siguiente) > 0.2 ? siguiente : actual));
+		};
+		medir();
+		document.fonts.ready.then(medir);
+		return () => {
+			vivo = false;
+		};
+	}, [estimado, frase, familia, limite]);
 
 	return (
 		<div>
@@ -188,7 +212,14 @@ function PautaHoja({
 								<line key={linea} x1="32" y1={base + linea} x2={ancho - 8} y2={base + linea} stroke={linea === lineas[1] || linea === lineas[2] ? '#9aa4b2' : '#d5dbe3'} stroke-width="1" />
 							))}
 							{muestraTexto(modo, renglon) && (
-								<text x="36" y={base + (lineas[1] ?? x)} fill="#c9ced6" font-family={`${familia}, sans-serif`} font-size={x * 1.35}>
+								<text
+									ref={renglon === 0 ? muestra : undefined}
+									x={margen + 4}
+									y={base + baseTexto}
+									fill="#c9ced6"
+									font-family={`${familia}, sans-serif`}
+									font-size={fontSize}
+								>
 									{frase}
 								</text>
 							)}

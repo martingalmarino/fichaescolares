@@ -1,9 +1,9 @@
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
-import type { ComponentChildren } from 'preact';
 import { efemerides, etiquetaFecha, type Efemeride } from '../data/efemerides';
 import { track } from '../lib/analytics';
 import { toSeed } from '../lib/prng';
 import { createWordSearch, type Difficulty, type Placement } from '../lib/wordsearch';
+import { PreviewFrame, useBarraFija } from './preview';
 
 interface Props {
 	initialSlug: string | null;
@@ -13,7 +13,6 @@ interface Props {
 type GridSize = 10 | 12 | 14 | 16;
 
 const SIZES: GridSize[] = [10, 12, 14, 16];
-const A4_WIDTH_PX = (210 * 96) / 25.4;
 
 export default function SopaGenerator({ initialSlug, initialSeed }: Props) {
 	const fallback = efemerides.find((item) => item.slug === '25-de-mayo') ?? efemerides[0];
@@ -31,6 +30,8 @@ export default function SopaGenerator({ initialSlug, initialSeed }: Props) {
 	const [reverseDiagonals, setReverseDiagonals] = useState(false);
 	const [optionsOpen, setOptionsOpen] = useState(true);
 	const [pdfHint, setPdfHint] = useState(false);
+	const barra = useRef<HTMLDivElement>(null);
+	useBarraFija(barra);
 
 	const efemeride = efemerides.find((item) => item.slug === slug) ?? starting ?? efemerides[0];
 
@@ -134,8 +135,8 @@ export default function SopaGenerator({ initialSlug, initialSeed }: Props) {
 	}
 
 	return (
-		<div class="pb-24 xl:pb-0">
-			<div class="grid items-start gap-6 xl:grid-cols-[300px_minmax(0,1fr)_160px]">
+		<div>
+			<div class="grid items-start gap-6 xl:grid-cols-[300px_minmax(0,1fr)]">
 				<aside class="panel rounded-card border border-borde bg-white p-4 shadow-card">
 					<button
 						type="button"
@@ -269,7 +270,6 @@ export default function SopaGenerator({ initialSlug, initialSeed }: Props) {
 							<span aria-hidden="true">↻</span>
 							Generar otra
 						</button>
-
 						{result && result.omitted.length > 0 && (
 							<p class="no-print mt-3 text-sm leading-relaxed text-muted" role="status">
 								No entraron:{' '}
@@ -281,16 +281,6 @@ export default function SopaGenerator({ initialSlug, initialSeed }: Props) {
 								. Probá un tamaño mayor o generá otra.
 							</p>
 						)}
-
-						<div class="mt-4">
-							<div
-								class="ad no-print flex h-[250px] w-full items-center justify-center rounded-card border border-dashed border-borde bg-[#f3f5f7] text-center text-[11px] font-medium uppercase tracking-[0.14em] text-muted"
-								role="complementary"
-								aria-label="Espacio publicitario"
-							>
-								Publicidad · 300×250
-							</div>
-						</div>
 					</div>
 				</aside>
 
@@ -333,17 +323,12 @@ export default function SopaGenerator({ initialSlug, initialSeed }: Props) {
 						)}
 					</div>
 				</div>
-
-				<div
-					class="ad no-print hidden h-[600px] w-[160px] shrink-0 items-center justify-center rounded-card border border-dashed border-borde bg-[#f3f5f7] text-center text-[11px] font-medium uppercase tracking-[0.14em] text-muted xl:flex"
-					role="complementary"
-					aria-label="Espacio publicitario"
-				>
-					Publicidad · 160×600
-				</div>
 			</div>
 
-			<div class="no-print fixed inset-x-0 bottom-0 z-20 flex justify-center gap-3 border-t border-borde bg-white p-3 xl:hidden">
+			<div
+				ref={barra}
+				class="barra-fija no-print fixed inset-x-0 bottom-0 z-30 flex flex-wrap items-center justify-center gap-2 border-t border-borde bg-white px-3 pt-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] xl:hidden"
+			>
 				<PrintButtons hint={pdfHint} onPrint={() => printSheet(false)} onPdf={() => printSheet(true)} />
 			</div>
 		</div>
@@ -394,7 +379,7 @@ function PrintButtons({
 		<>
 			<button
 				type="button"
-				class="inline-flex items-center gap-2 rounded-control border border-borde bg-white px-4 py-2.5 text-sm font-semibold text-azul shadow-sm"
+				class="inline-flex min-h-11 items-center gap-2 rounded-control border border-borde bg-white px-4 py-2.5 text-sm font-semibold text-azul shadow-sm"
 				onClick={onPrint}
 			>
 				<span aria-hidden="true">⎙</span>
@@ -404,14 +389,14 @@ function PrintButtons({
 				{hint && (
 					<p
 						role="status"
-						class="absolute bottom-full left-1/2 z-10 mb-2 w-56 -translate-x-1/2 rounded-control bg-azul px-3 py-2 text-center text-xs font-medium text-white"
+						class="absolute bottom-full left-1/2 z-10 mb-2 w-max max-w-[min(14rem,calc(100vw-2rem))] -translate-x-1/2 rounded-control bg-azul px-3 py-2 text-center text-xs font-medium text-white"
 					>
 						Elegí “Guardar como PDF” como destino.
 					</p>
 				)}
 				<button
 					type="button"
-					class="inline-flex items-center gap-2 rounded-control bg-sol px-4 py-2.5 text-sm font-semibold text-azul shadow-sm"
+					class="inline-flex min-h-11 items-center gap-2 rounded-control bg-sol px-4 py-2.5 text-sm font-semibold text-azul shadow-sm"
 					onClick={onPdf}
 				>
 					<span aria-hidden="true">⬇</span>
@@ -419,43 +404,6 @@ function PrintButtons({
 				</button>
 			</div>
 		</>
-	);
-}
-
-function PreviewFrame({ children, solution = false }: { children: ComponentChildren; solution?: boolean }) {
-	const frame = useRef<HTMLDivElement>(null);
-	const [scale, setScale] = useState(1);
-
-	useEffect(() => {
-		const element = frame.current;
-		if (!element) return;
-		const update = () => {
-			const next = Math.min(1, element.clientWidth / A4_WIDTH_PX);
-			setScale(next > 0 ? next : 1);
-		};
-		update();
-		const observer = new ResizeObserver(update);
-		observer.observe(element);
-		return () => observer.disconnect();
-	}, []);
-
-	return (
-		<div ref={frame} class="w-full">
-			<div class="preview-slot relative overflow-hidden" style={{ height: `${297 * scale}mm` }}>
-				<div
-					class={`a4 absolute left-0 top-0 bg-white text-azul shadow-card ${solution ? 'solutions' : ''}`}
-					style={{
-						width: '210mm',
-						minHeight: '297mm',
-						padding: '10mm',
-						transform: `scale(${scale})`,
-						transformOrigin: 'top left',
-					}}
-				>
-					{children}
-				</div>
-			</div>
-		</div>
 	);
 }
 
@@ -483,14 +431,14 @@ function Sheet({
 	return (
 		<div>
 			{showName && (
-				<div class="mb-4 flex items-end justify-between gap-4 text-[13px]">
-					<p>Nombre: ______________________________</p>
-					<p>Fecha: ___/___/______</p>
+				<div class="mb-4 flex flex-wrap items-end justify-between gap-x-4 gap-y-1 text-[13px]">
+					<p class="min-w-0">Nombre: ______________________________</p>
+					<p class="min-w-0">Fecha: ___/___/______</p>
 				</div>
 			)}
 			<h2 class="text-center text-[22px] font-bold leading-tight">{title}</h2>
 			<p class="mt-1 text-center text-[13px] text-texto">{instruction}</p>
-			<div class="mx-auto mt-4 w-full max-w-[170mm]">
+			<div class="mx-auto mt-4 w-full max-w-[min(100%,170mm)]">
 				<svg viewBox={`0 0 ${size} ${size}`} class="h-auto w-full" role="img" aria-label="Grilla de la sopa de letras">
 					<rect width={size} height={size} fill="#ffffff" />
 					{solution &&
@@ -533,9 +481,9 @@ function Sheet({
 			</div>
 			<ul class="mt-4 grid grid-cols-3 gap-x-3 gap-y-1.5 text-[12px]">
 				{words.map((word) => (
-					<li key={word} class="flex items-center gap-1.5">
-						<span class="inline-block size-3 shrink-0 border border-azul" aria-hidden="true" />
-						{formatText(word, uppercase)}
+					<li key={word} class="flex min-w-0 items-start gap-1.5">
+						<span class="mt-0.5 inline-block size-3 shrink-0 border border-azul" aria-hidden="true" />
+						<span class="min-w-0 break-words">{formatText(word, uppercase)}</span>
 					</li>
 				))}
 			</ul>

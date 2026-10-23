@@ -60,8 +60,11 @@ const descripcion = provincia.capital
 			<button id="imprimir-ficha" type="button" class="rounded-control bg-sol px-4 py-2.5 text-sm font-semibold text-azul">Imprimir</button>
 			<a class="rounded-control border border-borde px-4 py-2.5 text-sm" href="/provincias/">Volver al índice</a>
 		</div>
-		<div class="a4 mt-6 rounded-card border border-borde bg-white p-6 text-azul shadow-card">
-			<p class="text-sm">Nombre: ______________________________ Fecha: ___/___/______</p>
+		<div class="a4 mt-6 min-w-0 rounded-card border border-borde bg-white p-4 text-azul shadow-card sm:p-6">
+			<p class="flex flex-wrap gap-x-4 gap-y-1 text-sm">
+				<span>Nombre: ______________________________</span>
+				<span>Fecha: ___/___/______</span>
+			</p>
 			<h1 class="mt-3 text-3xl font-bold">{provincia.nombre}</h1>
 			<img class="mx-auto mt-4 h-auto w-full max-w-[90mm]" src={provincia.silueta} alt={`Silueta de ${provincia.nombre}`} />
 			<dl class="mt-4 grid gap-2 text-base sm:grid-cols-2">
@@ -90,7 +93,7 @@ const descripcion = provincia.capital
 				)
 			}
 			<ul class="mt-4 space-y-2 text-sm">
-				{datos.map(([etiqueta]) => <li>{etiqueta}: ______________________________</li>)}
+				{datos.map(([etiqueta]) => <li class="break-words">{etiqueta}: ______________________________</li>)}
 			</ul>
 			{
 				sopa && (
@@ -98,11 +101,11 @@ const descripcion = provincia.capital
 						<h2 class="text-xl font-bold">Sopa de letras</h2>
 						<p class="mt-1 text-sm">{provincia.palabras?.join(' · ')}</p>
 						<div
-							class="mx-auto mt-3 grid w-full max-w-[150mm] gap-px"
+							class="mx-auto mt-3 grid w-full min-w-0 max-w-[150mm] gap-px"
 							style={`grid-template-columns: repeat(${sopa.grid.length}, minmax(0, 1fr))`}
 						>
 							{sopa.grid.flat().map((letra) => (
-								<span class="flex aspect-square items-center justify-center border border-borde text-[10px] font-semibold">{letra}</span>
+								<span class="flex aspect-square min-w-0 items-center justify-center border border-borde text-[10px] font-semibold leading-none">{letra}</span>
 							))}
 						</div>
 					</section>

@@ -18,6 +18,16 @@ export function altoDeRenglon(tipo: TipoPauta, x: number): number {
 	return (tipo === 'simple' ? x * 2 : x * 4) + 10;
 }
 
+/** Achica el trazo para que la frase entre en el renglón sin cortarse. */
+export function tamanoDeTrazo(frase: string, x: number, cursiva: boolean, disponible: number): number {
+	const ideal = x * 1.05;
+	const caracteres = Math.max([...frase].length, 1);
+	const factor = cursiva ? 0.75 : 0.55;
+	if (disponible <= 0) return Math.min(ideal, 8);
+	const cabe = disponible / (caracteres * factor);
+	return Math.min(ideal, cabe);
+}
+
 export function muestraTexto(modo: ModoCaligrafia, renglon: number): boolean {
 	if (modo === 'calcar') return true;
 	if (modo === 'copiar') return false;

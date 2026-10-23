@@ -16,12 +16,54 @@
 
 html {
 	scroll-behavior: smooth;
+	overflow-x: clip;
 }
 
 body {
 	background: var(--bg);
 	color: var(--texto);
 	font-family: Inter, system-ui, sans-serif;
+	padding-bottom: calc(var(--fp-barra, 0px) + var(--fp-aviso, 0px));
+}
+
+/* Antes de medir la barra, reservar sitio para que no tape el final. */
+@media (max-width: 1279px) {
+	html:has(.barra-fija) {
+		--fp-barra: 4.75rem;
+	}
+}
+
+html:has(.aviso-consentimiento) {
+	--fp-aviso: 12rem;
+}
+
+:where(p, li, a, h1, h2, h3, dd, figcaption) {
+	overflow-wrap: break-word;
+}
+
+/* Evita el zoom/parpadeo de iOS al enfocar un campo de menos de 16px. */
+@media (max-width: 767px) {
+	input,
+	select,
+	textarea {
+		font-size: 16px;
+	}
+}
+
+/* La hoja A4 se achica al ancho del contenedor desde el primer pintado, sin esperar a JS. */
+.preview-frame {
+	container-type: inline-size;
+	width: 100%;
+	max-width: 210mm;
+	overflow-x: clip;
+}
+
+.preview-frame > .a4 {
+	width: 210mm;
+	min-height: 297mm;
+	box-sizing: border-box;
+	padding: 10mm;
+	zoom: min(1, calc(100cqi / 210mm));
 }
 
 summary {

@@ -1,5 +1,4 @@
 ---
-import AdSlot from '../components/AdSlot.astro';
 import ToolIcon from '../components/ToolIcon.astro';
 import { efemerides } from '../data/efemerides';
 import ProximasEfemerides from '../islands/ProximasEfemerides';
@@ -74,7 +73,7 @@ const preguntas = [
 	},
 	{
 		q: '¿En qué tamaño se imprimen?',
-		a: 'En A4. La vista previa muestra la hoja a escala y, al imprimir, quedan afuera el menú y los espacios de publicidad.',
+		a: 'En A4. La vista previa muestra la hoja a escala y, al imprimir, quedan afuera el menú y los botones.',
 	},
 	{
 		q: '¿Puedo incluir la hoja de soluciones?',
@@ -163,7 +162,7 @@ const checks = ['Formato A4', 'Con hoja de soluciones', 'Contenido argentino'];
 
 			<div class="mx-auto w-full max-w-md lg:justify-self-end">
 				<div
-					class="rotate-1 rounded-card border border-borde bg-white p-4 shadow-[0_16px_40px_rgba(29,53,87,0.1)]"
+					class="rounded-card border border-borde bg-white p-4 shadow-[0_16px_40px_rgba(29,53,87,0.1)] sm:rotate-1"
 				>
 					<p class="text-sm font-semibold text-azul">Sopa de letras · 25 de Mayo</p>
 					<div
@@ -183,10 +182,6 @@ const checks = ['Formato A4', 'Con hoja de soluciones', 'Contenido argentino'];
 			</div>
 		</div>
 	</section>
-
-	<div class="mx-auto max-w-6xl px-4 py-8">
-		<AdSlot variant="leaderboard" />
-	</div>
 
 	<section id="efemerides" class="scroll-mt-6">
 		<div class="mx-auto max-w-6xl px-4 py-6">
@@ -218,10 +213,6 @@ const checks = ['Formato A4', 'Con hoja de soluciones', 'Contenido argentino'];
 			</ul>
 		</div>
 	</section>
-
-	<div class="mx-auto max-w-6xl px-4 py-4">
-		<AdSlot variant="adaptable" />
-	</div>
 
 	<section class="mx-auto max-w-6xl px-4 py-10" aria-labelledby="faq-titulo">
 		<h2 id="faq-titulo" class="text-2xl font-bold tracking-tight text-azul">Preguntas frecuentes</h2>

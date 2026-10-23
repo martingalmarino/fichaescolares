@@ -260,7 +260,7 @@ function Hoja({
 			{nombre && <NombreFecha />}
 			<h2 class="text-center text-[22px] font-bold">{titulo.trim() || 'Crucigrama'}</h2>
 			<p class="mt-1 text-center text-[13px]">Completá con las pistas. Una letra por casillero.</p>
-			<svg viewBox={`0 0 ${columnas} ${filas}`} class="mx-auto mt-4 h-auto w-full max-w-[170mm]" role="img" aria-label="Crucigrama">
+			<svg viewBox={`0 0 ${columnas} ${filas}`} class="mx-auto mt-4 block h-auto w-full max-w-[min(100%,170mm)]" role="img" aria-label="Crucigrama">
 				{resultado.grid.flatMap((fila, row) =>
 					fila.map((letra, col) => {
 						if (!letra) {
