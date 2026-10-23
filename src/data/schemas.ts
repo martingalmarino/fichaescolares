@@ -60,22 +60,28 @@ export const fraseSchema = z.object({
 	origen: z.string().min(8),
 });
 
+const simboloImagenSchema = z.object({
+	src: z.string().url(),
+	licencia: z.string().min(2),
+	pagina: z.string().url(),
+});
+
 export const provinciaSchema = z.object({
 	slug,
 	nombre: z.string().min(3),
 	capital: z.string().min(3).nullable(),
 	region: z.string().min(3).nullable(),
-	superficie: z.string().min(2).nullable(),
-	poblacion: z.string().min(2).nullable(),
-	simbolos: z.object({
-		flor: z.string().nullable(),
-		arbol: z.string().nullable(),
-		bandera: z.string().nullable(),
-		escudo: z.string().nullable(),
-	}),
-	datos_para_investigar: z.array(z.string().min(10)).min(2),
+	superficie: z.string().min(2),
+	poblacion: z.string().min(2),
+	flor: z.string().min(3).nullable(),
+	arbol: z.string().min(3).nullable(),
+	bandera: simboloImagenSchema.nullable(),
+	escudo: simboloImagenSchema.nullable(),
+	palabras: z.array(z.string().regex(/^[A-ZÑ]{3,16}$/)).length(8).nullable(),
 	fuentes: z.array(z.string().url()).min(1),
-	verificado: z.boolean(),
+	normas: z.array(z.string().min(3)),
+	silueta: z.string().regex(/^\/provincias\/siluetas\/[a-z0-9-]+\.svg$/),
+	verificado: z.literal(true),
 });
 
 export const afiliadoSchema = z.object({
@@ -155,11 +161,11 @@ export function validarDatos(
 		const afiliadosParseados = afiliadosSchema.safeParse(extras.afiliados);
 		const creditosParseados = creditosSchema.safeParse(extras.creditos);
 		if (!frasesParseadas.success) errores.push(...mensajes('frases.json', frasesParseadas.error));
-		if (!provinciasParseadas.success) errores.push(...mensajes('provincias.json', provinciasParseadas.error));
+		if (!provinciasParseadas.success) errores.push(...mensajes('provincias', provinciasParseadas.error));
 		if (!afiliadosParseados.success) errores.push(...mensajes('afiliados.json', afiliadosParseados.error));
 		if (!creditosParseados.success) errores.push(...mensajes('creditos.json', creditosParseados.error));
 		if (provinciasParseadas.success) {
-			errores.push(...slugsRepetidos(provinciasParseadas.data.map((item) => item.slug), 'provincias.json'));
+			errores.push(...slugsRepetidos(provinciasParseadas.data.map((item) => item.slug), 'provincias'));
 			if (!opciones.allowDraft) {
 				for (const provincia of provinciasParseadas.data) {
 					if (!provincia.verificado) {

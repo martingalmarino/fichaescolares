@@ -1,0 +1,8 @@
+Siluetas provinciales de Fichas Patrias.
+
+Origen: Natural Earth, Admin 1 – States and Provinces, escala 1:10.000.000 (cultural vectors).
+Licencia: dominio público.
+Condiciones: https://www.naturalearthdata.com/about/terms-of-use/
+Archivo de origen: ne_10m_admin_1_states_provinces.
+
+Cada silueta es el polígono de esa jurisdicción en esa capa, simplificado para colorear. La correspondencia con las provincias argentinas usa el código ISO 3166-2.

@@ -65,9 +65,6 @@ export default function ColorearGenerator({ initialSeed, initialLamina }: Props)
 						<input type="checkbox" checked={nombre} onChange={(event) => setNombre(event.currentTarget.checked)} />
 						Campos nombre y fecha
 					</label>
-					{lamina === 'mapa' && (
-						<p class="mt-3 text-sm leading-relaxed text-muted">El recuadro está vacío a propósito: no publicamos una silueta sin un archivo geográfico citado.</p>
-					)}
 				</>
 			}
 			vista={

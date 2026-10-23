@@ -1,6 +1,7 @@
 ---
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import creditos from '../data/creditos.json';
+import { provincias } from '../data/provincias';
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
@@ -25,10 +26,28 @@ import BaseLayout from '../layouts/BaseLayout.astro';
 					</li>
 				))
 			}
-		</ul>
+			</ul>
+			{
+				provincias.length > 0 && (
+					<ul class="mt-6 space-y-4">
+						{provincias.flatMap((provincia) => [
+							provincia.bandera && { nombre: `Bandera de ${provincia.nombre}`, licencia: provincia.bandera.licencia, enlace: provincia.bandera.pagina },
+							provincia.escudo && { nombre: `Escudo de ${provincia.nombre}`, licencia: provincia.escudo.licencia, enlace: provincia.escudo.pagina },
+						]).filter((item) => item).map((item) => (
+							<li class="rounded-card border border-borde bg-white p-4">
+								<h2 class="text-lg font-semibold text-azul">{item.nombre}</h2>
+								<p class="text-sm text-muted">{item.licencia}</p>
+								<p class="mt-2 text-sm">
+									<a class="text-celeste underline" href={item.enlace}>{item.enlace}</a>
+								</p>
+							</li>
+						))}
+					</ul>
+				)
+			}
 		<h2 class="mt-8 text-2xl font-bold text-azul">Datos</h2>
 		<p class="mt-3">
-			Los nombres de las 24 jurisdicciones salen de la API Georef, con fuente IGN. La capital, la superficie y la población de cada ficha provincial se copian de la página de esa provincia en argentina.gob.ar cuando el HTML las publica. Cada ficha enlaza esa página. Las efemérides y las pistas de próceres guardan sus URLs en los archivos de datos. No hay fotos de terceros.
+			Las siluetas provinciales salen de Natural Earth, en dominio público. La capital, la superficie y la población de una ficha citan la fuente que figura al pie. La flor y el árbol citan la ley provincial. La bandera y el escudo, cuando la ficha los muestra, quedan abajo con su licencia. Las efemérides y las pistas de próceres guardan sus URLs en los archivos de datos.
 		</p>
 		<h2 class="mt-8 text-2xl font-bold text-azul">Frases de caligrafía</h2>
 		<p class="mt-3">

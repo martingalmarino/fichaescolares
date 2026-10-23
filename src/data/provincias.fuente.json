@@ -1,0 +1,2530 @@
+[
+  {
+    "id": "buenos_aires",
+    "nombre": "Buenos Aires",
+    "capital": {
+      "valor": "La Plata",
+      "fuente": [
+        "https://www.ign.gob.ar/NuestrasActividades/Geografia/DatosArgentina/DivisionPolitica"
+      ],
+      "verificado": true
+    },
+    "region": {
+      "valor": "Pampeana (interior) / GBA (conurbano)",
+      "fuente": [
+        "INDEC – regiones estadísticas (GBA, Pampeana, NOA, NEA, Cuyo, Patagonia)"
+      ],
+      "verificado": false,
+      "nota": "Asignación según esquema INDEC; composición tomada de conocimiento previo, falta citar documento INDEC que la liste"
+    },
+    "superficie_km2": {
+      "valor": 305907.4,
+      "fuente": [
+        "https://www.ign.gob.ar/NuestrasActividades/Geografia/DatosArgentina/DivisionPolitica",
+        "https://www.ign.gob.ar/descargas/geoespacial/Informe_supercies_de_Argentina.pdf"
+      ],
+      "verificado": true
+    },
+    "poblacion_2022": {
+      "valor": 17523996,
+      "fuente": [
+        "https://www.indec.gob.ar/ftp/cuadros/poblacion/censo2022_indicadores_demograficos.pdf"
+      ],
+      "verificado": true
+    },
+    "flor_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No se encontró norma"
+    },
+    "arbol_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No se encontró norma"
+    },
+    "ave_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No investigado a fondo / no hallado"
+    },
+    "dia_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "Pendiente"
+    },
+    "gentilicio": {
+      "valor": "bonaerense",
+      "fuente": [
+        "https://es.wikipedia.org/wiki/Provincia_de_Buenos_Aires"
+      ],
+      "verificado": false,
+      "nota": "Solo Wikipedia (dato de lengua; puede verificarse con DLE/RAE)"
+    },
+    "palabras_clave": {
+      "valor": [
+        "PAMPA",
+        "GIRASOL",
+        "LAPLATA",
+        "TANDIL",
+        "GAUCHO",
+        "MAR",
+        "LUJAN"
+      ],
+      "fuente": [],
+      "verificado": false,
+      "nota": "Editorial (no es dato fáctico); en mayúsculas sin tildes para sopa de letras. Revisar antes de publicar"
+    },
+    "bandera": {
+      "valor": "https://commons.wikimedia.org/wiki/File:Bandera_de_la_Provincia_de_Buenos_Aires.svg",
+      "fuente": [
+        "https://commons.wikimedia.org/wiki/File:Bandera_de_la_Provincia_de_Buenos_Aires.svg"
+      ],
+      "verificado": true,
+      "archivo": "File:Bandera de la Provincia de Buenos Aires.svg",
+      "url_archivo": "https://upload.wikimedia.org/wikipedia/commons/1/15/Bandera_de_la_Provincia_de_Buenos_Aires.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "licencia": "Public domain"
+    },
+    "escudo": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No se encontró archivo en Commons; buscar manualmente"
+    },
+    "simbolos_fuente_oficial": "https://www.argentina.gob.ar/buenosaires/simbolos",
+    "notas": "El ceibo es flor NACIONAL (Decreto 138.974/1942), no provincial. No se halló ley de flor/árbol bonaerense.",
+    "verificado": false,
+    "verificado_datos_basicos": false
+  },
+  {
+    "id": "caba",
+    "nombre": "Ciudad Autónoma de Buenos Aires",
+    "capital": {
+      "valor": null,
+      "fuente": [
+        "https://www.ign.gob.ar/NuestrasActividades/Geografia/DatosArgentina/DivisionPolitica"
+      ],
+      "verificado": true,
+      "nota": "CABA es Capital Federal; no tiene capital propia"
+    },
+    "region": {
+      "valor": "Gran Buenos Aires (GBA)",
+      "fuente": [
+        "INDEC – regiones estadísticas (GBA, Pampeana, NOA, NEA, Cuyo, Patagonia)"
+      ],
+      "verificado": false,
+      "nota": "Asignación según esquema INDEC; composición tomada de conocimiento previo, falta citar documento INDEC que la liste"
+    },
+    "superficie_km2": {
+      "valor": 205.9,
+      "fuente": [
+        "https://www.ign.gob.ar/NuestrasActividades/Geografia/DatosArgentina/DivisionPolitica",
+        "https://www.ign.gob.ar/descargas/geoespacial/Informe_supercies_de_Argentina.pdf"
+      ],
+      "verificado": true
+    },
+    "poblacion_2022": {
+      "valor": 3121707,
+      "fuente": [
+        "https://www.indec.gob.ar/ftp/cuadros/poblacion/censo2022_indicadores_demograficos.pdf"
+      ],
+      "verificado": true
+    },
+    "flor_provincial": {
+      "valor": "Orquídea ribereña o del talar (Chloraea membranacea) – flor simbólica",
+      "fuente": [
+        "(síntesis de búsqueda web; URL no registrada)"
+      ],
+      "verificado": false,
+      "nota": "Confirmar texto de Ley 5.925 en digesto.buenosaires.gob.ar",
+      "norma": "Ley CABA 5.925 (2017)"
+    },
+    "arbol_provincial": {
+      "valor": "Jacarandá (Jacaranda mimosifolia) – árbol distintivo",
+      "fuente": [
+        "digesto.buenosaires.gob.ar – Ley 5.229 (URL exacta no registrada)"
+      ],
+      "verificado": true,
+      "norma": "Ley CABA 5.229 (2014)"
+    },
+    "ave_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No investigado a fondo / no hallado"
+    },
+    "dia_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "Pendiente"
+    },
+    "gentilicio": {
+      "valor": "porteño, -a",
+      "fuente": [
+        "https://es.wikipedia.org/wiki/Ciudad_Autónoma_de_Buenos_Aires"
+      ],
+      "verificado": false,
+      "nota": "Solo Wikipedia (dato de lengua; puede verificarse con DLE/RAE)"
+    },
+    "palabras_clave": {
+      "valor": [
+        "OBELISCO",
+        "TANGO",
+        "CABILDO",
+        "RIACHUELO",
+        "PORTENO",
+        "PLAZA"
+      ],
+      "fuente": [],
+      "verificado": false,
+      "nota": "Editorial (no es dato fáctico); en mayúsculas sin tildes para sopa de letras. Revisar antes de publicar"
+    },
+    "bandera": {
+      "valor": "https://commons.wikimedia.org/wiki/File:Bandera_de_la_Ciudad_de_Buenos_Aires.svg",
+      "fuente": [
+        "https://commons.wikimedia.org/wiki/File:Bandera_de_la_Ciudad_de_Buenos_Aires.svg"
+      ],
+      "verificado": true,
+      "archivo": "File:Bandera de la Ciudad de Buenos Aires.svg",
+      "url_archivo": "https://upload.wikimedia.org/wikipedia/commons/f/f5/Bandera_de_la_Ciudad_de_Buenos_Aires.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "licencia": "CC BY 2.5 ar"
+    },
+    "escudo": {
+      "valor": "https://commons.wikimedia.org/wiki/File:Escudo_de_la_Ciudad_de_Buenos_Aires.svg",
+      "fuente": [
+        "https://commons.wikimedia.org/wiki/File:Escudo_de_la_Ciudad_de_Buenos_Aires.svg"
+      ],
+      "verificado": true,
+      "archivo": "File:Escudo de la Ciudad de Buenos Aires.svg",
+      "url_archivo": "https://upload.wikimedia.org/wikipedia/commons/4/4d/Escudo_de_la_Ciudad_de_Buenos_Aires.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "licencia": "CC BY 2.5 ar"
+    },
+    "simbolos_fuente_oficial": "https://www.argentina.gob.ar/caba/simbolos",
+    "notas": "No tiene capital (es la Capital Federal). También declaró mariposa simbólica: panambí morotí (Ley 5.925).",
+    "verificado": false,
+    "verificado_datos_basicos": true
+  },
+  {
+    "id": "catamarca",
+    "nombre": "Catamarca",
+    "capital": {
+      "valor": "San Fernando del Valle de Catamarca",
+      "fuente": [
+        "https://www.ign.gob.ar/NuestrasActividades/Geografia/DatosArgentina/DivisionPolitica"
+      ],
+      "verificado": true
+    },
+    "region": {
+      "valor": "Noroeste (NOA)",
+      "fuente": [
+        "INDEC – regiones estadísticas (GBA, Pampeana, NOA, NEA, Cuyo, Patagonia)"
+      ],
+      "verificado": false,
+      "nota": "Asignación según esquema INDEC; composición tomada de conocimiento previo, falta citar documento INDEC que la liste"
+    },
+    "superficie_km2": {
+      "valor": 101486.1,
+      "fuente": [
+        "https://www.ign.gob.ar/NuestrasActividades/Geografia/DatosArgentina/DivisionPolitica",
+        "https://www.ign.gob.ar/descargas/geoespacial/Informe_supercies_de_Argentina.pdf"
+      ],
+      "verificado": true
+    },
+    "poblacion_2022": {
+      "valor": 429562,
+      "fuente": [
+        "https://www.indec.gob.ar/ftp/cuadros/poblacion/censo2022_indicadores_demograficos.pdf"
+      ],
+      "verificado": true
+    },
+    "flor_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No se encontró norma"
+    },
+    "arbol_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No se encontró norma"
+    },
+    "ave_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No investigado a fondo / no hallado"
+    },
+    "dia_provincial": {
+      "valor": "25 de agosto – Día de la Autonomía de Catamarca",
+      "fuente": [
+        "https://www.argentina.gob.ar/catamarca/simbolos"
+      ],
+      "verificado": true,
+      "nota": "La fuente lo menciona; falta norma que lo instituya"
+    },
+    "gentilicio": {
+      "valor": "catamarqueño, -ña",
+      "fuente": [
+        "https://es.wikipedia.org/wiki/Provincia_de_Catamarca"
+      ],
+      "verificado": false,
+      "nota": "Solo Wikipedia (dato de lengua; puede verificarse con DLE/RAE)"
+    },
+    "palabras_clave": {
+      "valor": [
+        "VALLE",
+        "OLIVO",
+        "PONCHO",
+        "ANDES",
+        "SALAR",
+        "NOGAL"
+      ],
+      "fuente": [],
+      "verificado": false,
+      "nota": "Editorial (no es dato fáctico); en mayúsculas sin tildes para sopa de letras. Revisar antes de publicar"
+    },
+    "bandera": {
+      "valor": "https://commons.wikimedia.org/wiki/File:Bandera_de_la_Provincia_de_Catamarca.svg",
+      "fuente": [
+        "https://commons.wikimedia.org/wiki/File:Bandera_de_la_Provincia_de_Catamarca.svg"
+      ],
+      "verificado": true,
+      "archivo": "File:Bandera de la Provincia de Catamarca.svg",
+      "url_archivo": "https://upload.wikimedia.org/wikipedia/commons/7/7b/Bandera_de_la_Provincia_de_Catamarca.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "licencia": "CC BY 4.0"
+    },
+    "escudo": {
+      "valor": "https://commons.wikimedia.org/wiki/File:Escudo_de_la_Provincia_de_Catamarca.svg",
+      "fuente": [
+        "https://commons.wikimedia.org/wiki/File:Escudo_de_la_Provincia_de_Catamarca.svg"
+      ],
+      "verificado": true,
+      "archivo": "File:Escudo de la Provincia de Catamarca.svg",
+      "url_archivo": "https://upload.wikimedia.org/wikipedia/commons/6/64/Escudo_de_la_Provincia_de_Catamarca.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "licencia": "Public domain"
+    },
+    "simbolos_fuente_oficial": "https://www.argentina.gob.ar/catamarca/simbolos",
+    "notas": null,
+    "verificado": false,
+    "verificado_datos_basicos": true
+  },
+  {
+    "id": "chaco",
+    "nombre": "Chaco",
+    "capital": {
+      "valor": "Resistencia",
+      "fuente": [
+        "https://www.ign.gob.ar/NuestrasActividades/Geografia/DatosArgentina/DivisionPolitica"
+      ],
+      "verificado": true
+    },
+    "region": {
+      "valor": "Noreste (NEA)",
+      "fuente": [
+        "INDEC – regiones estadísticas (GBA, Pampeana, NOA, NEA, Cuyo, Patagonia)"
+      ],
+      "verificado": false,
+      "nota": "Asignación según esquema INDEC; composición tomada de conocimiento previo, falta citar documento INDEC que la liste"
+    },
+    "superficie_km2": {
+      "valor": 99763.3,
+      "fuente": [
+        "https://www.ign.gob.ar/NuestrasActividades/Geografia/DatosArgentina/DivisionPolitica",
+        "https://www.ign.gob.ar/descargas/geoespacial/Informe_supercies_de_Argentina.pdf"
+      ],
+      "verificado": true
+    },
+    "poblacion_2022": {
+      "valor": 1129606,
+      "fuente": [
+        "https://www.indec.gob.ar/ftp/cuadros/poblacion/censo2022_indicadores_demograficos.pdf"
+      ],
+      "verificado": true
+    },
+    "flor_provincial": {
+      "valor": "Flor rosada del palo borracho / samohú (Ceiba chodatii)",
+      "fuente": [
+        "saij.gob.ar (snippet de búsqueda; URL no registrada)"
+      ],
+      "verificado": false,
+      "nota": "Visto solo en resultado de búsqueda SAIJ",
+      "norma": "Ley 5.521 (2005)"
+    },
+    "arbol_provincial": {
+      "valor": "Quebracho colorado chaqueño",
+      "fuente": [
+        "(snippet de búsqueda; URL no registrada)"
+      ],
+      "verificado": false,
+      "nota": "Solo fuente secundaria (blog); dice Decreto 346/96, falta norma oficial",
+      "norma": "Decreto 346/96 (sin confirmar)"
+    },
+    "ave_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No investigado a fondo / no hallado"
+    },
+    "dia_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "Pendiente"
+    },
+    "gentilicio": {
+      "valor": "chaqueño, -ña",
+      "fuente": [
+        "https://es.wikipedia.org/wiki/Provincia_del_Chaco"
+      ],
+      "verificado": false,
+      "nota": "Solo Wikipedia (dato de lengua; puede verificarse con DLE/RAE)"
+    },
+    "palabras_clave": {
+      "valor": [
+        "MONTE",
+        "ALGODON",
+        "QUEBRACHO",
+        "RESISTENCIA",
+        "PALMERA",
+        "RIO"
+      ],
+      "fuente": [],
+      "verificado": false,
+      "nota": "Editorial (no es dato fáctico); en mayúsculas sin tildes para sopa de letras. Revisar antes de publicar"
+    },
+    "bandera": {
+      "valor": "https://commons.wikimedia.org/wiki/File:Bandera_de_la_Provincia_del_Chaco.svg",
+      "fuente": [
+        "https://commons.wikimedia.org/wiki/File:Bandera_de_la_Provincia_del_Chaco.svg"
+      ],
+      "verificado": true,
+      "archivo": "File:Bandera de la Provincia del Chaco.svg",
+      "url_archivo": "https://upload.wikimedia.org/wikipedia/commons/3/33/Bandera_de_la_Provincia_del_Chaco.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "licencia": "CC BY 4.0"
+    },
+    "escudo": {
+      "valor": "https://commons.wikimedia.org/wiki/File:Escudo_de_la_Provincia_del_Chaco.svg",
+      "fuente": [
+        "https://commons.wikimedia.org/wiki/File:Escudo_de_la_Provincia_del_Chaco.svg"
+      ],
+      "verificado": true,
+      "archivo": "File:Escudo de la Provincia del Chaco.svg",
+      "url_archivo": "https://upload.wikimedia.org/wikipedia/commons/0/08/Escudo_de_la_Provincia_del_Chaco.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "licencia": "CC BY 4.0"
+    },
+    "simbolos_fuente_oficial": "https://www.argentina.gob.ar/chaco/simbolos",
+    "notas": null,
+    "verificado": false,
+    "verificado_datos_basicos": true
+  },
+  {
+    "id": "chubut",
+    "nombre": "Chubut",
+    "capital": {
+      "valor": "Rawson",
+      "fuente": [
+        "https://www.ign.gob.ar/NuestrasActividades/Geografia/DatosArgentina/DivisionPolitica"
+      ],
+      "verificado": true
+    },
+    "region": {
+      "valor": "Patagonia",
+      "fuente": [
+        "INDEC – regiones estadísticas (GBA, Pampeana, NOA, NEA, Cuyo, Patagonia)"
+      ],
+      "verificado": false,
+      "nota": "Asignación según esquema INDEC; composición tomada de conocimiento previo, falta citar documento INDEC que la liste"
+    },
+    "superficie_km2": {
+      "valor": 224302.3,
+      "fuente": [
+        "https://www.ign.gob.ar/NuestrasActividades/Geografia/DatosArgentina/DivisionPolitica",
+        "https://www.ign.gob.ar/descargas/geoespacial/Informe_supercies_de_Argentina.pdf"
+      ],
+      "verificado": true
+    },
+    "poblacion_2022": {
+      "valor": 592621,
+      "fuente": [
+        "https://www.indec.gob.ar/ftp/cuadros/poblacion/censo2022_indicadores_demograficos.pdf"
+      ],
+      "verificado": true
+    },
+    "flor_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No se encontró norma"
+    },
+    "arbol_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No se encontró norma"
+    },
+    "ave_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No investigado a fondo / no hallado"
+    },
+    "dia_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "Pendiente"
+    },
+    "gentilicio": {
+      "valor": "chubutense",
+      "fuente": [
+        "https://es.wikipedia.org/wiki/Provincia_del_Chubut"
+      ],
+      "verificado": false,
+      "nota": "Solo Wikipedia (dato de lengua; puede verificarse con DLE/RAE)"
+    },
+    "palabras_clave": {
+      "valor": [
+        "BALLENA",
+        "PINGUINO",
+        "VALDES",
+        "DIQUE",
+        "MESETA",
+        "GALES"
+      ],
+      "fuente": [],
+      "verificado": false,
+      "nota": "Editorial (no es dato fáctico); en mayúsculas sin tildes para sopa de letras. Revisar antes de publicar"
+    },
+    "bandera": {
+      "valor": "https://commons.wikimedia.org/wiki/File:Bandera_de_la_Provincia_del_Chubut.svg",
+      "fuente": [
+        "https://commons.wikimedia.org/wiki/File:Bandera_de_la_Provincia_del_Chubut.svg"
+      ],
+      "verificado": true,
+      "archivo": "File:Bandera de la Provincia del Chubut.svg",
+      "url_archivo": "https://upload.wikimedia.org/wikipedia/commons/8/88/Bandera_de_la_Provincia_del_Chubut.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "licencia": "CC BY 4.0"
+    },
+    "escudo": {
+      "valor": "https://commons.wikimedia.org/wiki/File:Escudo_de_la_Provincia_de_Chubut.svg",
+      "fuente": [
+        "https://commons.wikimedia.org/wiki/File:Escudo_de_la_Provincia_de_Chubut.svg"
+      ],
+      "verificado": true,
+      "archivo": "File:Escudo de la Provincia de Chubut.svg",
+      "url_archivo": "https://upload.wikimedia.org/wikipedia/commons/e/e3/Escudo_de_la_Provincia_de_Chubut.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "licencia": "CC BY 4.0"
+    },
+    "simbolos_fuente_oficial": "https://www.argentina.gob.ar/chubut/simbolos",
+    "notas": null,
+    "verificado": false,
+    "verificado_datos_basicos": true
+  },
+  {
+    "id": "cordoba",
+    "nombre": "Córdoba",
+    "capital": {
+      "valor": "Córdoba",
+      "fuente": [
+        "https://www.ign.gob.ar/NuestrasActividades/Geografia/DatosArgentina/DivisionPolitica"
+      ],
+      "verificado": true
+    },
+    "region": {
+      "valor": "Pampeana",
+      "fuente": [
+        "INDEC – regiones estadísticas (GBA, Pampeana, NOA, NEA, Cuyo, Patagonia)"
+      ],
+      "verificado": false,
+      "nota": "Asignación según esquema INDEC; composición tomada de conocimiento previo, falta citar documento INDEC que la liste"
+    },
+    "superficie_km2": {
+      "valor": 164707.8,
+      "fuente": [
+        "https://www.ign.gob.ar/NuestrasActividades/Geografia/DatosArgentina/DivisionPolitica",
+        "https://www.ign.gob.ar/descargas/geoespacial/Informe_supercies_de_Argentina.pdf"
+      ],
+      "verificado": true
+    },
+    "poblacion_2022": {
+      "valor": 3840905,
+      "fuente": [
+        "https://www.indec.gob.ar/ftp/cuadros/poblacion/censo2022_indicadores_demograficos.pdf"
+      ],
+      "verificado": true
+    },
+    "flor_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No se encontró norma"
+    },
+    "arbol_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No se encontró norma"
+    },
+    "ave_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No investigado a fondo / no hallado"
+    },
+    "dia_provincial": {
+      "valor": "8 de septiembre – Día de la Bandera de Córdoba",
+      "fuente": [
+        "https://www.argentina.gob.ar/cordoba/simbolos"
+      ],
+      "verificado": false,
+      "nota": "La fuente oficial lo menciona vía Ley 9.989; no se leyó la ley",
+      "norma": "Ley 9.989"
+    },
+    "gentilicio": {
+      "valor": "cordobés, -esa",
+      "fuente": [
+        "https://es.wikipedia.org/wiki/Provincia_de_Córdoba_(Argentina)"
+      ],
+      "verificado": false,
+      "nota": "Solo Wikipedia (dato de lengua; puede verificarse con DLE/RAE)"
+    },
+    "palabras_clave": {
+      "valor": [
+        "SIERRAS",
+        "CUARTETO",
+        "PUNILLA",
+        "JESUITAS",
+        "CONDOR",
+        "DIQUE"
+      ],
+      "fuente": [],
+      "verificado": false,
+      "nota": "Editorial (no es dato fáctico); en mayúsculas sin tildes para sopa de letras. Revisar antes de publicar"
+    },
+    "bandera": {
+      "valor": "https://commons.wikimedia.org/wiki/File:Bandera_de_la_Provincia_de_C%C3%B3rdoba.svg",
+      "fuente": [
+        "https://commons.wikimedia.org/wiki/File:Bandera_de_la_Provincia_de_C%C3%B3rdoba.svg"
+      ],
+      "verificado": true,
+      "archivo": "File:Bandera de la Provincia de Córdoba.svg",
+      "url_archivo": "https://upload.wikimedia.org/wikipedia/commons/9/96/Bandera_de_la_Provincia_de_C%C3%B3rdoba.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "licencia": "CC BY 4.0"
+    },
+    "escudo": {
+      "valor": "https://commons.wikimedia.org/wiki/File:Escudo_de_la_Provincia_de_C%C3%B3rdoba.svg",
+      "fuente": [
+        "https://commons.wikimedia.org/wiki/File:Escudo_de_la_Provincia_de_C%C3%B3rdoba.svg"
+      ],
+      "verificado": true,
+      "archivo": "File:Escudo de la Provincia de Córdoba.svg",
+      "url_archivo": "https://upload.wikimedia.org/wikipedia/commons/2/23/Escudo_de_la_Provincia_de_C%C3%B3rdoba.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "licencia": "Public domain"
+    },
+    "simbolos_fuente_oficial": "https://www.argentina.gob.ar/cordoba/simbolos",
+    "notas": "Peperina: solo proyecto (Expte. 28220/19), no sancionado según lo hallado.",
+    "verificado": false,
+    "verificado_datos_basicos": true
+  },
+  {
+    "id": "corrientes",
+    "nombre": "Corrientes",
+    "capital": {
+      "valor": "Corrientes",
+      "fuente": [
+        "https://www.ign.gob.ar/NuestrasActividades/Geografia/DatosArgentina/DivisionPolitica"
+      ],
+      "verificado": true
+    },
+    "region": {
+      "valor": "Noreste (NEA)",
+      "fuente": [
+        "INDEC – regiones estadísticas (GBA, Pampeana, NOA, NEA, Cuyo, Patagonia)"
+      ],
+      "verificado": false,
+      "nota": "Asignación según esquema INDEC; composición tomada de conocimiento previo, falta citar documento INDEC que la liste"
+    },
+    "superficie_km2": {
+      "valor": 89123.3,
+      "fuente": [
+        "https://www.ign.gob.ar/NuestrasActividades/Geografia/DatosArgentina/DivisionPolitica",
+        "https://www.ign.gob.ar/descargas/geoespacial/Informe_supercies_de_Argentina.pdf"
+      ],
+      "verificado": true
+    },
+    "poblacion_2022": {
+      "valor": 1212696,
+      "fuente": [
+        "https://www.indec.gob.ar/ftp/cuadros/poblacion/censo2022_indicadores_demograficos.pdf"
+      ],
+      "verificado": true
+    },
+    "flor_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No se encontró norma"
+    },
+    "arbol_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No se encontró norma"
+    },
+    "ave_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No investigado a fondo / no hallado"
+    },
+    "dia_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "Pendiente"
+    },
+    "gentilicio": {
+      "valor": "correntino, -a",
+      "fuente": [
+        "https://es.wikipedia.org/wiki/Provincia_de_Corrientes"
+      ],
+      "verificado": false,
+      "nota": "Solo Wikipedia (dato de lengua; puede verificarse con DLE/RAE)"
+    },
+    "palabras_clave": {
+      "valor": [
+        "IBERA",
+        "CHAMAME",
+        "YACARE",
+        "PARANA",
+        "ESTEROS",
+        "IRUPE"
+      ],
+      "fuente": [],
+      "verificado": false,
+      "nota": "Editorial (no es dato fáctico); en mayúsculas sin tildes para sopa de letras. Revisar antes de publicar"
+    },
+    "bandera": {
+      "valor": "https://commons.wikimedia.org/wiki/File:Bandera_de_la_Provincia_de_Corrientes.svg",
+      "fuente": [
+        "https://commons.wikimedia.org/wiki/File:Bandera_de_la_Provincia_de_Corrientes.svg"
+      ],
+      "verificado": true,
+      "archivo": "File:Bandera de la Provincia de Corrientes.svg",
+      "url_archivo": "https://upload.wikimedia.org/wikipedia/commons/4/46/Bandera_de_la_Provincia_de_Corrientes.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "licencia": "Public domain"
+    },
+    "escudo": {
+      "valor": "https://commons.wikimedia.org/wiki/File:Escudo_de_la_Provincia_de_Corrientes_(variante_1).svg",
+      "fuente": [
+        "https://commons.wikimedia.org/wiki/File:Escudo_de_la_Provincia_de_Corrientes_(variante_1).svg"
+      ],
+      "verificado": true,
+      "archivo": "File:Escudo de la Provincia de Corrientes (variante 1).svg",
+      "url_archivo": "https://upload.wikimedia.org/wikipedia/commons/d/d5/Escudo_de_la_Provincia_de_Corrientes_%28variante_1%29.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "licencia": "Public domain"
+    },
+    "simbolos_fuente_oficial": "https://www.argentina.gob.ar/corrientes/simbolos",
+    "notas": null,
+    "verificado": false,
+    "verificado_datos_basicos": true
+  },
+  {
+    "id": "entre_rios",
+    "nombre": "Entre Ríos",
+    "capital": {
+      "valor": "Paraná",
+      "fuente": [
+        "https://www.ign.gob.ar/NuestrasActividades/Geografia/DatosArgentina/DivisionPolitica"
+      ],
+      "verificado": true
+    },
+    "region": {
+      "valor": "Pampeana",
+      "fuente": [
+        "INDEC – regiones estadísticas (GBA, Pampeana, NOA, NEA, Cuyo, Patagonia)"
+      ],
+      "verificado": false,
+      "nota": "Asignación según esquema INDEC; composición tomada de conocimiento previo, falta citar documento INDEC que la liste"
+    },
+    "superficie_km2": {
+      "valor": 78383.7,
+      "fuente": [
+        "https://www.ign.gob.ar/NuestrasActividades/Geografia/DatosArgentina/DivisionPolitica",
+        "https://www.ign.gob.ar/descargas/geoespacial/Informe_supercies_de_Argentina.pdf"
+      ],
+      "verificado": true
+    },
+    "poblacion_2022": {
+      "valor": 1425578,
+      "fuente": [
+        "https://www.indec.gob.ar/ftp/cuadros/poblacion/censo2022_indicadores_demograficos.pdf"
+      ],
+      "verificado": true
+    },
+    "flor_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No se encontró norma"
+    },
+    "arbol_provincial": {
+      "valor": "Espinillo / aromito",
+      "fuente": [
+        "(snippet de búsqueda; URL no registrada)"
+      ],
+      "verificado": false,
+      "nota": "Fuente no oficial ('elegido en 2020'); no se encontró norma"
+    },
+    "ave_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No investigado a fondo / no hallado"
+    },
+    "dia_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "Pendiente"
+    },
+    "gentilicio": {
+      "valor": "entrerriano, -na",
+      "fuente": [
+        "https://es.wikipedia.org/wiki/Provincia_de_Entre_Ríos"
+      ],
+      "verificado": false,
+      "nota": "Solo Wikipedia (dato de lengua; puede verificarse con DLE/RAE)"
+    },
+    "palabras_clave": {
+      "valor": [
+        "PALMAR",
+        "ISLAS",
+        "PARANA",
+        "URUGUAY",
+        "CARNAVAL",
+        "TERMAS"
+      ],
+      "fuente": [],
+      "verificado": false,
+      "nota": "Editorial (no es dato fáctico); en mayúsculas sin tildes para sopa de letras. Revisar antes de publicar"
+    },
+    "bandera": {
+      "valor": "https://commons.wikimedia.org/wiki/File:Bandera_de_la_Provincia_de_Entre_R%C3%ADos.svg",
+      "fuente": [
+        "https://commons.wikimedia.org/wiki/File:Bandera_de_la_Provincia_de_Entre_R%C3%ADos.svg"
+      ],
+      "verificado": true,
+      "archivo": "File:Bandera de la Provincia de Entre Ríos.svg",
+      "url_archivo": "https://upload.wikimedia.org/wikipedia/commons/5/5b/Bandera_de_la_Provincia_de_Entre_R%C3%ADos.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "licencia": "Public domain"
+    },
+    "escudo": {
+      "valor": "https://commons.wikimedia.org/wiki/File:Escudo_de_la_Provincia_de_Entre_R%C3%ADos.svg",
+      "fuente": [
+        "https://commons.wikimedia.org/wiki/File:Escudo_de_la_Provincia_de_Entre_R%C3%ADos.svg"
+      ],
+      "verificado": true,
+      "archivo": "File:Escudo de la Provincia de Entre Ríos.svg",
+      "url_archivo": "https://upload.wikimedia.org/wikipedia/commons/0/0f/Escudo_de_la_Provincia_de_Entre_R%C3%ADos.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "licencia": "Public domain"
+    },
+    "simbolos_fuente_oficial": "https://www.argentina.gob.ar/entre-rios/simbolos",
+    "notas": null,
+    "verificado": false,
+    "verificado_datos_basicos": true
+  },
+  {
+    "id": "formosa",
+    "nombre": "Formosa",
+    "capital": {
+      "valor": "Formosa",
+      "fuente": [
+        "https://www.ign.gob.ar/NuestrasActividades/Geografia/DatosArgentina/DivisionPolitica"
+      ],
+      "verificado": true
+    },
+    "region": {
+      "valor": "Noreste (NEA)",
+      "fuente": [
+        "INDEC – regiones estadísticas (GBA, Pampeana, NOA, NEA, Cuyo, Patagonia)"
+      ],
+      "verificado": false,
+      "nota": "Asignación según esquema INDEC; composición tomada de conocimiento previo, falta citar documento INDEC que la liste"
+    },
+    "superficie_km2": {
+      "valor": 75488.3,
+      "fuente": [
+        "https://www.ign.gob.ar/NuestrasActividades/Geografia/DatosArgentina/DivisionPolitica",
+        "https://www.ign.gob.ar/descargas/geoespacial/Informe_supercies_de_Argentina.pdf"
+      ],
+      "verificado": true
+    },
+    "poblacion_2022": {
+      "valor": 607419,
+      "fuente": [
+        "https://www.indec.gob.ar/ftp/cuadros/poblacion/censo2022_indicadores_demograficos.pdf"
+      ],
+      "verificado": true
+    },
+    "flor_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No se encontró norma"
+    },
+    "arbol_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No se encontró norma"
+    },
+    "ave_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No investigado a fondo / no hallado"
+    },
+    "dia_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "Pendiente"
+    },
+    "gentilicio": {
+      "valor": "formoseño, -ña",
+      "fuente": [
+        "https://es.wikipedia.org/wiki/Provincia_de_Formosa"
+      ],
+      "verificado": false,
+      "nota": "Solo Wikipedia (dato de lengua; puede verificarse con DLE/RAE)"
+    },
+    "palabras_clave": {
+      "valor": [
+        "ALGODON",
+        "BANADO",
+        "ESTEROS",
+        "PILCOMAYO",
+        "MONTE",
+        "CARPINCHO"
+      ],
+      "fuente": [],
+      "verificado": false,
+      "nota": "Editorial (no es dato fáctico); en mayúsculas sin tildes para sopa de letras. Revisar antes de publicar"
+    },
+    "bandera": {
+      "valor": "https://commons.wikimedia.org/wiki/File:Bandera_de_la_Provincia_de_Formosa.svg",
+      "fuente": [
+        "https://commons.wikimedia.org/wiki/File:Bandera_de_la_Provincia_de_Formosa.svg"
+      ],
+      "verificado": true,
+      "archivo": "File:Bandera de la Provincia de Formosa.svg",
+      "url_archivo": "https://upload.wikimedia.org/wikipedia/commons/4/42/Bandera_de_la_Provincia_de_Formosa.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "licencia": "CC BY 4.0"
+    },
+    "escudo": {
+      "valor": "https://commons.wikimedia.org/wiki/File:Escudo_de_la_Provincia_de_Formosa.svg",
+      "fuente": [
+        "https://commons.wikimedia.org/wiki/File:Escudo_de_la_Provincia_de_Formosa.svg"
+      ],
+      "verificado": true,
+      "archivo": "File:Escudo de la Provincia de Formosa.svg",
+      "url_archivo": "https://upload.wikimedia.org/wikipedia/commons/b/b8/Escudo_de_la_Provincia_de_Formosa.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "licencia": "CC BY 4.0"
+    },
+    "simbolos_fuente_oficial": "https://www.argentina.gob.ar/formosa/simbolos",
+    "notas": null,
+    "verificado": false,
+    "verificado_datos_basicos": true
+  },
+  {
+    "id": "jujuy",
+    "nombre": "Jujuy",
+    "capital": {
+      "valor": "San Salvador de Jujuy",
+      "fuente": [
+        "https://www.ign.gob.ar/NuestrasActividades/Geografia/DatosArgentina/DivisionPolitica"
+      ],
+      "verificado": true
+    },
+    "region": {
+      "valor": "Noroeste (NOA)",
+      "fuente": [
+        "INDEC – regiones estadísticas (GBA, Pampeana, NOA, NEA, Cuyo, Patagonia)"
+      ],
+      "verificado": false,
+      "nota": "Asignación según esquema INDEC; composición tomada de conocimiento previo, falta citar documento INDEC que la liste"
+    },
+    "superficie_km2": {
+      "valor": 53244.2,
+      "fuente": [
+        "https://www.ign.gob.ar/NuestrasActividades/Geografia/DatosArgentina/DivisionPolitica",
+        "https://www.ign.gob.ar/descargas/geoespacial/Informe_supercies_de_Argentina.pdf"
+      ],
+      "verificado": true
+    },
+    "poblacion_2022": {
+      "valor": 811611,
+      "fuente": [
+        "https://www.indec.gob.ar/ftp/cuadros/poblacion/censo2022_indicadores_demograficos.pdf"
+      ],
+      "verificado": true
+    },
+    "flor_provincial": {
+      "valor": "Flor del lapacho (Tabebuia avellanedae / impetiginosa)",
+      "fuente": [
+        "https://boletinoficial.jujuy.gob.ar/?p=48780"
+      ],
+      "verificado": true,
+      "norma": "Ley 4.383 (1988); Día de la Flor Provincial: 1 de septiembre"
+    },
+    "arbol_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No se encontró norma"
+    },
+    "ave_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No investigado a fondo / no hallado"
+    },
+    "dia_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "Pendiente"
+    },
+    "gentilicio": {
+      "valor": "jujeño, -ña",
+      "fuente": [
+        "https://es.wikipedia.org/wiki/Provincia_de_Jujuy"
+      ],
+      "verificado": false,
+      "nota": "Solo Wikipedia (dato de lengua; puede verificarse con DLE/RAE)"
+    },
+    "palabras_clave": {
+      "valor": [
+        "QUEBRADA",
+        "CERROS",
+        "LLAMA",
+        "SALINAS",
+        "PUNA",
+        "LAPACHO"
+      ],
+      "fuente": [],
+      "verificado": false,
+      "nota": "Editorial (no es dato fáctico); en mayúsculas sin tildes para sopa de letras. Revisar antes de publicar"
+    },
+    "bandera": {
+      "valor": "https://commons.wikimedia.org/wiki/File:Bandera_de_la_Provincia_de_Jujuy.svg",
+      "fuente": [
+        "https://commons.wikimedia.org/wiki/File:Bandera_de_la_Provincia_de_Jujuy.svg"
+      ],
+      "verificado": true,
+      "archivo": "File:Bandera de la Provincia de Jujuy.svg",
+      "url_archivo": "https://upload.wikimedia.org/wikipedia/commons/c/c9/Bandera_de_la_Provincia_de_Jujuy.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "licencia": "CC0"
+    },
+    "escudo": {
+      "valor": "https://commons.wikimedia.org/wiki/File:Escudo_de_la_Provincia_de_Jujuy.svg",
+      "fuente": [
+        "https://commons.wikimedia.org/wiki/File:Escudo_de_la_Provincia_de_Jujuy.svg"
+      ],
+      "verificado": true,
+      "archivo": "File:Escudo de la Provincia de Jujuy.svg",
+      "url_archivo": "https://upload.wikimedia.org/wikipedia/commons/0/0a/Escudo_de_la_Provincia_de_Jujuy.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "licencia": "Public domain"
+    },
+    "simbolos_fuente_oficial": "https://www.argentina.gob.ar/jujuy/simbolos",
+    "notas": null,
+    "verificado": false,
+    "verificado_datos_basicos": true
+  },
+  {
+    "id": "la_pampa",
+    "nombre": "La Pampa",
+    "capital": {
+      "valor": "Santa Rosa",
+      "fuente": [
+        "https://www.ign.gob.ar/NuestrasActividades/Geografia/DatosArgentina/DivisionPolitica"
+      ],
+      "verificado": true
+    },
+    "region": {
+      "valor": "Pampeana",
+      "fuente": [
+        "INDEC – regiones estadísticas (GBA, Pampeana, NOA, NEA, Cuyo, Patagonia)"
+      ],
+      "verificado": false,
+      "nota": "Asignación según esquema INDEC; composición tomada de conocimiento previo, falta citar documento INDEC que la liste"
+    },
+    "superficie_km2": {
+      "valor": 143492.5,
+      "fuente": [
+        "https://www.ign.gob.ar/NuestrasActividades/Geografia/DatosArgentina/DivisionPolitica",
+        "https://www.ign.gob.ar/descargas/geoespacial/Informe_supercies_de_Argentina.pdf"
+      ],
+      "verificado": true
+    },
+    "poblacion_2022": {
+      "valor": 361859,
+      "fuente": [
+        "https://www.indec.gob.ar/ftp/cuadros/poblacion/censo2022_indicadores_demograficos.pdf"
+      ],
+      "verificado": true
+    },
+    "flor_provincial": {
+      "valor": "Margarita pampeana / margarita de la sierra (Gaillardia cabrerae)",
+      "fuente": [
+        "(snippets de búsqueda; URL no registrada)"
+      ],
+      "verificado": false,
+      "nota": "Solo blogs; dicen Ley 1.774 (1997). Confirmar en Boletín Oficial La Pampa",
+      "norma": "Ley 1.774 (sin confirmar)"
+    },
+    "arbol_provincial": {
+      "valor": null,
+      "fuente": [
+        "https://www.argentina.gob.ar/lapampa/simbolos"
+      ],
+      "verificado": false,
+      "nota": "La fuente oficial llama al caldén 'nuestro árbol típico' (en el escudo), pero no se encontró ley que lo declare árbol provincial"
+    },
+    "ave_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No investigado a fondo / no hallado"
+    },
+    "dia_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "Pendiente"
+    },
+    "gentilicio": {
+      "valor": "pampeano, -na",
+      "fuente": [
+        "https://es.wikipedia.org/wiki/Provincia_de_La_Pampa"
+      ],
+      "verificado": false,
+      "nota": "Solo Wikipedia (dato de lengua; puede verificarse con DLE/RAE)"
+    },
+    "palabras_clave": {
+      "valor": [
+        "CALDEN",
+        "LLANURA",
+        "SANTAROSA",
+        "TRIGO",
+        "CHOIQUE",
+        "LIHUEL"
+      ],
+      "fuente": [],
+      "verificado": false,
+      "nota": "Editorial (no es dato fáctico); en mayúsculas sin tildes para sopa de letras. Revisar antes de publicar"
+    },
+    "bandera": {
+      "valor": "https://commons.wikimedia.org/wiki/File:Bandera_de_la_Provincia_de_La_Pampa.svg",
+      "fuente": [
+        "https://commons.wikimedia.org/wiki/File:Bandera_de_la_Provincia_de_La_Pampa.svg"
+      ],
+      "verificado": true,
+      "archivo": "File:Bandera de la Provincia de La Pampa.svg",
+      "url_archivo": "https://upload.wikimedia.org/wikipedia/commons/8/81/Bandera_de_la_Provincia_de_La_Pampa.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "licencia": "CC BY 4.0"
+    },
+    "escudo": {
+      "valor": "https://commons.wikimedia.org/wiki/File:Escudo_de_la_Provincia_de_La_Pampa.svg",
+      "fuente": [
+        "https://commons.wikimedia.org/wiki/File:Escudo_de_la_Provincia_de_La_Pampa.svg"
+      ],
+      "verificado": true,
+      "archivo": "File:Escudo de la Provincia de La Pampa.svg",
+      "url_archivo": "https://upload.wikimedia.org/wikipedia/commons/4/42/Escudo_de_la_Provincia_de_La_Pampa.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "licencia": "CC BY 4.0"
+    },
+    "simbolos_fuente_oficial": "https://www.argentina.gob.ar/lapampa/simbolos",
+    "notas": null,
+    "verificado": false,
+    "verificado_datos_basicos": true
+  },
+  {
+    "id": "la_rioja",
+    "nombre": "La Rioja",
+    "capital": {
+      "valor": "La Rioja",
+      "fuente": [
+        "https://www.ign.gob.ar/NuestrasActividades/Geografia/DatosArgentina/DivisionPolitica"
+      ],
+      "verificado": true
+    },
+    "region": {
+      "valor": "Noroeste (NOA)",
+      "fuente": [
+        "INDEC – regiones estadísticas (GBA, Pampeana, NOA, NEA, Cuyo, Patagonia)"
+      ],
+      "verificado": false,
+      "nota": "Asignación según esquema INDEC; composición tomada de conocimiento previo, falta citar documento INDEC que la liste"
+    },
+    "superficie_km2": {
+      "valor": 91493.7,
+      "fuente": [
+        "https://www.ign.gob.ar/NuestrasActividades/Geografia/DatosArgentina/DivisionPolitica",
+        "https://www.ign.gob.ar/descargas/geoespacial/Informe_supercies_de_Argentina.pdf"
+      ],
+      "verificado": true
+    },
+    "poblacion_2022": {
+      "valor": 383865,
+      "fuente": [
+        "https://www.indec.gob.ar/ftp/cuadros/poblacion/censo2022_indicadores_demograficos.pdf"
+      ],
+      "verificado": true
+    },
+    "flor_provincial": {
+      "valor": "Flor del cardón (Trichocereus pasacana / T. terscheckii)",
+      "fuente": [
+        "https://www.legislaturalarioja.gob.ar/imagenes/10-simbolos/LeyFlor.pdf"
+      ],
+      "verificado": true,
+      "norma": "Ley 6.581 (1998); Día: 20 de octubre"
+    },
+    "arbol_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No se encontró norma"
+    },
+    "ave_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No investigado a fondo / no hallado"
+    },
+    "dia_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "Pendiente"
+    },
+    "gentilicio": {
+      "valor": "Riojano, -a",
+      "fuente": [
+        "https://es.wikipedia.org/wiki/Provincia_de_La_Rioja_(Argentina)"
+      ],
+      "verificado": false,
+      "nota": "Solo Wikipedia (dato de lengua; puede verificarse con DLE/RAE)"
+    },
+    "palabras_clave": {
+      "valor": [
+        "FAMATINA",
+        "TALAMPAYA",
+        "CARDON",
+        "OLIVO",
+        "VINO",
+        "CERRO"
+      ],
+      "fuente": [],
+      "verificado": false,
+      "nota": "Editorial (no es dato fáctico); en mayúsculas sin tildes para sopa de letras. Revisar antes de publicar"
+    },
+    "bandera": {
+      "valor": "https://commons.wikimedia.org/wiki/File:Bandera_de_la_Provincia_de_La_Rioja.svg",
+      "fuente": [
+        "https://commons.wikimedia.org/wiki/File:Bandera_de_la_Provincia_de_La_Rioja.svg"
+      ],
+      "verificado": true,
+      "archivo": "File:Bandera de la Provincia de La Rioja.svg",
+      "url_archivo": "https://upload.wikimedia.org/wikipedia/commons/6/60/Bandera_de_la_Provincia_de_La_Rioja.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "licencia": "Public domain"
+    },
+    "escudo": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No se encontró archivo en Commons; buscar manualmente"
+    },
+    "simbolos_fuente_oficial": "https://www.argentina.gob.ar/la-rioja/simbolos",
+    "notas": null,
+    "verificado": false,
+    "verificado_datos_basicos": false
+  },
+  {
+    "id": "mendoza",
+    "nombre": "Mendoza",
+    "capital": {
+      "valor": "Mendoza",
+      "fuente": [
+        "https://www.ign.gob.ar/NuestrasActividades/Geografia/DatosArgentina/DivisionPolitica"
+      ],
+      "verificado": true
+    },
+    "region": {
+      "valor": "Cuyo",
+      "fuente": [
+        "INDEC – regiones estadísticas (GBA, Pampeana, NOA, NEA, Cuyo, Patagonia)"
+      ],
+      "verificado": false,
+      "nota": "Asignación según esquema INDEC; composición tomada de conocimiento previo, falta citar documento INDEC que la liste"
+    },
+    "superficie_km2": {
+      "valor": 149069.2,
+      "fuente": [
+        "https://www.ign.gob.ar/NuestrasActividades/Geografia/DatosArgentina/DivisionPolitica",
+        "https://www.ign.gob.ar/descargas/geoespacial/Informe_supercies_de_Argentina.pdf"
+      ],
+      "verificado": true
+    },
+    "poblacion_2022": {
+      "valor": 2043540,
+      "fuente": [
+        "https://www.indec.gob.ar/ftp/cuadros/poblacion/censo2022_indicadores_demograficos.pdf"
+      ],
+      "verificado": true
+    },
+    "flor_provincial": {
+      "valor": "Flor de la jarilla",
+      "fuente": [
+        "provinciademendoza.ar (URL exacta no registrada)"
+      ],
+      "verificado": false,
+      "nota": "Sitio no gubernamental; confirmar Ley 7.618 en Boletín Oficial de Mendoza",
+      "norma": "Ley 7.618 (2006)"
+    },
+    "arbol_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No se encontró norma"
+    },
+    "ave_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No investigado a fondo / no hallado"
+    },
+    "dia_provincial": {
+      "valor": "2 de marzo de 1561 – fundación de la ciudad de Mendoza",
+      "fuente": [
+        "https://es.wikipedia.org/wiki/Provincia_de_Mendoza"
+      ],
+      "verificado": false,
+      "nota": "Solo Wikipedia"
+    },
+    "gentilicio": {
+      "valor": "mendocino, -a",
+      "fuente": [
+        "https://es.wikipedia.org/wiki/Provincia_de_Mendoza"
+      ],
+      "verificado": false,
+      "nota": "Solo Wikipedia (dato de lengua; puede verificarse con DLE/RAE)"
+    },
+    "palabras_clave": {
+      "valor": [
+        "ACONCAGUA",
+        "VINEDO",
+        "UVA",
+        "ANDES",
+        "JARILLA",
+        "ACEQUIA"
+      ],
+      "fuente": [],
+      "verificado": false,
+      "nota": "Editorial (no es dato fáctico); en mayúsculas sin tildes para sopa de letras. Revisar antes de publicar"
+    },
+    "bandera": {
+      "valor": "https://commons.wikimedia.org/wiki/File:Bandera_de_la_Provincia_de_Mendoza.svg",
+      "fuente": [
+        "https://commons.wikimedia.org/wiki/File:Bandera_de_la_Provincia_de_Mendoza.svg"
+      ],
+      "verificado": true,
+      "archivo": "File:Bandera de la Provincia de Mendoza.svg",
+      "url_archivo": "https://upload.wikimedia.org/wikipedia/commons/7/7c/Bandera_de_la_Provincia_de_Mendoza.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "licencia": "Public domain"
+    },
+    "escudo": {
+      "valor": "https://commons.wikimedia.org/wiki/File:Escudo_provincia_Mendoza_grande.svg",
+      "fuente": [
+        "https://commons.wikimedia.org/wiki/File:Escudo_provincia_Mendoza_grande.svg"
+      ],
+      "verificado": true,
+      "archivo": "File:Escudo provincia Mendoza grande.svg",
+      "url_archivo": "https://upload.wikimedia.org/wikipedia/commons/9/92/Escudo_provincia_Mendoza_grande.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "licencia": "Public domain"
+    },
+    "simbolos_fuente_oficial": "https://www.argentina.gob.ar/mendoza/simbolos",
+    "notas": null,
+    "verificado": false,
+    "verificado_datos_basicos": true
+  },
+  {
+    "id": "misiones",
+    "nombre": "Misiones",
+    "capital": {
+      "valor": "Posadas",
+      "fuente": [
+        "https://www.ign.gob.ar/NuestrasActividades/Geografia/DatosArgentina/DivisionPolitica"
+      ],
+      "verificado": true
+    },
+    "region": {
+      "valor": "Noreste (NEA)",
+      "fuente": [
+        "INDEC – regiones estadísticas (GBA, Pampeana, NOA, NEA, Cuyo, Patagonia)"
+      ],
+      "verificado": false,
+      "nota": "Asignación según esquema INDEC; composición tomada de conocimiento previo, falta citar documento INDEC que la liste"
+    },
+    "superficie_km2": {
+      "valor": 29911.4,
+      "fuente": [
+        "https://www.ign.gob.ar/NuestrasActividades/Geografia/DatosArgentina/DivisionPolitica",
+        "https://www.ign.gob.ar/descargas/geoespacial/Informe_supercies_de_Argentina.pdf"
+      ],
+      "verificado": true
+    },
+    "poblacion_2022": {
+      "valor": 1278873,
+      "fuente": [
+        "https://www.indec.gob.ar/ftp/cuadros/poblacion/censo2022_indicadores_demograficos.pdf"
+      ],
+      "verificado": true
+    },
+    "flor_provincial": {
+      "valor": "Flor del lapacho negro (Handroanthus heptaphyllus)",
+      "fuente": [
+        "(snippet de búsqueda; URL no registrada)"
+      ],
+      "verificado": false,
+      "nota": "Confirmar Ley XVI N.º 91 en digesto de Misiones",
+      "norma": "Ley XVI N.º 91 (ex Ley 4.318/06)"
+    },
+    "arbol_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No se encontró norma"
+    },
+    "ave_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No investigado a fondo / no hallado"
+    },
+    "dia_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "Pendiente"
+    },
+    "gentilicio": {
+      "valor": "misionero, -a",
+      "fuente": [
+        "https://es.wikipedia.org/wiki/Provincia_de_Misiones"
+      ],
+      "verificado": false,
+      "nota": "Solo Wikipedia (dato de lengua; puede verificarse con DLE/RAE)"
+    },
+    "palabras_clave": {
+      "valor": [
+        "IGUAZU",
+        "CATARATAS",
+        "YERBA",
+        "SELVA",
+        "TUCAN",
+        "RUINAS"
+      ],
+      "fuente": [],
+      "verificado": false,
+      "nota": "Editorial (no es dato fáctico); en mayúsculas sin tildes para sopa de letras. Revisar antes de publicar"
+    },
+    "bandera": {
+      "valor": "https://commons.wikimedia.org/wiki/File:Bandera_de_la_Provincia_de_Misiones.svg",
+      "fuente": [
+        "https://commons.wikimedia.org/wiki/File:Bandera_de_la_Provincia_de_Misiones.svg"
+      ],
+      "verificado": true,
+      "archivo": "File:Bandera de la Provincia de Misiones.svg",
+      "url_archivo": "https://upload.wikimedia.org/wikipedia/commons/c/ce/Bandera_de_la_Provincia_de_Misiones.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "licencia": "Public domain"
+    },
+    "escudo": {
+      "valor": "https://commons.wikimedia.org/wiki/File:Escudo_de_la_Provincia_de_Misiones.svg",
+      "fuente": [
+        "https://commons.wikimedia.org/wiki/File:Escudo_de_la_Provincia_de_Misiones.svg"
+      ],
+      "verificado": true,
+      "archivo": "File:Escudo de la Provincia de Misiones.svg",
+      "url_archivo": "https://upload.wikimedia.org/wikipedia/commons/7/74/Escudo_de_la_Provincia_de_Misiones.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "licencia": "Public domain"
+    },
+    "simbolos_fuente_oficial": "https://www.argentina.gob.ar/misiones/simbolos",
+    "notas": null,
+    "verificado": false,
+    "verificado_datos_basicos": true
+  },
+  {
+    "id": "neuquen",
+    "nombre": "Neuquén",
+    "capital": {
+      "valor": "Neuquén",
+      "fuente": [
+        "https://www.ign.gob.ar/NuestrasActividades/Geografia/DatosArgentina/DivisionPolitica"
+      ],
+      "verificado": true
+    },
+    "region": {
+      "valor": "Patagonia",
+      "fuente": [
+        "INDEC – regiones estadísticas (GBA, Pampeana, NOA, NEA, Cuyo, Patagonia)"
+      ],
+      "verificado": false,
+      "nota": "Asignación según esquema INDEC; composición tomada de conocimiento previo, falta citar documento INDEC que la liste"
+    },
+    "superficie_km2": {
+      "valor": 94422.0,
+      "fuente": [
+        "https://www.ign.gob.ar/NuestrasActividades/Geografia/DatosArgentina/DivisionPolitica",
+        "https://www.ign.gob.ar/descargas/geoespacial/Informe_supercies_de_Argentina.pdf"
+      ],
+      "verificado": true
+    },
+    "poblacion_2022": {
+      "valor": 710814,
+      "fuente": [
+        "https://www.indec.gob.ar/ftp/cuadros/poblacion/censo2022_indicadores_demograficos.pdf"
+      ],
+      "verificado": true
+    },
+    "flor_provincial": {
+      "valor": "Mutisia / quiñilhue (Mutisia decurrens)",
+      "fuente": [
+        "turismo.neuquen.gob.ar",
+        "neuquen.edu.ar (URLs exactas no registradas)"
+      ],
+      "verificado": true,
+      "norma": "Ley 2.465 (2004)"
+    },
+    "arbol_provincial": {
+      "valor": "Pehuén (Araucaria araucana)",
+      "fuente": [
+        "jusneuquen.gov.ar – texto Ley 2.609 (URL exacta no registrada)"
+      ],
+      "verificado": true,
+      "norma": "Ley 2.609 (2008)"
+    },
+    "ave_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No investigado a fondo / no hallado"
+    },
+    "dia_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "Pendiente"
+    },
+    "gentilicio": {
+      "valor": "neuquino, -a",
+      "fuente": [
+        "https://es.wikipedia.org/wiki/Provincia_del_Neuquén"
+      ],
+      "verificado": false,
+      "nota": "Solo Wikipedia (dato de lengua; puede verificarse con DLE/RAE)"
+    },
+    "palabras_clave": {
+      "valor": [
+        "PEHUEN",
+        "LANIN",
+        "LAGOS",
+        "VOLCAN",
+        "MUTISIA",
+        "NIEVE"
+      ],
+      "fuente": [],
+      "verificado": false,
+      "nota": "Editorial (no es dato fáctico); en mayúsculas sin tildes para sopa de letras. Revisar antes de publicar"
+    },
+    "bandera": {
+      "valor": "https://commons.wikimedia.org/wiki/File:Bandera_de_la_Provincia_del_Neuquen.svg",
+      "fuente": [
+        "https://commons.wikimedia.org/wiki/File:Bandera_de_la_Provincia_del_Neuquen.svg"
+      ],
+      "verificado": true,
+      "archivo": "File:Bandera de la Provincia del Neuquen.svg",
+      "url_archivo": "https://upload.wikimedia.org/wikipedia/commons/1/18/Bandera_de_la_Provincia_del_Neuquen.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "licencia": "CC BY 4.0"
+    },
+    "escudo": {
+      "valor": "https://commons.wikimedia.org/wiki/File:Escudo_de_la_Provincia_de_Neuqu%C3%A9n.svg",
+      "fuente": [
+        "https://commons.wikimedia.org/wiki/File:Escudo_de_la_Provincia_de_Neuqu%C3%A9n.svg"
+      ],
+      "verificado": true,
+      "archivo": "File:Escudo de la Provincia de Neuquén.svg",
+      "url_archivo": "https://upload.wikimedia.org/wikipedia/commons/3/37/Escudo_de_la_Provincia_de_Neuqu%C3%A9n.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "licencia": "Public domain"
+    },
+    "simbolos_fuente_oficial": "https://www.argentina.gob.ar/neuquen/simbolos",
+    "notas": null,
+    "verificado": false,
+    "verificado_datos_basicos": true
+  },
+  {
+    "id": "rio_negro",
+    "nombre": "Río Negro",
+    "capital": {
+      "valor": "Viedma",
+      "fuente": [
+        "https://www.ign.gob.ar/NuestrasActividades/Geografia/DatosArgentina/DivisionPolitica"
+      ],
+      "verificado": true
+    },
+    "region": {
+      "valor": "Patagonia",
+      "fuente": [
+        "INDEC – regiones estadísticas (GBA, Pampeana, NOA, NEA, Cuyo, Patagonia)"
+      ],
+      "verificado": false,
+      "nota": "Asignación según esquema INDEC; composición tomada de conocimiento previo, falta citar documento INDEC que la liste"
+    },
+    "superficie_km2": {
+      "valor": 202168.6,
+      "fuente": [
+        "https://www.ign.gob.ar/NuestrasActividades/Geografia/DatosArgentina/DivisionPolitica",
+        "https://www.ign.gob.ar/descargas/geoespacial/Informe_supercies_de_Argentina.pdf"
+      ],
+      "verificado": true
+    },
+    "poblacion_2022": {
+      "valor": 750768,
+      "fuente": [
+        "https://www.indec.gob.ar/ftp/cuadros/poblacion/censo2022_indicadores_demograficos.pdf"
+      ],
+      "verificado": true
+    },
+    "flor_provincial": {
+      "valor": "Notro",
+      "fuente": [
+        "https://web.legisrn.gov.ar/digesto/normas/ver?id=2000070014"
+      ],
+      "verificado": true,
+      "norma": "Ley B 3.387 (2000)"
+    },
+    "arbol_provincial": {
+      "valor": "Ciprés de la cordillera",
+      "fuente": [
+        "https://web.legisrn.gov.ar/digesto/normas/ver?id=2000070014"
+      ],
+      "verificado": true,
+      "norma": "Ley B 3.387 (2000)"
+    },
+    "ave_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No investigado a fondo / no hallado"
+    },
+    "dia_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "Pendiente"
+    },
+    "gentilicio": {
+      "valor": "rionegrino, -a",
+      "fuente": [
+        "https://es.wikipedia.org/wiki/Provincia_de_Río_Negro"
+      ],
+      "verificado": false,
+      "nota": "Solo Wikipedia (dato de lengua; puede verificarse con DLE/RAE)"
+    },
+    "palabras_clave": {
+      "valor": [
+        "VIEDMA",
+        "MANZANA",
+        "BARILOCHE",
+        "LAGO",
+        "NOTRO",
+        "RIO"
+      ],
+      "fuente": [],
+      "verificado": false,
+      "nota": "Editorial (no es dato fáctico); en mayúsculas sin tildes para sopa de letras. Revisar antes de publicar"
+    },
+    "bandera": {
+      "valor": "https://commons.wikimedia.org/wiki/File:Bandera_de_la_Provincia_del_R%C3%ADo_Negro.svg",
+      "fuente": [
+        "https://commons.wikimedia.org/wiki/File:Bandera_de_la_Provincia_del_R%C3%ADo_Negro.svg"
+      ],
+      "verificado": true,
+      "archivo": "File:Bandera de la Provincia del Río Negro.svg",
+      "url_archivo": "https://upload.wikimedia.org/wikipedia/commons/5/5d/Bandera_de_la_Provincia_del_R%C3%ADo_Negro.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "licencia": "CC BY 4.0"
+    },
+    "escudo": {
+      "valor": "https://commons.wikimedia.org/wiki/File:Escudo_de_la_Provincia_del_R%C3%ADo_Negro.svg",
+      "fuente": [
+        "https://commons.wikimedia.org/wiki/File:Escudo_de_la_Provincia_del_R%C3%ADo_Negro.svg"
+      ],
+      "verificado": true,
+      "archivo": "File:Escudo de la Provincia del Río Negro.svg",
+      "url_archivo": "https://upload.wikimedia.org/wikipedia/commons/b/bf/Escudo_de_la_Provincia_del_R%C3%ADo_Negro.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "licencia": "CC BY 4.0"
+    },
+    "simbolos_fuente_oficial": "https://www.argentina.gob.ar/rionegro/simbolos",
+    "notas": null,
+    "verificado": false,
+    "verificado_datos_basicos": true
+  },
+  {
+    "id": "salta",
+    "nombre": "Salta",
+    "capital": {
+      "valor": "Salta",
+      "fuente": [
+        "https://www.ign.gob.ar/NuestrasActividades/Geografia/DatosArgentina/DivisionPolitica"
+      ],
+      "verificado": true
+    },
+    "region": {
+      "valor": "Noroeste (NOA)",
+      "fuente": [
+        "INDEC – regiones estadísticas (GBA, Pampeana, NOA, NEA, Cuyo, Patagonia)"
+      ],
+      "verificado": false,
+      "nota": "Asignación según esquema INDEC; composición tomada de conocimiento previo, falta citar documento INDEC que la liste"
+    },
+    "superficie_km2": {
+      "valor": 155340.5,
+      "fuente": [
+        "https://www.ign.gob.ar/NuestrasActividades/Geografia/DatosArgentina/DivisionPolitica",
+        "https://www.ign.gob.ar/descargas/geoespacial/Informe_supercies_de_Argentina.pdf"
+      ],
+      "verificado": true
+    },
+    "poblacion_2022": {
+      "valor": 1441351,
+      "fuente": [
+        "https://www.indec.gob.ar/ftp/cuadros/poblacion/censo2022_indicadores_demograficos.pdf"
+      ],
+      "verificado": true
+    },
+    "flor_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No se encontró norma"
+    },
+    "arbol_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No se encontró norma"
+    },
+    "ave_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No investigado a fondo / no hallado"
+    },
+    "dia_provincial": {
+      "valor": "8 de octubre – Día de la Bandera de Salta (creación de la provincia, 1814)",
+      "fuente": [
+        "https://www.argentina.gob.ar/salta/simbolos"
+      ],
+      "verificado": true
+    },
+    "gentilicio": {
+      "valor": "salteño, -a",
+      "fuente": [
+        "https://es.wikipedia.org/wiki/Provincia_de_Salta"
+      ],
+      "verificado": false,
+      "nota": "Solo Wikipedia (dato de lengua; puede verificarse con DLE/RAE)"
+    },
+    "palabras_clave": {
+      "valor": [
+        "CERRO",
+        "PONCHO",
+        "GUEMES",
+        "VALLES",
+        "CAFAYATE",
+        "TREN"
+      ],
+      "fuente": [],
+      "verificado": false,
+      "nota": "Editorial (no es dato fáctico); en mayúsculas sin tildes para sopa de letras. Revisar antes de publicar"
+    },
+    "bandera": {
+      "valor": "https://commons.wikimedia.org/wiki/File:Bandera_de_la_Provincia_de_Salta.svg",
+      "fuente": [
+        "https://commons.wikimedia.org/wiki/File:Bandera_de_la_Provincia_de_Salta.svg"
+      ],
+      "verificado": true,
+      "archivo": "File:Bandera de la Provincia de Salta.svg",
+      "url_archivo": "https://upload.wikimedia.org/wikipedia/commons/6/6a/Bandera_de_la_Provincia_de_Salta.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "licencia": "CC BY 4.0"
+    },
+    "escudo": {
+      "valor": "https://commons.wikimedia.org/wiki/File:Escudo_de_la_Provincia_de_Salta.svg",
+      "fuente": [
+        "https://commons.wikimedia.org/wiki/File:Escudo_de_la_Provincia_de_Salta.svg"
+      ],
+      "verificado": true,
+      "archivo": "File:Escudo de la Provincia de Salta.svg",
+      "url_archivo": "https://upload.wikimedia.org/wikipedia/commons/3/37/Escudo_de_la_Provincia_de_Salta.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "licencia": "Public domain"
+    },
+    "simbolos_fuente_oficial": "https://www.argentina.gob.ar/salta/simbolos",
+    "notas": "Ley 8.284 declara al cebil colorado 'Árbol histórico' (no 'árbol provincial'); no se cargó.",
+    "verificado": false,
+    "verificado_datos_basicos": true
+  },
+  {
+    "id": "san_juan",
+    "nombre": "San Juan",
+    "capital": {
+      "valor": "San Juan",
+      "fuente": [
+        "https://www.ign.gob.ar/NuestrasActividades/Geografia/DatosArgentina/DivisionPolitica"
+      ],
+      "verificado": true
+    },
+    "region": {
+      "valor": "Cuyo",
+      "fuente": [
+        "INDEC – regiones estadísticas (GBA, Pampeana, NOA, NEA, Cuyo, Patagonia)"
+      ],
+      "verificado": false,
+      "nota": "Asignación según esquema INDEC; composición tomada de conocimiento previo, falta citar documento INDEC que la liste"
+    },
+    "superficie_km2": {
+      "valor": 88296.2,
+      "fuente": [
+        "https://www.ign.gob.ar/NuestrasActividades/Geografia/DatosArgentina/DivisionPolitica",
+        "https://www.ign.gob.ar/descargas/geoespacial/Informe_supercies_de_Argentina.pdf"
+      ],
+      "verificado": true
+    },
+    "poblacion_2022": {
+      "valor": 822853,
+      "fuente": [
+        "https://www.indec.gob.ar/ftp/cuadros/poblacion/censo2022_indicadores_demograficos.pdf"
+      ],
+      "verificado": true
+    },
+    "flor_provincial": {
+      "valor": "Retamo (Bulnesia retama)",
+      "fuente": [
+        "destinosanjuan (URL no registrada)"
+      ],
+      "verificado": false,
+      "nota": "Fuente periodística; confirmar Ley 7.643 en fuente oficial",
+      "norma": "Ley 7.643 (2005)"
+    },
+    "arbol_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No se encontró norma"
+    },
+    "ave_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No investigado a fondo / no hallado"
+    },
+    "dia_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "Pendiente"
+    },
+    "gentilicio": {
+      "valor": "sanjuanino, -a",
+      "fuente": [
+        "https://es.wikipedia.org/wiki/Provincia_de_San_Juan"
+      ],
+      "verificado": false,
+      "nota": "Solo Wikipedia (dato de lengua; puede verificarse con DLE/RAE)"
+    },
+    "palabras_clave": {
+      "valor": [
+        "ISCHIGUALASTO",
+        "VINO",
+        "SOL",
+        "DIQUE",
+        "SARMIENTO",
+        "RETAMO"
+      ],
+      "fuente": [],
+      "verificado": false,
+      "nota": "Editorial (no es dato fáctico); en mayúsculas sin tildes para sopa de letras. Revisar antes de publicar"
+    },
+    "bandera": {
+      "valor": "https://commons.wikimedia.org/wiki/File:Bandera_de_la_Provincia_de_San_Juan_(1997-2018).svg",
+      "fuente": [
+        "https://commons.wikimedia.org/wiki/File:Bandera_de_la_Provincia_de_San_Juan_(1997-2018).svg"
+      ],
+      "verificado": true,
+      "nota": "Versión vieja, NO vigente",
+      "archivo": "File:Bandera de la Provincia de San Juan (1997-2018).svg",
+      "url_archivo": "https://upload.wikimedia.org/wikipedia/commons/8/8f/Bandera_de_la_Provincia_de_San_Juan_%281997-2018%29.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "licencia": "Public domain"
+    },
+    "escudo": {
+      "valor": "https://commons.wikimedia.org/wiki/File:Escudo_de_la_Provincia_de_San_Juan.svg",
+      "fuente": [
+        "https://commons.wikimedia.org/wiki/File:Escudo_de_la_Provincia_de_San_Juan.svg"
+      ],
+      "verificado": true,
+      "archivo": "File:Escudo de la Provincia de San Juan.svg",
+      "url_archivo": "https://upload.wikimedia.org/wikipedia/commons/6/61/Escudo_de_la_Provincia_de_San_Juan.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "licencia": "Public domain"
+    },
+    "simbolos_fuente_oficial": "https://www.argentina.gob.ar/sanjuan/simbolos",
+    "notas": "El archivo de bandera en Commons es la versión 1997-2018; la bandera vigente es la 'Ciudadana' (Ley 1880-F, 2018). Falta SVG vigente.",
+    "verificado": false,
+    "verificado_datos_basicos": false
+  },
+  {
+    "id": "san_luis",
+    "nombre": "San Luis",
+    "capital": {
+      "valor": "San Luis",
+      "fuente": [
+        "https://www.ign.gob.ar/NuestrasActividades/Geografia/DatosArgentina/DivisionPolitica"
+      ],
+      "verificado": true
+    },
+    "region": {
+      "valor": "Cuyo",
+      "fuente": [
+        "INDEC – regiones estadísticas (GBA, Pampeana, NOA, NEA, Cuyo, Patagonia)"
+      ],
+      "verificado": false,
+      "nota": "Asignación según esquema INDEC; composición tomada de conocimiento previo, falta citar documento INDEC que la liste"
+    },
+    "superficie_km2": {
+      "valor": 75347.1,
+      "fuente": [
+        "https://www.ign.gob.ar/NuestrasActividades/Geografia/DatosArgentina/DivisionPolitica",
+        "https://www.ign.gob.ar/descargas/geoespacial/Informe_supercies_de_Argentina.pdf"
+      ],
+      "verificado": true
+    },
+    "poblacion_2022": {
+      "valor": 542069,
+      "fuente": [
+        "https://www.indec.gob.ar/ftp/cuadros/poblacion/censo2022_indicadores_demograficos.pdf"
+      ],
+      "verificado": true
+    },
+    "flor_provincial": {
+      "valor": "Clavel del aire blanco / azahar de campo (Tillandsia xiphioides)",
+      "fuente": [
+        "(snippets de búsqueda; URL no registrada)"
+      ],
+      "verificado": false,
+      "nota": "Fuentes no oficiales y sin número de ley"
+    },
+    "arbol_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No se encontró norma"
+    },
+    "ave_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No investigado a fondo / no hallado"
+    },
+    "dia_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "Pendiente"
+    },
+    "gentilicio": {
+      "valor": "sanluiseño, -a / puntano, -a",
+      "fuente": [
+        "https://es.wikipedia.org/wiki/Provincia_de_San_Luis"
+      ],
+      "verificado": false,
+      "nota": "Solo Wikipedia (dato de lengua; puede verificarse con DLE/RAE)"
+    },
+    "palabras_clave": {
+      "valor": [
+        "SIERRAS",
+        "VENADO",
+        "PUNTANO",
+        "DIQUE",
+        "QUIJADAS",
+        "CLAVEL"
+      ],
+      "fuente": [],
+      "verificado": false,
+      "nota": "Editorial (no es dato fáctico); en mayúsculas sin tildes para sopa de letras. Revisar antes de publicar"
+    },
+    "bandera": {
+      "valor": "https://commons.wikimedia.org/wiki/File:Bandera_de_la_Provincia_de_San_Luis.svg",
+      "fuente": [
+        "https://commons.wikimedia.org/wiki/File:Bandera_de_la_Provincia_de_San_Luis.svg"
+      ],
+      "verificado": true,
+      "archivo": "File:Bandera de la Provincia de San Luis.svg",
+      "url_archivo": "https://upload.wikimedia.org/wikipedia/commons/0/0e/Bandera_de_la_Provincia_de_San_Luis.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "licencia": "Public domain"
+    },
+    "escudo": {
+      "valor": "https://commons.wikimedia.org/wiki/File:Escudo_de_la_Provincia_de_San_Luis.svg",
+      "fuente": [
+        "https://commons.wikimedia.org/wiki/File:Escudo_de_la_Provincia_de_San_Luis.svg"
+      ],
+      "verificado": true,
+      "archivo": "File:Escudo de la Provincia de San Luis.svg",
+      "url_archivo": "https://upload.wikimedia.org/wikipedia/commons/6/62/Escudo_de_la_Provincia_de_San_Luis.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "licencia": "Public domain"
+    },
+    "simbolos_fuente_oficial": "https://www.argentina.gob.ar/sanluis/simbolos",
+    "notas": null,
+    "verificado": false,
+    "verificado_datos_basicos": true
+  },
+  {
+    "id": "santa_cruz",
+    "nombre": "Santa Cruz",
+    "capital": {
+      "valor": "Río Gallegos",
+      "fuente": [
+        "https://www.ign.gob.ar/NuestrasActividades/Geografia/DatosArgentina/DivisionPolitica"
+      ],
+      "verificado": true
+    },
+    "region": {
+      "valor": "Patagonia",
+      "fuente": [
+        "INDEC – regiones estadísticas (GBA, Pampeana, NOA, NEA, Cuyo, Patagonia)"
+      ],
+      "verificado": false,
+      "nota": "Asignación según esquema INDEC; composición tomada de conocimiento previo, falta citar documento INDEC que la liste"
+    },
+    "superficie_km2": {
+      "valor": 244457.5,
+      "fuente": [
+        "https://www.ign.gob.ar/NuestrasActividades/Geografia/DatosArgentina/DivisionPolitica",
+        "https://www.ign.gob.ar/descargas/geoespacial/Informe_supercies_de_Argentina.pdf"
+      ],
+      "verificado": true
+    },
+    "poblacion_2022": {
+      "valor": 337226,
+      "fuente": [
+        "https://www.indec.gob.ar/ftp/cuadros/poblacion/censo2022_indicadores_demograficos.pdf"
+      ],
+      "verificado": true
+    },
+    "flor_provincial": {
+      "valor": "Lengua de fuego (Anarthrophyllum desideratum)",
+      "fuente": [
+        "https://boletinoficial.santacruz.gob.ar/legislacion/leyes/16179"
+      ],
+      "verificado": true,
+      "norma": "Ley 3.815 (2022)"
+    },
+    "arbol_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No se encontró norma"
+    },
+    "ave_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No investigado a fondo / no hallado"
+    },
+    "dia_provincial": {
+      "valor": "23 de noviembre – Día de la Bandera Oficial de Santa Cruz",
+      "fuente": [
+        "https://www.argentina.gob.ar/santacruz/simbolos"
+      ],
+      "verificado": true,
+      "norma": "Ley 2.595"
+    },
+    "gentilicio": {
+      "valor": "Santacruceño, -a",
+      "fuente": [
+        "https://es.wikipedia.org/wiki/Provincia_de_Santa_Cruz_(Argentina)"
+      ],
+      "verificado": false,
+      "nota": "Solo Wikipedia (dato de lengua; puede verificarse con DLE/RAE)"
+    },
+    "palabras_clave": {
+      "valor": [
+        "GLACIAR",
+        "PERITO",
+        "CALAFATE",
+        "CHALTEN",
+        "GUANACO",
+        "VIENTO"
+      ],
+      "fuente": [],
+      "verificado": false,
+      "nota": "Editorial (no es dato fáctico); en mayúsculas sin tildes para sopa de letras. Revisar antes de publicar"
+    },
+    "bandera": {
+      "valor": "https://commons.wikimedia.org/wiki/File:Bandera_de_la_Provincia_de_Santa_Cruz.svg",
+      "fuente": [
+        "https://commons.wikimedia.org/wiki/File:Bandera_de_la_Provincia_de_Santa_Cruz.svg"
+      ],
+      "verificado": true,
+      "archivo": "File:Bandera de la Provincia de Santa Cruz.svg",
+      "url_archivo": "https://upload.wikimedia.org/wikipedia/commons/4/45/Bandera_de_la_Provincia_de_Santa_Cruz.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "licencia": "CC BY 4.0"
+    },
+    "escudo": {
+      "valor": "https://commons.wikimedia.org/wiki/File:Escudo_de_la_Provincia_de_Santa_Cruz.svg",
+      "fuente": [
+        "https://commons.wikimedia.org/wiki/File:Escudo_de_la_Provincia_de_Santa_Cruz.svg"
+      ],
+      "verificado": true,
+      "archivo": "File:Escudo de la Provincia de Santa Cruz.svg",
+      "url_archivo": "https://upload.wikimedia.org/wikipedia/commons/d/dd/Escudo_de_la_Provincia_de_Santa_Cruz.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "licencia": "CC BY 4.0"
+    },
+    "simbolos_fuente_oficial": "https://www.argentina.gob.ar/santacruz/simbolos",
+    "notas": null,
+    "verificado": false,
+    "verificado_datos_basicos": true
+  },
+  {
+    "id": "santa_fe",
+    "nombre": "Santa Fe",
+    "capital": {
+      "valor": "Santa Fe",
+      "fuente": [
+        "https://www.ign.gob.ar/NuestrasActividades/Geografia/DatosArgentina/DivisionPolitica"
+      ],
+      "verificado": true
+    },
+    "region": {
+      "valor": "Pampeana",
+      "fuente": [
+        "INDEC – regiones estadísticas (GBA, Pampeana, NOA, NEA, Cuyo, Patagonia)"
+      ],
+      "verificado": false,
+      "nota": "Asignación según esquema INDEC; composición tomada de conocimiento previo, falta citar documento INDEC que la liste"
+    },
+    "superficie_km2": {
+      "valor": 133249.1,
+      "fuente": [
+        "https://www.ign.gob.ar/NuestrasActividades/Geografia/DatosArgentina/DivisionPolitica",
+        "https://www.ign.gob.ar/descargas/geoespacial/Informe_supercies_de_Argentina.pdf"
+      ],
+      "verificado": true
+    },
+    "poblacion_2022": {
+      "valor": 3544908,
+      "fuente": [
+        "https://www.indec.gob.ar/ftp/cuadros/poblacion/censo2022_indicadores_demograficos.pdf"
+      ],
+      "verificado": true
+    },
+    "flor_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No se encontró norma"
+    },
+    "arbol_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No se encontró norma"
+    },
+    "ave_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No investigado a fondo / no hallado"
+    },
+    "dia_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "Pendiente"
+    },
+    "gentilicio": {
+      "valor": "santafesino, -a",
+      "fuente": [
+        "https://es.wikipedia.org/wiki/Provincia_de_Santa_Fe"
+      ],
+      "verificado": false,
+      "nota": "Solo Wikipedia (dato de lengua; puede verificarse con DLE/RAE)"
+    },
+    "palabras_clave": {
+      "valor": [
+        "PARANA",
+        "ROSARIO",
+        "BANDERA",
+        "LAGUNA",
+        "ISLAS",
+        "SOJA"
+      ],
+      "fuente": [],
+      "verificado": false,
+      "nota": "Editorial (no es dato fáctico); en mayúsculas sin tildes para sopa de letras. Revisar antes de publicar"
+    },
+    "bandera": {
+      "valor": "https://commons.wikimedia.org/wiki/File:Bandera_de_la_Provincia_de_Santa_Fe.svg",
+      "fuente": [
+        "https://commons.wikimedia.org/wiki/File:Bandera_de_la_Provincia_de_Santa_Fe.svg"
+      ],
+      "verificado": true,
+      "archivo": "File:Bandera de la Provincia de Santa Fe.svg",
+      "url_archivo": "https://upload.wikimedia.org/wikipedia/commons/8/84/Bandera_de_la_Provincia_de_Santa_Fe.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "licencia": "Public domain"
+    },
+    "escudo": {
+      "valor": "https://commons.wikimedia.org/wiki/File:Escudo_de_la_Provincia_de_Santa_Fe.svg",
+      "fuente": [
+        "https://commons.wikimedia.org/wiki/File:Escudo_de_la_Provincia_de_Santa_Fe.svg"
+      ],
+      "verificado": true,
+      "archivo": "File:Escudo de la Provincia de Santa Fe.svg",
+      "url_archivo": "https://upload.wikimedia.org/wikipedia/commons/4/47/Escudo_de_la_Provincia_de_Santa_Fe.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "licencia": "Public domain"
+    },
+    "simbolos_fuente_oficial": "https://www.argentina.gob.ar/santafe/simbolos",
+    "notas": "Ley 13.673 (2018) creó concurso para elegir ave, flor y árbol; no se halló ley con las especies ganadoras.",
+    "verificado": false,
+    "verificado_datos_basicos": true
+  },
+  {
+    "id": "santiago_del_estero",
+    "nombre": "Santiago del Estero",
+    "capital": {
+      "valor": "Santiago del Estero",
+      "fuente": [
+        "https://www.ign.gob.ar/NuestrasActividades/Geografia/DatosArgentina/DivisionPolitica"
+      ],
+      "verificado": true
+    },
+    "region": {
+      "valor": "Noroeste (NOA)",
+      "fuente": [
+        "INDEC – regiones estadísticas (GBA, Pampeana, NOA, NEA, Cuyo, Patagonia)"
+      ],
+      "verificado": false,
+      "nota": "Asignación según esquema INDEC; composición tomada de conocimiento previo, falta citar documento INDEC que la liste"
+    },
+    "superficie_km2": {
+      "valor": 136934.3,
+      "fuente": [
+        "https://www.ign.gob.ar/NuestrasActividades/Geografia/DatosArgentina/DivisionPolitica",
+        "https://www.ign.gob.ar/descargas/geoespacial/Informe_supercies_de_Argentina.pdf"
+      ],
+      "verificado": true
+    },
+    "poblacion_2022": {
+      "valor": 1060906,
+      "fuente": [
+        "https://www.indec.gob.ar/ftp/cuadros/poblacion/censo2022_indicadores_demograficos.pdf"
+      ],
+      "verificado": true
+    },
+    "flor_provincial": {
+      "valor": "Flor de San Esteban (Caesalpinia gilliesii)",
+      "fuente": [
+        "(snippet de búsqueda; URL no registrada)"
+      ],
+      "verificado": false,
+      "nota": "Fuente no oficial; dice Decreto Serie E N.º 1.427/1999",
+      "norma": "Decreto Serie E 1.427/1999 (sin confirmar)"
+    },
+    "arbol_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No se encontró norma"
+    },
+    "ave_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No investigado a fondo / no hallado"
+    },
+    "dia_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "Pendiente"
+    },
+    "gentilicio": {
+      "valor": "santiagueño, -a",
+      "fuente": [
+        "https://es.wikipedia.org/wiki/Provincia_de_Santiago_del_Estero"
+      ],
+      "verificado": false,
+      "nota": "Solo Wikipedia (dato de lengua; puede verificarse con DLE/RAE)"
+    },
+    "palabras_clave": {
+      "valor": [
+        "CHACARERA",
+        "QUEBRACHO",
+        "TERMAS",
+        "MONTE",
+        "DULCE",
+        "BOMBO"
+      ],
+      "fuente": [],
+      "verificado": false,
+      "nota": "Editorial (no es dato fáctico); en mayúsculas sin tildes para sopa de letras. Revisar antes de publicar"
+    },
+    "bandera": {
+      "valor": "https://commons.wikimedia.org/wiki/File:Bandera_de_la_Provincia_de_Santiago_del_Estero.svg",
+      "fuente": [
+        "https://commons.wikimedia.org/wiki/File:Bandera_de_la_Provincia_de_Santiago_del_Estero.svg"
+      ],
+      "verificado": true,
+      "archivo": "File:Bandera de la Provincia de Santiago del Estero.svg",
+      "url_archivo": "https://upload.wikimedia.org/wikipedia/commons/0/07/Bandera_de_la_Provincia_de_Santiago_del_Estero.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "licencia": "Public domain"
+    },
+    "escudo": {
+      "valor": "https://commons.wikimedia.org/wiki/File:Escudo_de_la_Provincia_de_Santiago_del_Estero.svg",
+      "fuente": [
+        "https://commons.wikimedia.org/wiki/File:Escudo_de_la_Provincia_de_Santiago_del_Estero.svg"
+      ],
+      "verificado": true,
+      "archivo": "File:Escudo de la Provincia de Santiago del Estero.svg",
+      "url_archivo": "https://upload.wikimedia.org/wikipedia/commons/2/2e/Escudo_de_la_Provincia_de_Santiago_del_Estero.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "licencia": "Public domain"
+    },
+    "simbolos_fuente_oficial": null,
+    "notas": "argentina.gob.ar/santiagodelestero/simbolos devolvió 404.",
+    "verificado": false,
+    "verificado_datos_basicos": true
+  },
+  {
+    "id": "tierra_del_fuego",
+    "nombre": "Tierra del Fuego, Antártida e Islas del Atlántico Sur",
+    "capital": {
+      "valor": "Ushuaia",
+      "fuente": [
+        "https://www.ign.gob.ar/NuestrasActividades/Geografia/DatosArgentina/DivisionPolitica"
+      ],
+      "verificado": true
+    },
+    "region": {
+      "valor": "Patagonia",
+      "fuente": [
+        "INDEC – regiones estadísticas (GBA, Pampeana, NOA, NEA, Cuyo, Patagonia)"
+      ],
+      "verificado": false,
+      "nota": "Asignación según esquema INDEC; composición tomada de conocimiento previo, falta citar documento INDEC que la liste"
+    },
+    "superficie_km2": {
+      "valor": 910324.4,
+      "fuente": [
+        "https://www.ign.gob.ar/NuestrasActividades/Geografia/DatosArgentina/DivisionPolitica",
+        "https://www.ign.gob.ar/descargas/geoespacial/Informe_supercies_de_Argentina.pdf"
+      ],
+      "verificado": true,
+      "nota": "IGN; TdF incluye sector antártico e islas"
+    },
+    "poblacion_2022": {
+      "valor": 185732,
+      "fuente": [
+        "https://www.indec.gob.ar/ftp/cuadros/poblacion/censo2022_indicadores_demograficos.pdf"
+      ],
+      "verificado": true
+    },
+    "flor_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No se encontró norma"
+    },
+    "arbol_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No se encontró norma"
+    },
+    "ave_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No investigado a fondo / no hallado"
+    },
+    "dia_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "Pendiente"
+    },
+    "gentilicio": {
+      "valor": "fueguino, -a",
+      "fuente": [
+        "https://es.wikipedia.org/wiki/Provincia_de_Tierra_del_Fuego,_Antártida_e_Islas_del_Atlántico_Sur"
+      ],
+      "verificado": false,
+      "nota": "Solo Wikipedia (dato de lengua; puede verificarse con DLE/RAE)"
+    },
+    "palabras_clave": {
+      "valor": [
+        "USHUAIA",
+        "PINGUINO",
+        "CANAL",
+        "LENGA",
+        "ALBATROS",
+        "FUEGO"
+      ],
+      "fuente": [],
+      "verificado": false,
+      "nota": "Editorial (no es dato fáctico); en mayúsculas sin tildes para sopa de letras. Revisar antes de publicar"
+    },
+    "bandera": {
+      "valor": "https://commons.wikimedia.org/wiki/File:Bandera_de_la_Provincia_de_Tierra_del_Fuego.svg",
+      "fuente": [
+        "https://commons.wikimedia.org/wiki/File:Bandera_de_la_Provincia_de_Tierra_del_Fuego.svg"
+      ],
+      "verificado": true,
+      "archivo": "File:Bandera de la Provincia de Tierra del Fuego.svg",
+      "url_archivo": "https://upload.wikimedia.org/wikipedia/commons/9/94/Bandera_de_la_Provincia_de_Tierra_del_Fuego.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "licencia": "Public domain"
+    },
+    "escudo": {
+      "valor": "https://commons.wikimedia.org/wiki/File:Escudo_de_la_Provincia_de_Tierra_del_Fuego.svg",
+      "fuente": [
+        "https://commons.wikimedia.org/wiki/File:Escudo_de_la_Provincia_de_Tierra_del_Fuego.svg"
+      ],
+      "verificado": true,
+      "archivo": "File:Escudo de la Provincia de Tierra del Fuego.svg",
+      "url_archivo": "https://upload.wikimedia.org/wikipedia/commons/a/aa/Escudo_de_la_Provincia_de_Tierra_del_Fuego.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "licencia": "CC BY 4.0"
+    },
+    "simbolos_fuente_oficial": "https://www.argentina.gob.ar/tierradelfuego/simbolos",
+    "notas": "Superficie IGN incluye Antártida Argentina e islas del Atlántico Sur (Isla Grande: 20.698 km² aprox. según nota IGN). Una búsqueda menciona 'campanita' como flor, sin norma: no cargado.",
+    "verificado": false,
+    "verificado_datos_basicos": true
+  },
+  {
+    "id": "tucuman",
+    "nombre": "Tucumán",
+    "capital": {
+      "valor": "San Miguel de Tucumán",
+      "fuente": [
+        "https://www.ign.gob.ar/NuestrasActividades/Geografia/DatosArgentina/DivisionPolitica"
+      ],
+      "verificado": true
+    },
+    "region": {
+      "valor": "Noroeste (NOA)",
+      "fuente": [
+        "INDEC – regiones estadísticas (GBA, Pampeana, NOA, NEA, Cuyo, Patagonia)"
+      ],
+      "verificado": false,
+      "nota": "Asignación según esquema INDEC; composición tomada de conocimiento previo, falta citar documento INDEC que la liste"
+    },
+    "superficie_km2": {
+      "valor": 22592.1,
+      "fuente": [
+        "https://www.ign.gob.ar/NuestrasActividades/Geografia/DatosArgentina/DivisionPolitica",
+        "https://www.ign.gob.ar/descargas/geoespacial/Informe_supercies_de_Argentina.pdf"
+      ],
+      "verificado": true
+    },
+    "poblacion_2022": {
+      "valor": 1731820,
+      "fuente": [
+        "https://www.indec.gob.ar/ftp/cuadros/poblacion/censo2022_indicadores_demograficos.pdf"
+      ],
+      "verificado": true
+    },
+    "flor_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No se encontró norma"
+    },
+    "arbol_provincial": {
+      "valor": "Lapacho rosado (Tabebuia avellanedae)",
+      "fuente": [
+        "La Gaceta (snippet; URL no registrada)"
+      ],
+      "verificado": false,
+      "nota": "Fuente periodística; confirmar Ley 9.301 en Boletín Oficial Tucumán",
+      "norma": "Ley 9.301"
+    },
+    "ave_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "No investigado a fondo / no hallado"
+    },
+    "dia_provincial": {
+      "valor": null,
+      "fuente": [],
+      "verificado": false,
+      "nota": "Pendiente"
+    },
+    "gentilicio": {
+      "valor": "tucumano, -a",
+      "fuente": [
+        "https://es.wikipedia.org/wiki/Provincia_de_Tucumán"
+      ],
+      "verificado": false,
+      "nota": "Solo Wikipedia (dato de lengua; puede verificarse con DLE/RAE)"
+    },
+    "palabras_clave": {
+      "valor": [
+        "INDEPENDENCIA",
+        "CASA",
+        "CANA",
+        "LIMON",
+        "LAPACHO",
+        "TAFI"
+      ],
+      "fuente": [],
+      "verificado": false,
+      "nota": "Editorial (no es dato fáctico); en mayúsculas sin tildes para sopa de letras. Revisar antes de publicar"
+    },
+    "bandera": {
+      "valor": "https://commons.wikimedia.org/wiki/File:Bandera_de_la_Provincia_de_Tucum%C3%A1n.svg",
+      "fuente": [
+        "https://commons.wikimedia.org/wiki/File:Bandera_de_la_Provincia_de_Tucum%C3%A1n.svg"
+      ],
+      "verificado": true,
+      "archivo": "File:Bandera de la Provincia de Tucumán.svg",
+      "url_archivo": "https://upload.wikimedia.org/wikipedia/commons/c/ce/Bandera_de_la_Provincia_de_Tucum%C3%A1n.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "licencia": "Public domain"
+    },
+    "escudo": {
+      "valor": "https://commons.wikimedia.org/wiki/File:Escudo_de_la_Provincia_de_Tucum%C3%A1n.svg",
+      "fuente": [
+        "https://commons.wikimedia.org/wiki/File:Escudo_de_la_Provincia_de_Tucum%C3%A1n.svg"
+      ],
+      "verificado": true,
+      "archivo": "File:Escudo de la Provincia de Tucumán.svg",
+      "url_archivo": "https://upload.wikimedia.org/wikipedia/commons/b/bc/Escudo_de_la_Provincia_de_Tucum%C3%A1n.svg?utm_source=commons.wikimedia.org&utm_campaign=imageinfo&utm_content=original",
+      "licencia": "Public domain"
+    },
+    "simbolos_fuente_oficial": "https://www.argentina.gob.ar/tucuman/simbolos",
+    "notas": null,
+    "verificado": false,
+    "verificado_datos_basicos": true
+  }
+]

@@ -1,16 +1,9 @@
-import data from './provincias.json';
+import fuente from './provincias.fuente.json';
+import siluetas from './siluetas.json';
+import { publicarProvincias, type Provincia } from './publicar-provincias';
 
-export interface Provincia {
-	slug: string;
-	nombre: string;
-	capital: string | null;
-	region: string | null;
-	superficie: string | null;
-	poblacion: string | null;
-	simbolos: { flor: string | null; arbol: string | null; bandera: string | null; escudo: string | null };
-	datos_para_investigar: string[];
-	fuentes: string[];
-	verificado: boolean;
-}
+export type { Provincia };
 
-export const provincias = data as Provincia[];
+const disponibles = new Set(Object.keys(siluetas));
+
+export const provincias = publicarProvincias(fuente, disponibles);

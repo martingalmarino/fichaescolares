@@ -6,25 +6,28 @@ import BaseLayout from '../../layouts/BaseLayout.astro';
 
 <BaseLayout
 	title="Fichas por provincia para imprimir | Fichas Patrias"
-	description="Fichas de las jurisdicciones con capital publicada en argentina.gob.ar. Sin flor, árbol ni escudo hasta tener licencia."
+	description="Fichas provinciales para imprimir, con silueta para colorear, capital y datos para completar."
 >
 	<article class="mx-auto max-w-6xl px-4 py-8">
 		<Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: 'Provincias' }]} />
 		<h1 class="mt-4 text-3xl font-bold tracking-tight text-azul sm:text-4xl">Fichas por provincia</h1>
 		<p class="mt-3 max-w-3xl leading-relaxed text-muted">
-			Hay {provincias.length} fichas. Cada capital, superficie y población está copiada de la página oficial de esa jurisdicción. Misiones no está: en la pasada de hoy su página no publicó el bloque de capital. La flor, el árbol, la bandera y el escudo no se muestran. La región solo aparece cuando una página oficial la nombra, como la Región Centro en Entre Ríos, Córdoba y Santa Fe, o el Nuevo Cuyo en Mendoza. La Ciudad Autónoma de Buenos Aires no tiene una capital distinta en su ficha.
+			Cada ficha trae la silueta para colorear, la capital para marcar y los datos para completar. La flor, el árbol, la bandera y el escudo se suman cuando tienen fuente.
 		</p>
-		<ul class="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
-			{
-				provincias.map((provincia) => (
-					<li>
-						<a class="block rounded-card border border-borde bg-white p-4 shadow-card hover:border-celeste" href={`/provincias/${provincia.slug}/`}>
-							<h2 class="font-semibold text-azul">{provincia.nombre}</h2>
-							<p class="mt-1 text-sm text-muted">{provincia.capital ? `Capital: ${provincia.capital}` : 'Sin capital aparte en la página oficial'}</p>
-						</a>
-					</li>
-				))
-			}
-		</ul>
+		{
+			provincias.length > 0 && (
+				<ul class="mt-8 grid gap-3 sm:grid-cols-2 lg:grid-cols-3">
+					{provincias.map((provincia) => (
+						<li>
+							<a class="block rounded-card border border-borde bg-white p-4 shadow-card hover:border-celeste" href={`/provincias/${provincia.slug}/`}>
+								<img class="h-24 w-full object-contain" src={provincia.silueta} alt="" />
+								<h2 class="mt-3 font-semibold text-azul">{provincia.nombre}</h2>
+								{provincia.capital && <p class="mt-1 text-sm text-muted">Capital: {provincia.capital}</p>}
+							</a>
+						</li>
+					))}
+				</ul>
+			)
+		}
 	</article>
 </BaseLayout>

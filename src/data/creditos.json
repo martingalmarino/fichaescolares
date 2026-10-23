@@ -19,5 +19,12 @@
 		"licencia": "SIL Open Font License 1.1",
 		"enlace": "https://software.sil.org/andika/",
 		"archivo": "/fonts/LICENSES/Andika-OFL.txt"
+	},
+	{
+		"nombre": "Siluetas de las provincias",
+		"autor": "Natural Earth",
+		"licencia": "Dominio público",
+		"enlace": "https://www.naturalearthdata.com/about/terms-of-use/",
+		"archivo": "/geo/natural-earth.txt"
 	}
 ]
