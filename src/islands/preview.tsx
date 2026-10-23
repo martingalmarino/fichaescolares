@@ -91,10 +91,17 @@ export function NombreFecha() {
 	);
 }
 
+export function PieHoja() {
+	return <p class="pie-hoja">aulita.com.ar</p>;
+}
+
 export function PreviewFrame({ children, solution = false, className = '' }: { children: ComponentChildren; solution?: boolean; className?: string }) {
 	return (
 		<div class="preview-frame w-full min-w-0">
-			<div class={`a4 bg-white text-azul shadow-card ${solution ? 'solutions' : ''} ${className}`}>{children}</div>
+			<div class={`a4 flex flex-col bg-white text-azul shadow-card ${solution ? 'solutions' : ''} ${className}`}>
+				<div class="min-h-0 flex-1">{children}</div>
+				<PieHoja />
+			</div>
 		</div>
 	);
 }

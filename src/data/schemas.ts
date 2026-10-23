@@ -24,29 +24,99 @@ export const procerSchema = z
 		}
 	});
 
+const tipoEfemeride = z.enum(['feriado', 'acto-escolar', 'conmemoracion', 'no-laborable']);
+const nivelEscolar = z.enum(['inicial', 'primaria']);
+const reglaFeriado = z.enum(['inamovible', 'trasladable', 'movil']);
+
 export const efemerideSchema = z
 	.object({
+		id: z.number().int().positive(),
 		slug,
-		dia: z.number().int().min(1).max(31),
-		mes: z.number().int().min(1).max(12),
+		dia: z.number().int().min(1).max(31).nullable(),
+		mes: z.number().int().min(1).max(12).nullable(),
 		nombre: z.string().min(3),
 		titulo: z.string().min(3),
-		tema: z.string().min(3),
-		linea: z.string().min(10).max(160),
+		tema: z.string().min(3).optional(),
+		linea: z.string().min(10).max(160).optional(),
 		resumen: z.string().min(80),
-		vocabulario: z.array(z.string().min(2)).min(6),
+		vocabulario: z.array(z.string().min(2)).min(6).optional(),
 		proceres: z.array(slug),
 		laminas: z.array(slug),
+		tipo: tipoEfemeride,
+		nivel: z.array(nivelEscolar),
+		feriado: z.object({
+			es: z.boolean(),
+			regla: reglaFeriado.nullable(),
+		}),
+		movil: z
+			.string()
+			.regex(/^[a-z0-9]+(?:-[a-z0-9]+)*$/)
+			.optional(),
+		recursos: z.object({
+			fichas: z.array(slug),
+			laminas: z.array(slug),
+		}),
 		fuentes: z.array(z.string().url()).min(1),
 		verificado: z.boolean(),
 	})
 	.superRefine((item, contexto) => {
-		const ultimo = new Date(2024, item.mes, 0).getDate();
-		if (item.dia > ultimo) {
+		const sinDia = item.dia == null;
+		const sinMes = item.mes == null;
+		if (sinDia !== sinMes) {
 			contexto.addIssue({
 				code: 'custom',
 				path: ['dia'],
-				message: `el mes ${item.mes} no tiene día ${item.dia}`,
+				message: 'dia y mes van juntos, o los dos en null',
+			});
+		} else if (sinDia && !item.movil) {
+			contexto.addIssue({
+				code: 'custom',
+				path: ['movil'],
+				message: 'una fecha sin día necesita la regla movil',
+			});
+		} else if (!sinDia && item.movil) {
+			contexto.addIssue({
+				code: 'custom',
+				path: ['movil'],
+				message: 'una fecha con día fijo no lleva movil',
+			});
+		} else if (!sinDia && item.dia != null && item.mes != null) {
+			const ultimo = new Date(2024, item.mes, 0).getDate();
+			if (item.dia > ultimo) {
+				contexto.addIssue({
+					code: 'custom',
+					path: ['dia'],
+					message: `el mes ${item.mes} no tiene día ${item.dia}`,
+				});
+			}
+		}
+		if (item.vocabulario && (!item.tema || !item.linea)) {
+			contexto.addIssue({
+				code: 'custom',
+				path: ['vocabulario'],
+				message: 'una fecha con vocabulario necesita tema y linea',
+			});
+		}
+		if (item.feriado.es === (item.feriado.regla === null)) {
+			contexto.addIssue({
+				code: 'custom',
+				path: ['feriado'],
+				message: 'un feriado necesita regla, y una fecha que no es feriado lleva regla null',
+			});
+		}
+		if (item.feriado.regla === 'movil' && !item.movil) {
+			contexto.addIssue({
+				code: 'custom',
+				path: ['movil'],
+				message: 'un feriado móvil necesita la regla movil',
+			});
+		}
+		const mismas = item.laminas.length === item.recursos.laminas.length && item.laminas.every((lamina, indice) => lamina === item.recursos.laminas[indice]);
+		if (!mismas) {
+			contexto.addIssue({
+				code: 'custom',
+				path: ['recursos', 'laminas'],
+				message: 'recursos.laminas tiene que coincidir con laminas',
 			});
 		}
 	});
@@ -122,6 +192,16 @@ function slugsRepetidos(slugs: string[], archivo: string): string[] {
 	return errores;
 }
 
+function idsRepetidos(ids: number[]): string[] {
+	const vistos = new Set<number>();
+	const errores: string[] = [];
+	for (const item of ids) {
+		if (vistos.has(item)) errores.push(`efemerides.json: id repetido ${item}`);
+		vistos.add(item);
+	}
+	return errores;
+}
+
 export interface DatosExtra {
 	frases: unknown;
 	provincias: unknown;
@@ -144,6 +224,7 @@ export function validarDatos(
 	if (!efemeridesParseadas.success || !proceresParseados.success) return errores;
 
 	errores.push(...slugsRepetidos(efemeridesParseadas.data.map((item) => item.slug), 'efemerides.json'));
+	errores.push(...idsRepetidos(efemeridesParseadas.data.map((item) => item.id)));
 	errores.push(...slugsRepetidos(proceresParseados.data.map((item) => item.slug), 'proceres.json'));
 
 	const slugs = new Set(proceresParseados.data.map((item) => item.slug));

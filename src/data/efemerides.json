@@ -1,5 +1,296 @@
 [
 	{
+		"id": 1,
+		"slug": "1-de-enero",
+		"dia": 1,
+		"mes": 1,
+		"nombre": "Año Nuevo",
+		"titulo": "Año Nuevo",
+		"linea": "Feriado nacional inamovible del 1 de enero.",
+		"resumen": "La ley 27.399 incluye el 1 de enero entre los feriados nacionales inamovibles y lo nombra Año Nuevo. La fecha de este registro es esa, sin traslado.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "feriado",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": true,
+			"regla": "inamovible"
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://servicios.infoleg.gob.ar/infolegInternet/anexos/280000-284999/281835/norma.htm"
+		],
+		"verificado": true
+	},
+	{
+		"id": 2,
+		"slug": "26-de-enero",
+		"dia": 26,
+		"mes": 1,
+		"nombre": "Día Mundial de la Educación Ambiental",
+		"titulo": "Educación ambiental",
+		"linea": "Conmemoración del 26 de enero.",
+		"resumen": "El 26 de enero es el Día Mundial de la Educación Ambiental en el calendario que publica el Estado nacional. No es feriado.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "conmemoracion",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://www.argentina.gob.ar/noticias/26-enero-dia-mundial-educacion-ambiental"
+		],
+		"verificado": true
+	},
+	{
+		"id": 4,
+		"slug": "2-de-febrero",
+		"dia": 2,
+		"mes": 2,
+		"nombre": "Día Mundial de los Humedales",
+		"titulo": "Humedales",
+		"linea": "Día internacional del 2 de febrero.",
+		"resumen": "El 2 de febrero figura como Día Mundial de los Humedales en el listado de días internacionales de las Naciones Unidas. No es feriado nacional.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "conmemoracion",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://www.un.org/es/observances/list-days-weeks"
+		],
+		"verificado": true
+	},
+	{
+		"id": 5,
+		"slug": "3-de-febrero",
+		"dia": 3,
+		"mes": 2,
+		"nombre": "Combate de San Lorenzo",
+		"titulo": "Combate de San Lorenzo",
+		"linea": "La Casa Rosada recuerda el Combate de San Lorenzo.",
+		"resumen": "La Casa Rosada recuerda el Combate de San Lorenzo en esta fecha, el 3 de febrero. En este calendario queda como conmemoración, no como feriado.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "conmemoracion",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://www.casarosada.gob.ar/informacion/actividad-oficial/9-noticias/51159-a-213-anos-del-combate-de-san-lorenzo"
+		],
+		"verificado": true
+	},
+	{
+		"id": 6,
+		"slug": "11-de-febrero",
+		"dia": 11,
+		"mes": 2,
+		"nombre": "Día Internacional de la Mujer y la Niña en la Ciencia",
+		"titulo": "Mujeres y niñas en la ciencia",
+		"linea": "Día internacional del 11 de febrero.",
+		"resumen": "El 11 de febrero es el Día Internacional de la Mujer y la Niña en la Ciencia en el calendario de las Naciones Unidas. No es feriado nacional.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "conmemoracion",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://www.un.org/es/observances/list-days-weeks"
+		],
+		"verificado": true
+	},
+	{
+		"id": 7,
+		"slug": "21-de-febrero",
+		"dia": 21,
+		"mes": 2,
+		"nombre": "Día Internacional de la Lengua Materna",
+		"titulo": "Lengua materna",
+		"linea": "Día internacional del 21 de febrero.",
+		"resumen": "El 21 de febrero es el Día Internacional de la Lengua Materna en el calendario de las Naciones Unidas. No es feriado nacional.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "conmemoracion",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://www.un.org/es/observances/list-days-weeks"
+		],
+		"verificado": true
+	},
+	{
+		"id": 8,
+		"slug": "27-de-febrero",
+		"dia": 27,
+		"mes": 2,
+		"nombre": "Creación de la Bandera (Rosario, 1812)",
+		"titulo": "Creación de la bandera",
+		"linea": "El calendario escolar la ubica el 27 de febrero, en Rosario.",
+		"resumen": "La página oficial de los símbolos nacionales ubica en Rosario, en 1812, la creación de la bandera. El calendario escolar conmemora esa fecha el 27 de febrero. El feriado de la bandera sigue siendo el 20 de junio.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "conmemoracion",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://www.argentina.gob.ar/pais/simbolos/bandera"
+		],
+		"verificado": true
+	},
+	{
+		"id": 9,
+		"slug": "8-de-marzo",
+		"dia": 8,
+		"mes": 3,
+		"nombre": "Día Internacional de la Mujer",
+		"titulo": "Día de la Mujer",
+		"linea": "Día internacional del 8 de marzo.",
+		"resumen": "El 8 de marzo es el Día Internacional de la Mujer en el calendario de las Naciones Unidas. En la Argentina no es feriado nacional.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "conmemoracion",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://www.un.org/es/observances/list-days-weeks"
+		],
+		"verificado": true
+	},
+	{
+		"id": 10,
+		"slug": "21-de-marzo",
+		"dia": 21,
+		"mes": 3,
+		"nombre": "Día Internacional de la Eliminación de la Discriminación Racial",
+		"titulo": "Discriminación racial",
+		"linea": "Día internacional del 21 de marzo.",
+		"resumen": "El 21 de marzo es el Día Internacional de la Eliminación de la Discriminación Racial en el calendario de las Naciones Unidas. No es feriado nacional.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "conmemoracion",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://www.un.org/es/observances/list-days-weeks"
+		],
+		"verificado": true
+	},
+	{
+		"id": 11,
+		"slug": "22-de-marzo",
+		"dia": 22,
+		"mes": 3,
+		"nombre": "Día Mundial del Agua",
+		"titulo": "Día del Agua",
+		"linea": "Día internacional del 22 de marzo.",
+		"resumen": "El 22 de marzo es el Día Mundial del Agua en el calendario de las Naciones Unidas. No es feriado nacional.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "conmemoracion",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://www.un.org/es/observances/list-days-weeks"
+		],
+		"verificado": true
+	},
+	{
+		"id": 12,
 		"slug": "24-de-marzo",
 		"dia": 24,
 		"mes": 3,
@@ -8,9 +299,35 @@
 		"tema": "la memoria, la verdad y la justicia",
 		"linea": "Recuerda a las víctimas del proceso iniciado en 1976.",
 		"resumen": "La ley 25.633 fijó el 24 de marzo para recordar a las víctimas del proceso que empezó ese día de 1976. El calendario de feriados lo nombra Día Nacional de la Memoria por la Verdad y la Justicia. En las fichas usamos esa fecha, la conmemorativa.",
-		"vocabulario": ["MEMORIA", "VERDAD", "JUSTICIA", "DERECHOS", "DEMOCRACIA", "PAZ", "NUNCA MÁS", "IDENTIDAD", "ABRAZO", "ESCUELA"],
+		"vocabulario": [
+			"MEMORIA",
+			"VERDAD",
+			"JUSTICIA",
+			"DERECHOS",
+			"DEMOCRACIA",
+			"PAZ",
+			"NUNCA MÁS",
+			"IDENTIDAD",
+			"ABRAZO",
+			"ESCUELA"
+		],
 		"proceres": [],
 		"laminas": [],
+		"tipo": "feriado",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": true,
+			"regla": "inamovible"
+		},
+		"recursos": {
+			"fichas": [
+				"sopa-de-letras"
+			],
+			"laminas": []
+		},
 		"fuentes": [
 			"https://www.argentina.gob.ar/normativa/nacional/ley-25633-77081/texto",
 			"https://www.argentina.gob.ar/normativa/nacional/ley-27399-281835/texto"
@@ -18,6 +335,7 @@
 		"verificado": true
 	},
 	{
+		"id": 13,
 		"slug": "2-de-abril",
 		"dia": 2,
 		"mes": 4,
@@ -26,9 +344,35 @@
 		"tema": "Malvinas y quienes combatieron",
 		"linea": "Recuerda a veteranos y caídos de la Guerra de Malvinas.",
 		"resumen": "El 2 de abril es el Día del Veterano y de los Caídos en la Guerra de Malvinas. Así lo nombra el calendario de feriados, y la ley 25.370 ya lo había instituido como homenaje a quienes combatieron. La fecha de las fichas es el 2 de abril.",
-		"vocabulario": ["MALVINAS", "VETERANO", "ISLAS", "SOBERANÍA", "ATLÁNTICO", "BANDERA", "ABRIL", "PATRIA", "HÉROE", "MEMORIA"],
+		"vocabulario": [
+			"MALVINAS",
+			"VETERANO",
+			"ISLAS",
+			"SOBERANÍA",
+			"ATLÁNTICO",
+			"BANDERA",
+			"ABRIL",
+			"PATRIA",
+			"HÉROE",
+			"MEMORIA"
+		],
 		"proceres": [],
 		"laminas": [],
+		"tipo": "feriado",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": true,
+			"regla": "inamovible"
+		},
+		"recursos": {
+			"fichas": [
+				"sopa-de-letras"
+			],
+			"laminas": []
+		},
 		"fuentes": [
 			"https://www.argentina.gob.ar/normativa/nacional/ley-25370-65442",
 			"https://www.argentina.gob.ar/normativa/nacional/ley-27399-281835/texto"
@@ -36,6 +380,152 @@
 		"verificado": true
 	},
 	{
+		"id": 14,
+		"slug": "7-de-abril",
+		"dia": 7,
+		"mes": 4,
+		"nombre": "Día Mundial de la Salud",
+		"titulo": "Día de la Salud",
+		"linea": "Día internacional del 7 de abril.",
+		"resumen": "El 7 de abril es el Día Mundial de la Salud en el calendario de las Naciones Unidas. No es feriado nacional.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "conmemoracion",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://www.un.org/es/observances/list-days-weeks"
+		],
+		"verificado": true
+	},
+	{
+		"id": 16,
+		"slug": "19-de-abril",
+		"dia": 19,
+		"mes": 4,
+		"nombre": "Día del Indio Americano (Día de la Convivencia en la Diversidad Cultural)",
+		"titulo": "Pueblos indígenas de América",
+		"linea": "El 19 de abril, según una nota oficial.",
+		"resumen": "Una nota del Estado nacional recuerda el 19 de abril como Día del Indio Americano y también como día de la convivencia en la diversidad cultural. No es feriado nacional.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "conmemoracion",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://www.argentina.gob.ar/noticias/19-de-abril-dia-del-indio-americano"
+		],
+		"verificado": true
+	},
+	{
+		"id": 17,
+		"slug": "22-de-abril",
+		"dia": 22,
+		"mes": 4,
+		"nombre": "Día Internacional de la Madre Tierra",
+		"titulo": "Madre Tierra",
+		"linea": "Día internacional del 22 de abril.",
+		"resumen": "El 22 de abril es el Día Internacional de la Madre Tierra en el calendario de las Naciones Unidas. No es feriado nacional.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "conmemoracion",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://www.un.org/es/observances/list-days-weeks"
+		],
+		"verificado": true
+	},
+	{
+		"id": 18,
+		"slug": "23-de-abril",
+		"dia": 23,
+		"mes": 4,
+		"nombre": "Día Mundial del Libro y del Derecho de Autor (Día del Idioma)",
+		"titulo": "Día del Libro",
+		"linea": "El 23 de abril, día internacional del libro y del idioma.",
+		"resumen": "El 23 de abril es el Día Mundial del Libro y del Derecho de Autor en el calendario de las Naciones Unidas. En la Argentina el día nacional del libro es otra fecha, el 15 de junio.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "conmemoracion",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://www.un.org/es/observances/list-days-weeks"
+		],
+		"verificado": true
+	},
+	{
+		"id": 19,
+		"slug": "29-de-abril",
+		"dia": 29,
+		"mes": 4,
+		"nombre": "Día del Animal",
+		"titulo": "Día del Animal",
+		"linea": "El 29 de abril, según una nota oficial.",
+		"resumen": "Una nota del Estado nacional recuerda el 29 de abril como Día del Animal. No es feriado nacional.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "conmemoracion",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://www.argentina.gob.ar/noticias/29-de-abril-dia-del-animal"
+		],
+		"verificado": true
+	},
+	{
+		"id": 20,
 		"slug": "1-de-mayo",
 		"dia": 1,
 		"mes": 5,
@@ -44,9 +534,35 @@
 		"tema": "el trabajo y sus derechos",
 		"linea": "El calendario oficial de feriados lo nombra Día del Trabajo.",
 		"resumen": "En la ley de feriados, el 1 de mayo es el Día del Trabajo. El portal educativo también lo presenta como Día Internacional del Trabajador. Para las fichas usamos el nombre del calendario oficial.",
-		"vocabulario": ["TRABAJO", "MAYO", "DERECHOS", "OFICIO", "JORNADA", "SALARIO", "DESCANSO", "HUELGA", "OBRERO", "SINDICATO"],
+		"vocabulario": [
+			"TRABAJO",
+			"MAYO",
+			"DERECHOS",
+			"OFICIO",
+			"JORNADA",
+			"SALARIO",
+			"DESCANSO",
+			"HUELGA",
+			"OBRERO",
+			"SINDICATO"
+		],
 		"proceres": [],
 		"laminas": [],
+		"tipo": "feriado",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": true,
+			"regla": "inamovible"
+		},
+		"recursos": {
+			"fichas": [
+				"sopa-de-letras"
+			],
+			"laminas": []
+		},
 		"fuentes": [
 			"https://www.argentina.gob.ar/normativa/nacional/ley-27399-281835/texto",
 			"https://www.educ.ar/recursos/159169/calendario-de-efemerides-educar"
@@ -54,6 +570,65 @@
 		"verificado": true
 	},
 	{
+		"id": 21,
+		"slug": "11-de-mayo",
+		"dia": 11,
+		"mes": 5,
+		"nombre": "Día del Himno Nacional Argentino",
+		"titulo": "Día del Himno",
+		"linea": "Acto escolar del 11 de mayo.",
+		"resumen": "El 11 de mayo es el Día del Himno Nacional Argentino en el calendario escolar. La página oficial de los símbolos nacionales es la referencia de esta fecha. No es feriado.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "acto-escolar",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://www.argentina.gob.ar/pais/simbolos/himno"
+		],
+		"verificado": true
+	},
+	{
+		"id": 22,
+		"slug": "15-de-mayo",
+		"dia": 15,
+		"mes": 5,
+		"nombre": "Día Internacional de las Familias",
+		"titulo": "Día de las Familias",
+		"linea": "Día internacional del 15 de mayo.",
+		"resumen": "El 15 de mayo es el Día Internacional de las Familias en el calendario de las Naciones Unidas. No es feriado nacional.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "conmemoracion",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://www.un.org/es/observances/list-days-weeks"
+		],
+		"verificado": true
+	},
+	{
+		"id": 23,
 		"slug": "18-de-mayo",
 		"dia": 18,
 		"mes": 5,
@@ -62,9 +637,42 @@
 		"tema": "la escarapela argentina",
 		"linea": "Fecha escolar de la escarapela, fijada en el siglo XX.",
 		"resumen": "El 18 de mayo es el Día de la Escarapela en el calendario escolar. Educ.ar recuerda que el Consejo Nacional de Educación fijó esa conmemoración en 1935 y que el pedido de Belgrano para usarla fue el 18 de febrero de 1812. No mezclamos las dos fechas.",
-		"vocabulario": ["ESCARAPELA", "CELESTE", "BLANCO", "BELGRANO", "CINTA", "PECHO", "PATRIA", "MAYO", "INSIGNIA", "COCARDA"],
-		"proceres": ["manuel-belgrano"],
-		"laminas": ["escarapela"],
+		"vocabulario": [
+			"ESCARAPELA",
+			"CELESTE",
+			"BLANCO",
+			"BELGRANO",
+			"CINTA",
+			"PECHO",
+			"PATRIA",
+			"MAYO",
+			"INSIGNIA",
+			"COCARDA"
+		],
+		"proceres": [
+			"manuel-belgrano"
+		],
+		"laminas": [
+			"escarapela"
+		],
+		"tipo": "acto-escolar",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [
+				"sopa-de-letras",
+				"crucigrama-proceres"
+			],
+			"laminas": [
+				"escarapela"
+			]
+		},
 		"fuentes": [
 			"https://www.educ.ar/recursos/70213/18-de-mayo-dia-de-la-escarapela",
 			"https://www.argentina.gob.ar/derechoshumanos/actividades/conmemoraciones"
@@ -72,6 +680,7 @@
 		"verificado": true
 	},
 	{
+		"id": 24,
 		"slug": "25-de-mayo",
 		"dia": 25,
 		"mes": 5,
@@ -80,9 +689,60 @@
 		"tema": "la Revolución de Mayo",
 		"linea": "El 25 de mayo de 1810 se formó la Primera Junta.",
 		"resumen": "El 25 de mayo de 1810 dejó el cargo el virrey Cisneros y quedó formada la Primera Junta, con Cornelio Saavedra como presidente. Mariano Moreno y Juan José Paso fueron sus secretarios. El feriado se llama Día de la Revolución de Mayo.",
-		"vocabulario": ["CABILDO", "JUNTA", "VIRREY", "PATRIA", "PUEBLO", "SAAVEDRA", "MORENO", "FRENCH", "BERUTI", "LIBERTAD", "MAYO", "REVOLUCIÓN"],
-		"proceres": ["cornelio-saavedra", "mariano-moreno", "manuel-belgrano"],
-		"laminas": ["sol-de-mayo", "escarapela", "dama-con-peineta", "aguatero", "vendedora-de-empanadas", "carreta", "farolero", "empanadas-y-pastelitos"],
+		"vocabulario": [
+			"CABILDO",
+			"JUNTA",
+			"VIRREY",
+			"PATRIA",
+			"PUEBLO",
+			"SAAVEDRA",
+			"MORENO",
+			"FRENCH",
+			"BERUTI",
+			"LIBERTAD",
+			"MAYO",
+			"REVOLUCIÓN"
+		],
+		"proceres": [
+			"cornelio-saavedra",
+			"mariano-moreno",
+			"manuel-belgrano"
+		],
+		"laminas": [
+			"sol-de-mayo",
+			"escarapela",
+			"dama-con-peineta",
+			"aguatero",
+			"vendedora-de-empanadas",
+			"carreta",
+			"farolero",
+			"empanadas-y-pastelitos"
+		],
+		"tipo": "feriado",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": true,
+			"regla": "inamovible"
+		},
+		"recursos": {
+			"fichas": [
+				"sopa-de-letras",
+				"crucigrama-proceres"
+			],
+			"laminas": [
+				"sol-de-mayo",
+				"escarapela",
+				"dama-con-peineta",
+				"aguatero",
+				"vendedora-de-empanadas",
+				"carreta",
+				"farolero",
+				"empanadas-y-pastelitos"
+			]
+		},
 		"fuentes": [
 			"https://www.argentina.gob.ar/noticias/25-de-mayo-de-1810-dia-de-la-revolucion-de-mayo-y-primer-gobierno-patrio",
 			"https://www.argentina.gob.ar/normativa/nacional/ley-27399-281835/texto"
@@ -90,6 +750,210 @@
 		"verificado": true
 	},
 	{
+		"id": 25,
+		"slug": "28-de-mayo",
+		"dia": 28,
+		"mes": 5,
+		"nombre": "Día de los Jardines de Infantes y de las Maestras Jardineras",
+		"titulo": "Jardines de infantes",
+		"linea": "La ley 27.059 fija el 28 de mayo.",
+		"resumen": "La ley 27.059 instituye el 28 de mayo como Día de los Jardines de Infantes y de las Maestras Jardineras. No es feriado nacional.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "conmemoracion",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://www.argentina.gob.ar/normativa/nacional/ley-27059-240729"
+		],
+		"verificado": true
+	},
+	{
+		"id": 26,
+		"slug": "31-de-mayo",
+		"dia": 31,
+		"mes": 5,
+		"nombre": "Día Mundial sin Tabaco",
+		"titulo": "Día sin Tabaco",
+		"linea": "Día internacional del 31 de mayo.",
+		"resumen": "El 31 de mayo es el Día Mundial sin Tabaco en el calendario de las Naciones Unidas. No es feriado nacional.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "conmemoracion",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://www.un.org/es/observances/list-days-weeks"
+		],
+		"verificado": true
+	},
+	{
+		"id": 27,
+		"slug": "3-de-junio",
+		"dia": 3,
+		"mes": 6,
+		"nombre": "Ni Una Menos (acción colectiva contra los femicidios)",
+		"titulo": "Ni una menos",
+		"linea": "El 3 de junio, en el calendario escolar bonaerense.",
+		"resumen": "El 3 de junio recuerda la acción colectiva Ni una menos contra los femicidios. La fuente de esta fecha es el calendario de la Dirección General de Cultura y Educación de Buenos Aires. No es feriado nacional.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "conmemoracion",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://continuemosestudiando.abc.gob.ar/contenido/ni-una-menos-2/"
+		],
+		"verificado": true
+	},
+	{
+		"id": 28,
+		"slug": "5-de-junio",
+		"dia": 5,
+		"mes": 6,
+		"nombre": "Día Mundial del Medio Ambiente",
+		"titulo": "Medio ambiente",
+		"linea": "Día internacional del 5 de junio.",
+		"resumen": "El 5 de junio es el Día Mundial del Medio Ambiente en el calendario de las Naciones Unidas. No es feriado nacional.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "conmemoracion",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://www.un.org/es/observances/list-days-weeks"
+		],
+		"verificado": true
+	},
+	{
+		"id": 29,
+		"slug": "10-de-junio",
+		"dia": 10,
+		"mes": 6,
+		"nombre": "Día de la Afirmación de los Derechos Argentinos sobre Malvinas, Islas y Sector Antártico",
+		"titulo": "Derechos sobre Malvinas",
+		"linea": "La ley 20.561 fija el acto escolar del 10 de junio.",
+		"resumen": "La ley 20.561 incorporó al calendario escolar el 10 de junio como Día de la Afirmación de los Derechos Argentinos sobre las Malvinas, Islas y Sector Antártico. El feriado de Malvinas sigue siendo el 2 de abril.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "acto-escolar",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://www.argentina.gob.ar/normativa/nacional/ley-20561-231251/texto"
+		],
+		"verificado": true
+	},
+	{
+		"id": 30,
+		"slug": "15-de-junio",
+		"dia": 15,
+		"mes": 6,
+		"nombre": "Día del Libro (Argentina)",
+		"titulo": "Día del Libro en Argentina",
+		"linea": "El decreto 1038 de 1924 fija el 15 de junio.",
+		"resumen": "El 15 de junio es el Día del Libro en la Argentina. Así lo recuerda una nota oficial, que cita el decreto 1038 de 1924. El 23 de abril es la fecha internacional, distinta de esta.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "conmemoracion",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://www.argentina.gob.ar/noticias/15-de-junio-dia-del-libro"
+		],
+		"verificado": true
+	},
+	{
+		"id": 31,
+		"slug": "17-de-junio",
+		"dia": 17,
+		"mes": 6,
+		"nombre": "Paso a la Inmortalidad del Gral. Martín Miguel de Güemes",
+		"titulo": "Güemes",
+		"linea": "Feriado del 17 de junio. El asueto puede trasladarse.",
+		"resumen": "La ley 27.399 nombra el 17 de junio como Paso a la Inmortalidad del General Martín Miguel de Güemes. Es feriado trasladable: el asueto puede correrse de día y esta fecha queda en el 17 de junio.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "feriado",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": true,
+			"regla": "trasladable"
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://servicios.infoleg.gob.ar/infolegInternet/anexos/280000-284999/281835/norma.htm"
+		],
+		"verificado": true
+	},
+	{
+		"id": 32,
 		"slug": "20-de-junio",
 		"dia": 20,
 		"mes": 6,
@@ -98,9 +962,44 @@
 		"tema": "la bandera argentina",
 		"linea": "Recuerda a Manuel Belgrano, muerto el 20 de junio de 1820.",
 		"resumen": "Manuel Belgrano murió el 20 de junio de 1820. La ley 12.361 declaró esa fecha Día de la Bandera, y el calendario de feriados la nombra Paso a la Inmortalidad del General Don Manuel Belgrano. Las fichas salen con el 20 de junio.",
-		"vocabulario": ["BANDERA", "BELGRANO", "CELESTE", "BLANCO", "SOL", "JUNIO", "PATRIA", "LIBERTAD", "ESCUELA", "ROSARIO"],
-		"proceres": ["manuel-belgrano"],
-		"laminas": ["bandera", "sol-de-mayo"],
+		"vocabulario": [
+			"BANDERA",
+			"BELGRANO",
+			"CELESTE",
+			"BLANCO",
+			"SOL",
+			"JUNIO",
+			"PATRIA",
+			"LIBERTAD",
+			"ESCUELA",
+			"ROSARIO"
+		],
+		"proceres": [
+			"manuel-belgrano"
+		],
+		"laminas": [
+			"bandera",
+			"sol-de-mayo"
+		],
+		"tipo": "feriado",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": true,
+			"regla": "inamovible"
+		},
+		"recursos": {
+			"fichas": [
+				"sopa-de-letras",
+				"crucigrama-proceres"
+			],
+			"laminas": [
+				"bandera",
+				"sol-de-mayo"
+			]
+		},
 		"fuentes": [
 			"https://www.argentina.gob.ar/normativa/nacional/ley-12361-232587/texto",
 			"https://www.argentina.gob.ar/normativa/nacional/ley-27399-281835/texto",
@@ -109,6 +1008,7 @@
 		"verificado": true
 	},
 	{
+		"id": 34,
 		"slug": "9-de-julio",
 		"dia": 9,
 		"mes": 7,
@@ -117,9 +1017,41 @@
 		"tema": "la declaración de la Independencia",
 		"linea": "El calendario de feriados lo llama Día de la Independencia.",
 		"resumen": "El 9 de julio es el Día de la Independencia en la ley de feriados. Educ.ar lo presenta como el día de la declaración de la Independencia. Las fichas usan esa fecha fija.",
-		"vocabulario": ["INDEPENDENCIA", "TUCUMÁN", "JULIO", "CONGRESO", "LIBERTAD", "PATRIA", "PROVINCIAS", "ACTA", "UNIÓN", "PUEBLO"],
+		"vocabulario": [
+			"INDEPENDENCIA",
+			"TUCUMÁN",
+			"JULIO",
+			"CONGRESO",
+			"LIBERTAD",
+			"PATRIA",
+			"PROVINCIAS",
+			"ACTA",
+			"UNIÓN",
+			"PUEBLO"
+		],
 		"proceres": [],
-		"laminas": ["dama-con-peineta", "empanadas-y-pastelitos"],
+		"laminas": [
+			"dama-con-peineta",
+			"empanadas-y-pastelitos"
+		],
+		"tipo": "feriado",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": true,
+			"regla": "inamovible"
+		},
+		"recursos": {
+			"fichas": [
+				"sopa-de-letras"
+			],
+			"laminas": [
+				"dama-con-peineta",
+				"empanadas-y-pastelitos"
+			]
+		},
 		"fuentes": [
 			"https://www.argentina.gob.ar/normativa/nacional/ley-27399-281835/texto",
 			"https://www.educ.ar/recursos/159169/calendario-de-efemerides-educar"
@@ -127,6 +1059,152 @@
 		"verificado": true
 	},
 	{
+		"id": 36,
+		"slug": "26-de-julio",
+		"dia": 26,
+		"mes": 7,
+		"nombre": "Fallecimiento de Eva Perón",
+		"titulo": "Eva Perón",
+		"linea": "El 26 de julio recuerda su fallecimiento.",
+		"resumen": "El Estado nacional recuerda el 26 de julio el fallecimiento de Eva Perón. En este calendario es una conmemoración, no un feriado.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "conmemoracion",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://www.argentina.gob.ar/noticias/70-anos-del-fallecimiento-de-eva-duarte-de-peron"
+		],
+		"verificado": true
+	},
+	{
+		"id": 37,
+		"slug": "30-de-julio",
+		"dia": 30,
+		"mes": 7,
+		"nombre": "Día Internacional de la Amistad",
+		"titulo": "Día de la Amistad",
+		"linea": "Día internacional del 30 de julio.",
+		"resumen": "El 30 de julio es el Día Internacional de la Amistad en el calendario de las Naciones Unidas. No es el Día del Amigo ni un feriado nacional.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "conmemoracion",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://www.un.org/es/observances/list-days-weeks"
+		],
+		"verificado": true
+	},
+	{
+		"id": 38,
+		"slug": "1-de-agosto",
+		"dia": 1,
+		"mes": 8,
+		"nombre": "Día de la Pachamama",
+		"titulo": "Pachamama",
+		"linea": "El 1 de agosto, según una nota oficial.",
+		"resumen": "Una nota del Estado nacional recuerda el 1 de agosto como Día de la Pachamama, también llamado Día de la Madre Tierra. No es feriado nacional. El 22 de abril es otra fecha, la internacional.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "conmemoracion",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://www.argentina.gob.ar/noticias/dia-de-la-pachamama-o-dia-de-la-madre-tierra"
+		],
+		"verificado": true
+	},
+	{
+		"id": 39,
+		"slug": "9-de-agosto",
+		"dia": 9,
+		"mes": 8,
+		"nombre": "Día Internacional de los Pueblos Indígenas",
+		"titulo": "Pueblos indígenas",
+		"linea": "Día internacional del 9 de agosto.",
+		"resumen": "El 9 de agosto es el Día Internacional de los Pueblos Indígenas en el calendario de las Naciones Unidas. No es feriado nacional.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "conmemoracion",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://www.un.org/es/observances/list-days-weeks"
+		],
+		"verificado": true
+	},
+	{
+		"id": 40,
+		"slug": "12-de-agosto",
+		"dia": 12,
+		"mes": 8,
+		"nombre": "Día Internacional de la Juventud",
+		"titulo": "Juventud",
+		"linea": "Día internacional del 12 de agosto.",
+		"resumen": "El 12 de agosto es el Día Internacional de la Juventud en el calendario de las Naciones Unidas. No es feriado nacional. El 16 de septiembre es otra fecha, la nacional.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "conmemoracion",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://www.un.org/es/observances/list-days-weeks"
+		],
+		"verificado": true
+	},
+	{
+		"id": 41,
 		"slug": "17-de-agosto",
 		"dia": 17,
 		"mes": 8,
@@ -135,9 +1213,44 @@
 		"tema": "San Martín y el cruce de los Andes",
 		"linea": "Recuerda la muerte de San Martín, el 17 de agosto de 1850.",
 		"resumen": "José de San Martín murió el 17 de agosto de 1850. El feriado lleva el nombre de su paso a la inmortalidad y es trasladable: si el asueto se corre de día, las fichas igual salen con el 17 de agosto.",
-		"vocabulario": ["SAN MARTÍN", "LIBERTADOR", "ANDES", "GRANADEROS", "AGOSTO", "PATRIA", "LIBERTAD", "CRUCE", "EJÉRCITO", "AMÉRICA"],
-		"proceres": ["jose-de-san-martin"],
-		"laminas": ["granadero", "cruce-de-los-andes"],
+		"vocabulario": [
+			"SAN MARTÍN",
+			"LIBERTADOR",
+			"ANDES",
+			"GRANADEROS",
+			"AGOSTO",
+			"PATRIA",
+			"LIBERTAD",
+			"CRUCE",
+			"EJÉRCITO",
+			"AMÉRICA"
+		],
+		"proceres": [
+			"jose-de-san-martin"
+		],
+		"laminas": [
+			"granadero",
+			"cruce-de-los-andes"
+		],
+		"tipo": "feriado",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": true,
+			"regla": "trasladable"
+		},
+		"recursos": {
+			"fichas": [
+				"sopa-de-letras",
+				"crucigrama-proceres"
+			],
+			"laminas": [
+				"granadero",
+				"cruce-de-los-andes"
+			]
+		},
 		"fuentes": [
 			"https://www.argentina.gob.ar/noticias/17-de-agosto-de-1850-paso-la-inmortalidad-del-general-jose-de-san-martin",
 			"https://www.argentina.gob.ar/normativa/nacional/ley-27399-281835/texto"
@@ -145,6 +1258,152 @@
 		"verificado": true
 	},
 	{
+		"id": 42,
+		"slug": "22-de-agosto",
+		"dia": 22,
+		"mes": 8,
+		"nombre": "Día del Folklore",
+		"titulo": "Día del Folklore",
+		"linea": "El 22 de agosto, según una nota oficial.",
+		"resumen": "Una nota del Estado nacional recuerda el 22 de agosto como Día del Folklore argentino y también como día mundial del folclore. No es feriado nacional.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "conmemoracion",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://www.argentina.gob.ar/noticias/dia-mundial-del-folclore-y-dia-del-folclore-argentino-0"
+		],
+		"verificado": true
+	},
+	{
+		"id": 43,
+		"slug": "29-de-agosto",
+		"dia": 29,
+		"mes": 8,
+		"nombre": "Día Nacional del Árbol",
+		"titulo": "Día del Árbol",
+		"linea": "La ley 27.683 fija el 29 de agosto.",
+		"resumen": "La ley 27.683 declara el 29 de agosto Día Nacional del Árbol. No es feriado nacional.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "conmemoracion",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://www.argentina.gob.ar/normativa/nacional/ley-27683-371486/texto"
+		],
+		"verificado": true
+	},
+	{
+		"id": 44,
+		"slug": "2-de-septiembre",
+		"dia": 2,
+		"mes": 9,
+		"nombre": "Día de la Industria",
+		"titulo": "Día de la Industria",
+		"linea": "Una nota oficial lo fecha el 2 de septiembre de 1941.",
+		"resumen": "Una nota del Estado nacional recuerda el 2 de septiembre como Día de la Industria y sitúa el origen de esa conmemoración en 1941. No es feriado nacional.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "conmemoracion",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://www.argentina.gob.ar/noticias/2-de-septiembre-de-1941-dia-de-la-industria"
+		],
+		"verificado": true
+	},
+	{
+		"id": 45,
+		"slug": "4-de-septiembre",
+		"dia": 4,
+		"mes": 9,
+		"nombre": "Día del Inmigrante",
+		"titulo": "Día del Inmigrante",
+		"linea": "El decreto 21.430 de 1949 fija el 4 de septiembre.",
+		"resumen": "El 4 de septiembre es el Día del Inmigrante. Una nota oficial lo presenta así y cita el decreto 21.430 de 1949. No es feriado nacional.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "conmemoracion",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://www.argentina.gob.ar/noticias/4-de-septiembre-de-1949-dia-del-inmigrante"
+		],
+		"verificado": true
+	},
+	{
+		"id": 46,
+		"slug": "8-de-septiembre",
+		"dia": 8,
+		"mes": 9,
+		"nombre": "Día Internacional de la Alfabetización",
+		"titulo": "Alfabetización",
+		"linea": "Día internacional del 8 de septiembre.",
+		"resumen": "El 8 de septiembre es el Día Internacional de la Alfabetización en el calendario de las Naciones Unidas. No es feriado nacional.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "conmemoracion",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://www.un.org/es/observances/list-days-weeks"
+		],
+		"verificado": true
+	},
+	{
+		"id": 47,
 		"slug": "11-de-septiembre",
 		"dia": 11,
 		"mes": 9,
@@ -153,9 +1412,38 @@
 		"tema": "el Día de las maestras y los maestros",
 		"linea": "Recuerda a Sarmiento, muerto en Asunción en 1888.",
 		"resumen": "El 11 de septiembre es el Día de las Maestras y los Maestros. Educ.ar lo vincula con la muerte de Domingo Faustino Sarmiento, el 11 de septiembre de 1888 en Asunción. No es el 11 de noviembre.",
-		"vocabulario": ["MAESTRO", "SARMIENTO", "ESCUELA", "ALUMNO", "LIBRO", "AULA", "SEPTIEMBRE", "ENSEÑAR", "LÁPIZ", "TAREA"],
-		"proceres": ["domingo-faustino-sarmiento"],
+		"vocabulario": [
+			"MAESTRO",
+			"SARMIENTO",
+			"ESCUELA",
+			"ALUMNO",
+			"LIBRO",
+			"AULA",
+			"SEPTIEMBRE",
+			"ENSEÑAR",
+			"LÁPIZ",
+			"TAREA"
+		],
+		"proceres": [
+			"domingo-faustino-sarmiento"
+		],
 		"laminas": [],
+		"tipo": "acto-escolar",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [
+				"sopa-de-letras",
+				"crucigrama-proceres"
+			],
+			"laminas": []
+		},
 		"fuentes": [
 			"https://www.educ.ar/recursos/154313/11-de-septiembre-dia-de-las-maestras-y-los-maestros",
 			"https://www.argentina.gob.ar/noticias/domingo-faustino-sarmiento-la-escuela-como-pilar-de-la-nacion"
@@ -163,6 +1451,65 @@
 		"verificado": true
 	},
 	{
+		"id": 48,
+		"slug": "16-de-septiembre",
+		"dia": 16,
+		"mes": 9,
+		"nombre": "Día Nacional de la Juventud – La Noche de los Lápices",
+		"titulo": "Noche de los Lápices",
+		"linea": "La ley 27.002 fija el 16 de septiembre.",
+		"resumen": "La ley 27.002 instituye el 16 de septiembre como Día Nacional de la Juventud, en memoria de la Noche de los Lápices. No es feriado nacional.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "conmemoracion",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://www.argentina.gob.ar/normativa/nacional/ley-27002-238074/texto"
+		],
+		"verificado": true
+	},
+	{
+		"id": 49,
+		"slug": "17-de-septiembre",
+		"dia": 17,
+		"mes": 9,
+		"nombre": "Día del Profesor (J. M. Estrada)",
+		"titulo": "Día del Profesor",
+		"linea": "El 17 de septiembre, según la Biblioteca Nacional.",
+		"resumen": "La Biblioteca Nacional recuerda el 17 de septiembre como Día del Profesor. En la referencia de este calendario el nombre de la fecha cita a J. M. Estrada. No es feriado nacional.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "conmemoracion",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://www.bn.gov.ar/noticias/17-de-septiembre-dia-del-profesor"
+		],
+		"verificado": true
+	},
+	{
+		"id": 51,
 		"slug": "21-de-septiembre",
 		"dia": 21,
 		"mes": 9,
@@ -171,13 +1518,158 @@
 		"tema": "el Día del Estudiante",
 		"linea": "Figura en el calendario oficial de conmemoraciones.",
 		"resumen": "El calendario oficial de conmemoraciones incluye el 21 de septiembre como Día del Estudiante. También lista ese día el Día Internacional de la Paz. No agregamos un origen que esas páginas no cuentan.",
-		"vocabulario": ["ESTUDIANTE", "ESCUELA", "AULA", "LIBRO", "SEPTIEMBRE", "JUVENTUD", "ESTUDIO", "APRENDER", "DERECHO", "EDUCACIÓN"],
+		"vocabulario": [
+			"ESTUDIANTE",
+			"ESCUELA",
+			"AULA",
+			"LIBRO",
+			"SEPTIEMBRE",
+			"JUVENTUD",
+			"ESTUDIO",
+			"APRENDER",
+			"DERECHO",
+			"EDUCACIÓN"
+		],
 		"proceres": [],
 		"laminas": [],
-		"fuentes": ["https://www.argentina.gob.ar/derechoshumanos/actividades/conmemoraciones"],
+		"tipo": "conmemoracion",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [
+				"sopa-de-letras"
+			],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://www.argentina.gob.ar/derechoshumanos/actividades/conmemoraciones"
+		],
 		"verificado": true
 	},
 	{
+		"id": 50,
+		"slug": "dia-internacional-de-la-paz",
+		"dia": 21,
+		"mes": 9,
+		"nombre": "Día Internacional de la Paz",
+		"titulo": "Día de la Paz",
+		"linea": "Día internacional del 21 de septiembre.",
+		"resumen": "El 21 de septiembre es el Día Internacional de la Paz en el calendario de las Naciones Unidas. El mismo día el calendario escolar argentino recuerda el Día del Estudiante, que tiene su propia ficha.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "conmemoracion",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://www.un.org/es/observances/list-days-weeks"
+		],
+		"verificado": true
+	},
+	{
+		"id": 52,
+		"slug": "27-de-septiembre",
+		"dia": 27,
+		"mes": 9,
+		"nombre": "Día Mundial del Turismo",
+		"titulo": "Día del Turismo",
+		"linea": "Día internacional del 27 de septiembre.",
+		"resumen": "El 27 de septiembre es el Día Mundial del Turismo en el calendario de las Naciones Unidas. No es feriado nacional.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "conmemoracion",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://www.un.org/es/observances/list-days-weeks"
+		],
+		"verificado": true
+	},
+	{
+		"id": 53,
+		"slug": "1-de-octubre",
+		"dia": 1,
+		"mes": 10,
+		"nombre": "Día Internacional de las Personas de Edad",
+		"titulo": "Personas mayores",
+		"linea": "Día internacional del 1 de octubre.",
+		"resumen": "El 1 de octubre es el Día Internacional de las Personas de Edad en el calendario de las Naciones Unidas. No es feriado nacional.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "conmemoracion",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://www.un.org/es/observances/list-days-weeks"
+		],
+		"verificado": true
+	},
+	{
+		"id": 54,
+		"slug": "2-de-octubre",
+		"dia": 2,
+		"mes": 10,
+		"nombre": "Día Internacional de la No Violencia",
+		"titulo": "No violencia",
+		"linea": "Día internacional del 2 de octubre.",
+		"resumen": "El 2 de octubre es el Día Internacional de la No Violencia en el calendario de las Naciones Unidas. No es feriado nacional.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "conmemoracion",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://www.un.org/es/observances/list-days-weeks"
+		],
+		"verificado": true
+	},
+	{
+		"id": 55,
 		"slug": "12-de-octubre",
 		"dia": 12,
 		"mes": 10,
@@ -186,9 +1678,35 @@
 		"tema": "el respeto a la diversidad cultural",
 		"linea": "El decreto 1584/2010 le dio este nombre al 12 de octubre.",
 		"resumen": "El decreto 1584/2010 y la ley de feriados llaman al 12 de octubre Día del Respeto a la Diversidad Cultural. El asueto puede trasladarse; la ficha queda en el 12 de octubre, que es la fecha conmemorativa.",
-		"vocabulario": ["DIVERSIDAD", "CULTURA", "PUEBLOS", "RESPETO", "OCTUBRE", "AMÉRICA", "LENGUA", "MEMORIA", "COMUNIDAD", "RAÍZ"],
+		"vocabulario": [
+			"DIVERSIDAD",
+			"CULTURA",
+			"PUEBLOS",
+			"RESPETO",
+			"OCTUBRE",
+			"AMÉRICA",
+			"LENGUA",
+			"MEMORIA",
+			"COMUNIDAD",
+			"RAÍZ"
+		],
 		"proceres": [],
 		"laminas": [],
+		"tipo": "feriado",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": true,
+			"regla": "trasladable"
+		},
+		"recursos": {
+			"fichas": [
+				"sopa-de-letras"
+			],
+			"laminas": []
+		},
 		"fuentes": [
 			"https://www.argentina.gob.ar/normativa/nacional/decreto-1584-2010-174389/texto",
 			"https://www.argentina.gob.ar/normativa/nacional/ley-27399-281835/texto"
@@ -196,6 +1714,123 @@
 		"verificado": true
 	},
 	{
+		"id": 56,
+		"slug": "16-de-octubre",
+		"dia": 16,
+		"mes": 10,
+		"nombre": "Día Mundial de la Alimentación",
+		"titulo": "Alimentación",
+		"linea": "Día internacional del 16 de octubre.",
+		"resumen": "El 16 de octubre es el Día Mundial de la Alimentación en el calendario de las Naciones Unidas. No es feriado nacional.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "conmemoracion",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://www.un.org/es/observances/list-days-weeks"
+		],
+		"verificado": true
+	},
+	{
+		"id": 57,
+		"slug": "22-de-octubre",
+		"dia": 22,
+		"mes": 10,
+		"nombre": "Día Nacional del Derecho a la Identidad",
+		"titulo": "Derecho a la identidad",
+		"linea": "La ley 26.001 fija el 22 de octubre.",
+		"resumen": "La ley 26.001 instituye el 22 de octubre como Día Nacional del Derecho a la Identidad. No es feriado nacional.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "conmemoracion",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://www.argentina.gob.ar/normativa/nacional/ley-26001-102730/texto"
+		],
+		"verificado": true
+	},
+	{
+		"id": 58,
+		"slug": "24-de-octubre",
+		"dia": 24,
+		"mes": 10,
+		"nombre": "Día de las Naciones Unidas",
+		"titulo": "Naciones Unidas",
+		"linea": "Día internacional del 24 de octubre.",
+		"resumen": "El 24 de octubre es el Día de las Naciones Unidas en el calendario de días internacionales de la ONU. No es feriado nacional.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "conmemoracion",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://www.un.org/es/observances/list-days-weeks"
+		],
+		"verificado": true
+	},
+	{
+		"id": 59,
+		"slug": "6-de-noviembre",
+		"dia": 6,
+		"mes": 11,
+		"nombre": "Día de los Parques Nacionales",
+		"titulo": "Parques nacionales",
+		"linea": "El 6 de noviembre, según una nota oficial.",
+		"resumen": "Una nota del Estado nacional recuerda el 6 de noviembre como Día de los Parques Nacionales Argentinos. No es feriado nacional.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "conmemoracion",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://www.argentina.gob.ar/noticias/6-de-noviembre-dia-de-los-parques-nacionales-argentinos"
+		],
+		"verificado": true
+	},
+	{
+		"id": 60,
 		"slug": "10-de-noviembre",
 		"dia": 10,
 		"mes": 11,
@@ -204,9 +1839,48 @@
 		"tema": "la tradición argentina",
 		"linea": "El 10 de noviembre recuerda el natalicio de José Hernández.",
 		"resumen": "La ley 21.154 instituyó el 10 de noviembre como Día de la Tradición en todo el país y llamó cuna a San Martín, en Buenos Aires. Una página oficial de Cultura dice que Hernández nació en 1834 y que esa fecha recuerda su natalicio.",
-		"vocabulario": ["TRADICIÓN", "GAUCHO", "PAYADA", "HERNÁNDEZ", "FIERRO", "PAMPA", "MATE", "CABALLO", "CAMPO", "NOVIEMBRE"],
-		"proceres": ["jose-hernandez"],
-		"laminas": ["carreta", "gaucho-con-mate", "mate-y-pava", "guitarra-y-poncho"],
+		"vocabulario": [
+			"TRADICIÓN",
+			"GAUCHO",
+			"PAYADA",
+			"HERNÁNDEZ",
+			"FIERRO",
+			"PAMPA",
+			"MATE",
+			"CABALLO",
+			"CAMPO",
+			"NOVIEMBRE"
+		],
+		"proceres": [
+			"jose-hernandez"
+		],
+		"laminas": [
+			"carreta",
+			"gaucho-con-mate",
+			"mate-y-pava",
+			"guitarra-y-poncho"
+		],
+		"tipo": "acto-escolar",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [
+				"sopa-de-letras",
+				"crucigrama-proceres"
+			],
+			"laminas": [
+				"carreta",
+				"gaucho-con-mate",
+				"mate-y-pava",
+				"guitarra-y-poncho"
+			]
+		},
 		"fuentes": [
 			"https://www.argentina.gob.ar/normativa/nacional/ley-21154-231404/texto",
 			"https://www.argentina.gob.ar/noticias/jose-hernandez-y-la-inmortalidad-de-la-gauchesca"
@@ -214,6 +1888,7 @@
 		"verificado": true
 	},
 	{
+		"id": 61,
 		"slug": "20-de-noviembre",
 		"dia": 20,
 		"mes": 11,
@@ -222,9 +1897,35 @@
 		"tema": "la soberanía nacional",
 		"linea": "Recuerda la Batalla de la Vuelta de Obligado, en 1845.",
 		"resumen": "El 20 de noviembre es el Día de la Soberanía Nacional. Recuerda la Batalla de la Vuelta de Obligado, en 1845, en un recodo del Paraná, en San Pedro. El feriado es trasladable; la ficha usa el 20 de noviembre.",
-		"vocabulario": ["SOBERANÍA", "OBLIGADO", "PARANÁ", "NOVIEMBRE", "RÍO", "BATALLA", "PATRIA", "CADENAS", "DEFENSA", "ORILLA"],
+		"vocabulario": [
+			"SOBERANÍA",
+			"OBLIGADO",
+			"PARANÁ",
+			"NOVIEMBRE",
+			"RÍO",
+			"BATALLA",
+			"PATRIA",
+			"CADENAS",
+			"DEFENSA",
+			"ORILLA"
+		],
 		"proceres": [],
 		"laminas": [],
+		"tipo": "feriado",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": true,
+			"regla": "trasladable"
+		},
+		"recursos": {
+			"fichas": [
+				"sopa-de-letras"
+			],
+			"laminas": []
+		},
 		"fuentes": [
 			"https://www.argentina.gob.ar/noticias/dia-de-la-soberania-nacional",
 			"https://www.argentina.gob.ar/noticias/20-de-noviembre-dia-de-la-soberania-nacional-3",
@@ -233,6 +1934,181 @@
 		"verificado": true
 	},
 	{
+		"id": 62,
+		"slug": "dia-mundial-de-la-infancia",
+		"dia": 20,
+		"mes": 11,
+		"nombre": "Día Mundial de la Infancia (Convención sobre los Derechos del Niño)",
+		"titulo": "Infancia",
+		"linea": "Día internacional del 20 de noviembre.",
+		"resumen": "El 20 de noviembre es el Día Mundial de la Infancia en el calendario de las Naciones Unidas, ligado a la Convención sobre los Derechos del Niño. El mismo día es feriado el Día de la Soberanía Nacional, que tiene su propia ficha.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "conmemoracion",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://www.un.org/es/observances/list-days-weeks"
+		],
+		"verificado": true
+	},
+	{
+		"id": 63,
+		"slug": "22-de-noviembre",
+		"dia": 22,
+		"mes": 11,
+		"nombre": "Día de la Música",
+		"titulo": "Día de la Música",
+		"linea": "El 22 de noviembre, según una nota oficial.",
+		"resumen": "Una nota del Estado nacional explica por qué se recuerda el Día de la Música el 22 de noviembre. No es feriado nacional.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "conmemoracion",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://www.argentina.gob.ar/noticias/por-que-se-festeja-el-dia-de-la-musica"
+		],
+		"verificado": true
+	},
+	{
+		"id": 64,
+		"slug": "25-de-noviembre",
+		"dia": 25,
+		"mes": 11,
+		"nombre": "Día Internacional de la Eliminación de la Violencia contra la Mujer",
+		"titulo": "Violencia contra la mujer",
+		"linea": "Día internacional del 25 de noviembre.",
+		"resumen": "El 25 de noviembre es el Día Internacional de la Eliminación de la Violencia contra la Mujer en el calendario de las Naciones Unidas. No es feriado nacional.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "conmemoracion",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://www.un.org/es/observances/list-days-weeks"
+		],
+		"verificado": true
+	},
+	{
+		"id": 65,
+		"slug": "1-de-diciembre",
+		"dia": 1,
+		"mes": 12,
+		"nombre": "Día Mundial del Sida",
+		"titulo": "Día Mundial del Sida",
+		"linea": "Día internacional del 1 de diciembre.",
+		"resumen": "El 1 de diciembre es el Día Mundial del Sida en el calendario de las Naciones Unidas. No es feriado nacional.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "conmemoracion",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://www.un.org/es/observances/list-days-weeks"
+		],
+		"verificado": true
+	},
+	{
+		"id": 66,
+		"slug": "3-de-diciembre",
+		"dia": 3,
+		"mes": 12,
+		"nombre": "Día Internacional de las Personas con Discapacidad",
+		"titulo": "Personas con discapacidad",
+		"linea": "Día internacional del 3 de diciembre.",
+		"resumen": "El 3 de diciembre es el Día Internacional de las Personas con Discapacidad en el calendario de las Naciones Unidas. No es feriado nacional.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "conmemoracion",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://www.un.org/es/observances/list-days-weeks"
+		],
+		"verificado": true
+	},
+	{
+		"id": 67,
+		"slug": "8-de-diciembre",
+		"dia": 8,
+		"mes": 12,
+		"nombre": "Día de la Inmaculada Concepción de María",
+		"titulo": "Inmaculada Concepción",
+		"linea": "Feriado nacional inamovible del 8 de diciembre.",
+		"resumen": "La ley 27.399 incluye el 8 de diciembre entre los feriados nacionales inamovibles, con el nombre de Día de la Inmaculada Concepción de María.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "feriado",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": true,
+			"regla": "inamovible"
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://servicios.infoleg.gob.ar/infolegInternet/anexos/280000-284999/281835/norma.htm"
+		],
+		"verificado": true
+	},
+	{
+		"id": 69,
 		"slug": "10-de-diciembre",
 		"dia": 10,
 		"mes": 12,
@@ -241,13 +2117,277 @@
 		"tema": "el regreso de la democracia y los derechos humanos",
 		"linea": "La ley 26.323 recuerda el regreso de la democracia en 1983.",
 		"resumen": "La ley 26.323 incorporó al calendario escolar el Día de la Restauración de la Democracia, el 10 de diciembre, por la asunción de 1983. El calendario de conmemoraciones también llama a esa fecha Día de los Derechos Humanos. Las fichas mencionan las dos.",
-		"vocabulario": ["DERECHOS", "HUMANOS", "DICIEMBRE", "DIGNIDAD", "PAZ", "LIBERTAD", "IGUALDAD", "DEMOCRACIA", "PERSONA", "JUSTICIA"],
+		"vocabulario": [
+			"DERECHOS",
+			"HUMANOS",
+			"DICIEMBRE",
+			"DIGNIDAD",
+			"PAZ",
+			"LIBERTAD",
+			"IGUALDAD",
+			"DEMOCRACIA",
+			"PERSONA",
+			"JUSTICIA"
+		],
 		"proceres": [],
 		"laminas": [],
+		"tipo": "conmemoracion",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [
+				"sopa-de-letras"
+			],
+			"laminas": []
+		},
 		"fuentes": [
 			"https://www.argentina.gob.ar/normativa/nacional/ley-26323-135915/texto",
 			"https://www.argentina.gob.ar/noticias/10-de-diciembre-dia-de-la-restauracion-de-la-democracia",
 			"https://www.argentina.gob.ar/derechoshumanos/actividades/conmemoraciones"
+		],
+		"verificado": true
+	},
+	{
+		"id": 68,
+		"slug": "dia-de-los-derechos-humanos",
+		"dia": 10,
+		"mes": 12,
+		"nombre": "Día de los Derechos Humanos",
+		"titulo": "Derechos humanos",
+		"linea": "Día internacional del 10 de diciembre.",
+		"resumen": "El 10 de diciembre es el Día de los Derechos Humanos en el calendario de las Naciones Unidas. La misma fecha es, en la Argentina, el Día de la Restauración de la Democracia, que tiene su propia ficha.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "conmemoracion",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://www.un.org/es/observances/list-days-weeks"
+		],
+		"verificado": true
+	},
+	{
+		"id": 70,
+		"slug": "25-de-diciembre",
+		"dia": 25,
+		"mes": 12,
+		"nombre": "Navidad",
+		"titulo": "Navidad",
+		"linea": "Feriado nacional inamovible del 25 de diciembre.",
+		"resumen": "La ley 27.399 incluye el 25 de diciembre entre los feriados nacionales inamovibles y lo nombra Navidad.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "feriado",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": true,
+			"regla": "inamovible"
+		},
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://servicios.infoleg.gob.ar/infolegInternet/anexos/280000-284999/281835/norma.htm"
+		],
+		"verificado": true
+	},
+	{
+		"id": 71,
+		"slug": "carnaval",
+		"dia": null,
+		"mes": null,
+		"nombre": "Lunes y martes de Carnaval",
+		"titulo": "Carnaval",
+		"linea": "Feriado móvil: el lunes y el martes previos al Miércoles de Ceniza.",
+		"resumen": "La ley 27.399 fija como feriado el lunes y el martes de Carnaval. Caen 48 y 47 días antes de Pascua. La ley no escribe esa fórmula: sale del calendario litúrgico. La regla guardada en este registro es la del martes.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "feriado",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": true,
+			"regla": "movil"
+		},
+		"movil": "pascua-47",
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://servicios.infoleg.gob.ar/infolegInternet/anexos/280000-284999/281835/norma.htm"
+		],
+		"verificado": true
+	},
+	{
+		"id": 72,
+		"slug": "viernes-santo",
+		"dia": null,
+		"mes": null,
+		"nombre": "Viernes Santo",
+		"titulo": "Viernes Santo",
+		"linea": "Feriado móvil, dos días antes de Pascua.",
+		"resumen": "La ley 27.399 incluye el Viernes Santo entre los feriados nacionales. Es una fecha móvil: cae dos días antes de Pascua. Por eso este registro no tiene día ni mes fijos.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "feriado",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": true,
+			"regla": "movil"
+		},
+		"movil": "pascua-2",
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://servicios.infoleg.gob.ar/infolegInternet/anexos/280000-284999/281835/norma.htm"
+		],
+		"verificado": true
+	},
+	{
+		"id": 73,
+		"slug": "jueves-santo",
+		"dia": null,
+		"mes": null,
+		"nombre": "Jueves Santo",
+		"titulo": "Jueves Santo",
+		"linea": "Día no laborable, tres días antes de Pascua.",
+		"resumen": "La ley 27.399 incluye el Jueves Santo como día no laborable. Cae tres días antes de Pascua. No es feriado nacional y la fecha cambia cada año.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "no-laborable",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"movil": "pascua-3",
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://servicios.infoleg.gob.ar/infolegInternet/anexos/280000-284999/281835/norma.htm"
+		],
+		"verificado": true
+	},
+	{
+		"id": 74,
+		"slug": "dias-turisticos",
+		"dia": null,
+		"mes": null,
+		"nombre": "Días no laborables con fines turísticos",
+		"titulo": "Días turísticos",
+		"linea": "Hasta tres lunes o viernes por año, según resolución.",
+		"resumen": "La ley 27.399 permite hasta tres días no laborables con fines turísticos, en lunes o viernes, fijados cada año por el Poder Ejecutivo. Para 2026 la resolución 164 de la Jefatura de Gabinete los puso el 23 de marzo, el 10 de julio y el 7 de diciembre.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "no-laborable",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"movil": "resolucion-anual",
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://www.argentina.gob.ar/normativa/nacional/resoluci%C3%B3n-164-2025-421799/texto"
+		],
+		"verificado": true
+	},
+	{
+		"id": 75,
+		"slug": "acoso-escolar",
+		"dia": null,
+		"mes": null,
+		"nombre": "Día Internacional contra la Violencia y el Acoso Escolar, incluido el Ciberacoso",
+		"titulo": "Acoso escolar",
+		"linea": "El primer jueves de noviembre.",
+		"resumen": "La UNESCO marca el primer jueves de noviembre como Día Internacional contra la Violencia y el Acoso Escolar, incluido el ciberacoso. No tiene un número de día fijo y no es feriado nacional.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "conmemoracion",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"movil": "jueves-1-nov",
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://www.unesco.org/es/days/against-school-violence-and-bullying"
+		],
+		"verificado": true
+	},
+	{
+		"id": 76,
+		"slug": "dia-de-las-infancias",
+		"dia": null,
+		"mes": null,
+		"nombre": "Día de las Infancias",
+		"titulo": "Día de las Infancias",
+		"linea": "El tercer domingo de agosto. No hay una ley nacional que lo fije.",
+		"resumen": "En este calendario el Día de las Infancias es el tercer domingo de agosto. La referencia lo marca como costumbre, sin ley nacional. Una nota del Estado nacional sobre la fecha está publicada con el 16 de agosto en el título.",
+		"proceres": [],
+		"laminas": [],
+		"tipo": "conmemoracion",
+		"nivel": [
+			"inicial",
+			"primaria"
+		],
+		"feriado": {
+			"es": false,
+			"regla": null
+		},
+		"movil": "domingo-3-ago",
+		"recursos": {
+			"fichas": [],
+			"laminas": []
+		},
+		"fuentes": [
+			"https://www.argentina.gob.ar/noticias/el-16-de-agosto-celebramos-el-dia-de-las-infancias"
 		],
 		"verificado": true
 	}

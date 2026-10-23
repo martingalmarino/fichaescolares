@@ -1,6 +1,6 @@
 # Láminas para colorear — instrucciones para Cursor
 
-Contexto: sitio Fichas Patrias (Astro + Tailwind). El texto le habla a docentes y familias, no a chicos.
+Contexto: sitio Aulita (Astro + Tailwind). El texto le habla a docentes y familias, no a chicos.
 
 ## 1. Archivos
 - Copiá `svg/*` a `public/laminas/`. Copiá `laminas.json` a `src/data/laminas.json`.
@@ -26,8 +26,8 @@ Contexto: sitio Fichas Patrias (Astro + Tailwind). El texto le habla a docentes 
 - Botones: "Imprimir" y "Descargar PDF" (ambos `window.print()`; en el PDF indicá "Guardar como PDF").
 - CSS de impresión: `@page { size: A4 portrait; margin: 10mm; }`; en `@media print` ocultar header, footer, menú, botones, anuncios y todo lo que no sea la hoja.
 - Debajo (no imprime): consejos de uso en el aula, láminas relacionadas (misma categoría/efeméride, 4), links a la ficha de la efeméride y a la sopa de letras de esa fecha.
-- Schema JSON-LD: `ImageObject` (contentUrl, name, description=alt, encodingFormat image/svg+xml, creditText "Fichas Patrias", isAccessibleForFree) dentro de `CreativeWork` con `educationalUse`, `audience` (docentes/familias) y BreadcrumbList.
-- Mencionar el origen en `/creditos`: "Ilustraciones generadas con IA y editadas por Fichas Patrias".
+- Schema JSON-LD: `ImageObject` (contentUrl, name, description=alt, encodingFormat image/svg+xml, creditText "Aulita", isAccessibleForFree) dentro de `CreativeWork` con `educationalUse`, `audience` (docentes/familias) y BreadcrumbList.
+- Mencionar el origen en `/creditos`: "Ilustraciones generadas con IA y editadas por Aulita".
 
 ## 6. Medición y anuncios
 - GA4: evento `lamina_imprimir` con `{slug, categoria, con_nombre}` al tocar Imprimir/PDF; `lamina_ver` opcional.

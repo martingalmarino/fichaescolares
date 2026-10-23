@@ -4,12 +4,12 @@ import sitio from '../data/sitio.json';
 import BaseLayout from '../layouts/BaseLayout.astro';
 ---
 
-<BaseLayout title="Contacto | Fichas Patrias" description="Cómo escribir a Fichas Patrias. El sitio es para docentes y familias.">
+<BaseLayout title="Contacto | Aulita" description="Cómo escribir a Aulita. El sitio es para docentes y familias.">
 	<article class="mx-auto max-w-3xl px-4 py-8 text-base leading-relaxed">
 		<Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: 'Contacto' }]} />
 		<h1 class="mt-4 text-3xl font-bold tracking-tight text-azul">Contacto</h1>
 		<p class="mt-4">
-			Fichas Patrias responde consultas de docentes y familias sobre las fichas, una fecha que no aparece o un enlace que no abre. No es un canal para cargar datos de estudiantes.
+			Aulita responde consultas de docentes y familias sobre las fichas, una fecha que no aparece o un enlace que no abre. No es un canal para cargar datos de estudiantes.
 		</p>
 		{
 			sitio.email ? (

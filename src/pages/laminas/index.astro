@@ -20,7 +20,7 @@ const adsense = import.meta.env.PUBLIC_ADSENSE_CLIENT ?? '';
 const adsenseSlot = import.meta.env.PUBLIC_ADSENSE_SLOT_HUB ?? import.meta.env.PUBLIC_ADSENSE_SLOT ?? '';
 ---
 
-<BaseLayout title="Láminas patrias para colorear e imprimir" description={descripcion} image="/og/laminas.svg">
+<BaseLayout title="Láminas patrias para colorear e imprimir | Aulita" description={descripcion} image="/og/laminas.svg">
 	<article class="mx-auto max-w-6xl px-4 py-8">
 		<Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: 'Láminas para colorear' }]} />
 		<h1 class="no-print mt-4 text-3xl font-bold tracking-tight text-azul sm:text-4xl">Láminas patrias para colorear e imprimir</h1>
@@ -35,7 +35,7 @@ const adsenseSlot = import.meta.env.PUBLIC_ADSENSE_SLOT_HUB ?? import.meta.env.P
 				efemerides={opcionesEfemeride().map((item) => ({ id: item.clave, nombre: item.etiqueta }))}
 				dificultades={dificultades.map((item) => ({ id: item.id, nombre: item.nombre }))}
 				inicialCategoria={Astro.url.searchParams.get('categoria') ?? ''}
-				inicialEfemeride={Astro.url.searchParams.get('efemeride') ?? ''}
+				inicialEfemeride={Astro.url.searchParams.get('e') ?? Astro.url.searchParams.get('efemeride') ?? ''}
 				inicialDificultad={Astro.url.searchParams.get('dificultad') ?? ''}
 				adsense={adsense}
 				adsenseSlot={adsenseSlot}

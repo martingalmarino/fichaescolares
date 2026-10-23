@@ -52,7 +52,7 @@ export default function FiltroLaminas({
 	useEffect(() => {
 		const params = new URLSearchParams(window.location.search);
 		setCategoria(valorInicial(params.get('categoria') ?? '', categorias));
-		setEfemeride(valorInicial(params.get('efemeride') ?? '', efemerides));
+		setEfemeride(valorInicial(params.get('e') ?? params.get('efemeride') ?? '', efemerides));
 		setDificultad(valorInicial(params.get('dificultad') ?? '', dificultades));
 		setListo(true);
 	}, [categorias, efemerides, dificultades]);
@@ -65,6 +65,7 @@ export default function FiltroLaminas({
 			else url.searchParams.delete(clave);
 		};
 		poner('categoria', categoria);
+		url.searchParams.delete('e');
 		poner('efemeride', efemeride);
 		poner('dificultad', dificultad);
 		const siguiente = `${url.pathname}${url.search}`;

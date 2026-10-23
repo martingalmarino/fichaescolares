@@ -1,5 +1,5 @@
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
-import { efemerides, etiquetaFecha, type Efemeride } from '../data/efemerides';
+import { efemerides, etiquetaFecha, tieneFicha } from '../data/efemerides';
 import { track } from '../lib/analytics';
 import { toSeed } from '../lib/prng';
 import { createWordSearch, type Difficulty, type Placement } from '../lib/wordsearch';
@@ -13,10 +13,11 @@ interface Props {
 type GridSize = 10 | 12 | 14 | 16;
 
 const SIZES: GridSize[] = [10, 12, 14, 16];
+const fechasConFicha = efemerides.filter(tieneFicha);
 
 export default function SopaGenerator({ initialSlug, initialSeed }: Props) {
-	const fallback = efemerides.find((item) => item.slug === '25-de-mayo') ?? efemerides[0];
-	const starting = efemerides.find((item) => item.slug === initialSlug) ?? fallback;
+	const fallback = fechasConFicha.find((item) => item.slug === '25-de-mayo') ?? fechasConFicha[0];
+	const starting = fechasConFicha.find((item) => item.slug === initialSlug) ?? fallback;
 
 	const [slug, setSlug] = useState(starting?.slug ?? '25-de-mayo');
 	const [seed, setSeed] = useState<number | null>(initialSeed);
@@ -33,16 +34,16 @@ export default function SopaGenerator({ initialSlug, initialSeed }: Props) {
 	const barra = useRef<HTMLDivElement>(null);
 	useBarraFija(barra);
 
-	const efemeride = efemerides.find((item) => item.slug === slug) ?? starting ?? efemerides[0];
+	const efemeride = fechasConFicha.find((item) => item.slug === slug) ?? starting ?? fechasConFicha[0];
 
 	useEffect(() => {
 		const url = new URL(window.location.href);
 		const fromSlug = url.searchParams.get('e');
 		const fromSeed = url.searchParams.get('s');
 
-		if (fromSlug && efemerides.some((item) => item.slug === fromSlug)) {
+		if (fromSlug && fechasConFicha.some((item) => item.slug === fromSlug)) {
 			setSlug(fromSlug);
-			const match = efemerides.find((item) => item.slug === fromSlug);
+			const match = fechasConFicha.find((item) => item.slug === fromSlug);
 			if (match) setTitle(match.titulo);
 		}
 
@@ -73,9 +74,9 @@ export default function SopaGenerator({ initialSlug, initialSeed }: Props) {
 			const url = new URL(window.location.href);
 			const nextSlug = url.searchParams.get('e');
 			const nextSeed = url.searchParams.get('s');
-			if (nextSlug && efemerides.some((item) => item.slug === nextSlug)) {
+			if (nextSlug && fechasConFicha.some((item) => item.slug === nextSlug)) {
 				setSlug(nextSlug);
-				const match = efemerides.find((item) => item.slug === nextSlug);
+				const match = fechasConFicha.find((item) => item.slug === nextSlug);
 				if (match) setTitle(match.titulo);
 			}
 			if (nextSeed && /^\d+$/.test(nextSeed)) setSeed(toSeed(Number(nextSeed)));
@@ -105,7 +106,7 @@ export default function SopaGenerator({ initialSlug, initialSeed }: Props) {
 	function chooseEfemeride(nextSlug: string) {
 		track('select_efemeride', { slug: nextSlug, from: 'sopa' });
 		setSlug(nextSlug);
-		const match = efemerides.find((item) => item.slug === nextSlug);
+		const match = fechasConFicha.find((item) => item.slug === nextSlug);
 		if (match) setTitle(match.titulo);
 	}
 
@@ -158,7 +159,7 @@ export default function SopaGenerator({ initialSlug, initialSeed }: Props) {
 							value={efemeride.slug}
 							onChange={(event) => chooseEfemeride(event.currentTarget.value)}
 						>
-							{efemerides.map((item) => (
+							{fechasConFicha.map((item) => (
 								<option key={item.slug} value={item.slug}>
 									{etiquetaFecha(item.dia, item.mes, item.nombre)}
 								</option>

@@ -16,4 +16,4 @@ Allow: /
 User-agent: CCBot
 Allow: /
 
-Sitemap: https://fichaspatrias.vercel.app/sitemap-index.xml
+Sitemap: https://aulita.com.ar/sitemap-index.xml

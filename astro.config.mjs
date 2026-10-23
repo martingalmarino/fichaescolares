@@ -6,7 +6,7 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-	site: process.env.SITE ?? 'https://fichaspatrias.vercel.app',
+	site: 'https://aulita.com.ar',
 	output: 'static',
 	trailingSlash: 'always',
 	integrations: [preact(), sitemap()],

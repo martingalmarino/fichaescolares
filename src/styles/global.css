@@ -66,6 +66,14 @@ html:has(.aviso-consentimiento) {
 	zoom: min(1, calc(100cqi / 210mm));
 }
 
+.pie-hoja {
+	margin-top: 1.5rem;
+	text-align: center;
+	font-size: 11px;
+	letter-spacing: 0.04em;
+	color: var(--muted);
+}
+
 summary {
 	list-style: none;
 }

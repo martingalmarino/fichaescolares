@@ -6,45 +6,117 @@ const antes = [
 	{ label: 'Generadores', href: '/#generadores' },
 ];
 const despues = [
-	{ label: 'Efemérides', href: '/#efemerides' },
+	{ label: 'Efemérides', href: '/efemerides/' },
 	{ label: 'Provincias', href: '/provincias/' },
 	{ label: 'Guía para el aula', href: '/guia-para-el-aula/' },
 ];
+const movil = [
+	...antes,
+	{ label: 'Láminas para colorear', href: '/laminas/' },
+	...despues,
+];
 ---
 
-<header class="border-b border-borde bg-white">
-	<div
-		class="mx-auto flex max-w-6xl flex-col gap-3 px-4 py-4 sm:flex-row sm:items-center sm:justify-between"
-	>
-		<a href="/" class="flex items-center gap-2.5">
-			<Logo />
-			<span class="text-lg font-semibold tracking-tight text-azul">Fichas Patrias</span>
-		</a>
-		<nav class="flex flex-wrap items-center gap-x-1 gap-y-0.5 text-sm" aria-label="Principal">
-			{
-				antes.map((link) => (
-					<a href={link.href} class="inline-flex min-h-11 items-center rounded-md px-2 text-muted transition-colors hover:text-azul">
-						{link.label}
-					</a>
-				))
-			}
-			<details class="relative">
-				<summary class="inline-flex min-h-11 cursor-pointer items-center rounded-md px-2 text-muted transition-colors hover:text-azul">
-					Imprimibles
-				</summary>
-				<div class="z-20 min-w-56 rounded-card border border-borde bg-white p-2 shadow-card sm:absolute sm:left-0 sm:top-full">
-					<a class="flex min-h-11 items-center rounded-md px-3 text-sm text-azul hover:bg-celeste-50" href="/laminas/">
-						Láminas para colorear
-					</a>
-				</div>
-			</details>
-			{
-				despues.map((link) => (
-					<a href={link.href} class="inline-flex min-h-11 items-center rounded-md px-2 text-muted transition-colors hover:text-azul">
-						{link.label}
-					</a>
-				))
-			}
+<header class="sticky top-0 z-40 border-b border-borde bg-white">
+	<div class="mx-auto max-w-6xl px-4">
+		<div class="flex items-center justify-between gap-3 py-3 lg:py-4">
+			<a href="/" class="inline-flex items-center">
+				<Logo />
+			</a>
+
+			<button
+				type="button"
+				class="inline-flex size-11 items-center justify-center rounded-md text-azul hover:bg-celeste-50 aria-expanded:bg-celeste-50 lg:hidden"
+				aria-expanded="false"
+				aria-controls="menu-movil"
+				data-menu-boton
+			>
+				<span class="sr-only">Menú</span>
+				<svg data-icono-abrir class="size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+					<path stroke-linecap="round" d="M4 7h16M4 12h16M4 17h16"></path>
+				</svg>
+				<svg data-icono-cerrar class="hidden size-6" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true">
+					<path stroke-linecap="round" d="M6 6l12 12M18 6L6 18"></path>
+				</svg>
+			</button>
+
+			<nav class="hidden items-center gap-x-1 text-sm lg:flex" aria-label="Principal">
+				{
+					antes.map((link) => (
+						<a href={link.href} class="inline-flex min-h-11 items-center rounded-md px-2 text-muted transition-colors hover:text-azul">
+							{link.label}
+						</a>
+					))
+				}
+				<details class="relative">
+					<summary class="inline-flex min-h-11 cursor-pointer items-center rounded-md px-2 text-muted transition-colors hover:text-azul">
+						Imprimibles
+					</summary>
+					<div class="absolute left-0 top-full z-20 min-w-56 rounded-card border border-borde bg-white p-2 shadow-card">
+						<a class="flex min-h-11 items-center rounded-md px-3 text-sm text-azul hover:bg-celeste-50" href="/laminas/">
+							Láminas para colorear
+						</a>
+					</div>
+				</details>
+				{
+					despues.map((link) => (
+						<a href={link.href} class="inline-flex min-h-11 items-center rounded-md px-2 text-muted transition-colors hover:text-azul">
+							{link.label}
+						</a>
+					))
+				}
+			</nav>
+		</div>
+
+		<nav id="menu-movil" class="hidden border-t border-borde py-2 lg:hidden" aria-label="Principal" data-menu-panel>
+			<ul>
+				{
+					movil.map((link) => (
+						<li>
+							<a class="flex min-h-11 items-center rounded-md px-2 text-base text-azul hover:bg-celeste-50" href={link.href}>
+								{link.label}
+							</a>
+						</li>
+					))
+				}
+			</ul>
 		</nav>
 	</div>
 </header>
+
+<script>
+	const boton = document.querySelector('[data-menu-boton]');
+	const panel = document.querySelector('[data-menu-panel]');
+	if (boton instanceof HTMLButtonElement && panel instanceof HTMLElement) {
+		const abrirIcono = boton.querySelector('[data-icono-abrir]');
+		const cerrarIcono = boton.querySelector('[data-icono-cerrar]');
+
+		const pintar = (abierto: boolean) => {
+			panel.classList.toggle('hidden', !abierto);
+			boton.setAttribute('aria-expanded', String(abierto));
+			abrirIcono?.classList.toggle('hidden', abierto);
+			cerrarIcono?.classList.toggle('hidden', !abierto);
+		};
+
+		boton.addEventListener('click', () => {
+			pintar(boton.getAttribute('aria-expanded') !== 'true');
+		});
+
+		document.addEventListener('click', (event) => {
+			if (boton.getAttribute('aria-expanded') !== 'true') return;
+			if (!(event.target instanceof Node)) return;
+			if (boton.contains(event.target) || panel.contains(event.target)) return;
+			pintar(false);
+		});
+
+		document.addEventListener('keydown', (event) => {
+			if (event.key === 'Escape') pintar(false);
+		});
+
+		for (const link of panel.querySelectorAll('a')) {
+			link.addEventListener('click', () => {
+				window.setTimeout(() => pintar(false), 0);
+			});
+		}
+	}
+</script>

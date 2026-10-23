@@ -1,3 +1,56 @@
+export function isoFecha(anio: number, mes: number, dia: number): string {
+	return `${anio}-${String(mes).padStart(2, '0')}-${String(dia).padStart(2, '0')}`;
+}
+
+export function itemListJsonLd(nombre: string, items: { name: string; url: string }[]) {
+	return {
+		'@context': 'https://schema.org',
+		'@type': 'ItemList',
+		name: nombre,
+		numberOfItems: items.length,
+		itemListElement: items.map((item, indice) => ({
+			'@type': 'ListItem',
+			position: indice + 1,
+			name: item.name,
+			url: item.url,
+		})),
+	};
+}
+
+export function eventoEfemeride(entrada: {
+	nombre: string;
+	descripcion: string;
+	url: string;
+	sitio: string;
+	inicio: string | null;
+	migas: { name: string; url: string }[];
+}) {
+	const evento: Record<string, unknown> = {
+		'@type': 'Event',
+		name: entrada.nombre,
+		eventAttendanceMode: 'https://schema.org/OnlineEventAttendanceMode',
+		location: { '@type': 'VirtualLocation', url: entrada.url },
+		description: entrada.descripcion,
+		organizer: { '@type': 'Organization', name: 'Aulita', url: entrada.sitio },
+	};
+	if (entrada.inicio) evento.startDate = entrada.inicio;
+	return {
+		'@context': 'https://schema.org',
+		'@graph': [
+			evento,
+			{
+				'@type': 'BreadcrumbList',
+				itemListElement: entrada.migas.map((miga, indice) => ({
+					'@type': 'ListItem',
+					position: indice + 1,
+					name: miga.name,
+					item: miga.url,
+				})),
+			},
+		],
+	};
+}
+
 export function fichaJsonLd(nombre: string, descripcion: string, path: string) {
 	return {
 		'@context': 'https://schema.org',

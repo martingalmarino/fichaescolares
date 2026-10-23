@@ -1,0 +1,51 @@
+---
+import BloqueMes from '../../components/BloqueMes.astro';
+import { efemerides } from '../../data/efemerides';
+import ProximasEfemerides from '../../islands/ProximasEfemerides';
+import { MESES_SLUG, efemeridesDelMes, fechaArgentina, nombreMes, proximasEfemerides, slugDeMes } from '../../lib/calendario';
+import { itemListJsonLd } from '../../lib/seo';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const hoy = fechaArgentina(new Date());
+const proximas = proximasEfemerides(efemerides, new Date(), 4);
+const descripcion = `Calendario ${hoy.anio} de efemérides argentinas para docentes y familias. Feriados, actos escolares y conmemoraciones, con las fechas móviles ya resueltas.`;
+const sitio = Astro.site ?? new URL(Astro.url.origin);
+const jsonLd = itemListJsonLd(
+	`Calendario de efemérides ${hoy.anio}`,
+	MESES_SLUG.map((slug, indice) => ({
+		name: nombreMes(indice + 1),
+		url: new URL(`/efemerides/${slug}/`, sitio).href,
+	})),
+);
+---
+
+<BaseLayout title={`Calendario de efemérides ${hoy.anio} | Aulita`} description={descripcion} jsonLd={jsonLd}>
+	<div class="mx-auto max-w-6xl px-4 py-8">
+		<h1 class="text-3xl font-bold tracking-tight text-azul sm:text-4xl">Calendario de efemérides</h1>
+		<p class="mt-3 max-w-3xl text-base leading-relaxed text-muted">
+			Las fechas de {hoy.anio} para el aula y la casa. Los feriados trasladables figuran en su día conmemorativo.
+		</p>
+		<nav class="mt-6 flex flex-wrap gap-2 text-sm" aria-label="Meses">
+			{
+				MESES_SLUG.map((slug, indice) => (
+					<a class="inline-flex min-h-11 items-center rounded-control border border-borde bg-white px-3 text-celeste hover:border-celeste" href={`#${slug}`}>
+						{nombreMes(indice + 1)}
+					</a>
+				))
+			}
+		</nav>
+		<ProximasEfemerides client:load iniciales={proximas} todas={efemerides} cantidad={4} />
+		<div class="mt-12 space-y-10">
+			{
+				MESES_SLUG.map((slug, indice) => (
+					<BloqueMes
+						id={slug}
+						titulo={nombreMes(indice + 1)}
+						href={`/efemerides/${slugDeMes(indice + 1)}/`}
+						fechas={efemeridesDelMes(efemerides, indice + 1, hoy.anio)}
+					/>
+				))
+			}
+		</div>
+	</div>
+</BaseLayout>

@@ -1,16 +1,34 @@
-# Fichas Patrias
+# Aulita
 
 Sitio para docentes y familias. Genera fichas imprimibles en A4 sobre el calendario escolar argentino, próceres y provincias. No está dirigido a menores de 13 años.
 
 ## Herramientas
 
-- https://fichaspatrias.vercel.app/sopa-de-letras/ Sopa de letras por efeméride, con soluciones.
-- https://fichaspatrias.vercel.app/crucigrama-proceres/ Crucigrama con pistas de próceres.
-- https://fichaspatrias.vercel.app/caligrafia/ Pauta de cursiva o imprenta.
-- https://fichaspatrias.vercel.app/laminas-para-colorear/ Láminas en trazo propio.
-- https://fichaspatrias.vercel.app/tablas-y-operaciones/ Tablas y cuentas con respuestas.
-- https://fichaspatrias.vercel.app/provincias/ Fichas provinciales con silueta, símbolos y sopa de letras.
-- https://fichaspatrias.vercel.app/guia-para-el-aula/ Cómo combinar las fichas en una semana patria.
+- https://aulita.com.ar/sopa-de-letras/ Sopa de letras por efeméride, con soluciones.
+- https://aulita.com.ar/crucigrama-proceres/ Crucigrama con pistas de próceres.
+- https://aulita.com.ar/caligrafia/ Pauta de cursiva o imprenta.
+- https://aulita.com.ar/laminas-para-colorear/ Láminas en trazo propio.
+- https://aulita.com.ar/tablas-y-operaciones/ Tablas y cuentas con respuestas.
+- https://aulita.com.ar/provincias/ Fichas provinciales con silueta, símbolos y sopa de letras.
+- https://aulita.com.ar/guia-para-el-aula/ Cómo combinar las fichas en una semana patria.
+
+## Calendario
+
+- https://aulita.com.ar/efemerides/ Índice por mes, con las próximas fechas.
+- https://aulita.com.ar/efemerides/enero/ Enero
+- https://aulita.com.ar/efemerides/febrero/ Febrero
+- https://aulita.com.ar/efemerides/marzo/ Marzo
+- https://aulita.com.ar/efemerides/abril/ Abril
+- https://aulita.com.ar/efemerides/mayo/ Mayo
+- https://aulita.com.ar/efemerides/junio/ Junio
+- https://aulita.com.ar/efemerides/julio/ Julio
+- https://aulita.com.ar/efemerides/agosto/ Agosto
+- https://aulita.com.ar/efemerides/septiembre/ Septiembre
+- https://aulita.com.ar/efemerides/octubre/ Octubre
+- https://aulita.com.ar/efemerides/noviembre/ Noviembre
+- https://aulita.com.ar/efemerides/diciembre/ Diciembre
+
+Cada fecha tiene su página en /efemerides/{slug}/. El sitemap lista todas.
 
 ## Fuentes
 

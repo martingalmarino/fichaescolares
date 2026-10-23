@@ -1,0 +1,16 @@
+name: Rebuild semanal
+
+on:
+  schedule:
+    # Lunes 06:00 en Argentina (UTC−3, sin horario de verano).
+    - cron: '0 9 * * 1'
+  workflow_dispatch:
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Pedir un deploy nuevo en Vercel
+        env:
+          VERCEL_DEPLOY_HOOK: ${{ secrets.VERCEL_DEPLOY_HOOK }}
+        run: curl --fail --silent --show-error --request POST "$VERCEL_DEPLOY_HOOK"

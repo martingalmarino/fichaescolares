@@ -28,15 +28,15 @@ const sitioLd = {
 	'@graph': [
 		{
 			'@type': 'WebSite',
-			name: 'Fichas Patrias',
-			url: new URL('/', sitio).href,
+			name: 'Aulita',
+			url: 'https://aulita.com.ar',
 			inLanguage: 'es-AR',
 			description: 'Fichas escolares argentinas para docentes y familias.',
 		},
 		{
 			'@type': 'Organization',
-			name: 'Fichas Patrias',
-			url: new URL('/', sitio).href,
+			name: 'Aulita',
+			url: 'https://aulita.com.ar',
 		},
 	],
 };
@@ -52,6 +52,7 @@ const sitioLd = {
 		<link rel="canonical" href={canonical} />
 		<meta property="og:type" content="website" />
 		<meta property="og:locale" content="es_AR" />
+		<meta property="og:site_name" content="Aulita" />
 		<meta property="og:title" content={title} />
 		<meta property="og:description" content={description} />
 		<meta property="og:url" content={canonical} />
@@ -62,6 +63,7 @@ const sitioLd = {
 		<meta name="twitter:image" content={imagen} />
 		<link rel="icon" type="image/svg+xml" href="/favicon.svg" />
 		<link rel="icon" href="/favicon.ico" />
+		<link rel="manifest" href="/site.webmanifest" />
 		<title>{title}</title>
 		{
 			adsense && (

@@ -1,6 +1,6 @@
 import { useEffect, useMemo, useState } from 'preact/hooks';
 import proceresData from '../data/proceres.json';
-import { efemerides } from '../data/efemerides';
+import { efemerides, tieneFicha } from '../data/efemerides';
 import { track } from '../lib/analytics';
 import { createCrossword, type PlacedWord } from '../lib/crossword';
 import { normalizeWord } from '../lib/normalize';
@@ -14,6 +14,7 @@ interface Procer {
 }
 
 const proceres = proceresData as Procer[];
+const fechasConFicha = efemerides.filter(tieneFicha);
 
 interface Props {
 	initialSeed: number | null;
@@ -38,7 +39,7 @@ function entradasDe(slugs: string[], cantidad: number) {
 
 export default function CrucigramaGenerator({ initialSeed, initialSlug }: Props) {
 	const { seed, ready, setSeed } = useSemilla(initialSeed);
-	const [slug, setSlug] = useState(initialSlug ?? '');
+	const [slug, setSlug] = useState(fechasConFicha.some((item) => item.slug === initialSlug) ? (initialSlug ?? '') : '');
 	const [elegidos, setElegidos] = useState<string[]>(['jose-de-san-martin', 'manuel-belgrano', 'domingo-faustino-sarmiento']);
 	const [cantidad, setCantidad] = useState(8);
 	const [titulo, setTitulo] = useState('Crucigrama de próceres');
@@ -50,8 +51,8 @@ export default function CrucigramaGenerator({ initialSeed, initialSlug }: Props)
 		if (!ready) return;
 		const params = new URLSearchParams(window.location.search);
 		const desdeUrl = params.get('e');
-		if (desdeUrl && efemerides.some((item) => item.slug === desdeUrl)) {
-			const fecha = efemerides.find((item) => item.slug === desdeUrl);
+		if (desdeUrl && fechasConFicha.some((item) => item.slug === desdeUrl)) {
+			const fecha = fechasConFicha.find((item) => item.slug === desdeUrl);
 			setSlug(desdeUrl);
 			if (fecha && fecha.proceres.length > 0) setElegidos(fecha.proceres);
 		}
@@ -84,7 +85,7 @@ export default function CrucigramaGenerator({ initialSeed, initialSlug }: Props)
 	function elegirFecha(valor: string) {
 		const anterior = slug;
 		setSlug(valor);
-		const fecha = efemerides.find((item) => item.slug === valor);
+		const fecha = fechasConFicha.find((item) => item.slug === valor);
 		if (fecha && fecha.proceres.length > 0) setElegidos(fecha.proceres);
 		track('select_efemeride', { slug: valor, from: 'crucigrama', anterior });
 	}
@@ -116,7 +117,7 @@ export default function CrucigramaGenerator({ initialSeed, initialSlug }: Props)
 						onChange={(event) => elegirFecha(event.currentTarget.value)}
 					>
 						<option value="">Elegir próceres a mano</option>
-						{efemerides.map((item) => (
+						{fechasConFicha.map((item) => (
 							<option key={item.slug} value={item.slug}>
 								{item.nombre}
 							</option>
