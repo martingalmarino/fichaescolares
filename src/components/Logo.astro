@@ -1,3 +1,11 @@
-<span class="border-b-2 border-sol pb-0.5 text-[1.75rem] font-bold leading-none tracking-tight text-celeste">
+---
+interface Props {
+	clara?: boolean;
+}
+
+const { clara = false } = Astro.props;
+---
+
+<span class:list={['border-b-2 border-sol pb-0.5 text-[1.75rem] font-bold leading-none tracking-tight', clara ? 'text-white' : 'text-celeste']}>
 	Aulita
 </span>

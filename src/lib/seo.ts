@@ -1,3 +1,6 @@
+export const ID_SITIO = 'https://www.aulita.com.ar/#website';
+export const ID_ORGANIZACION = 'https://www.aulita.com.ar/#organization';
+
 export function isoFecha(anio: number, mes: number, dia: number): string {
 	return `${anio}-${String(mes).padStart(2, '0')}-${String(dia).padStart(2, '0')}`;
 }
@@ -31,7 +34,7 @@ export function eventoEfemeride(entrada: {
 		eventAttendanceMode: 'https://schema.org/OnlineEventAttendanceMode',
 		location: { '@type': 'VirtualLocation', url: entrada.url },
 		description: entrada.descripcion,
-		organizer: { '@type': 'Organization', name: 'Aulita', url: entrada.sitio },
+		organizer: { '@id': ID_ORGANIZACION },
 	};
 	if (entrada.inicio) evento.startDate = entrada.inicio;
 	return {

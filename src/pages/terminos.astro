@@ -1,0 +1,43 @@
+---
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import { fuenteIgn, licenciaMapas } from '../data/footer';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { metaEstaticas } from '../lib/meta';
+
+const sitio = Astro.site ?? new URL('https://www.aulita.com.ar');
+const meta = metaEstaticas.terminos;
+const url = new URL(meta.ruta, sitio).href;
+const jsonLd = {
+	'@context': 'https://schema.org',
+	'@type': 'BreadcrumbList',
+	itemListElement: [
+		{ '@type': 'ListItem', position: 1, name: 'Inicio', item: new URL('/', sitio).href },
+		{ '@type': 'ListItem', position: 2, name: 'Términos de uso', item: url },
+	],
+};
+---
+
+<BaseLayout title={meta.title} description={meta.description} jsonLd={jsonLd}>
+	<article class="mx-auto max-w-3xl px-4 py-8 text-base leading-relaxed">
+		<Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: 'Términos de uso' }]} />
+		<h1 class="mt-4 text-3xl font-bold tracking-tight text-azul">Términos de uso</h1>
+		<p class="mt-4">
+			Aulita es gratis. Podés armar, imprimir y guardar las fichas sin registrarte y sin pagar. El sitio está pensado para docentes y familias, no para menores de 13 años.
+		</p>
+		<h2 class="mt-8 text-2xl font-bold text-azul">Uso de las fichas</h2>
+		<p class="mt-3">
+			Las fichas, láminas, sopas, crucigramas y cuentas se pueden usar en el aula y en casa, con fines educativos y no comerciales. No hace falta pedir permiso para imprimir una hoja para tu clase. No las vuelvas a publicar como si fueran un producto propio ni las vendas.
+		</p>
+		<h2 class="mt-8 text-2xl font-bold text-azul">Mapas del IGN</h2>
+		<p class="mt-3">
+			Los mapas escolares son del <a class="text-celeste underline" href={fuenteIgn} rel="noopener">Instituto Geográfico Nacional</a> y se publican con licencia <a class="text-celeste underline" href={licenciaMapas} rel="noopener">CC BY-SA 4.0</a>. Si los reutilizás, tenés que citar al IGN, mantener la misma licencia e indicar si los modificaste. Cada página de mapa repite esa atribución.
+		</p>
+		<h2 class="mt-8 text-2xl font-bold text-azul">Sin garantías</h2>
+		<p class="mt-3">
+			Las fechas y los datos salen de fuentes públicas y se revisan, pero el sitio no reemplaza la norma oficial ni el calendario de tu provincia. Si una fecha todavía no fue publicada por el ministerio, la página lo dice. Aulita no responde por un uso distinto del educativo ni por una decisión tomada solo con estas fichas.
+		</p>
+		<p class="mt-4">
+			Para una corrección o una consulta, usá <a class="text-celeste underline" href="/contacto/">Contacto</a>. La privacidad y las cookies están en sus páginas: <a class="text-celeste underline" href="/privacidad/">Privacidad</a> y <a class="text-celeste underline" href="/cookies/">Cookies</a>.
+		</p>
+	</article>
+</BaseLayout>

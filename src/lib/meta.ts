@@ -102,6 +102,18 @@ export const metaEstaticas = {
 		description:
 			'Cómo usa Aulita las cookies, Google Analytics y la publicidad, y tus derechos según la Ley 25.326. El sitio es para adultos, no para menores de 13 años.',
 	},
+	terminos: {
+		ruta: '/terminos/',
+		title: 'Términos de uso | Aulita',
+		description:
+			'Condiciones de uso de Aulita: fichas escolares gratis para uso educativo, mapas del IGN con licencia CC BY-SA 4.0, sin garantías y cómo contactarnos.',
+	},
+	cookies: {
+		ruta: '/cookies/',
+		title: 'Política de cookies | Aulita',
+		description:
+			'Qué cookies y datos locales usa Aulita: preferencias del navegador, Google Analytics con tu consentimiento y anuncios de Google cuando estén activos.',
+	},
 	noEncontrada: {
 		ruta: '/404/',
 		title: 'Página no encontrada | Aulita',

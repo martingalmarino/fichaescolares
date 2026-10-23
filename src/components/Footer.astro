@@ -1,17 +1,176 @@
-<footer class="bg-azul text-sm text-white/80">
-	<div
-		class="mx-auto flex max-w-6xl flex-wrap items-center justify-center gap-x-2 gap-y-1 px-4 py-4 text-center"
-	>
-		<span class="text-white">Aulita</span>
-		<span aria-hidden="true">·</span>
-		<span>Recursos para docentes y familias</span>
-		<span aria-hidden="true">·</span>
-		<a class="inline-flex min-h-11 items-center px-1 hover:text-white" href="/acerca/">Acerca de</a>
-		<span aria-hidden="true">·</span>
-		<a class="inline-flex min-h-11 items-center px-1 hover:text-white" href="/privacidad/">Privacidad</a>
-		<span aria-hidden="true">·</span>
-		<a class="inline-flex min-h-11 items-center px-1 hover:text-white" href="/creditos/">Créditos</a>
-		<span aria-hidden="true">·</span>
-		<a class="inline-flex min-h-11 items-center px-1 hover:text-white" href="/contacto/">Contacto</a>
+---
+import {
+	actualizadoPie,
+	anioPie,
+	columnas,
+	diasHasta,
+	fuenteIgn,
+	legales,
+	leyFeriados,
+	licenciaMapas,
+	proximasFooter,
+	textoFranja,
+} from '../data/footer';
+import Logo from './Logo.astro';
+
+const inicio = Astro.url.pathname === '/';
+const primera = proximasFooter[0];
+const franja = primera ? textoFranja(primera, diasHasta(primera.anio, primera.mes, primera.dia)) : '';
+const enlaceFranja = primera?.fichas ?? primera?.href ?? '/efemerides/';
+const textoEnlace = primera?.fichas ? 'Ver fichas' : 'Ver la fecha';
+const claseLink =
+	'inline-flex min-h-11 items-center rounded-sm text-sm text-[#edf3f8] underline-offset-2 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white';
+---
+
+<footer class="bg-azul text-[#edf3f8]">
+	{
+		!inicio && primera && (
+			<div class="bg-sol text-azul" data-footer-franja data-lista={JSON.stringify(proximasFooter)}>
+				<p class="mx-auto flex max-w-6xl flex-wrap items-center gap-x-3 gap-y-1 px-4 py-2 text-sm font-medium">
+					<span data-franja-texto>{franja}</span>
+					<a class="inline-flex min-h-11 items-center font-semibold underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-azul" data-franja-enlace href={enlaceFranja}>
+						{textoEnlace}
+					</a>
+				</p>
+			</div>
+		)
+	}
+	<div class="mx-auto max-w-6xl px-4 py-10">
+		<div class="grid grid-cols-2 gap-x-6 gap-y-8 md:grid-cols-3 lg:grid-cols-[minmax(0,1.5fr)_repeat(4,minmax(0,1fr))]">
+			<div class="col-span-2 md:col-span-3 lg:col-span-1">
+				<Logo clara />
+				<p class="mt-4 max-w-xs text-sm leading-relaxed text-[#edf3f8]">
+					Fichas, mapas y efemérides escolares argentinas, gratis y listas para imprimir en A4. Para docentes y familias.
+				</p>
+				<a class:list={['mt-3 font-semibold', claseLink]} href="/acerca/">Conocé Aulita →</a>
+			</div>
+			{
+				columnas.map((columna) => (
+					<nav class:list={[columna.anchoMovil ? 'col-span-2 md:col-span-1 lg:col-span-1' : 'col-span-1']} aria-label={columna.ariaLabel}>
+						<h2 class="text-xs font-semibold uppercase tracking-wide text-white">{columna.titulo}</h2>
+						<ul class="mt-2" data-footer-efemerides={columna.titulo === 'Efemérides' ? JSON.stringify(proximasFooter) : undefined}>
+							{columna.titulo === 'Efemérides' &&
+								proximasFooter.slice(0, 3).map((fecha) => (
+									<li>
+										<a class={claseLink} href={fecha.href}>
+											<span class="mr-1.5 font-semibold text-sol">
+												{fecha.dia}/{fecha.mes}
+											</span>
+											{fecha.nombre}
+										</a>
+									</li>
+								))}
+							{columna.links.map((enlace) => (
+								<li>
+									<a class={claseLink} href={enlace.href}>
+										{enlace.label}
+										{enlace.label === 'Calendario completo' ? ' →' : ''}
+									</a>
+								</li>
+							))}
+						</ul>
+					</nav>
+				))
+			}
+		</div>
+		<p class="mt-10 border-t border-white/25 pt-4 text-sm leading-relaxed">
+			Mapas:
+			<a class="underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white" href={fuenteIgn} rel="noopener">Instituto Geográfico Nacional (IGN)</a>,
+			licencia <a class="underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white" href={licenciaMapas} rel="noopener">CC BY-SA 4.0</a>.
+			Feriados según <a class="underline underline-offset-2 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white" href={leyFeriados} rel="noopener">Ley 27.399</a> y decretos vigentes.
+			<a class={claseLink} href="/creditos/">Ver créditos</a>
+		</p>
+		<div class="mt-4 flex flex-wrap items-center justify-between gap-x-6 gap-y-2 text-sm">
+			<p>© {anioPie} Aulita · Actualizado el {actualizadoPie}</p>
+			<nav aria-label="Información legal">
+				<ul class="flex flex-wrap gap-x-4">
+					{
+						legales.map((enlace) => (
+							<li>
+								<a class={claseLink} href={enlace.href}>
+									{enlace.label}
+								</a>
+							</li>
+						))
+					}
+				</ul>
+			</nav>
+		</div>
 	</div>
 </footer>
+
+<script>
+	interface FechaPie {
+		nombre: string;
+		dia: number;
+		mes: number;
+		anio: number;
+		href: string;
+		fichas: string | null;
+	}
+
+	const zona = 'America/Argentina/Buenos_Aires';
+
+	function hoyArgentina() {
+		const partes = new Intl.DateTimeFormat('en-US', { timeZone: zona, year: 'numeric', month: 'numeric', day: 'numeric' }).formatToParts(new Date());
+		const valor = (tipo: Intl.DateTimeFormatPartTypes) => Number(partes.find((parte) => parte.type === tipo)?.value);
+		return { anio: valor('year'), mes: valor('month'), dia: valor('day') };
+	}
+
+	function futura(item: FechaPie, hoy: { anio: number; mes: number; dia: number }) {
+		return item.anio > hoy.anio || item.mes > hoy.mes || (item.mes === hoy.mes && item.dia >= hoy.dia);
+	}
+
+	function diasHastaCliente(item: FechaPie, hoy: { anio: number; mes: number; dia: number }) {
+		const destino = Date.UTC(item.anio, item.mes - 1, item.dia);
+		const partida = Date.UTC(hoy.anio, hoy.mes - 1, hoy.dia);
+		return Math.round((destino - partida) / 86400000);
+	}
+
+	function texto(item: FechaPie, dias: number) {
+		const cuando = `${item.dia}/${item.mes}`;
+		const nombre = /^(día|paso|año)\b/i.test(item.nombre) ? `el ${item.nombre}` : item.nombre;
+		if (dias <= 0) return `Hoy es ${nombre} (${cuando})`;
+		if (dias === 1) return `Falta 1 día para ${nombre} (${cuando})`;
+		return `Faltan ${dias} días para ${nombre} (${cuando})`;
+	}
+
+	const listaNodo = document.querySelector('[data-footer-efemerides]');
+	if (listaNodo instanceof HTMLElement && listaNodo.dataset.footerEfemerides) {
+		const lista = JSON.parse(listaNodo.dataset.footerEfemerides) as FechaPie[];
+		const hoy = hoyArgentina();
+		const visibles = lista.filter((item) => futura(item, hoy)).slice(0, 3);
+		const actuales = [...listaNodo.querySelectorAll('a')].slice(0, 3).map((enlace) => enlace.getAttribute('href'));
+		if (visibles.length === 3 && actuales.join('|') !== visibles.map((item) => item.href).join('|')) {
+			const fijas = [...listaNodo.children].slice(3);
+			listaNodo.replaceChildren();
+			for (const item of visibles) {
+				const li = document.createElement('li');
+				const enlace = document.createElement('a');
+				enlace.href = item.href;
+				enlace.className = 'inline-flex min-h-11 items-center rounded-sm text-sm text-[#edf3f8] underline-offset-2 hover:underline focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-white';
+				const fecha = document.createElement('span');
+				fecha.className = 'mr-1.5 font-semibold text-sol';
+				fecha.textContent = `${item.dia}/${item.mes}`;
+				enlace.append(fecha, document.createTextNode(` ${item.nombre}`));
+				li.append(enlace);
+				listaNodo.append(li);
+			}
+			for (const fija of fijas) listaNodo.append(fija);
+		}
+	}
+
+	const franja = document.querySelector('[data-footer-franja]');
+	if (franja instanceof HTMLElement && franja.dataset.lista) {
+		const lista = JSON.parse(franja.dataset.lista) as FechaPie[];
+		const hoy = hoyArgentina();
+		const siguiente = lista.find((item) => futura(item, hoy));
+		const textoNodo = franja.querySelector('[data-franja-texto]');
+		const enlace = franja.querySelector('[data-franja-enlace]');
+		if (siguiente && textoNodo && enlace instanceof HTMLAnchorElement) {
+			textoNodo.textContent = texto(siguiente, diasHastaCliente(siguiente, hoy));
+			enlace.href = siguiente.fichas || siguiente.href;
+			enlace.textContent = siguiente.fichas ? 'Ver fichas' : 'Ver la fecha';
+		}
+	}
+</script>
