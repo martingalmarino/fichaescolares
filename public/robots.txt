@@ -16,4 +16,4 @@ Allow: /
 User-agent: CCBot
 Allow: /
 
-Sitemap: https://aulita.com.ar/sitemap-index.xml
+Sitemap: https://www.aulita.com.ar/sitemap-index.xml

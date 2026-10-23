@@ -4,29 +4,29 @@ Sitio para docentes y familias. Genera fichas imprimibles en A4 sobre el calenda
 
 ## Herramientas
 
-- https://aulita.com.ar/sopa-de-letras/ Sopa de letras por efeméride, con soluciones.
-- https://aulita.com.ar/crucigrama-proceres/ Crucigrama con pistas de próceres.
-- https://aulita.com.ar/caligrafia/ Pauta de cursiva o imprenta.
-- https://aulita.com.ar/laminas-para-colorear/ Láminas en trazo propio.
-- https://aulita.com.ar/tablas-y-operaciones/ Tablas y cuentas con respuestas.
-- https://aulita.com.ar/provincias/ Fichas provinciales con silueta, símbolos y sopa de letras.
-- https://aulita.com.ar/guia-para-el-aula/ Cómo combinar las fichas en una semana patria.
+- https://www.aulita.com.ar/sopa-de-letras/ Sopa de letras por efeméride, con soluciones.
+- https://www.aulita.com.ar/crucigrama-proceres/ Crucigrama con pistas de próceres.
+- https://www.aulita.com.ar/caligrafia/ Pauta de cursiva o imprenta.
+- https://www.aulita.com.ar/laminas-para-colorear/ Láminas en trazo propio.
+- https://www.aulita.com.ar/tablas-y-operaciones/ Tablas y cuentas con respuestas.
+- https://www.aulita.com.ar/provincias/ Fichas provinciales con silueta, símbolos y sopa de letras.
+- https://www.aulita.com.ar/guia-para-el-aula/ Cómo combinar las fichas en una semana patria.
 
 ## Calendario
 
-- https://aulita.com.ar/efemerides/ Índice por mes, con las próximas fechas.
-- https://aulita.com.ar/efemerides/enero/ Enero
-- https://aulita.com.ar/efemerides/febrero/ Febrero
-- https://aulita.com.ar/efemerides/marzo/ Marzo
-- https://aulita.com.ar/efemerides/abril/ Abril
-- https://aulita.com.ar/efemerides/mayo/ Mayo
-- https://aulita.com.ar/efemerides/junio/ Junio
-- https://aulita.com.ar/efemerides/julio/ Julio
-- https://aulita.com.ar/efemerides/agosto/ Agosto
-- https://aulita.com.ar/efemerides/septiembre/ Septiembre
-- https://aulita.com.ar/efemerides/octubre/ Octubre
-- https://aulita.com.ar/efemerides/noviembre/ Noviembre
-- https://aulita.com.ar/efemerides/diciembre/ Diciembre
+- https://www.aulita.com.ar/efemerides/ Índice por mes, con las próximas fechas.
+- https://www.aulita.com.ar/efemerides/enero/ Enero
+- https://www.aulita.com.ar/efemerides/febrero/ Febrero
+- https://www.aulita.com.ar/efemerides/marzo/ Marzo
+- https://www.aulita.com.ar/efemerides/abril/ Abril
+- https://www.aulita.com.ar/efemerides/mayo/ Mayo
+- https://www.aulita.com.ar/efemerides/junio/ Junio
+- https://www.aulita.com.ar/efemerides/julio/ Julio
+- https://www.aulita.com.ar/efemerides/agosto/ Agosto
+- https://www.aulita.com.ar/efemerides/septiembre/ Septiembre
+- https://www.aulita.com.ar/efemerides/octubre/ Octubre
+- https://www.aulita.com.ar/efemerides/noviembre/ Noviembre
+- https://www.aulita.com.ar/efemerides/diciembre/ Diciembre
 
 Cada fecha tiene su página en /efemerides/{slug}/. El sitemap lista todas.
 

@@ -6,7 +6,7 @@ import { defineConfig } from 'astro/config';
 
 // https://astro.build/config
 export default defineConfig({
-	site: 'https://aulita.com.ar',
+	site: 'https://www.aulita.com.ar',
 	output: 'static',
 	trailingSlash: 'always',
 	integrations: [preact(), sitemap()],

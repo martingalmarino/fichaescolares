@@ -1,3 +1,11 @@
 {
-	"trailingSlash": true
+	"trailingSlash": true,
+	"redirects": [
+		{
+			"source": "/:path*",
+			"has": [{ "type": "host", "value": "aulita.com.ar" }],
+			"destination": "https://www.aulita.com.ar/:path*",
+			"permanent": true
+		}
+	]
 }
