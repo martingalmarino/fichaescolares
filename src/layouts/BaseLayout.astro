@@ -22,7 +22,7 @@ const sitio = Astro.site ?? new URL(Astro.url.origin);
 const canonical = new URL(Astro.url.pathname, sitio).href;
 const imagen = new URL(image, sitio).href;
 const gaId = import.meta.env.PUBLIC_GA_ID ?? '';
-const adsense = import.meta.env.PUBLIC_ADSENSE_CLIENT ?? '';
+const adsense = import.meta.env.PUBLIC_ADSENSE_CLIENT || 'ca-pub-6771833588582297';
 
 const mision = 'Fichas, mapas y efemérides escolares argentinas, gratis y listas para imprimir en A4. Para docentes y familias.';
 const sitioLd = {
