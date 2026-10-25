@@ -1,0 +1,21 @@
+---
+import { CALIFICACION_ACTUALIZADO_TEXTO } from '../data/calificacion-primaria';
+
+interface Props {
+	modo?: 'fecha' | 'cierre';
+	normas?: string;
+}
+
+const { modo = 'fecha', normas } = Astro.props;
+---
+
+{
+	modo === 'fecha' ? (
+		<p class="mt-2 text-sm font-medium text-muted">Actualizado: {CALIFICACION_ACTUALIZADO_TEXTO}</p>
+	) : (
+		<p class="mt-8 rounded-card border border-borde bg-white p-4 text-sm leading-relaxed text-muted">
+			Información orientativa, confirmá con la escuela.
+			{normas ? ` Fuente: ${normas}.` : ' La norma de cada provincia está citada cuando esta ficha tiene el número.'}
+		</p>
+	)
+}

@@ -15,6 +15,15 @@ Sitio para docentes y familias. Genera fichas imprimibles en A4 sobre el calenda
 - https://www.aulita.com.ar/provincias/ Fichas provinciales con silueta, símbolos y sopa de letras.
 - https://www.aulita.com.ar/guia-para-el-aula/ Cómo combinar las fichas en una semana patria.
 
+## Calificaciones de primaria
+
+- https://www.aulita.com.ar/como-se-califica-en-primaria/ Cómo se califica en primaria, provincia por provincia. No hay una escala nacional.
+- https://www.aulita.com.ar/como-se-califica-en-primaria/provincia-de-buenos-aires/ Primaria bonaerense: conceptos en el 1.º ciclo y de 1 a 10 desde 4.º. Se aprueba con 7.
+- https://www.aulita.com.ar/como-se-califica-en-primaria/caba/ Boletín porteño desde 2025: Destacado, Avanzado, Alcanzado, En proceso y No alcanzó.
+- https://www.aulita.com.ar/calculadora-promedio-primaria/ Calculadora de promedio según la escala numérica de cada provincia.
+- https://www.aulita.com.ar/como-se-califica-en-primaria/se-repite-primer-grado/ 1.º y 2.º forman una unidad pedagógica: no se repite primer grado.
+- https://www.aulita.com.ar/como-se-califica-en-primaria/como-leer-el-boletin/ Cómo leer el boletín de CABA y de Provincia de Buenos Aires.
+
 ## Calendario
 
 - https://www.aulita.com.ar/efemerides/ Índice por mes, con las próximas fechas.

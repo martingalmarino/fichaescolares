@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#eef7fd"/>
+  <rect x="80" y="230" width="88" height="88" rx="18" fill="#4aa3df"/>
+  <circle cx="124" cy="274" r="14" fill="#f4a531"/>
+  <text x="200" y="280" font-family="Arial, sans-serif" font-size="52" font-weight="700" fill="#1d3557">Cómo se califica en primaria</text>
+  <text x="200" y="350" font-family="Arial, sans-serif" font-size="32" fill="#6b7280">Aulita</text>
+</svg>

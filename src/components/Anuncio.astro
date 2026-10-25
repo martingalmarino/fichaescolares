@@ -3,7 +3,7 @@ interface Props {
 	slot?: string;
 }
 
-const cliente = import.meta.env.PUBLIC_ADSENSE_CLIENT ?? '';
+const cliente = import.meta.env.PUBLIC_ADSENSE_CLIENT || 'ca-pub-6771833588582297';
 const slot = Astro.props.slot || import.meta.env.PUBLIC_ADSENSE_SLOT || '';
 ---
 

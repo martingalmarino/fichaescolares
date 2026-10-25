@@ -25,6 +25,12 @@ describe('títulos y descripciones', () => {
 		expect(metas.filter((meta) => meta.ruta.startsWith('/efemerides/') && !MESES_SLUG.some((mes) => meta.ruta === `/efemerides/${mes}/`) && meta.ruta !== '/efemerides/')).toHaveLength(efemerides.length);
 		expect(metas.filter((meta) => meta.ruta.startsWith('/calendario-escolar-2027/'))).toHaveLength(25);
 		expect(rutas.has('/calendario-escolar-2027/cordoba/')).toBe(true);
+		expect(rutas.has('/como-se-califica-en-primaria/')).toBe(true);
+		expect(rutas.has('/como-se-califica-en-primaria/provincia-de-buenos-aires/')).toBe(true);
+		expect(rutas.has('/como-se-califica-en-primaria/caba/')).toBe(true);
+		expect(rutas.has('/calculadora-promedio-primaria/')).toBe(true);
+		expect(rutas.has('/como-se-califica-en-primaria/se-repite-primer-grado/')).toBe(true);
+		expect(rutas.has('/como-se-califica-en-primaria/como-leer-el-boletin/')).toBe(true);
 		expect(rutas.has('/etiquetas-escolares/')).toBe(true);
 		expect(rutas.has('/etiquetas-escolares/cuadernos/')).toBe(true);
 		expect(rutas.has('/etiquetas-escolares/utiles/')).toBe(true);

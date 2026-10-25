@@ -1,0 +1,53 @@
+---
+import Anuncio from '../../components/Anuncio.astro';
+import AvisoCalificacion from '../../components/AvisoCalificacion.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Preguntas from '../../components/Preguntas.astro';
+import { CALIFICACION_ACTUALIZADO, NORMA_NACIONAL, preguntasRepite } from '../../data/calificacion-primaria';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { metaEstaticas } from '../../lib/meta';
+import { paginaCalificacionJsonLd } from '../../lib/seo';
+
+const meta = metaEstaticas.repitePrimerGrado;
+const h1 = '¿Se repite primer grado?';
+const migas = [
+	{ name: 'Inicio', url: '/' },
+	{ name: 'Cómo se califica', url: '/como-se-califica-en-primaria/' },
+	{ name: 'Primer grado', url: meta.ruta },
+];
+---
+
+<BaseLayout
+	title={meta.title}
+	description={meta.description}
+	keywords="se repite primer grado en argentina, unidad pedagogica primer y segundo grado, promocion acompañada"
+	image="/og/calificacion-primer-grado.svg"
+	jsonLd={paginaCalificacionJsonLd({
+		tipo: 'Article',
+		nombre: h1,
+		descripcion: meta.description,
+		ruta: meta.ruta,
+		actualizado: CALIFICACION_ACTUALIZADO,
+		migas,
+		preguntas: preguntasRepite,
+	})}
+>
+	<article class="mx-auto max-w-3xl px-4 py-8 text-base leading-relaxed">
+		<Breadcrumbs items={migas.map((item) => ({ label: item.name, href: item.url === meta.ruta ? undefined : item.url }))} />
+		<h1 class="mt-4 text-3xl font-bold tracking-tight text-azul sm:text-4xl">{h1}</h1>
+		<AvisoCalificacion />
+		<p class="mt-4">No. En Argentina, 1.º y 2.º grado forman una unidad pedagógica: no se repite primer grado. La norma es la {NORMA_NACIONAL}.</p>
+		<Anuncio />
+		<h2 class="mt-8 text-2xl font-bold text-azul">Qué dice la resolución</h2>
+		<p class="mt-3">La {NORMA_NACIONAL} crea esa unidad. El primer grado no se cierra con una repetición. Cada provincia sigue definiendo su propia escala, su nota de aprobación y sus períodos.</p>
+		<h2 class="mt-8 text-2xl font-bold text-azul">Qué pasa en 2.º</h2>
+		<p class="mt-3">Como 1.º y 2.º se cursan juntos como unidad, la decisión no se toma al terminar primer grado. Esta ficha no trae una regla nacional que diga si 2.º se repite o no. Eso se confirma con la escuela y con la norma de la provincia.</p>
+		<h2 class="mt-8 text-2xl font-bold text-azul">Seguir leyendo</h2>
+		<ul class="mt-3 list-disc space-y-2 pl-5">
+			<li><a class="text-celeste underline" href="/como-se-califica-en-primaria/">Cómo se califica en cada provincia</a></li>
+			<li><a class="text-celeste underline" href="/calculadora-promedio-primaria/">Calculadora de promedio</a></li>
+		</ul>
+		<AvisoCalificacion modo="cierre" normas={NORMA_NACIONAL} />
+		<Preguntas preguntas={preguntasRepite} />
+	</article>
+</BaseLayout>

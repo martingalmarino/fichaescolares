@@ -1,0 +1,68 @@
+---
+import Anuncio from '../../components/Anuncio.astro';
+import AvisoCalificacion from '../../components/AvisoCalificacion.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Preguntas from '../../components/Preguntas.astro';
+import { CALIFICACION_ACTUALIZADO, calificacionDe, equivalenciasCaba, preguntasBoletin } from '../../data/calificacion-primaria';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { metaEstaticas } from '../../lib/meta';
+import { paginaCalificacionJsonLd } from '../../lib/seo';
+
+const meta = metaEstaticas.leerBoletin;
+const caba = calificacionDe('caba');
+const buenosAires = calificacionDe('buenos-aires');
+if (!caba || !buenosAires) throw new Error('Faltan las fichas de CABA o Buenos Aires');
+const h1 = 'Cómo leer el boletín de primaria';
+const migas = [
+	{ name: 'Inicio', url: '/' },
+	{ name: 'Cómo se califica', url: '/como-se-califica-en-primaria/' },
+	{ name: 'El boletín', url: meta.ruta },
+];
+---
+
+<BaseLayout
+	title={meta.title}
+	description={meta.description}
+	keywords="boletín primaria, como leer el boletín, que significa en proceso en el boletín, libreta primaria"
+	image="/og/calificacion-boletin.svg"
+	jsonLd={paginaCalificacionJsonLd({
+		tipo: 'Article',
+		nombre: h1,
+		descripcion: meta.description,
+		ruta: meta.ruta,
+		actualizado: CALIFICACION_ACTUALIZADO,
+		migas,
+		preguntas: preguntasBoletin,
+	})}
+>
+	<article class="mx-auto max-w-3xl px-4 py-8 text-base leading-relaxed">
+		<Breadcrumbs items={migas.map((item) => ({ label: item.name, href: item.url === meta.ruta ? undefined : item.url }))} />
+		<h1 class="mt-4 text-3xl font-bold tracking-tight text-azul sm:text-4xl">{h1}</h1>
+		<AvisoCalificacion />
+		<p class="mt-4">
+			El boletín se lee con la escala de la provincia, no con una tabla nacional. En CABA y en Provincia de Buenos Aires los conceptos y los números no coinciden. Si dice “En proceso”, el significado también cambia según la jurisdicción.
+		</p>
+		<Anuncio />
+		<h2 class="mt-8 text-2xl font-bold text-azul">Ciudad de Buenos Aires</h2>
+		<p class="mt-3">Desde 2025, {caba.norma}. Se aprueba con Alcanzado. De 1.º a 3.º solo figura el concepto. De 4.º a 7.º van el número y el concepto.</p>
+		<ul class="mt-3 list-disc space-y-1 pl-5">
+			{equivalenciasCaba.map((fila) => <li>{fila.concepto}: {fila.numeros}</li>)}
+		</ul>
+		<h2 class="mt-8 text-2xl font-bold text-azul">Provincia de Buenos Aires</h2>
+		<p class="mt-3">
+			Fuente: {buenosAires.norma}. En el 1.º ciclo se lee Desaprobado, Regular, Bueno, Muy bueno o Sobresaliente, y se aprueba con Bueno. Desde 4.º se lee un número de 1 a 10 y se aprueba con 7. Hay trimestres y un informe final. Esa nota final no es el promedio de los trimestres.
+		</p>
+		<h2 class="mt-8 text-2xl font-bold text-azul">Si dice “En proceso”</h2>
+		<p class="mt-3">
+			En CABA, En proceso es 4 o 5. En Entre Ríos, debajo de 6 el boletín dice “En proceso de apropiación de contenidos” (Res. 920/19 CGE). Chubut, Río Negro y Jujuy también usan el concepto, sin un número publicado en esta ficha. Qué contenidos faltan lo mira la escuela: esta página no reemplaza esa conversación.
+		</p>
+		<h2 class="mt-8 text-2xl font-bold text-azul">Seguir leyendo</h2>
+		<ul class="mt-3 list-disc space-y-2 pl-5">
+			<li><a class="text-celeste underline" href="/como-se-califica-en-primaria/">Cómo se califica en cada provincia</a></li>
+			<li><a class="text-celeste underline" href="/como-se-califica-en-primaria/caba/">Escala de CABA</a></li>
+			<li><a class="text-celeste underline" href="/como-se-califica-en-primaria/provincia-de-buenos-aires/">Escala de Provincia de Buenos Aires</a></li>
+		</ul>
+		<AvisoCalificacion modo="cierre" normas={`${caba.norma}; ${buenosAires.norma}`} />
+		<Preguntas preguntas={preguntasBoletin} />
+	</article>
+</BaseLayout>

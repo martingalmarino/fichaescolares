@@ -82,6 +82,7 @@ export const columnas: ColumnaFooter[] = [
 		anchoMovil: true,
 		links: [
 			{ label: 'Guía para el aula', href: '/guia-para-el-aula/' },
+			{ label: 'Calificaciones de primaria', href: '/como-se-califica-en-primaria/' },
 			{ label: 'Acerca de Aulita', href: '/acerca/' },
 			{ label: 'Créditos y fuentes', href: '/creditos/' },
 			{ label: 'Contacto', href: '/contacto/' },

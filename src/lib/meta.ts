@@ -66,6 +66,42 @@ export const metaEstaticas = {
 		description:
 			'Generá hojas de caligrafía en cursiva o imprenta con renglones escolares y frases propias o de efemérides. Gratis, en A4 y listas para imprimir.',
 	},
+	calificacion: {
+		ruta: '/como-se-califica-en-primaria/',
+		title: 'Cómo se califica en primaria en Argentina | Aulita',
+		description:
+			'No hay una escala nacional: cada provincia define sus notas. Mirá con cuánto se aprueba en primaria, si la escala es conceptual o numérica, y la norma vigente.',
+	},
+	calificacionBuenosAires: {
+		ruta: '/como-se-califica-en-primaria/provincia-de-buenos-aires/',
+		title: 'Notas de primaria en Provincia de Buenos Aires | Aulita',
+		description:
+			'En primaria bonaerense, el 1.º ciclo usa conceptos y desde 4.º se califica del 1 al 10. Se aprueba con 7. Te explicamos el boletín y los trimestres.',
+	},
+	calificacionCaba: {
+		ruta: '/como-se-califica-en-primaria/caba/',
+		title: 'Nueva escala del boletín de primaria en CABA | Aulita',
+		description:
+			'Desde 2025, las primarias porteñas califican con Destacado, Avanzado, Alcanzado, En proceso y No alcanzó. Qué número equivale a cada uno y con cuál se aprueba.',
+	},
+	calculadoraPromedio: {
+		ruta: '/calculadora-promedio-primaria/',
+		title: 'Promedio de primaria: ¿aprobó con 6 o con 7? | Aulita',
+		description:
+			'Cargá las notas, elegí la provincia y mirá el promedio y si aprueba según la escala vigente. En Mendoza el promedio no se redondea a un entero.',
+	},
+	repitePrimerGrado: {
+		ruta: '/como-se-califica-en-primaria/se-repite-primer-grado/',
+		title: '¿Se repite primer grado en Argentina? | Aulita',
+		description:
+			'En Argentina, 1.º y 2.º grado forman una unidad pedagógica y no se repite primer grado. Qué dice la Res. CFE 174/12 y cómo se cierra en 2.º.',
+	},
+	leerBoletin: {
+		ruta: '/como-se-califica-en-primaria/como-leer-el-boletin/',
+		title: 'Cómo leer el boletín de primaria en Argentina | Aulita',
+		description:
+			'Qué significa cada concepto del boletín de primaria en CABA y en la Provincia de Buenos Aires, y qué quiere decir En proceso según cada norma.',
+	},
 	etiquetas: {
 		ruta: '/etiquetas-escolares/',
 		title: 'Etiquetas escolares para imprimir con nombre | Aulita',

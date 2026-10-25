@@ -1,0 +1,136 @@
+---
+import Anuncio from '../../components/Anuncio.astro';
+import AvisoCalificacion from '../../components/AvisoCalificacion.astro';
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Preguntas from '../../components/Preguntas.astro';
+import { CALIFICACION_ACTUALIZADO, NORMA_NACIONAL, jurisdiccionesCalificacion, preguntasHub } from '../../data/calificacion-primaria';
+import { calendarioVigente } from '../../data/calendario-escolar';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { metaEstaticas } from '../../lib/meta';
+import { paginaCalificacionJsonLd } from '../../lib/seo';
+
+const meta = metaEstaticas.calificacion;
+const h1 = 'Cómo se califica en la escuela primaria en Argentina';
+const migas = [
+	{ name: 'Inicio', url: '/' },
+	{ name: 'Cómo se califica', url: meta.ruta },
+];
+const secciones = [
+	{
+		titulo: 'Mendoza',
+		texto: 'La escala es de 1 a 10, con dos decimales y sin redondeo. La nota del período es el promedio exacto. Se aprueba con 7. El año tiene dos períodos más una evaluación integradora. La Res. 4778/26 modifica la Res. DGE 1949/22 y rige desde agosto de 2026.',
+	},
+	{
+		titulo: 'Santa Fe',
+		texto: 'De 1.º a 6.º los conceptos son Excelente, Muy bueno, Bueno, Satisfactorio y No satisfactorio. En 7.º la escala es de 1 a 10. Se aprueba con Satisfactorio o con 6. Fuentes: decretos 181/09 y 182/09.',
+	},
+	{
+		titulo: 'Salta',
+		texto: 'De 1.º a 3.º: Sobresaliente, Muy bueno, Bueno, Regular e Insatisfactorio. Desde 4.º, de 1 a 10. Se aprueba con Bueno o con 6. El boletín es por trimestres. Fuente: Res. 1142/12.',
+	},
+	{
+		titulo: 'Entre Ríos',
+		texto: 'La escala numérica va de 6 a 10. Debajo de 6 se registra “En proceso de apropiación de contenidos”. Se aprueba con 6. Fuente: Res. 920/19 CGE.',
+	},
+	{
+		titulo: 'Catamarca',
+		texto: 'Desde 2023 la escala es de 1 a 10, con nota conceptual. Se aprueba con 6. Fuente: Res. 168/23.',
+	},
+];
+---
+
+<BaseLayout
+	title={meta.title}
+	description={meta.description}
+	keywords="como se califica en primaria argentina, escala de notas primaria, con cuanto se aprueba en primaria, calificaciones primaria, notas primaria 2026, boletín primaria"
+	image="/og/calificacion.svg"
+	jsonLd={paginaCalificacionJsonLd({
+		tipo: 'Article',
+		nombre: h1,
+		descripcion: meta.description,
+		ruta: meta.ruta,
+		actualizado: CALIFICACION_ACTUALIZADO,
+		migas,
+		preguntas: preguntasHub,
+		dataset: {
+			name: 'Escalas de calificación de primaria por provincia',
+			description: 'Escala del primer ciclo, escala del segundo ciclo, nota de aprobación y norma citada para cada jurisdicción.',
+		},
+	})}
+>
+	<article class="mx-auto max-w-5xl px-4 py-8 text-base leading-relaxed">
+		<Breadcrumbs items={migas.map((item) => ({ label: item.name, href: item.url === meta.ruta ? undefined : item.url }))} />
+		<h1 class="mt-4 text-3xl font-bold tracking-tight text-azul sm:text-4xl">{h1}</h1>
+		<AvisoCalificacion />
+		<p class="mt-4 max-w-3xl">
+			En Argentina no hay una escala única: cada provincia define la suya. En los primeros grados casi todas usan conceptos, y desde 4.º muchas pasan a números del 1 al 10. Según la provincia, se aprueba con 6 o con 7.
+		</p>
+		<Anuncio />
+		<p class="mt-4 max-w-3xl text-sm text-muted">
+			La {NORMA_NACIONAL} crea la unidad pedagógica de 1.º y 2.º grado: no se repite 1.º. Cada jurisdicción define su escala, la nota de aprobación y los períodos. El detalle de primer grado está en <a class="text-celeste underline" href="/como-se-califica-en-primaria/se-repite-primer-grado/">¿se repite primer grado?</a>
+		</p>
+
+		<h2 class="mt-10 text-2xl font-bold text-azul">Provincia por provincia</h2>
+		<div class="mt-4 overflow-x-auto rounded-card border border-borde bg-white">
+			<table class="w-full min-w-[44rem] text-left text-sm">
+				<caption class="sr-only">Escala de primaria, nota de aprobación y norma por jurisdicción</caption>
+				<thead class="bg-celeste-50 text-azul">
+					<tr>
+						<th class="px-3 py-3 font-semibold" scope="col">Jurisdicción</th>
+						<th class="px-3 py-3 font-semibold" scope="col">Escala 1.º ciclo</th>
+						<th class="px-3 py-3 font-semibold" scope="col">Escala 2.º ciclo</th>
+						<th class="px-3 py-3 font-semibold" scope="col">Aprueba con</th>
+						<th class="px-3 py-3 font-semibold" scope="col">Norma</th>
+					</tr>
+				</thead>
+				<tbody>
+					{
+						jurisdiccionesCalificacion.map((fila) => (
+							<tr class="border-t border-borde align-top">
+								<th class="px-3 py-3 font-semibold text-azul" scope="row">{fila.nombre}</th>
+								<td class="px-3 py-3">{fila.ciclo1}</td>
+								<td class="px-3 py-3">{fila.ciclo2}</td>
+								<td class="px-3 py-3">{fila.aprueba}</td>
+								<td class="px-3 py-3">{fila.norma}</td>
+							</tr>
+						))
+					}
+				</tbody>
+			</table>
+		</div>
+
+		<div class="mt-10 grid gap-4 md:grid-cols-2">
+			{
+				secciones.map((seccion) => (
+					<section class="rounded-card border border-borde bg-white p-5 shadow-card">
+						<h2 class="text-xl font-bold text-azul">{seccion.titulo}</h2>
+						<p class="mt-2 text-sm leading-relaxed">{seccion.texto}</p>
+					</section>
+				))
+			}
+		</div>
+
+		<section class="mt-10 max-w-3xl">
+			<h2 class="text-2xl font-bold text-azul">Unidad pedagógica: ¿se repite primer grado?</h2>
+			<p class="mt-3">
+				No. 1.º y 2.º grado forman una unidad pedagógica y no se repite 1.º. La norma nacional es la {NORMA_NACIONAL}. <a class="text-celeste underline" href="/como-se-califica-en-primaria/se-repite-primer-grado/">La nota explica qué dice esa resolución y qué pasa en 2.º.</a>
+			</p>
+		</section>
+
+		<section class="mt-10 max-w-3xl">
+			<h2 class="text-2xl font-bold text-azul">Seguir leyendo</h2>
+			<ul class="mt-3 list-disc space-y-2 pl-5">
+				<li><a class="text-celeste underline" href="/como-se-califica-en-primaria/provincia-de-buenos-aires/">Provincia de Buenos Aires</a></li>
+				<li><a class="text-celeste underline" href="/como-se-califica-en-primaria/caba/">Ciudad de Buenos Aires</a></li>
+				<li><a class="text-celeste underline" href="/calculadora-promedio-primaria/">Calculadora de promedio</a></li>
+				<li><a class="text-celeste underline" href="/como-se-califica-en-primaria/como-leer-el-boletin/">Cómo leer el boletín</a></li>
+				<li><a class="text-celeste underline" href={`/calendario-escolar-${calendarioVigente.anio}/`}>Calendario escolar {calendarioVigente.anio}</a></li>
+				<li><a class="text-celeste underline" href="/">Inicio</a></li>
+			</ul>
+		</section>
+		<AvisoCalificacion modo="cierre" />
+		<div class="max-w-3xl">
+			<Preguntas preguntas={preguntasHub} />
+		</div>
+	</article>
+</BaseLayout>

@@ -123,6 +123,74 @@ export function etiquetasJsonLd(entrada: {
 	return { '@context': 'https://schema.org', '@graph': graph };
 }
 
+export function paginaCalificacionJsonLd(entrada: {
+	tipo: 'Article' | 'WebApplication';
+	nombre: string;
+	descripcion: string;
+	ruta: string;
+	actualizado: string;
+	migas: { name: string; url: string }[];
+	preguntas: { q: string; a: string }[];
+	dataset?: { name: string; description: string };
+}) {
+	const url = `${SITIO}${entrada.ruta}`;
+	const principal =
+		entrada.tipo === 'Article'
+			? {
+					'@type': 'Article',
+					headline: entrada.nombre,
+					description: entrada.descripcion,
+					inLanguage: 'es-AR',
+					dateModified: entrada.actualizado,
+					url,
+					author: { '@id': ID_ORGANIZACION },
+					publisher: { '@id': ID_ORGANIZACION },
+				}
+			: {
+					'@type': 'WebApplication',
+					name: entrada.nombre,
+					description: entrada.descripcion,
+					applicationCategory: 'EducationalApplication',
+					operatingSystem: 'Web',
+					inLanguage: 'es-AR',
+					url,
+					dateModified: entrada.actualizado,
+					offers: { '@type': 'Offer', price: '0', priceCurrency: 'ARS' },
+				};
+	const graph: Record<string, unknown>[] = [
+		principal,
+		{
+			'@type': 'BreadcrumbList',
+			itemListElement: entrada.migas.map((miga, indice) => ({
+				'@type': 'ListItem',
+				position: indice + 1,
+				name: miga.name,
+				item: miga.url.startsWith('http') ? miga.url : `${SITIO}${miga.url}`,
+			})),
+		},
+		{
+			'@type': 'FAQPage',
+			mainEntity: entrada.preguntas.map((item) => ({
+				'@type': 'Question',
+				name: item.q,
+				acceptedAnswer: { '@type': 'Answer', text: item.a },
+			})),
+		},
+	];
+	if (entrada.dataset) {
+		graph.push({
+			'@type': 'Dataset',
+			name: entrada.dataset.name,
+			description: entrada.dataset.description,
+			inLanguage: 'es-AR',
+			dateModified: entrada.actualizado,
+			url,
+			creator: { '@id': ID_ORGANIZACION },
+		});
+	}
+	return { '@context': 'https://schema.org', '@graph': graph };
+}
+
 export function fichaJsonLd(nombre: string, descripcion: string, path: string) {
 	return {
 		'@context': 'https://schema.org',
