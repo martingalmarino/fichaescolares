@@ -66,6 +66,63 @@ export function faqJsonLd(preguntas: { q: string; a: string }[]) {
 	};
 }
 
+const SITIO = 'https://www.aulita.com.ar';
+
+export function etiquetasJsonLd(entrada: {
+	nombre: string;
+	descripcion: string;
+	ruta: string;
+	migas: { name: string; url: string }[];
+	preguntas: { q: string; a: string }[];
+	pasos?: readonly { name: string; text: string }[];
+}) {
+	const url = `${SITIO}${entrada.ruta}`;
+	const graph: Record<string, unknown>[] = [
+		{
+			'@type': 'WebApplication',
+			name: entrada.nombre,
+			description: entrada.descripcion,
+			applicationCategory: 'EducationalApplication',
+			operatingSystem: 'Web',
+			inLanguage: 'es-AR',
+			url,
+			offers: { '@type': 'Offer', price: '0', priceCurrency: 'ARS' },
+			isAccessibleForFree: true,
+		},
+		{
+			'@type': 'BreadcrumbList',
+			itemListElement: entrada.migas.map((miga, indice) => ({
+				'@type': 'ListItem',
+				position: indice + 1,
+				name: miga.name,
+				item: miga.url.startsWith('http') ? miga.url : `${SITIO}${miga.url}`,
+			})),
+		},
+		{
+			'@type': 'FAQPage',
+			mainEntity: entrada.preguntas.map((item) => ({
+				'@type': 'Question',
+				name: item.q,
+				acceptedAnswer: { '@type': 'Answer', text: item.a },
+			})),
+		},
+	];
+	if (entrada.pasos) {
+		graph.push({
+			'@type': 'HowTo',
+			name: `Cómo imprimir: ${entrada.nombre}`,
+			inLanguage: 'es-AR',
+			step: entrada.pasos.map((paso, indice) => ({
+				'@type': 'HowToStep',
+				position: indice + 1,
+				name: paso.name,
+				text: paso.text,
+			})),
+		});
+	}
+	return { '@context': 'https://schema.org', '@graph': graph };
+}
+
 export function fichaJsonLd(nombre: string, descripcion: string, path: string) {
 	return {
 		'@context': 'https://schema.org',

@@ -1,0 +1,11 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#eef7fd"/>
+  <rect x="80" y="180" width="420" height="270" rx="8" fill="#ffffff" stroke="#1d3557" stroke-width="4"/>
+  <line x1="140" y1="180" x2="140" y2="450" stroke="#e24b4b" stroke-width="6"/>
+  <line x1="100" y1="240" x2="480" y2="240" stroke="#7eb6e0" stroke-width="3"/>
+  <line x1="100" y1="290" x2="480" y2="290" stroke="#7eb6e0" stroke-width="3"/>
+  <line x1="100" y1="340" x2="480" y2="340" stroke="#7eb6e0" stroke-width="3"/>
+  <line x1="100" y1="390" x2="480" y2="390" stroke="#7eb6e0" stroke-width="3"/>
+  <text x="540" y="300" font-family="Arial, sans-serif" font-size="52" font-weight="700" fill="#1d3557">Cuadernos</text>
+  <text x="540" y="360" font-family="Arial, sans-serif" font-size="32" fill="#6b7280">Aulita</text>
+</svg>

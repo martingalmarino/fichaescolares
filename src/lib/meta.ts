@@ -66,6 +66,24 @@ export const metaEstaticas = {
 		description:
 			'Generá hojas de caligrafía en cursiva o imprenta con renglones escolares y frases propias o de efemérides. Gratis, en A4 y listas para imprimir.',
 	},
+	etiquetas: {
+		ruta: '/etiquetas-escolares/',
+		title: 'Etiquetas escolares para imprimir con nombre | Aulita',
+		description:
+			'Creá etiquetas para cuadernos, carpetas y útiles con el nombre de tu hijo. Elegís diseño y tamaño y la imprimís en A4. Los datos quedan en tu compu.',
+	},
+	etiquetasCuadernos: {
+		ruta: '/etiquetas-escolares/cuadernos/',
+		title: 'Etiquetas para cuadernos con nombre y materia | Aulita',
+		description:
+			'Etiquetas para cuadernos y carpetas con nombre, grado y materia. Generá una por materia y la imprimís en hoja A4. Los datos no salen de tu compu.',
+	},
+	etiquetasUtiles: {
+		ruta: '/etiquetas-escolares/utiles/',
+		title: 'Etiquetas para lápices, fibras y cartuchera | Aulita',
+		description:
+			'Etiquetas chiquitas con el nombre para marcar lápices, fibras, tijera y cartuchera. Imprimí una hoja A4 con 48 etiquetas. Los datos quedan en tu compu.',
+	},
 	tablas: {
 		ruta: '/tablas-y-operaciones/',
 		title: 'Fichas de cuentas y tablas para imprimir gratis | Aulita',

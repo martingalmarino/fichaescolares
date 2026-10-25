@@ -66,6 +66,26 @@ html:has(.aviso-consentimiento) {
 	zoom: min(1, calc(100cqi / 210mm));
 }
 
+.hoja-etiquetas.a4 {
+	height: 297mm;
+	max-height: 297mm;
+	overflow: hidden;
+}
+
+.grilla-etiquetas {
+	display: grid;
+	border-top: 0.25mm dashed #94a3b8;
+	border-left: 0.25mm dashed #94a3b8;
+}
+
+.grilla-etiquetas > * {
+	box-sizing: border-box;
+	border-right: 0.25mm dashed #94a3b8;
+	border-bottom: 0.25mm dashed #94a3b8;
+	overflow: hidden;
+	position: relative;
+}
+
 .pie-hoja {
 	margin-top: 1.5rem;
 	text-align: center;

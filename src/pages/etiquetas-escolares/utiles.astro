@@ -1,0 +1,42 @@
+---
+import PaginaEtiquetas from '../../components/PaginaEtiquetas.astro';
+import { parrafosUtiles, preguntasUtiles } from '../../data/etiquetas-contenido';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { metaEstaticas } from '../../lib/meta';
+import { etiquetasJsonLd } from '../../lib/seo';
+
+const meta = metaEstaticas.etiquetasUtiles;
+const migas = [
+	{ name: 'Inicio', url: '/' },
+	{ name: 'Etiquetas escolares', url: '/etiquetas-escolares/' },
+	{ name: 'Útiles', url: '/etiquetas-escolares/utiles/' },
+];
+---
+
+<BaseLayout
+	title={meta.title}
+	description={meta.description}
+	keywords="etiquetas para útiles escolares, etiquetas para lápices, etiquetas con nombre para útiles, etiquetas chiquitas para imprimir, marcar útiles escolares"
+	image="/og/etiquetas-utiles.svg"
+	jsonLd={etiquetasJsonLd({
+		nombre: 'Etiquetas para útiles escolares con nombre',
+		descripcion: meta.description,
+		ruta: meta.ruta,
+		migas,
+		preguntas: preguntasUtiles,
+	})}
+>
+	<PaginaEtiquetas
+		h1="Etiquetas para útiles escolares con nombre"
+		resumen="Imprimí 48 etiquetas chiquitas con el nombre para lápices, fibras y cartuchera. Los datos no salen de tu compu."
+		preset="utiles"
+		migas={migas.map((item) => ({ label: item.name, href: item.url === meta.ruta ? undefined : item.url }))}
+		parrafos={parrafosUtiles}
+		preguntas={preguntasUtiles}
+		enlaces={[
+			{ href: '/etiquetas-escolares/', label: 'Todas las etiquetas escolares' },
+			{ href: '/etiquetas-escolares/cuadernos/', label: 'Etiquetas para cuadernos' },
+			{ href: '/', label: 'Inicio' },
+		]}
+	/>
+</BaseLayout>

@@ -25,6 +25,9 @@ describe('títulos y descripciones', () => {
 		expect(metas.filter((meta) => meta.ruta.startsWith('/efemerides/') && !MESES_SLUG.some((mes) => meta.ruta === `/efemerides/${mes}/`) && meta.ruta !== '/efemerides/')).toHaveLength(efemerides.length);
 		expect(metas.filter((meta) => meta.ruta.startsWith('/calendario-escolar-2027/'))).toHaveLength(25);
 		expect(rutas.has('/calendario-escolar-2027/cordoba/')).toBe(true);
+		expect(rutas.has('/etiquetas-escolares/')).toBe(true);
+		expect(rutas.has('/etiquetas-escolares/cuadernos/')).toBe(true);
+		expect(rutas.has('/etiquetas-escolares/utiles/')).toBe(true);
 	});
 
 	it('no pasa el largo y no repite title ni description', () => {

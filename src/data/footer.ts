@@ -55,6 +55,7 @@ export const columnas: ColumnaFooter[] = [
 			{ label: 'Caligrafía', href: '/caligrafia/' },
 			{ label: 'Tablas y operaciones', href: '/tablas-y-operaciones/' },
 			{ label: 'Láminas para colorear', href: '/laminas/' },
+			{ label: 'Etiquetas escolares', href: '/etiquetas-escolares/' },
 		],
 	},
 	{

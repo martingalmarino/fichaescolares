@@ -1,0 +1,43 @@
+---
+import PaginaEtiquetas from '../../components/PaginaEtiquetas.astro';
+import { calendarioVigente } from '../../data/calendario-escolar';
+import { parrafosCuadernos, preguntasCuadernos } from '../../data/etiquetas-contenido';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { metaEstaticas } from '../../lib/meta';
+import { etiquetasJsonLd } from '../../lib/seo';
+
+const meta = metaEstaticas.etiquetasCuadernos;
+const migas = [
+	{ name: 'Inicio', url: '/' },
+	{ name: 'Etiquetas escolares', url: '/etiquetas-escolares/' },
+	{ name: 'Cuadernos', url: '/etiquetas-escolares/cuadernos/' },
+];
+---
+
+<BaseLayout
+	title={meta.title}
+	description={meta.description}
+	keywords="etiquetas para cuadernos, etiquetas para cuadernos con nombre, etiquetas de materias para imprimir, rótulos para cuadernos, etiquetas para carpetas escolares"
+	image="/og/etiquetas-cuadernos.svg"
+	jsonLd={etiquetasJsonLd({
+		nombre: 'Etiquetas para cuadernos con nombre y materia',
+		descripcion: meta.description,
+		ruta: meta.ruta,
+		migas,
+		preguntas: preguntasCuadernos,
+	})}
+>
+	<PaginaEtiquetas
+		h1="Etiquetas para cuadernos con nombre y materia"
+		resumen="Generá una etiqueta de cuaderno por materia, con el mismo nombre, grado y escuela. Los datos no salen de tu compu."
+		preset="cuadernos"
+		migas={migas.map((item) => ({ label: item.name, href: item.url === meta.ruta ? undefined : item.url }))}
+		parrafos={parrafosCuadernos}
+		preguntas={preguntasCuadernos}
+		enlaces={[
+			{ href: '/etiquetas-escolares/', label: 'Todas las etiquetas escolares' },
+			{ href: '/etiquetas-escolares/utiles/', label: 'Etiquetas para lápices y fibras' },
+			{ href: `/calendario-escolar-${calendarioVigente.anio}/`, label: 'Calendario escolar de cada provincia' },
+		]}
+	/>
+</BaseLayout>

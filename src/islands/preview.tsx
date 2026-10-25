@@ -139,12 +139,14 @@ function Botones({ hint, onPrint, onPdf }: { hint: boolean; onPrint: () => void;
 export function MarcoGenerador({
 	opciones,
 	vista,
+	debajo,
 	pdfHint,
 	onPrint,
 	onPdf,
 }: {
 	opciones: ComponentChildren;
 	vista: ComponentChildren;
+	debajo?: ComponentChildren;
 	pdfHint: boolean;
 	onPrint: () => void;
 	onPdf: () => void;
@@ -175,6 +177,7 @@ export function MarcoGenerador({
 						<Botones hint={pdfHint} onPrint={onPrint} onPdf={onPdf} />
 					</div>
 					<div class="rounded-card bg-celeste-50 p-3 sm:p-5">{vista}</div>
+					{debajo}
 				</div>
 			</div>
 			<div

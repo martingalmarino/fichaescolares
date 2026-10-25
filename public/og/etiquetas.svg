@@ -1,0 +1,9 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
+  <rect width="1200" height="630" fill="#eef7fd"/>
+  <rect x="80" y="210" width="280" height="150" rx="8" fill="#ffffff" stroke="#1d3557" stroke-width="4" stroke-dasharray="10 8"/>
+  <rect x="390" y="210" width="280" height="150" rx="8" fill="#ffffff" stroke="#1d3557" stroke-width="4" stroke-dasharray="10 8"/>
+  <rect x="700" y="250" width="88" height="88" rx="18" fill="#4aa3df"/>
+  <circle cx="744" cy="294" r="14" fill="#f4a531"/>
+  <text x="810" y="300" font-family="Arial, sans-serif" font-size="56" font-weight="700" fill="#1d3557">Etiquetas</text>
+  <text x="810" y="360" font-family="Arial, sans-serif" font-size="32" fill="#6b7280">Aulita</text>
+</svg>

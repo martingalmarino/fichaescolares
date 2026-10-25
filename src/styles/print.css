@@ -18,6 +18,11 @@
 	margin: 8mm;
 }
 
+@page etiquetas {
+	size: A4 portrait;
+	margin: 10mm;
+}
+
 .print-solo {
 	display: none;
 }
@@ -84,6 +89,23 @@
 
 	.hoja-calendario {
 		page: calendario;
+	}
+
+	.hoja-etiquetas {
+		page: etiquetas;
+	}
+
+	.hoja-etiquetas.corte-hoja {
+		break-after: page;
+	}
+
+	.hoja-etiquetas.a4 {
+		width: auto !important;
+		height: 277mm !important;
+		min-height: 0 !important;
+		max-height: 277mm;
+		padding: 0 !important;
+		overflow: hidden;
 	}
 
 	.hoja-calendario h1 {

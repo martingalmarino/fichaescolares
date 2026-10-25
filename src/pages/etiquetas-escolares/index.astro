@@ -1,0 +1,46 @@
+---
+import PaginaEtiquetas from '../../components/PaginaEtiquetas.astro';
+import { parrafosGenerales, pasosEtiquetas, preguntasGenerales } from '../../data/etiquetas-contenido';
+import { calendarioVigente } from '../../data/calendario-escolar';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { metaEstaticas } from '../../lib/meta';
+import { etiquetasJsonLd } from '../../lib/seo';
+
+const meta = metaEstaticas.etiquetas;
+const migas = [
+	{ name: 'Inicio', url: '/' },
+	{ name: 'Etiquetas escolares', url: '/etiquetas-escolares/' },
+];
+---
+
+<BaseLayout
+	title={meta.title}
+	description={meta.description}
+	keywords="etiquetas escolares para imprimir, etiquetas con nombre para cuadernos, etiquetas escolares personalizadas, etiquetas para útiles escolares, etiquetas escolares gratis"
+	image="/og/etiquetas.svg"
+	jsonLd={etiquetasJsonLd({
+		nombre: 'Etiquetas escolares para imprimir con nombre',
+		descripcion: meta.description,
+		ruta: meta.ruta,
+		migas,
+		preguntas: preguntasGenerales,
+		pasos: pasosEtiquetas,
+	})}
+>
+	<PaginaEtiquetas
+		h1="Etiquetas escolares para imprimir con nombre"
+		resumen="Armás etiquetas con el nombre, el grado y la materia, elegís el diseño y las imprimís en A4. Los datos no salen de tu compu."
+		preset="general"
+		migas={migas.map((item) => ({ label: item.name, href: item.url === meta.ruta ? undefined : item.url }))}
+		parrafos={parrafosGenerales}
+		preguntas={preguntasGenerales}
+		pasos={pasosEtiquetas}
+		enlaces={[
+			{ href: '/etiquetas-escolares/cuadernos/', label: 'Etiquetas para cuadernos con nombre y materia' },
+			{ href: '/etiquetas-escolares/utiles/', label: 'Etiquetas para útiles escolares' },
+			{ href: `/calendario-escolar-${calendarioVigente.anio}/`, label: 'Calendario escolar, antes del inicio de clases' },
+			{ href: '/caligrafia/', label: 'Pauta de caligrafía, con la misma cursiva' },
+			{ href: '/', label: 'Inicio' },
+		]}
+	/>
+</BaseLayout>

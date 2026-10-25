@@ -12,12 +12,13 @@ import Consentimiento from '../islands/Consentimiento';
 interface Props {
 	title: string;
 	description: string;
+	keywords?: string;
 	image?: string;
 	jsonLd?: unknown;
 	noindex?: boolean;
 }
 
-const { title, description, image = '/og/home.svg', jsonLd, noindex = false } = Astro.props;
+const { title, description, keywords, image = '/og/home.svg', jsonLd, noindex = false } = Astro.props;
 const sitio = Astro.site ?? new URL(Astro.url.origin);
 const canonical = new URL(Astro.url.pathname, sitio).href;
 const imagen = new URL(image, sitio).href;
@@ -59,6 +60,7 @@ const sitioLd = {
 		<meta name="viewport" content="width=device-width, initial-scale=1" />
 		<meta name="generator" content={Astro.generator} />
 		<meta name="description" content={description} />
+		{keywords && <meta name="keywords" content={keywords} />}
 		{noindex && <meta name="robots" content="noindex" />}
 		<meta name="google-site-verification" content="FgKMay3SX1jirsCErPropAS-F33MoPLQKFuyOJizKcY" />
 		<link rel="canonical" href={canonical} />

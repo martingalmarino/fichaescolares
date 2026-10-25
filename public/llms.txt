@@ -7,6 +7,9 @@ Sitio para docentes y familias. Genera fichas imprimibles en A4 sobre el calenda
 - https://www.aulita.com.ar/sopa-de-letras/ Sopa de letras por efeméride, con soluciones.
 - https://www.aulita.com.ar/crucigrama-proceres/ Crucigrama con pistas de próceres.
 - https://www.aulita.com.ar/caligrafia/ Pauta de cursiva o imprenta.
+- https://www.aulita.com.ar/etiquetas-escolares/ Etiquetas con nombre para cuadernos, carpetas y útiles. Los datos no salen de la computadora.
+- https://www.aulita.com.ar/etiquetas-escolares/cuadernos/ Etiquetas de cuaderno, una por materia.
+- https://www.aulita.com.ar/etiquetas-escolares/utiles/ Etiquetas chicas para lápices y fibras, 48 por hoja.
 - https://www.aulita.com.ar/laminas-para-colorear/ Láminas en trazo propio.
 - https://www.aulita.com.ar/tablas-y-operaciones/ Tablas y cuentas con respuestas.
 - https://www.aulita.com.ar/provincias/ Fichas provinciales con silueta, símbolos y sopa de letras.
