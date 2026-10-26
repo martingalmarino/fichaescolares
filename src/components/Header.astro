@@ -2,20 +2,16 @@
 import { calendarioVigente } from '../data/calendario-escolar';
 import Logo from './Logo.astro';
 
-const antes = [
-	{ label: 'Inicio', href: '/' },
-	{ label: 'Generadores', href: '/#generadores' },
-];
+const antes = [{ label: 'Generadores', href: '/#generadores' }];
 const despues = [
 	{ label: 'Efemérides', href: '/efemerides/' },
 	{ label: `Calendario ${calendarioVigente.anio}`, href: `/calendario-escolar-${calendarioVigente.anio}/` },
-	{ label: 'Provincias', href: '/provincias/' },
 	{ label: 'Calificaciones', href: '/como-se-califica-en-primaria/' },
-	{ label: 'Guía para el aula', href: '/guia-para-el-aula/' },
 ];
 const imprimibles = [
 	{ label: 'Láminas para colorear', href: '/laminas/' },
 	{ label: 'Mapas escolares', href: '/mapas/' },
+	{ label: 'Provincias', href: '/provincias/' },
 	{ label: 'Etiquetas escolares', href: '/etiquetas-escolares/' },
 ];
 const movil = [...antes, ...imprimibles, ...despues];
