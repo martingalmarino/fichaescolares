@@ -84,31 +84,42 @@ const generadores = [
 	},
 ];
 
-const preguntas = [
+const preguntas: { q: string; a: string; abierta?: boolean; html?: string; qHtml?: string }[] = [
 	{
 		q: '¿Es gratis?',
-		a: 'Sí. Todas las fichas son gratuitas y no hace falta registrarse.',
+		a: 'Sí. Todo Aulita es gratis y sin registro: fichas, mapas, láminas, el calendario escolar y el planificador docente.',
 		abierta: true,
 	},
 	{
-		q: '¿Cómo la guardo en PDF?',
-		a: 'En el generador, tocá Descargar PDF y elegí “Guardar como PDF” como destino de impresión. La hoja sale en A4.',
+		q: '¿Qué puedo imprimir en Aulita?',
+		a: 'Sopas de letras, crucigramas, caligrafía, ejercicios de matemática, láminas, mapas del IGN y fichas de efemérides. Para docentes, también el planificador, la agenda docente, la planificación anual y el registro de asistencia.',
+	},
+	{
+		q: '¿Cómo lo guardo en PDF?',
+		a: 'Tocá Descargar PDF. En los generadores de fichas, elegí "Guardar como PDF" como destino de impresión. Todo sale en A4.',
 	},
 	{
 		q: '¿Sigue los contenidos de la escuela argentina?',
-		a: 'Sí. Las fechas, el vocabulario y los próceres corresponden al calendario escolar argentino: Revolución de Mayo, Independencia, Día de la Bandera y el resto de las efemérides fijas.',
+		a: 'Sí. Las fechas, el vocabulario y los próceres siguen el calendario escolar argentino: Revolución de Mayo, Independencia, Día de la Bandera y el resto de las efemérides.',
 	},
 	{
-		q: '¿En qué tamaño se imprimen?',
-		a: 'En A4. La vista previa muestra la hoja a escala y, al imprimir, quedan afuera el menú y los botones.',
+		q: '¿Dónde veo cuándo empiezan las clases en mi provincia?',
+		a: 'En el calendario escolar 2027 hay una página por cada una de las 24 jurisdicciones con inicio, vacaciones de invierno y fin de clases. Lo actualizamos apenas cada provincia publica su calendario oficial.',
+		html: 'En el <a class="text-celeste underline" href="/calendario-escolar-2027/">calendario escolar 2027</a> hay una página por cada una de las 24 jurisdicciones con inicio, vacaciones de invierno y fin de clases. Lo actualizamos apenas cada provincia publica su calendario oficial.',
+	},
+	{
+		q: '¿El planificador docente trae las fechas de mi provincia?',
+		qHtml:
+			'¿El <a class="text-celeste underline" href="/planificador-docente-2027/">planificador docente</a> trae las fechas de mi provincia?',
+		a: 'Sí. Elegís tu provincia y arma los meses con feriados, efemérides y días hábiles ya contados. Mientras la provincia no publique su calendario, las fechas figuran como provisorias.',
 	},
 	{
 		q: '¿Puedo incluir la hoja de soluciones?',
-		a: 'Sí. En la sopa de letras y en el crucigrama podés sumar la hoja de soluciones. Sale en una página aparte, para que la uses vos en el aula.',
+		a: 'Sí. En la sopa de letras y en el crucigrama podés sumar la hoja de soluciones, que sale en una página aparte.',
 	},
 	{
 		q: '¿Para quién es este sitio?',
-		a: 'Para docentes de nivel inicial y primario, maestras particulares y familias. Las fichas se llevan al aula; el sitio está pensado para adultos.',
+		a: 'Para docentes de nivel inicial y primario, maestras particulares y familias. El sitio está pensado para adultos; las hojas se llevan al aula o a casa.',
 	},
 ];
 
@@ -272,9 +283,11 @@ const checks = ['Formato A4', 'Con hoja de soluciones', 'Contenido argentino'];
 							>
 								<path d="M6 3.5 11 8 6 12.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" />
 							</svg>
-							{item.q}
+							<span>
+								{item.qHtml ? <Fragment set:html={item.qHtml} /> : item.q}
+							</span>
 						</summary>
-						<p class="px-4 pb-4 pl-10 text-sm leading-relaxed text-muted">{item.a}</p>
+						<p class="px-4 pb-4 pl-10 text-sm leading-relaxed text-muted" set:html={item.html ?? item.a} />
 					</details>
 				))
 			}

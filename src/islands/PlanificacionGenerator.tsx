@@ -19,7 +19,7 @@ import {
 	type OpcionesPlanificacion,
 	type OrientacionPlan,
 } from '../lib/planificador';
-import { useBarraFija, useImprimir } from './preview';
+import { AvisoVistaPrevia, HOJAS_EN_VISTA, useBarraFija, useImprimir, useVistaImpresion } from './preview';
 import { HojaPlanificacionAnual, MarcoHoja, type ContextoHoja } from './planificador/Hojas';
 
 const SLUGS = provincias.map((provincia) => provincia.slug);
@@ -74,6 +74,9 @@ export default function PlanificacionGenerator() {
 		return () => window.removeEventListener('popstate', alVolver);
 	}, []);
 
+	const claveHojas = `${opciones.prov}|${opciones.nivel}|${opciones.grado}|${opciones.periodos}|${opciones.orientacion}|${opciones.areas.join(',')}`;
+	const { completas, pedir } = useVistaImpresion(claveHojas);
+
 	if (!provincia || !plan) return null;
 
 	const catalogo = AREAS_POR_NIVEL[opciones.nivel];
@@ -93,9 +96,11 @@ export default function PlanificacionGenerator() {
 		nivelId: opciones.nivel,
 	};
 
+	const visibles = completas ? paginas : paginas.slice(0, HOJAS_EN_VISTA);
+
 	function pedirImpresion(pdf: boolean) {
 		track(pdf ? 'pdf_click' : 'print_click', { tool: 'planificacion', hojas: paginas.length });
-		imprimir(pdf);
+		pedir(pdf, paginas.length, imprimir);
 	}
 
 	function cambiarNivel(nivel: NivelPlanificador) {
@@ -292,20 +297,23 @@ export default function PlanificacionGenerator() {
 						{paginas.length === 0 ? (
 							<p class="py-16 text-center text-sm text-muted">Elegí al menos un área para armar la hoja.</p>
 						) : (
-							<div class="grid gap-6">
-								{paginas.map((areas, indice) => (
-									<MarcoHoja key={`${opciones.orientacion}-${indice}`} corte={indice < paginas.length - 1} apaisada={opciones.orientacion === 'horizontal'}>
-										<HojaPlanificacionAnual
-											ctx={ctx}
-											plan={plan}
-											areas={areas}
-											orientacion={opciones.orientacion}
-											pagina={indice + 1}
-											total={paginas.length}
-										/>
-									</MarcoHoja>
-								))}
-							</div>
+							<>
+								<AvisoVistaPrevia total={paginas.length} completas={completas} />
+								<div class="grid gap-6">
+									{visibles.map((areas, indice) => (
+										<MarcoHoja key={`${opciones.orientacion}-${indice}`} corte={indice < visibles.length - 1} apaisada={opciones.orientacion === 'horizontal'}>
+											<HojaPlanificacionAnual
+												ctx={ctx}
+												plan={plan}
+												areas={areas}
+												orientacion={opciones.orientacion}
+												pagina={indice + 1}
+												total={paginas.length}
+											/>
+										</MarcoHoja>
+									))}
+								</div>
+							</>
 						)}
 					</div>
 				</div>

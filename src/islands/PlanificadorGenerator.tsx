@@ -26,7 +26,7 @@ import {
 	type TurnoPlanificador,
 	type VariantePlanificador,
 } from '../lib/planificador';
-import { useBarraFija, useImprimir } from './preview';
+import { AvisoVistaPrevia, HOJAS_EN_VISTA, useBarraFija, useImprimir, useVistaImpresion } from './preview';
 import {
 	HojaActos,
 	HojaAsistencia,
@@ -89,6 +89,9 @@ export default function PlanificadorGenerator({ variante = 'planificador' }: { v
 		window.addEventListener('popstate', alVolver);
 		return () => window.removeEventListener('popstate', alVolver);
 	}, [variante]);
+
+	const claveHojas = `${variante}|${opciones.prov}|${opciones.nivel}|${opciones.grado}|${opciones.turno}|${opciones.periodos}|${opciones.secciones.join(',')}|${datos.alumnos}|${datos.cumpleanos}`;
+	const { completas, pedir } = useVistaImpresion(claveHojas);
 
 	if (!provincia || !plan) return null;
 
@@ -157,9 +160,11 @@ export default function PlanificadorGenerator({ variante = 'planificador' }: { v
 		});
 	}
 
+	const visibles = completas ? hojas : hojas.slice(0, HOJAS_EN_VISTA);
+
 	function pedirImpresion(pdf: boolean) {
 		track(pdf ? 'pdf_click' : 'print_click', { tool: variante, hojas: hojas.length });
-		imprimir(pdf);
+		pedir(pdf, hojas.length, imprimir);
 	}
 
 	function cambiarNivel(nivel: NivelPlanificador) {
@@ -360,13 +365,16 @@ export default function PlanificadorGenerator({ variante = 'planificador' }: { v
 						{hojas.length === 0 ? (
 							<p class="py-16 text-center text-sm text-muted">Elegí al menos una sección para armar la hoja.</p>
 						) : (
-							<div class="grilla-hojas grid gap-6 xl:grid-cols-2">
-								{hojas.map((hoja, indice) => (
-									<MarcoHoja key={hoja.id} corte={indice < hojas.length - 1}>
-										{hoja.nodo}
-									</MarcoHoja>
-								))}
-							</div>
+							<>
+								<AvisoVistaPrevia total={hojas.length} completas={completas} />
+								<div class="grilla-hojas grid gap-6 xl:grid-cols-2">
+									{visibles.map((hoja, indice) => (
+										<MarcoHoja key={hoja.id} corte={indice < visibles.length - 1}>
+											{hoja.nodo}
+										</MarcoHoja>
+									))}
+								</div>
+							</>
 						)}
 					</div>
 				</div>

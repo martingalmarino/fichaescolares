@@ -109,9 +109,54 @@ describe('días hábiles', () => {
 		const suma = plan.periodos.reduce((total, periodo) => total + periodo.habiles, 0);
 		expect(suma).toBe(plan.totalHabiles);
 		expect(plan.periodos.map((periodo) => periodo.nombre)).toEqual(['1.er trimestre', '2.º trimestre', '3.er trimestre']);
+		expect(plan.periodos.every((periodo) => periodo.estimados)).toBe(true);
+		const cantidades = plan.periodos.map((periodo) => periodo.habiles);
+		expect(Math.max(...cantidades) - Math.min(...cantidades)).toBeLessThanOrEqual(1);
+		for (let indice = 1; indice < plan.periodos.length; indice += 1) {
+			expect(plan.periodos[indice - 1]?.hasta < (plan.periodos[indice]?.desde ?? '')).toBe(true);
+		}
 		const cuatrimestres = armarPlan(2027, 'cordoba', VACIA, 'cuatrimestres');
 		expect(cuatrimestres.periodos).toHaveLength(2);
 		expect(cuatrimestres.periodos.reduce((total, periodo) => total + periodo.habiles, 0)).toBe(cuatrimestres.totalHabiles);
+		const mitades = cuatrimestres.periodos.map((periodo) => periodo.habiles);
+		expect(Math.max(...mitades) - Math.min(...mitades)).toBeLessThanOrEqual(1);
+		expect(cuatrimestres.periodos.every((periodo) => periodo.estimados)).toBe(true);
+	});
+
+	it('usa el corte publicado y no reparte en partes parejas', () => {
+		const oficial = armarPlan(
+			2027,
+			'cordoba',
+			{
+				...VACIA,
+				estado: 'oficial',
+				inicio: '2027-03-01',
+				invierno: { desde: '2027-07-12', hasta: '2027-07-23' },
+				fin: '2027-12-17',
+				fuente: 'https://ejemplo.test/calendario',
+				cortes: { trimestres: ['2027-05-31', '2027-08-31'], cuatrimestres: ['2027-06-30'] },
+			},
+			'trimestres',
+		);
+		expect(oficial.periodos.map((periodo) => periodo.hasta)).toEqual(['2027-05-31', '2027-08-31', '2027-12-17']);
+		expect(oficial.periodos.every((periodo) => periodo.estimados)).toBe(false);
+		expect(oficial.periodos.map((periodo) => periodo.habiles)).not.toEqual(plan.periodos.map((periodo) => periodo.habiles));
+		const cuatrimestres = armarPlan(
+			2027,
+			'cordoba',
+			{
+				...VACIA,
+				estado: 'oficial',
+				inicio: '2027-03-01',
+				invierno: { desde: '2027-07-12', hasta: '2027-07-23' },
+				fin: '2027-12-17',
+				fuente: 'https://ejemplo.test/calendario',
+				cortes: { cuatrimestres: ['2027-06-30'] },
+			},
+			'cuatrimestres',
+		);
+		expect(cuatrimestres.periodos.map((periodo) => periodo.hasta)).toEqual(['2027-06-30', '2027-12-17']);
+		expect(cuatrimestres.periodos.every((periodo) => periodo.estimados)).toBe(false);
 	});
 
 	it('un inicio oficial cambia la cuenta de marzo', () => {
@@ -195,7 +240,7 @@ describe('opciones y datos locales', () => {
 
 describe('textos de la página', () => {
 	it('respeta el largo de title y meta, y no usa las búsquedas del calendario', () => {
-		expect(seoPlanificador.title.length).toBeLessThanOrEqual(MAX_TITULO);
+		expect(seoPlanificador.title).toBe('Planificador docente 2027 para imprimir, con feriados y días hábiles | Aulita');
 		expect(seoPlanificador.description.length).toBeGreaterThanOrEqual(MIN_DESCRIPCION);
 		expect(seoPlanificador.description.length).toBeLessThanOrEqual(MAX_DESCRIPCION);
 		expect(seoPlanificador.h1).toBe('Planificador docente 2027 para imprimir');
@@ -256,11 +301,11 @@ describe('textos de la página', () => {
 	});
 
 	it('la planificación anual respeta el largo y no usa las búsquedas del calendario', () => {
+		expect(seoPlanificacion.title).toBe('Planificación anual docente: plantilla para imprimir por trimestre | Aulita');
 		expect(seoPlanificacion.h1).toBe('Planificación anual para imprimir');
 		expect(seoPlanificacion.description).toBe(
 			'Plantilla de planificación anual en A4 para primaria y nivel inicial: áreas por trimestre o cuatrimestre con los días hábiles de tu provincia ya calculados.',
 		);
-		expect(seoPlanificacion.title.length).toBeLessThanOrEqual(MAX_TITULO);
 		expect(seoPlanificacion.description.length).toBeGreaterThanOrEqual(MIN_DESCRIPCION);
 		expect(seoPlanificacion.description.length).toBeLessThanOrEqual(MAX_DESCRIPCION);
 		const reservado = /calendario escolar 2027|cuándo empiezan las clases/i;
@@ -290,11 +335,11 @@ describe('textos de la página', () => {
 	});
 
 	it('el registro de asistencia respeta el largo y no usa las búsquedas del calendario', () => {
+		expect(seoAsistencia.title).toBe('Registro de asistencia de alumnos para imprimir (PDF A4) | Aulita');
 		expect(seoAsistencia.h1).toBe('Registro de asistencia para imprimir');
 		expect(seoAsistencia.description).toBe(
 			'Planilla de asistencia por mes en A4: los días hábiles de tu provincia ya cargados, feriados marcados y tu lista de alumnos. Para primaria y secundaria.',
 		);
-		expect(seoAsistencia.title.length).toBeLessThanOrEqual(MAX_TITULO);
 		expect(seoAsistencia.description.length).toBeGreaterThanOrEqual(MIN_DESCRIPCION);
 		expect(seoAsistencia.description.length).toBeLessThanOrEqual(MAX_DESCRIPCION);
 		const reservado = /calendario escolar 2027|cuándo empiezan las clases/i;

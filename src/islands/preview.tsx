@@ -82,6 +82,49 @@ export function useImprimir(titulo: string) {
 	return { pdfHint, imprimir };
 }
 
+/** La vista previa muestra estas hojas. El resto entra al DOM recién al imprimir o descargar. */
+export const HOJAS_EN_VISTA = 2;
+
+export function useVistaImpresion(clave: string) {
+	const [completas, setCompletas] = useState(false);
+	const pendiente = useRef<boolean | null>(null);
+	const imprimirRef = useRef<(pdf: boolean) => void>(() => {});
+
+	useEffect(() => {
+		pendiente.current = null;
+		setCompletas(false);
+	}, [clave]);
+
+	useEffect(() => {
+		if (!completas || pendiente.current === null) return;
+		const pdf = pendiente.current;
+		pendiente.current = null;
+		const id = window.setTimeout(() => imprimirRef.current(pdf), 0);
+		return () => window.clearTimeout(id);
+	}, [completas]);
+
+	function pedir(pdf: boolean, total: number, imprimir: (desdePdf: boolean) => void) {
+		imprimirRef.current = imprimir;
+		if (total <= HOJAS_EN_VISTA || completas) {
+			imprimir(pdf);
+			return;
+		}
+		pendiente.current = pdf;
+		setCompletas(true);
+	}
+
+	return { completas, pedir };
+}
+
+export function AvisoVistaPrevia({ total, completas }: { total: number; completas: boolean }) {
+	if (completas || total <= HOJAS_EN_VISTA) return null;
+	return (
+		<p class="no-print mb-3 text-center text-sm text-muted">
+			Vista previa de {HOJAS_EN_VISTA} de {total} hojas. Al imprimir o descargar salen todas.
+		</p>
+	);
+}
+
 export function NombreFecha() {
 	return (
 		<div class="mb-4 flex flex-wrap items-end justify-between gap-x-4 gap-y-1 text-[13px]">

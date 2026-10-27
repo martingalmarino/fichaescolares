@@ -7,7 +7,7 @@ export const hojasAgendaDefecto = 1 + planAgenda.mesesCiclo.length + planAgenda.
 
 export const seoPlanificador = {
 	ruta: '/planificador-docente-2027/',
-	title: 'Planificador docente 2027 para imprimir | Aulita',
+	title: 'Planificador docente 2027 para imprimir, con feriados y días hábiles | Aulita',
 	description:
 		'Armá tu planificador docente 2027 en A4: elegís provincia y grado y te arma los meses con feriados, efemérides y días hábiles ya contados. PDF gratis.',
 	h1: 'Planificador docente 2027 para imprimir',
@@ -98,7 +98,7 @@ export const preguntasAgenda = [
 
 export const seoPlanificacion = {
 	ruta: '/planificacion-anual/',
-	title: 'Planificación anual para imprimir por trimestre | Aulita',
+	title: 'Planificación anual docente: plantilla para imprimir por trimestre | Aulita',
 	description:
 		'Plantilla de planificación anual en A4 para primaria y nivel inicial: áreas por trimestre o cuatrimestre con los días hábiles de tu provincia ya calculados.',
 	h1: 'Planificación anual para imprimir',
@@ -111,7 +111,7 @@ export const respuestaPlanificacion =
 
 export const parrafosPlanificacion = [
 	'Una planificación anual ordena el año antes de abrir las secuencias de la semana. En esta plantilla cada área tiene una fila y cada período una columna, con los días hábiles de la provincia que elijas ya sumados. En cada celda hay lugar para cuatro partes: contenidos, propósitos, actividades y evaluación. Abajo, la caja de proyectos y actos del año reúne las fechas patrias que suelen organizar la escuela, del 25 de Mayo al 12 de Octubre. Docente, escuela y grado se completan en el panel y salen en el encabezado.',
-	'Para repartir los contenidos, mirá los días hábiles de cada período y no solo los meses del almanaque. El receso de invierno cae en el segundo trimestre, así que ese tramo suele tener menos días de clase que el tercero. El primero alcanza para el diagnóstico y para los contenidos que el resto del año va a necesitar. El segundo sirve para desarrollar. El tercero queda para integrar, revisar y evaluar. Si preferís cuatrimestres, la hoja arma dos bloques más largos: de marzo a junio y de julio a diciembre. No hace falta volcar el programa entero en cada celda. Alcanza con los contenidos de ese tramo, el propósito, dos o tres actividades y cómo vas a mirar qué aprendieron.',
+	'Para repartir los contenidos, mirá los días hábiles de cada período y no solo los meses del almanaque. Mientras la provincia no publicó el corte, los días de clase se reparten en partes parejas y cada tramo se marca como estimado. El primero alcanza para el diagnóstico y para los contenidos que el resto del año va a necesitar. El segundo sirve para desarrollar. El tercero queda para integrar, revisar y evaluar. Si preferís cuatrimestres, la hoja arma dos bloques de duración parecida. Cuando la provincia publique el corte, la grilla usa esa fecha. No hace falta volcar el programa entero en cada celda. Alcanza con los contenidos de ese tramo, el propósito, dos o tres actividades y cómo vas a mirar qué aprendieron.',
 	'En primer grado el ejemplo no es una lista de temas sueltos. Primero y segundo forman una unidad pedagógica: la Res. CFE 174/12 establece que no se repite primer grado y que ese recorrido se cierra en segundo. La planificación de 1.er grado puede tomar el tramo inicial de lectura, escritura y números, y dejar en 2.º la continuidad, sin un cierre que parezca el fin del ciclo. Educación Física, Plástica, Música e Inglés entran en la misma grilla. Si solo necesitás una, destildá el resto y la hoja queda para esa área: sirve, por ejemplo, para armar sola la de Educación Física. Las escalas y el cierre de cada provincia están en <a href="/como-se-califica-en-primaria/">cómo se califica en primaria</a>. El detalle de la unidad pedagógica está en <a href="/como-se-califica-en-primaria/se-repite-primer-grado/">primer grado</a>.',
 	'Los días de la grilla son los lunes a viernes entre el inicio y el fin del ciclo. Se restan los feriados nacionales de la Ley 27.399, con el traslado cuando la ley lo pide, los feriados provinciales cargados, los días sin clases y el receso. El Jueves Santo se resta porque es día no laborable. Los puentes turísticos no entran hasta que exista un decreto de ese año. Si la provincia todavía no publicó la resolución, el recuadro dice días hábiles estimados y la hoja se actualiza sola cuando el dato pasa a oficial. La orientación vertical imprime en A4 parado y reparte las áreas de a cuatro por hoja, para que cada celda tenga renglón. La horizontal imprime apaisada: cada período se abre en cuatro columnas y las áreas entran en una sola hoja.',
 	'Con las ocho áreas de primaria, la orientación vertical arma dos hojas. En nivel inicial la grilla no usa las áreas de primaria: usa los ejes de la sala, y podés elegir sala de 3, 4 o 5 años. El grado viaja en la dirección de la página, así que podés compartir el de 1.er grado o el de sala de 3 sin armar una página distinta por curso. Las fechas de la provincia que elijas están en el <a href="/calendario-escolar-2027/">calendario escolar 2027</a>. El cuaderno completo está en el <a href="/planificador-docente-2027/">planificador docente 2027</a> y en la <a href="/agenda-docente-2027/">agenda docente 2027</a>. El resto de las fichas está en el <a href="/">inicio</a>.',
@@ -124,7 +124,7 @@ export const preguntasPlanificacion = [
 	},
 	{
 		q: '¿Trimestres o cuatrimestres?',
-		a: 'Las dos. Los trimestres reparten el año en tres tramos: marzo a mayo, junio a agosto y septiembre a diciembre. Los cuatrimestres usan dos: marzo a junio y julio a diciembre. En los dos casos la hoja muestra los días hábiles de cada tramo.',
+		a: 'Las dos. Mientras no haya un corte oficial, los trimestres parten los días hábiles en tres partes parejas y los cuatrimestres en dos. La hoja los marca como estimados. Si la provincia publica las fechas de cada período, la grilla usa esas fechas.',
 	},
 	{
 		q: '¿Sirve para nivel inicial?',
@@ -144,7 +144,7 @@ export const pasosPlanificacion = [
 
 export const seoAsistencia = {
 	ruta: '/registro-de-asistencia/',
-	title: 'Registro de asistencia de alumnos para imprimir | Aulita',
+	title: 'Registro de asistencia de alumnos para imprimir (PDF A4) | Aulita',
 	description:
 		'Planilla de asistencia por mes en A4: los días hábiles de tu provincia ya cargados, feriados marcados y tu lista de alumnos. Para primaria y secundaria.',
 	h1: 'Registro de asistencia para imprimir',

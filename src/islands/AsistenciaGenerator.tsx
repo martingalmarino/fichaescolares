@@ -15,7 +15,7 @@ import {
 	type NivelAsistencia,
 	type OpcionesAsistencia,
 } from '../lib/planificador';
-import { useBarraFija, useImprimir } from './preview';
+import { AvisoVistaPrevia, HOJAS_EN_VISTA, useBarraFija, useImprimir, useVistaImpresion } from './preview';
 import { HojaAsistenciaMes, MarcoHoja, type ContextoHoja } from './planificador/Hojas';
 
 const SLUGS = provincias.map((provincia) => provincia.slug);
@@ -70,6 +70,9 @@ export default function AsistenciaGenerator() {
 		return () => window.removeEventListener('popstate', alVolver);
 	}, []);
 
+	const claveHojas = `${opciones.prov}|${opciones.nivel}|${opciones.mes}|${opciones.filas}|${datos.alumnos}`;
+	const { completas, pedir } = useVistaImpresion(claveHojas);
+
 	if (!provincia || !plan) return null;
 
 	const meses = opciones.mes === 'anio' ? plan.mesesCiclo : plan.mesesCiclo.filter((mes) => mes.mes === opciones.mes);
@@ -99,9 +102,11 @@ export default function AsistenciaGenerator() {
 		nivelId: 'primario',
 	};
 
+	const visibles = completas ? hojas : hojas.slice(0, HOJAS_EN_VISTA);
+
 	function pedirImpresion(pdf: boolean) {
 		track(pdf ? 'pdf_click' : 'print_click', { tool: 'asistencia', hojas: hojas.length });
-		imprimir(pdf);
+		pedir(pdf, hojas.length, imprimir);
 	}
 
 	function borrarDatos() {
@@ -279,9 +284,10 @@ export default function AsistenciaGenerator() {
 				<div class="min-w-0">
 					<div class="no-print mb-4 hidden flex-wrap justify-center gap-3 xl:flex">{botones}</div>
 					<div class="vista-plan rounded-card bg-celeste-50 p-3 sm:p-5">
+						<AvisoVistaPrevia total={hojas.length} completas={completas} />
 						<div class="grid gap-6">
-							{hojas.map((hoja, indice) => (
-								<MarcoHoja key={hoja.id} corte={indice < hojas.length - 1} apaisada>
+							{visibles.map((hoja, indice) => (
+								<MarcoHoja key={hoja.id} corte={indice < visibles.length - 1} apaisada>
 									<HojaAsistenciaMes ctx={ctx} mes={hoja.mes} nombres={hoja.nombres} desde={hoja.desde} pagina={hoja.pagina} total={hoja.total} />
 								</MarcoHoja>
 							))}

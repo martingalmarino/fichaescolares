@@ -18,6 +18,8 @@ export interface MetaPagina {
 	description: string;
 	/** La 404 no se reescribe: no entra en el mínimo de la descripción. */
 	flexible?: boolean;
+	/** Estas páginas usan el title del documento, aunque pase de 60 caracteres. */
+	tituloLibre?: boolean;
 }
 
 const MESES_MIN = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
@@ -137,6 +139,7 @@ export const metaEstaticas = {
 		ruta: seoPlanificador.ruta,
 		title: seoPlanificador.title,
 		description: seoPlanificador.description,
+		tituloLibre: true,
 	},
 	agenda: {
 		ruta: seoAgenda.ruta,
@@ -147,11 +150,13 @@ export const metaEstaticas = {
 		ruta: seoPlanificacion.ruta,
 		title: seoPlanificacion.title,
 		description: seoPlanificacion.description,
+		tituloLibre: true,
 	},
 	asistencia: {
 		ruta: seoAsistencia.ruta,
 		title: seoAsistencia.title,
 		description: seoAsistencia.description,
+		tituloLibre: true,
 	},
 	acerca: {
 		ruta: '/acerca/',

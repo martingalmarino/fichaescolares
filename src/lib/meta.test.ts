@@ -45,7 +45,7 @@ describe('títulos y descripciones', () => {
 		const descripciones = new Map<string, string>();
 		const largos: string[] = [];
 		for (const meta of metas) {
-			if (meta.title.length > MAX_TITULO) largos.push(`título ${meta.title.length}: ${meta.ruta} — ${meta.title}`);
+			if (!meta.tituloLibre && meta.title.length > MAX_TITULO) largos.push(`título ${meta.title.length}: ${meta.ruta} — ${meta.title}`);
 			if (meta.description.length > MAX_DESCRIPCION) largos.push(`description ${meta.description.length}: ${meta.ruta} — ${meta.description}`);
 			if (!meta.flexible && meta.description.length < MIN_DESCRIPCION) largos.push(`description corta ${meta.description.length}: ${meta.ruta} — ${meta.description}`);
 			const tituloPrevio = titulos.get(meta.title);

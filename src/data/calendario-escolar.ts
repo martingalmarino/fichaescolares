@@ -3,7 +3,10 @@
  * (src/data/calendario-escolar/2027.json): estado "oficial", inicio,
  * invierno.desde, invierno.hasta, fin, fuente (https) y actualizado con la
  * fecha de hoy. El título, la descripción, el banner y las respuestas
- * salen de esos campos.
+ * salen de esos campos. Los cortes de período son opcionales y solo
+ * valen con estado oficial: cortes.trimestres son el fin del primero y
+ * del segundo, y cortes.cuatrimestres el fin del primero. Si no están,
+ * el planificador reparte los días hábiles en partes parejas.
  * Para 2028: copiá el JSON, sumalo al array `archivos` y copiá la carpeta
  * src/pages/calendario-escolar-2027/ con el año nuevo en la ruta.
  */
@@ -23,6 +26,12 @@ export interface RangoNombrado {
 	nombre: string;
 }
 
+/** Fines inclusive de cada período, salvo el último, que cierra con el fin del ciclo. */
+export interface CortesPeriodo {
+	trimestres?: [string, string];
+	cuatrimestres?: [string];
+}
+
 export interface Jurisdiccion {
 	estado: EstadoCalendario;
 	inicio: string | null;
@@ -33,6 +42,7 @@ export interface Jurisdiccion {
 	feriadosProvinciales: FechaNombrada[];
 	sinClases: (FechaNombrada | RangoNombrado)[];
 	actualizado?: string;
+	cortes?: CortesPeriodo;
 }
 
 export interface CalendarioEscolar {
@@ -98,6 +108,22 @@ function fechaNombrada(valor: unknown, anio: number): valor is FechaNombrada {
 	return Boolean(item && fechaIso(item.fecha, anio) && typeof item.nombre === 'string' && item.nombre.trim());
 }
 
+function cortesValidos(valor: unknown, anio: number): boolean {
+	const cortes = registro(valor);
+	if (!cortes) return false;
+	const claves = Object.keys(cortes);
+	if (claves.some((clave) => clave !== 'trimestres' && clave !== 'cuatrimestres')) return false;
+	if (cortes.trimestres !== undefined) {
+		if (!Array.isArray(cortes.trimestres) || cortes.trimestres.length !== 2) return false;
+		const [primero, segundo] = cortes.trimestres;
+		if (!fechaIso(primero, anio) || !fechaIso(segundo, anio) || primero >= segundo) return false;
+	}
+	if (cortes.cuatrimestres !== undefined) {
+		if (!Array.isArray(cortes.cuatrimestres) || cortes.cuatrimestres.length !== 1 || !fechaIso(cortes.cuatrimestres[0], anio)) return false;
+	}
+	return cortes.trimestres !== undefined || cortes.cuatrimestres !== undefined;
+}
+
 function rango(valor: unknown, anio: number): valor is RangoNombrado {
 	const item = registro(valor);
 	if (!item || !fechaIso(item.desde, anio) || !fechaIso(item.hasta, anio) || typeof item.nombre !== 'string' || !item.nombre.trim()) return false;
@@ -144,6 +170,10 @@ export function erroresCalendario(datos: unknown, slugs: string[]): string[] {
 		}
 		if (!Array.isArray(item.sinClases) || item.sinClases.some((dia) => !fechaNombrada(dia, anio) && !rango(dia, anio))) {
 			errores.push(`${anio}/${slug}: día sin clases inválido`);
+		}
+		if (item.cortes !== undefined) {
+			if (!oficial) errores.push(`${anio}/${slug}: a-confirmar no puede tener cortes de período`);
+			else if (!cortesValidos(item.cortes, anio)) errores.push(`${anio}/${slug}: cortes de período inválidos`);
 		}
 	}
 	for (const [slug, vecinas] of Object.entries(VECINAS)) {

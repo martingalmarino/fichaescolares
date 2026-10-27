@@ -94,7 +94,7 @@ export function armarPlan(anio: number, slug: string, jurisdiccion: Jurisdiccion
 		ciclo,
 		meses,
 		mesesCiclo: ORDEN_CICLO.map((mes) => meses[mes - 1]!),
-		periodos: periodosDe(ciclo, periodos, porIso),
+		periodos: periodosDe(ciclo, periodos, porIso, jurisdiccion),
 		semanas: semanasDe(ciclo, porIso),
 		totalHabiles,
 		estimados: ciclo.provisorio,
@@ -200,26 +200,89 @@ function armarMes(anio: number, mes: number, ciclo: CicloLectivo, porIso: Map<st
 	};
 }
 
-function periodosDe(ciclo: CicloLectivo, organizacion: OrganizacionPeriodos, porIso: Map<string, DiaLectivo>): PeriodoLectivo[] {
-	const anio = ciclo.anio;
-	const ventanas =
-		organizacion === 'cuatrimestres'
-			? [
-					{ clave: 'c1', nombre: '1.er cuatrimestre', desde: ciclo.inicio.iso, hasta: minIso(ciclo.fin.iso, `${anio}-06-30`) },
-					{ clave: 'c2', nombre: '2.º cuatrimestre', desde: maxIso(ciclo.inicio.iso, `${anio}-07-01`), hasta: ciclo.fin.iso },
-				]
-			: [
-					{ clave: 't1', nombre: '1.er trimestre', desde: ciclo.inicio.iso, hasta: minIso(ciclo.fin.iso, `${anio}-05-31`) },
-					{ clave: 't2', nombre: '2.º trimestre', desde: maxIso(ciclo.inicio.iso, `${anio}-06-01`), hasta: minIso(ciclo.fin.iso, `${anio}-08-31`) },
-					{ clave: 't3', nombre: '3.er trimestre', desde: maxIso(ciclo.inicio.iso, `${anio}-09-01`), hasta: ciclo.fin.iso },
-				];
+function periodosDe(ciclo: CicloLectivo, organizacion: OrganizacionPeriodos, porIso: Map<string, DiaLectivo>, jurisdiccion: Jurisdiccion): PeriodoLectivo[] {
+	const publicados = periodosPublicados(ciclo, organizacion, porIso, jurisdiccion);
+	if (publicados) return publicados;
+	return periodosParejos(ciclo, organizacion, porIso);
+}
+
+function periodosPublicados(
+	ciclo: CicloLectivo,
+	organizacion: OrganizacionPeriodos,
+	porIso: Map<string, DiaLectivo>,
+	jurisdiccion: Jurisdiccion,
+): PeriodoLectivo[] | null {
+	const cortes = jurisdiccion.cortes;
+	if (!cortes) return null;
+	if (organizacion === 'cuatrimestres') {
+		const fin = cortes.cuatrimestres?.[0];
+		if (!fin) return null;
+		return ventanasDe(
+			[
+				{ clave: 'c1', nombre: '1.er cuatrimestre', desde: ciclo.inicio.iso, hasta: minIso(ciclo.fin.iso, fin) },
+				{ clave: 'c2', nombre: '2.º cuatrimestre', desde: maxIso(ciclo.inicio.iso, sumarIso(fin, 1)), hasta: ciclo.fin.iso },
+			],
+			porIso,
+			ciclo.provisorio,
+		);
+	}
+	const fines = cortes.trimestres;
+	if (!fines) return null;
+	const [fin1, fin2] = fines;
+	return ventanasDe(
+		[
+			{ clave: 't1', nombre: '1.er trimestre', desde: ciclo.inicio.iso, hasta: minIso(ciclo.fin.iso, fin1) },
+			{ clave: 't2', nombre: '2.º trimestre', desde: maxIso(ciclo.inicio.iso, sumarIso(fin1, 1)), hasta: minIso(ciclo.fin.iso, fin2) },
+			{ clave: 't3', nombre: '3.er trimestre', desde: maxIso(ciclo.inicio.iso, sumarIso(fin2, 1)), hasta: ciclo.fin.iso },
+		],
+		porIso,
+		ciclo.provisorio,
+	);
+}
+
+/** Reparte los días hábiles del ciclo en partes lo más parejas posible. El corte no es un dato publicado. */
+function periodosParejos(ciclo: CicloLectivo, organizacion: OrganizacionPeriodos, porIso: Map<string, DiaLectivo>): PeriodoLectivo[] {
+	const dias = diasEntre(ciclo.inicio.iso, ciclo.fin.iso).filter((iso) => porIso.get(iso)?.habil);
+	const partes = organizacion === 'cuatrimestres' ? 2 : 3;
+	const nombres = organizacion === 'cuatrimestres' ? ['1.er cuatrimestre', '2.º cuatrimestre'] : ['1.er trimestre', '2.º trimestre', '3.er trimestre'];
+	const claves = organizacion === 'cuatrimestres' ? ['c1', 'c2'] : ['t1', 't2', 't3'];
+	if (dias.length === 0) return [];
+	const base = Math.floor(dias.length / partes);
+	const resto = dias.length % partes;
+	let cursor = 0;
+	const periodos: PeriodoLectivo[] = [];
+	for (let indice = 0; indice < partes; indice += 1) {
+		const cantidad = base + (indice < resto ? 1 : 0);
+		const grupo = dias.slice(cursor, cursor + cantidad);
+		cursor += cantidad;
+		const desde = grupo[0];
+		const hasta = grupo[grupo.length - 1];
+		if (!desde || !hasta) continue;
+		periodos.push({
+			clave: claves[indice] ?? `p${indice}`,
+			nombre: nombres[indice] ?? `Período ${indice + 1}`,
+			desde,
+			hasta,
+			etiquetaMeses: rangoMeses(desde, hasta),
+			habiles: grupo.length,
+			estimados: true,
+		});
+	}
+	return periodos;
+}
+
+function ventanasDe(
+	ventanas: { clave: string; nombre: string; desde: string; hasta: string }[],
+	porIso: Map<string, DiaLectivo>,
+	estimados: boolean,
+): PeriodoLectivo[] {
 	return ventanas
 		.filter((ventana) => ventana.desde <= ventana.hasta)
 		.map((ventana) => ({
 			...ventana,
 			etiquetaMeses: rangoMeses(ventana.desde, ventana.hasta),
 			habiles: contarHabiles(porIso, ventana.desde, ventana.hasta),
-			estimados: ciclo.provisorio,
+			estimados,
 		}));
 }
 
