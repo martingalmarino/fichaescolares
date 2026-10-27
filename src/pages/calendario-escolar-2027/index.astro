@@ -4,7 +4,7 @@ import ListaFeriados from '../../components/ListaFeriados.astro';
 import Preguntas from '../../components/Preguntas.astro';
 import { calendarioDe } from '../../data/calendario-escolar';
 import { provincias } from '../../data/provincias';
-import { feriadosDelAnio } from '../../lib/calendario';
+import { feriadosDelAnio, partesIso } from '../../lib/calendario';
 import { metaCalendarioEscolar, nombreCalendario } from '../../lib/meta';
 import { faqJsonLd, itemListJsonLd } from '../../lib/seo';
 import {
@@ -12,10 +12,10 @@ import {
 	actualizadoVisible,
 	confirmadas,
 	fechaActualizado,
-	fechaTarjeta,
+	fechaCorta,
 	notaPuentes,
 	preguntasNacional,
-	rangoTarjeta,
+	regionesEscolares,
 	textoPlano,
 } from '../../lib/texto-calendario';
 import BaseLayout from '../../layouts/BaseLayout.astro';
@@ -31,13 +31,42 @@ const filas = provincias
 	.map((provincia) => ({ provincia, jurisdiccion: calendario.jurisdicciones[provincia.slug]! }))
 	.sort((a, b) => a.provincia.slug.localeCompare(b.provincia.slug, 'es'));
 const oficiales = confirmadas(calendario);
+const total = provincias.length;
+const avance = oficiales === 0 ? 1 : (oficiales / total) * 100;
 const feriados = feriadosDelAnio(anio);
+const regiones = regionesEscolares.map((region) => ({
+	...region,
+	filas: region.slugs
+		.map((slug) => {
+			const provincia = provincias.find((item) => item.slug === slug);
+			if (!provincia) throw new Error(`Falta la provincia ${slug}`);
+			const jurisdiccion = calendario.jurisdicciones[slug];
+			if (!jurisdiccion) throw new Error(`Falta el calendario de ${slug}`);
+			const inicio = jurisdiccion.inicio;
+			const fin = jurisdiccion.fin;
+			const desde = jurisdiccion.invierno.desde;
+			const hasta = jurisdiccion.invierno.hasta;
+			const publicado = jurisdiccion.estado === 'oficial' && Boolean(inicio && fin && desde && hasta);
+			const invierno = publicado && desde && hasta ? partesIso(desde).mes === partesIso(hasta).mes : false;
+			return { provincia, jurisdiccion, publicado, invierno, inicio, fin, desde, hasta };
+		})
+		.sort((a, b) => nombreCalendario(a.provincia).localeCompare(nombreCalendario(b.provincia), 'es')),
+}));
 const lista = itemListJsonLd(
 	`Calendario escolar ${anio} por provincia`,
 	filas.map((fila) => ({
 		name: nombreCalendario(fila.provincia),
 		url: new URL(`/calendario-escolar-${anio}/${fila.provincia.slug}/`, sitio).href,
 	})),
+);
+const listaGrilla = itemListJsonLd(
+	`Calendario escolar ${anio} de cada provincia`,
+	regiones.flatMap((region) =>
+		region.filas.map((fila) => ({
+			name: `Calendario escolar ${anio} ${nombreCalendario(fila.provincia)}`,
+			url: new URL(`/calendario-escolar-${anio}/${fila.provincia.slug}/`, sitio).href,
+		})),
+	),
 );
 const faq = faqJsonLd(preguntas.map((item) => ({ q: item.q, a: textoPlano(item.a) })));
 const jsonLd = {
@@ -69,86 +98,129 @@ const jsonLd = {
 	<article class="mx-auto max-w-6xl px-4 py-8">
 		<Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: `Calendario escolar ${anio}` }]} />
 		<h1 class="mt-4 text-3xl font-bold tracking-tight text-azul sm:text-4xl">Calendario escolar {anio} en Argentina, por provincia</h1>
-		<p class="mt-3 max-w-3xl text-base leading-relaxed text-texto">
-			{
-				oficiales === 0
-					? `Ninguna provincia publicó todavía su calendario escolar ${anio}. Acá vas a ver inicio de clases, vacaciones de invierno y fin del ciclo de las 24 jurisdicciones a medida que salgan las fechas oficiales.`
-					: `${oficiales} de 24 jurisdicciones ya publicaron el calendario escolar ${anio}. En el resto, el inicio de clases, las vacaciones de invierno y el fin del ciclo siguen a confirmar.`
-			}
+		<p class="mt-3 max-w-[720px] text-base leading-relaxed text-muted">
+			Elegí tu provincia para ver inicio de clases, vacaciones de invierno y fin del ciclo. Cargamos cada fecha cuando sale la resolución oficial del ministerio.
 		</p>
-		<p class="mt-2 text-sm text-muted">
-			Actualizado el <time datetime={actualizado}>{fechaActualizado(actualizado)}</time>
-			<span aria-hidden="true"> · </span>
-			{oficiales} de 24 provincias con calendario oficial
-		</p>
-		<h2 class="mt-10 text-2xl font-bold tracking-tight text-azul">Fechas clave por provincia</h2>
-		<ul class="no-print mt-4 grid gap-3 lg:hidden">
+		<div class="grilla-barra">
+			<div class="grilla-progreso">
+				<p>
+					<strong>{oficiales} de {total} provincias</strong> con calendario oficial · actualizado el <time datetime={actualizado}>{fechaActualizado(actualizado)}</time>
+				</p>
+				<div class="grilla-pista" aria-hidden="true"><span class="grilla-avance" style={`width: ${avance}%`}></span></div>
+			</div>
+			<a class="grilla-cta" href="/planificador-docente-2027/">Armá tu planificador docente</a>
+		</div>
+		<div id="grilla-provincias">
+			<div class="grilla-herramientas">
+				<label class="sr-only" for="buscar-provincia">Buscá tu provincia</label>
+				<input id="buscar-provincia" class="grilla-buscar" type="search" placeholder="Buscá tu provincia (ej.: Córdoba)" autocomplete="off" spellcheck="false" />
+				<div class="grilla-chips" role="group" aria-label="Filtrar provincias">
+					<button class="grilla-chip" type="button" data-filtro="todas" aria-pressed="true">Todas</button>
+					<button class="grilla-chip" type="button" data-filtro="centro" aria-pressed="false">Centro</button>
+					<button class="grilla-chip" type="button" data-filtro="noa" aria-pressed="false">NOA</button>
+					<button class="grilla-chip" type="button" data-filtro="nea" aria-pressed="false">NEA</button>
+					<button class="grilla-chip" type="button" data-filtro="cuyo" aria-pressed="false">Cuyo</button>
+					<button class="grilla-chip" type="button" data-filtro="patagonia" aria-pressed="false">Patagonia</button>
+					<button class="grilla-chip" type="button" data-filtro="publicadas" aria-pressed="false">Ya publicadas</button>
+				</div>
+			</div>
+			<p class="sr-only" aria-live="polite" data-conteo>Mostrando {total} provincias</p>
 			{
-				filas.map((fila) => (
-					<li class="rounded-card border border-borde bg-white p-4">
-						<a class="text-base font-semibold text-azul hover:text-celeste" href={`/calendario-escolar-${anio}/${fila.provincia.slug}/`}>
-							{nombreCalendario(fila.provincia)}
-						</a>
-						<dl class="mt-3 grid grid-cols-2 gap-3 text-sm">
-							<div>
-								<dt class="text-xs font-semibold uppercase tracking-wide text-muted">Inicio</dt>
-								<dd class="mt-1 text-azul">{fechaTarjeta(fila.jurisdiccion.inicio)}</dd>
-							</div>
-							<div>
-								<dt class="text-xs font-semibold uppercase tracking-wide text-muted">Fin</dt>
-								<dd class="mt-1 text-azul">{fechaTarjeta(fila.jurisdiccion.fin)}</dd>
-							</div>
-							<div class="col-span-2">
-								<dt class="text-xs font-semibold uppercase tracking-wide text-muted">Vacaciones de invierno</dt>
-								<dd class="mt-1 text-azul">{rangoTarjeta(fila.jurisdiccion.invierno.desde, fila.jurisdiccion.invierno.hasta)}</dd>
-							</div>
-							<div>
-								<dt class="text-xs font-semibold uppercase tracking-wide text-muted">Estado</dt>
-								<dd class="mt-1">
-									<span class:list={['inline-flex rounded-full px-2 py-0.5 text-xs font-medium', fila.jurisdiccion.estado === 'oficial' ? 'bg-celeste-50 text-celeste' : 'bg-sol-50 text-sol']}>
-										{fila.jurisdiccion.estado === 'oficial' ? 'oficial' : 'a confirmar'}
-									</span>
-								</dd>
-							</div>
-						</dl>
-					</li>
+				regiones.map((region) => (
+					<section class="grilla-region" data-region={region.id} aria-labelledby={`region-${region.id}`}>
+						<h2 id={`region-${region.id}`}>
+							{region.nombre} <span class="grilla-region-n">{region.filas.length}</span>
+						</h2>
+						<ul class="grilla-lista">
+							{region.filas.map((fila) => {
+								const nombre = nombreCalendario(fila.provincia);
+								return (
+									<li data-provincia data-region={region.id} data-oficial={fila.publicado ? '1' : '0'} data-busqueda={`${nombre} ${fila.provincia.slug.replaceAll('-', ' ')}`}>
+										<a class:list={['grilla-tarjeta', fila.publicado && 'grilla-tarjeta-oficial']} href={`/calendario-escolar-${anio}/${fila.provincia.slug}/`} aria-label={`Calendario escolar ${anio} de ${nombre}`}>
+											<span class="grilla-nombre">{nombre}</span>
+											{fila.publicado && fila.inicio && fila.fin && fila.desde && fila.hasta ? (
+												<dl class="grilla-fechas">
+													<div>
+														<dt>Inicio</dt>
+														<dd>
+															<time datetime={fila.inicio}>{fechaCorta(fila.inicio)}</time>
+														</dd>
+													</div>
+													<div>
+														<dt>Invierno</dt>
+														<dd>
+															{fila.invierno ? (
+																<>
+																	<time datetime={fila.desde}>{partesIso(fila.desde).dia}</time>–<time datetime={fila.hasta}>{fechaCorta(fila.hasta)}</time>
+																</>
+															) : (
+																<>
+																	<time datetime={fila.desde}>{fechaCorta(fila.desde)}</time>–<time datetime={fila.hasta}>{fechaCorta(fila.hasta)}</time>
+																</>
+															)}
+														</dd>
+													</div>
+													<div>
+														<dt>Fin</dt>
+														<dd>
+															<time datetime={fila.fin}>{fechaCorta(fila.fin)}</time>
+														</dd>
+													</div>
+												</dl>
+											) : (
+												<p class="grilla-estado">Sin resolución {anio} todavía</p>
+											)}
+											{fila.publicado && <p class="grilla-estado grilla-estado-ok">Calendario oficial publicado</p>}
+											<span class="grilla-ir"><span class="grilla-ir-texto">Ver calendario</span> <span aria-hidden="true">→</span></span>
+										</a>
+									</li>
+								);
+							})}
+						</ul>
+					</section>
 				))
 			}
-		</ul>
-		<div class="tabla-provincias mt-4 hidden overflow-x-auto rounded-card border border-borde bg-white lg:block">
-			<table class="w-full text-left text-sm">
-				<thead class="bg-celeste-50 text-azul">
-					<tr>
-						<th class="px-4 py-3 font-semibold">Provincia</th>
-						<th class="px-4 py-3 font-semibold">Inicio</th>
-						<th class="px-4 py-3 font-semibold">Vacaciones de invierno</th>
-						<th class="px-4 py-3 font-semibold">Fin</th>
-						<th class="px-4 py-3 font-semibold">Estado</th>
-					</tr>
-				</thead>
-				<tbody>
-					{
-						filas.map((fila) => (
-							<tr class="border-t border-borde">
-								<th class="px-4 py-3 font-medium" scope="row">
-									<a class="inline-flex min-h-11 items-center text-azul hover:text-celeste hover:underline" href={`/calendario-escolar-${anio}/${fila.provincia.slug}/`}>
-										{nombreCalendario(fila.provincia)}
-									</a>
-								</th>
-								<td class="px-4 py-3">{fechaTarjeta(fila.jurisdiccion.inicio)}</td>
-								<td class="px-4 py-3">{rangoTarjeta(fila.jurisdiccion.invierno.desde, fila.jurisdiccion.invierno.hasta)}</td>
-								<td class="px-4 py-3">{fechaTarjeta(fila.jurisdiccion.fin)}</td>
-								<td class="px-4 py-3">
-									<span class:list={['inline-flex rounded-full px-2 py-0.5 text-xs font-medium', fila.jurisdiccion.estado === 'oficial' ? 'bg-celeste-50 text-celeste' : 'bg-sol-50 text-sol']}>
-										{fila.jurisdiccion.estado === 'oficial' ? 'oficial' : 'a confirmar'}
-									</span>
-								</td>
-							</tr>
-						))
-					}
-				</tbody>
-			</table>
 		</div>
+		<script is:inline type="module">
+			const raiz = document.querySelector('#grilla-provincias');
+			if (raiz instanceof HTMLElement) {
+				const entrada = raiz.querySelector('input');
+				const aviso = raiz.querySelector('[data-conteo]');
+				const chips = [...raiz.querySelectorAll('[data-filtro]')];
+				const items = [...raiz.querySelectorAll('[data-provincia]')];
+				const secciones = [...raiz.querySelectorAll('section[data-region]')];
+				const normalizar = (texto) => texto.normalize('NFD').replace(/[\u0300-\u036f]/g, '').toLowerCase();
+				const aplicar = () => {
+					const consulta = normalizar(entrada instanceof HTMLInputElement ? entrada.value.trim() : '');
+					const activo = chips.find((chip) => chip.getAttribute('aria-pressed') === 'true');
+					const filtro = activo instanceof HTMLElement ? activo.dataset.filtro ?? 'todas' : 'todas';
+					let visibles = 0;
+					for (const item of items) {
+						if (!(item instanceof HTMLElement)) continue;
+						const busqueda = normalizar(item.dataset.busqueda ?? '');
+						const region = item.dataset.region ?? '';
+						const oficial = item.dataset.oficial === '1';
+						const coincideTexto = consulta === '' || busqueda.includes(consulta);
+						const coincideFiltro = filtro === 'todas' || (filtro === 'publicadas' ? oficial : region === filtro);
+						const visible = coincideTexto && coincideFiltro;
+						item.hidden = !visible;
+						if (visible) visibles += 1;
+					}
+					for (const seccion of secciones) {
+						if (!(seccion instanceof HTMLElement)) continue;
+						seccion.hidden = ![...seccion.querySelectorAll('[data-provincia]')].some((item) => item instanceof HTMLElement && !item.hidden);
+					}
+					if (aviso) aviso.textContent = `Mostrando ${visibles} ${visibles === 1 ? 'provincia' : 'provincias'}`;
+				};
+				entrada?.addEventListener('input', aplicar);
+				for (const chip of chips) {
+					chip.addEventListener('click', () => {
+						for (const otro of chips) otro.setAttribute('aria-pressed', otro === chip ? 'true' : 'false');
+						aplicar();
+					});
+				}
+			}
+		</script>
 		<section id="feriados" class="mt-12">
 			<h2 class="text-2xl font-bold tracking-tight text-azul">Feriados nacionales {anio}</h2>
 			<p class="mt-2 max-w-3xl text-sm leading-relaxed text-muted">
@@ -164,5 +236,322 @@ const jsonLd = {
 			</p>
 		</section>
 		<Preguntas preguntas={preguntas} />
+		<script type="application/ld+json" set:html={JSON.stringify(listaGrilla)} />
 	</article>
 </BaseLayout>
+
+<style>
+	.grilla-barra {
+		display: flex;
+		gap: 16px;
+		align-items: center;
+		flex-wrap: wrap;
+		margin: 18px 0;
+		min-height: 4.5rem;
+	}
+
+	.grilla-progreso {
+		flex: 1;
+		min-width: min(100%, 240px);
+		background: #fff4e2;
+		border-radius: 10px;
+		padding: 12px 14px;
+		font-size: 14px;
+		line-height: 1.4;
+		color: #1d3557;
+	}
+
+	.grilla-progreso p {
+		margin: 0;
+	}
+
+	.grilla-pista {
+		height: 6px;
+		margin-top: 8px;
+		border-radius: 3px;
+		background: #fde3b5;
+		overflow: hidden;
+	}
+
+	.grilla-avance {
+		display: block;
+		height: 6px;
+		border-radius: 3px;
+		background: #f4a531;
+	}
+
+	.grilla-cta {
+		display: inline-flex;
+		min-height: 44px;
+		align-items: center;
+		justify-content: center;
+		flex: none;
+		padding: 12px 18px;
+		border-radius: 8px;
+		background: #1d3557;
+		color: #fff;
+		font-weight: 600;
+		text-decoration: none;
+		white-space: nowrap;
+	}
+
+	.grilla-cta:hover {
+		background: #16304f;
+	}
+
+	#grilla-provincias {
+		position: relative;
+	}
+
+	.grilla-herramientas {
+		position: sticky;
+		top: 69px;
+		z-index: 30;
+		display: flex;
+		gap: 10px;
+		flex-wrap: wrap;
+		align-items: center;
+		min-height: 4.5rem;
+		margin-top: 4px;
+		padding: 14px;
+		border-radius: 12px;
+		background: #eef7fd;
+	}
+
+	.grilla-buscar {
+		flex: 1 1 12rem;
+		min-width: min(100%, 12rem);
+		min-height: 44px;
+		padding: 12px 14px;
+		border: 1px solid #9aa3af;
+		border-radius: 8px;
+		background: #fff;
+		color: #1d3557;
+		font: inherit;
+		font-size: 16px;
+	}
+
+	.grilla-buscar::placeholder {
+		color: #6b7280;
+		opacity: 1;
+	}
+
+	.grilla-chips {
+		display: flex;
+		gap: 10px;
+		flex-wrap: wrap;
+	}
+
+	.grilla-chip {
+		min-height: 44px;
+		padding: 10px 14px;
+		border: 1px solid #d6ecfa;
+		border-radius: 999px;
+		background: #fff;
+		color: #1d3557;
+		font: inherit;
+		font-size: 14px;
+		line-height: 1.2;
+		cursor: pointer;
+	}
+
+	.grilla-chip[aria-pressed='true'] {
+		border-color: #327bac;
+		background: #327bac;
+		color: #fff;
+	}
+
+	.grilla-region {
+		margin-top: 28px;
+	}
+
+	.grilla-region h2 {
+		margin: 0 0 10px;
+		color: #1d3557;
+		font-size: 18px;
+		font-weight: 700;
+		letter-spacing: -0.01em;
+	}
+
+	.grilla-region-n {
+		color: #6b7280;
+		font-size: 16px;
+		font-weight: 500;
+	}
+
+	.grilla-lista {
+		display: grid;
+		grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+		gap: 12px;
+		margin: 0;
+		padding: 0;
+		list-style: none;
+	}
+
+	.grilla-lista > li {
+		display: flex;
+		min-width: 0;
+	}
+
+	.grilla-lista > li[hidden],
+	.grilla-region[hidden] {
+		display: none !important;
+	}
+
+	.grilla-tarjeta {
+		display: flex;
+		flex: 1;
+		flex-direction: column;
+		gap: 8px;
+		min-height: 120px;
+		padding: 16px;
+		border: 1px solid #e5e7eb;
+		border-radius: 12px;
+		background: #fff;
+		color: inherit;
+		text-decoration: none;
+	}
+
+	.grilla-tarjeta:hover {
+		border-color: #4aa3df;
+	}
+
+	.grilla-tarjeta-oficial {
+		border-left: 4px solid #f4a531;
+	}
+
+	.grilla-tarjeta-oficial:hover {
+		border-color: #4aa3df;
+		border-left-color: #f4a531;
+	}
+
+	.grilla-nombre {
+		color: #1d3557;
+		font-size: 19px;
+		font-weight: 700;
+		line-height: 1.25;
+	}
+
+	.grilla-estado {
+		margin: 0;
+		color: #6b7280;
+		font-size: 14px;
+		line-height: 1.35;
+	}
+
+	.grilla-estado-ok {
+		color: #1d3557;
+		font-weight: 500;
+	}
+
+	.grilla-ir {
+		margin-top: auto;
+		color: #327bac;
+		font-size: 15px;
+		font-weight: 600;
+	}
+
+	.grilla-fechas {
+		display: grid;
+		grid-template-columns: repeat(3, minmax(0, 1fr));
+		gap: 6px;
+		margin: 0;
+	}
+
+	.grilla-fechas div {
+		padding: 6px 8px;
+		border-radius: 8px;
+		background: #eef7fd;
+	}
+
+	.grilla-fechas dt {
+		color: #4b5563;
+		font-size: 11px;
+		font-weight: 600;
+		letter-spacing: 0.04em;
+		text-transform: uppercase;
+	}
+
+	.grilla-fechas dd {
+		margin: 0;
+		color: #1d3557;
+		font-size: 14px;
+		font-weight: 600;
+	}
+
+	.grilla-tarjeta:focus-visible,
+	.grilla-chip:focus-visible,
+	.grilla-buscar:focus-visible,
+	.grilla-cta:focus-visible {
+		outline: 2px solid #327bac;
+		outline-offset: 2px;
+	}
+
+	@media (min-width: 1024px) {
+		.grilla-herramientas {
+			top: 77px;
+		}
+	}
+
+	@media (max-width: 600px) {
+		.grilla-barra {
+			flex-direction: column;
+			align-items: stretch;
+		}
+
+		.grilla-progreso,
+		.grilla-cta {
+			width: 100%;
+			min-width: 0;
+		}
+
+		.grilla-cta {
+			white-space: normal;
+			text-align: center;
+		}
+
+		.grilla-lista {
+			grid-template-columns: 1fr;
+		}
+
+		.grilla-tarjeta {
+			display: grid;
+			grid-template-columns: minmax(0, 1fr) auto;
+			align-items: center;
+			column-gap: 12px;
+			row-gap: 2px;
+			min-height: 56px;
+			padding: 12px 16px;
+		}
+
+		.grilla-nombre {
+			grid-column: 1;
+			grid-row: 1;
+		}
+
+		.grilla-ir {
+			grid-column: 2;
+			grid-row: 1;
+			margin-top: 0;
+			font-size: 22px;
+			line-height: 1;
+		}
+
+		.grilla-fechas,
+		.grilla-estado {
+			grid-column: 1 / -1;
+		}
+
+		.grilla-ir-texto {
+			position: absolute;
+			width: 1px;
+			height: 1px;
+			padding: 0;
+			margin: -1px;
+			overflow: hidden;
+			clip: rect(0, 0, 0, 0);
+			white-space: nowrap;
+			border: 0;
+		}
+	}
+</style>

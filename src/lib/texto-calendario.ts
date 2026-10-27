@@ -31,6 +31,23 @@ export function rangoTarjeta(desde: string | null, hasta: string | null): string
 	return `${fechaDiaMes(inicio.dia, inicio.mes)} al ${fechaDiaMes(fin.dia, fin.mes)}`;
 }
 
+const MESES_GRILLA = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'] as const;
+
+/** «1 mar», «11 dic». Para las tarjetas de la grilla nacional. */
+export function fechaCorta(iso: string): string {
+	const { mes, dia } = partesIso(iso);
+	return `${dia} ${MESES_GRILLA[mes - 1] ?? ''}`;
+}
+
+/** Regiones de la grilla. El campo `region` de cada provincia no coincide con este corte. */
+export const regionesEscolares = [
+	{ id: 'centro', nombre: 'Centro', slugs: ['buenos-aires', 'caba', 'cordoba', 'entre-rios', 'la-pampa', 'santa-fe'] },
+	{ id: 'noa', nombre: 'NOA', slugs: ['catamarca', 'jujuy', 'la-rioja', 'salta', 'santiago-del-estero', 'tucuman'] },
+	{ id: 'nea', nombre: 'NEA', slugs: ['chaco', 'corrientes', 'formosa', 'misiones'] },
+	{ id: 'cuyo', nombre: 'Cuyo', slugs: ['mendoza', 'san-juan', 'san-luis'] },
+	{ id: 'patagonia', nombre: 'Patagonia', slugs: ['chubut', 'neuquen', 'rio-negro', 'santa-cruz', 'tierra-del-fuego'] },
+] as const;
+
 export function fraseProvincia(provincia: Provincia, jurisdiccion: Jurisdiccion, anio: number): string {
 	const lugar = lugarCalendario(provincia);
 	if (jurisdiccion.estado === 'oficial' && jurisdiccion.inicio && jurisdiccion.fin && jurisdiccion.invierno.desde && jurisdiccion.invierno.hasta) {
