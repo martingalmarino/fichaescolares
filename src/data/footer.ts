@@ -50,6 +50,10 @@ export const columnas: ColumnaFooter[] = [
 		titulo: 'Fichas para imprimir',
 		ariaLabel: 'Fichas para imprimir',
 		links: [
+			{ label: 'Planificador docente 2027', href: '/planificador-docente-2027/' },
+			{ label: 'Agenda docente 2027', href: '/agenda-docente-2027/' },
+			{ label: 'Planificación anual', href: '/planificacion-anual/' },
+			{ label: 'Registro de asistencia', href: '/registro-de-asistencia/' },
 			{ label: 'Sopa de letras', href: '/sopa-de-letras/' },
 			{ label: 'Crucigrama de próceres', href: '/crucigrama-proceres/' },
 			{ label: 'Caligrafía', href: '/caligrafia/' },

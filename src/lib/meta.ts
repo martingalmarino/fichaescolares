@@ -1,4 +1,5 @@
 import { calendarios, type Jurisdiccion } from '../data/calendario-escolar';
+import { seoAgenda, seoAsistencia, seoPlanificacion, seoPlanificador } from '../data/planificador-contenido';
 import type { Efemeride } from '../data/efemerides';
 import { efemerides } from '../data/efemerides';
 import type { Lamina } from '../data/laminas';
@@ -131,6 +132,26 @@ export const metaEstaticas = {
 		title: 'Guía para usar imprimibles en el aula | Aulita',
 		description:
 			'Ideas para combinar sopas de letras, crucigramas, caligrafía, láminas y cuentas en una semana patria, con adaptaciones por grado y consejos para ahorrar tinta.',
+	},
+	planificador: {
+		ruta: seoPlanificador.ruta,
+		title: seoPlanificador.title,
+		description: seoPlanificador.description,
+	},
+	agenda: {
+		ruta: seoAgenda.ruta,
+		title: seoAgenda.title,
+		description: seoAgenda.description,
+	},
+	planificacion: {
+		ruta: seoPlanificacion.ruta,
+		title: seoPlanificacion.title,
+		description: seoPlanificacion.description,
+	},
+	asistencia: {
+		ruta: seoAsistencia.ruta,
+		title: seoAsistencia.title,
+		description: seoAsistencia.description,
 	},
 	acerca: {
 		ruta: '/acerca/',

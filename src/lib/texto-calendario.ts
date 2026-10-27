@@ -1,10 +1,10 @@
 import { actualizadoDe, recesosDe, vecinasDe, type CalendarioEscolar, type Jurisdiccion } from '../data/calendario-escolar';
 import { efemerides } from '../data/efemerides';
 import { provincias, type Provincia } from '../data/provincias';
-import { fechaCompleta, fechaDiaMes, feriadosDelAnio, partesIso, puentesDelAnio, type FeriadoCalculado } from './calendario';
+import { LEY_FERIADOS, fechaCompleta, fechaDiaMes, feriadosDelAnio, partesIso, puentesDelAnio, type FeriadoCalculado } from './calendario';
 import { h1CalendarioProvincia, lugarCalendario, nombreCalendario } from './meta';
 
-export const LEY_FERIADOS = 'https://servicios.infoleg.gob.ar/infolegInternet/anexos/280000-284999/281835/norma.htm';
+export { LEY_FERIADOS };
 
 export function ministerioDe(provincia: Provincia): string {
 	if (provincia.slug === 'caba') return 'Ministerio de Educación de la Ciudad de Buenos Aires';

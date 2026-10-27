@@ -1,5 +1,7 @@
 import { efemerides } from '../data/efemerides';
 
+export const LEY_FERIADOS = 'https://servicios.infoleg.gob.ar/infolegInternet/anexos/280000-284999/281835/norma.htm';
+
 export const MESES_CORTOS = ['ENE', 'FEB', 'MAR', 'ABR', 'MAY', 'JUN', 'JUL', 'AGO', 'SEP', 'OCT', 'NOV', 'DIC'] as const;
 
 const MESES = ['Enero', 'Febrero', 'Marzo', 'Abril', 'Mayo', 'Junio', 'Julio', 'Agosto', 'Septiembre', 'Octubre', 'Noviembre', 'Diciembre'];

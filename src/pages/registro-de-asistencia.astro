@@ -1,0 +1,62 @@
+---
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Preguntas from '../components/Preguntas.astro';
+import { parrafosAsistencia, preguntasAsistencia, respuestaAsistencia, seoAsistencia } from '../data/planificador-contenido';
+import AsistenciaGenerator from '../islands/AsistenciaGenerator.tsx';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { metaEstaticas } from '../lib/meta';
+import { etiquetasJsonLd } from '../lib/seo';
+
+const meta = metaEstaticas.asistencia;
+const migas = [
+	{ name: 'Inicio', url: '/' },
+	{ name: 'Generadores', url: '/#generadores' },
+	{ name: 'Registro de asistencia', url: meta.ruta },
+];
+---
+
+<BaseLayout
+	title={meta.title}
+	description={meta.description}
+	keywords={seoAsistencia.keywords}
+	jsonLd={etiquetasJsonLd({
+		nombre: 'Registro de asistencia',
+		descripcion: meta.description,
+		ruta: meta.ruta,
+		migas,
+		preguntas: preguntasAsistencia,
+	})}
+>
+	<article class="mx-auto max-w-7xl px-4 py-8">
+		<div class="no-print">
+			<Breadcrumbs
+				items={[
+					{ label: 'Inicio', href: '/' },
+					{ label: 'Generadores', href: '/#generadores' },
+					{ label: 'Registro de asistencia' },
+				]}
+			/>
+			<h1 class="mt-4 text-3xl font-bold tracking-tight text-azul sm:text-4xl">{seoAsistencia.h1}</h1>
+			<p class="mt-3 max-w-3xl text-base leading-relaxed text-muted">{respuestaAsistencia}</p>
+		</div>
+
+		<div class="mt-6">
+			<AsistenciaGenerator client:visible />
+		</div>
+
+		<section class="no-print mx-auto mt-12 max-w-3xl text-base leading-relaxed text-texto">
+			<p class="mt-4" set:html={parrafosAsistencia[0]} />
+			<h2 class="mt-8 text-2xl font-bold tracking-tight text-azul">Cómo se marcan los días</h2>
+			<p class="mt-4" set:html={parrafosAsistencia[1]} />
+			<h2 class="mt-8 text-2xl font-bold tracking-tight text-azul">Referencias y privacidad</h2>
+			{
+				parrafosAsistencia.slice(2).map((parrafo) => (
+					<p class="mt-4" set:html={parrafo} />
+				))
+			}
+		</section>
+		<div class="no-print mx-auto max-w-3xl">
+			<Preguntas preguntas={preguntasAsistencia} />
+		</div>
+	</article>
+</BaseLayout>

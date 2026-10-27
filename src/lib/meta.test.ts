@@ -32,6 +32,10 @@ describe('títulos y descripciones', () => {
 		expect(rutas.has('/como-se-califica-en-primaria/se-repite-primer-grado/')).toBe(true);
 		expect(rutas.has('/como-se-califica-en-primaria/como-leer-el-boletin/')).toBe(true);
 		expect(rutas.has('/etiquetas-escolares/')).toBe(true);
+		expect(rutas.has('/planificador-docente-2027/')).toBe(true);
+		expect(rutas.has('/agenda-docente-2027/')).toBe(true);
+		expect(rutas.has('/planificacion-anual/')).toBe(true);
+		expect(rutas.has('/registro-de-asistencia/')).toBe(true);
 		expect(rutas.has('/etiquetas-escolares/cuadernos/')).toBe(true);
 		expect(rutas.has('/etiquetas-escolares/utiles/')).toBe(true);
 	});

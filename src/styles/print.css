@@ -23,6 +23,11 @@
 	margin: 10mm;
 }
 
+@page apaisada {
+	size: A4 landscape;
+	margin: 10mm;
+}
+
 .print-solo {
 	display: none;
 }
@@ -177,6 +182,26 @@
 		border: 0 !important;
 		background: transparent !important;
 		box-shadow: none !important;
+	}
+
+	.vista-plan,
+	.grilla-hojas {
+		display: block !important;
+		background: transparent !important;
+		padding: 0 !important;
+	}
+
+	.hoja-plan.corte {
+		break-after: page;
+	}
+
+	.hoja-apaisada {
+		page: apaisada;
+	}
+
+	.hoja-plan a {
+		color: inherit !important;
+		text-decoration: none !important;
 	}
 
 	* {

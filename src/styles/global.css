@@ -66,6 +66,16 @@ html:has(.aviso-consentimiento) {
 	zoom: min(1, calc(100cqi / 210mm));
 }
 
+.preview-frame:has(> .hoja-apaisada) {
+	max-width: 297mm;
+}
+
+.preview-frame > .a4.hoja-apaisada {
+	width: 297mm;
+	min-height: 210mm;
+	zoom: min(1, calc(100cqi / 297mm));
+}
+
 .hoja-etiquetas.a4 {
 	height: 297mm;
 	max-height: 297mm;
@@ -92,6 +102,10 @@ html:has(.aviso-consentimiento) {
 	font-size: 11px;
 	letter-spacing: 0.04em;
 	color: var(--muted);
+}
+
+.renglones-dia {
+	background-image: repeating-linear-gradient(to bottom, transparent 0, transparent 6.2mm, #e5e7eb 6.2mm, #e5e7eb 6.45mm);
 }
 
 summary {

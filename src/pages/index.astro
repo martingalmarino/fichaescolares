@@ -11,6 +11,30 @@ const proximas = proximasEfemerides(efemerides, new Date(), 4);
 
 const generadores = [
 	{
+		nombre: 'Planificador docente 2027',
+		texto: 'Meses con feriados, días hábiles, planificación anual y asistencia.',
+		icon: 'planificador' as const,
+		href: '/planificador-docente-2027/',
+	},
+	{
+		nombre: 'Agenda docente 2027',
+		texto: 'Portada, meses, semana a semana, cumpleaños y asistencia.',
+		icon: 'agenda' as const,
+		href: '/agenda-docente-2027/',
+	},
+	{
+		nombre: 'Planificación anual',
+		texto: 'Áreas por trimestre o cuatrimestre, con los días hábiles de tu provincia.',
+		icon: 'planificacion' as const,
+		href: '/planificacion-anual/',
+	},
+	{
+		nombre: 'Registro de asistencia',
+		texto: 'Planilla por mes, con los días hábiles de tu provincia y tu lista de alumnos.',
+		icon: 'asistencia' as const,
+		href: '/registro-de-asistencia/',
+	},
+	{
 		nombre: 'Sopa de letras',
 		texto: 'Por efeméride, con 3 niveles de dificultad y soluciones.',
 		icon: 'sopa' as const,

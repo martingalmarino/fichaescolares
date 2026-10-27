@@ -1,0 +1,62 @@
+---
+import Breadcrumbs from '../components/Breadcrumbs.astro';
+import Preguntas from '../components/Preguntas.astro';
+import { parrafosAgenda, preguntasAgenda, respuestaAgenda, seoAgenda } from '../data/planificador-contenido';
+import PlanificadorGenerator from '../islands/PlanificadorGenerator.tsx';
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { metaEstaticas } from '../lib/meta';
+import { etiquetasJsonLd } from '../lib/seo';
+
+const meta = metaEstaticas.agenda;
+const migas = [
+	{ name: 'Inicio', url: '/' },
+	{ name: 'Generadores', url: '/#generadores' },
+	{ name: 'Agenda docente 2027', url: meta.ruta },
+];
+---
+
+<BaseLayout
+	title={meta.title}
+	description={meta.description}
+	keywords={seoAgenda.keywords}
+	jsonLd={etiquetasJsonLd({
+		nombre: 'Agenda docente 2027',
+		descripcion: meta.description,
+		ruta: meta.ruta,
+		migas,
+		preguntas: preguntasAgenda,
+	})}
+>
+	<article class="mx-auto max-w-7xl px-4 py-8">
+		<div class="no-print">
+			<Breadcrumbs
+				items={[
+					{ label: 'Inicio', href: '/' },
+					{ label: 'Generadores', href: '/#generadores' },
+					{ label: 'Agenda docente 2027' },
+				]}
+			/>
+			<h1 class="mt-4 text-3xl font-bold tracking-tight text-azul sm:text-4xl">{seoAgenda.h1}</h1>
+			<p class="mt-3 max-w-3xl text-base leading-relaxed text-muted">{respuestaAgenda}</p>
+		</div>
+
+		<div class="mt-6">
+			<PlanificadorGenerator client:visible variante="agenda" />
+		</div>
+
+		<section class="no-print mx-auto mt-12 max-w-3xl text-base leading-relaxed text-texto">
+			<p class="mt-4" set:html={parrafosAgenda[0]} />
+			<h2 class="mt-8 text-2xl font-bold tracking-tight text-azul">Cómo imprimirla y anillarla</h2>
+			<p class="mt-4" set:html={parrafosAgenda[1]} />
+			<h2 class="mt-8 text-2xl font-bold tracking-tight text-azul">En qué se diferencia del planificador</h2>
+			{
+				parrafosAgenda.slice(2).map((parrafo) => (
+					<p class="mt-4" set:html={parrafo} />
+				))
+			}
+		</section>
+		<div class="no-print mx-auto max-w-3xl">
+			<Preguntas preguntas={preguntasAgenda} />
+		</div>
+	</article>
+</BaseLayout>
