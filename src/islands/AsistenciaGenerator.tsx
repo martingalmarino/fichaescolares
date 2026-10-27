@@ -15,20 +15,26 @@ import {
 	type NivelAsistencia,
 	type OpcionesAsistencia,
 } from '../lib/planificador';
-import { AvisoVistaPrevia, HOJAS_EN_VISTA, useBarraFija, useImprimir, useVistaImpresion } from './preview';
-import { HojaAsistenciaMes, MarcoHoja, type ContextoHoja } from './planificador/Hojas';
+import { sincronizarAviso } from './planificador/aviso';
+import { useBarraFija, useImprimir } from './preview';
 
 const SLUGS = provincias.map((provincia) => provincia.slug);
 const CLAVE = 'aulita-planificador-2027';
 const VACIO: DatosDocente = { docente: '', escuela: '', alumnos: '', cumpleanos: '' };
 
-export default function AsistenciaGenerator() {
-	const [opciones, setOpciones] = useState<OpcionesAsistencia>(() => opcionesAsistenciaDesdeParams(new URLSearchParams(), SLUGS));
+function paramsDe(search: string) {
+	return new URLSearchParams(search.startsWith('?') ? search.slice(1) : search);
+}
+
+export default function AsistenciaGenerator({ search = '' }: { search?: string }) {
+	const [opciones, setOpciones] = useState<OpcionesAsistencia>(() => opcionesAsistenciaDesdeParams(paramsDe(search), SLUGS));
 	const [datos, setDatos] = useState<DatosDocente>(VACIO);
-	const [hidratado, setHidratado] = useState(false);
 	const [aviso, setAviso] = useState('');
 	const [abierto, setAbierto] = useState(true);
 	const barra = useRef<HTMLDivElement>(null);
+	const saltearUrl = useRef(true);
+	const saltearGuardado = useRef(true);
+	const saltearPintado = useRef(true);
 	useBarraFija(barra);
 
 	const provincia = provincias.find((item) => item.slug === opciones.prov) ?? provincias.find((item) => item.slug === 'cordoba') ?? provincias[0];
@@ -37,20 +43,27 @@ export default function AsistenciaGenerator() {
 	const { pdfHint, imprimir } = useImprimir(tituloPdf);
 
 	useEffect(() => {
-		setOpciones(opcionesAsistenciaDesdeParams(new URLSearchParams(window.location.search), SLUGS));
-		setDatos(cargarDatos());
-		setHidratado(true);
-	}, []);
+		const prop = search.startsWith('?') || search === '' ? search : `?${search}`;
+		if (window.location.search !== prop) setOpciones(opcionesAsistenciaDesdeParams(paramsDe(window.location.search), SLUGS));
+		const locales = cargarDatos();
+		if (locales.docente || locales.escuela || locales.alumnos || locales.cumpleanos) setDatos(locales);
+	}, [search]);
 
 	useEffect(() => {
-		if (!hidratado) return;
+		if (saltearUrl.current) {
+			saltearUrl.current = false;
+			return;
+		}
 		const consulta = paramsAsistencia(opciones);
 		const siguiente = `${location.pathname}?${consulta}`;
 		if (`${location.pathname}${location.search}` !== siguiente) history.replaceState(null, '', siguiente);
-	}, [opciones, hidratado]);
+	}, [opciones]);
 
 	useEffect(() => {
-		if (!hidratado) return;
+		if (saltearGuardado.current) {
+			saltearGuardado.current = false;
+			return;
+		}
 		try {
 			const previo = cargarDatos();
 			const siguiente = { ...previo, docente: datos.docente, escuela: datos.escuela, alumnos: datos.alumnos };
@@ -62,7 +75,7 @@ export default function AsistenciaGenerator() {
 		} catch {
 			/* el navegador puede rechazar el almacenamiento */
 		}
-	}, [datos, hidratado]);
+	}, [datos]);
 
 	useEffect(() => {
 		const alVolver = () => setOpciones(opcionesAsistenciaDesdeParams(new URLSearchParams(location.search), SLUGS));
@@ -70,43 +83,41 @@ export default function AsistenciaGenerator() {
 		return () => window.removeEventListener('popstate', alVolver);
 	}, []);
 
-	const claveHojas = `${opciones.prov}|${opciones.nivel}|${opciones.mes}|${opciones.filas}|${datos.alumnos}`;
-	const { completas, pedir } = useVistaImpresion(claveHojas);
+	useEffect(() => {
+		if (!provincia || !plan) return;
+		sincronizarAviso(provincia.slug, nombreCorto(provincia), sujetoProvincia(provincia), plan.estimados);
+	}, [provincia, plan]);
+
+	useEffect(() => {
+		if (saltearPintado.current) {
+			saltearPintado.current = false;
+			return;
+		}
+		let vivo = true;
+		void import('./planificador/vistas').then(({ pintarAsistencia }) => {
+			if (!vivo) return;
+			const destino = document.getElementById('vista-hojas');
+			if (!destino) return;
+			pintarAsistencia(destino, opciones, datos, false);
+		});
+		return () => {
+			vivo = false;
+		};
+	}, [opciones, datos]);
 
 	if (!provincia || !plan) return null;
 
 	const meses = opciones.mes === 'anio' ? plan.mesesCiclo : plan.mesesCiclo.filter((mes) => mes.mes === opciones.mes);
-	const alumnos = leerAlumnos(datos.alumnos);
-	const tandas = paginasDeNombres(alumnos, opciones.filas);
-	const hojas = meses.flatMap((mes) =>
-		tandas.map((nombres, indice) => ({
-			id: `${mes.mes}-${indice}`,
-			mes,
-			nombres,
-			desde: indice * opciones.filas,
-			pagina: indice + 1,
-			total: tandas.length,
-		})),
-	);
-	const ctx: ContextoHoja = {
-		docente: datos.docente.trim(),
-		escuela: datos.escuela.trim(),
-		grado: '',
-		nivel: opciones.nivel === 'secundario' ? 'Secundaria' : 'Primaria',
-		turno: '',
-		lugar: '',
-		provincia: nombreCorto(provincia),
-		slug: provincia.slug,
-		provisorio: plan.estimados,
-		organizacion: '',
-		nivelId: 'primario',
-	};
+	const tandas = paginasDeNombres(leerAlumnos(datos.alumnos), opciones.filas);
+	const total = meses.length * tandas.length;
 
-	const visibles = completas ? hojas : hojas.slice(0, HOJAS_EN_VISTA);
-
-	function pedirImpresion(pdf: boolean) {
-		track(pdf ? 'pdf_click' : 'print_click', { tool: 'asistencia', hojas: hojas.length });
-		pedir(pdf, hojas.length, imprimir);
+	async function pedirImpresion(pdf: boolean) {
+		track(pdf ? 'pdf_click' : 'print_click', { tool: 'asistencia', hojas: total });
+		const destino = document.getElementById('vista-hojas');
+		if (!destino || total === 0) return;
+		const { pintarAsistencia } = await import('./planificador/vistas');
+		pintarAsistencia(destino, opciones, datos, true);
+		imprimir(pdf);
 	}
 
 	function borrarDatos() {
@@ -124,7 +135,7 @@ export default function AsistenciaGenerator() {
 			<button
 				type="button"
 				class="inline-flex min-h-11 items-center gap-2 rounded-control border border-borde bg-white px-4 py-2.5 text-sm font-semibold text-azul disabled:opacity-50"
-				disabled={hojas.length === 0}
+				disabled={total === 0}
 				onClick={() => pedirImpresion(false)}
 			>
 				<span aria-hidden="true">🖨</span>
@@ -134,11 +145,11 @@ export default function AsistenciaGenerator() {
 				<button
 					type="button"
 					class="inline-flex min-h-11 items-center gap-2 rounded-control bg-sol px-4 py-2.5 text-sm font-semibold text-azul shadow-sm disabled:opacity-50"
-					disabled={hojas.length === 0}
+					disabled={total === 0}
 					onClick={() => pedirImpresion(true)}
 				>
 					<span aria-hidden="true">⬇</span>
-					Descargar PDF ({hojas.length} {hojas.length === 1 ? 'hoja' : 'hojas'})
+					Descargar PDF ({total} {total === 1 ? 'hoja' : 'hojas'})
 				</button>
 				{pdfHint && (
 					<p class="absolute bottom-full left-1/2 z-10 mb-2 w-max max-w-[min(16rem,calc(100vw-2rem))] -translate-x-1/2 rounded-control bg-azul px-3 py-2 text-center text-xs text-white">
@@ -150,18 +161,8 @@ export default function AsistenciaGenerator() {
 	);
 
 	return (
-		<div>
-			{plan.estimados && (
-				<p class="no-print mb-4 rounded-card border border-sol bg-sol-50 px-4 py-3 text-sm leading-relaxed text-azul">
-					{sujetoProvincia(provincia)} todavía no publicó su calendario 2027. Usamos fechas provisorias y las actualizamos cuando salga. Las fechas oficiales están en el{' '}
-					<a class="font-semibold underline" href={`/calendario-escolar-2027/${provincia.slug}/`}>
-						calendario escolar 2027 de {nombreCorto(provincia)}
-					</a>
-					.
-				</p>
-			)}
-			<div class="grid items-start gap-6 xl:grid-cols-[300px_minmax(0,1fr)]">
-				<aside class="panel rounded-card border border-borde bg-white p-4 shadow-card">
+		<div class="plan-contents">
+			<aside class="panel rounded-card border border-borde bg-white p-4 shadow-card xl:col-start-1 xl:row-start-1 xl:row-span-2">
 					<button
 						type="button"
 						class="flex min-h-11 w-full items-center justify-between text-left text-sm font-semibold text-azul xl:hidden"
@@ -280,27 +281,14 @@ export default function AsistenciaGenerator() {
 							)}
 						</div>
 					</div>
-				</aside>
-				<div class="min-w-0">
-					<div class="no-print mb-4 hidden flex-wrap justify-center gap-3 xl:flex">{botones}</div>
-					<div class="vista-plan rounded-card bg-celeste-50 p-3 sm:p-5">
-						<AvisoVistaPrevia total={hojas.length} completas={completas} />
-						<div class="grid gap-6">
-							{visibles.map((hoja, indice) => (
-								<MarcoHoja key={hoja.id} corte={indice < visibles.length - 1} apaisada>
-									<HojaAsistenciaMes ctx={ctx} mes={hoja.mes} nombres={hoja.nombres} desde={hoja.desde} pagina={hoja.pagina} total={hoja.total} />
-								</MarcoHoja>
-							))}
-						</div>
-					</div>
+				<div
+					ref={barra}
+					class="barra-fija no-print fixed inset-x-0 bottom-0 z-30 flex flex-wrap items-center justify-center gap-2 border-t border-borde bg-white px-3 pt-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] xl:hidden"
+				>
+					{botones}
 				</div>
-			</div>
-			<div
-				ref={barra}
-				class="barra-fija no-print fixed inset-x-0 bottom-0 z-30 flex flex-wrap items-center justify-center gap-2 border-t border-borde bg-white px-3 pt-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] xl:hidden"
-			>
-				{botones}
-			</div>
+				</aside>
+			<div class="no-print mb-4 hidden flex-wrap justify-center gap-3 xl:col-start-2 xl:row-start-1 xl:flex">{botones}</div>
 		</div>
 	);
 }

@@ -1,0 +1,24 @@
+---
+import { provincias } from '../data/provincias';
+import { nombreCorto, planDe, sujetoProvincia } from '../lib/planificador';
+
+const slug = Astro.url.searchParams.get('prov') || 'cordoba';
+const provincia = provincias.find((item) => item.slug === slug) ?? provincias.find((item) => item.slug === 'cordoba');
+const plan = provincia ? planDe(provincia.slug, 'trimestres') : null;
+---
+
+{
+	plan?.estimados && provincia && (
+		<p
+			id="aviso-provisorio"
+			class="no-print mb-4 rounded-card border border-sol bg-sol-50 px-4 py-3 text-sm leading-relaxed text-azul"
+			data-slug={provincia.slug}
+		>
+			<span data-aviso-sujeto>{sujetoProvincia(provincia)}</span> todavía no publicó su calendario 2027. Usamos fechas provisorias y las actualizamos cuando salga. Las fechas oficiales están en el{' '}
+			<a class="font-semibold underline" href={`/calendario-escolar-2027/${provincia.slug}/`}>
+				calendario escolar 2027 de {nombreCorto(provincia)}
+			</a>
+			.
+		</p>
+	)
+}

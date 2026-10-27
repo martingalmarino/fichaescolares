@@ -90,7 +90,13 @@ export function useVistaImpresion(clave: string) {
 	const pendiente = useRef<boolean | null>(null);
 	const imprimirRef = useRef<(pdf: boolean) => void>(() => {});
 
+	const primeraClave = useRef(true);
+
 	useEffect(() => {
+		if (primeraClave.current) {
+			primeraClave.current = false;
+			return;
+		}
 		pendiente.current = null;
 		setCompletas(false);
 	}, [clave]);

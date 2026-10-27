@@ -37,7 +37,7 @@ export default function Consentimiento({ gaId }: Props) {
 
 	useEffect(() => {
 		if (!visible) {
-			document.documentElement.style.removeProperty('--fp-aviso');
+			document.documentElement.style.setProperty('--fp-aviso', '0px');
 			return;
 		}
 		const element = aviso.current;
@@ -50,7 +50,7 @@ export default function Consentimiento({ gaId }: Props) {
 		observer.observe(element);
 		return () => {
 			observer.disconnect();
-			document.documentElement.style.removeProperty('--fp-aviso');
+			document.documentElement.style.setProperty('--fp-aviso', '0px');
 		};
 	}, [visible]);
 

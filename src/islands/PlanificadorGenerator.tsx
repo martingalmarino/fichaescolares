@@ -1,18 +1,13 @@
 import { useEffect, useMemo, useRef, useState } from 'preact/hooks';
-import type { ComponentChildren } from 'preact';
 import { provincias } from '../data/provincias';
 import { track } from '../lib/analytics';
+import { totalPlanificador } from '../lib/planificador/conteo';
 import {
 	GRADOS,
-	NIVEL_LABEL,
 	SECCIONES,
 	TURNOS,
-	etiquetaGrado,
-	etiquetaTurno,
 	gradoValido,
 	leerAlumnos,
-	leerCumpleanos,
-	lugarProvincia,
 	nombreCorto,
 	opcionesDesdeParams,
 	paramsDesdeOpciones,
@@ -26,31 +21,32 @@ import {
 	type TurnoPlanificador,
 	type VariantePlanificador,
 } from '../lib/planificador';
-import { AvisoVistaPrevia, HOJAS_EN_VISTA, useBarraFija, useImprimir, useVistaImpresion } from './preview';
-import {
-	HojaActos,
-	HojaAsistencia,
-	HojaCumpleanos,
-	HojaMes,
-	HojaPlan,
-	HojaPortada,
-	HojaSemana,
-	MarcoHoja,
-	type ContextoHoja,
-} from './planificador/Hojas';
+import { sincronizarAviso } from './planificador/aviso';
+import { useBarraFija, useImprimir } from './preview';
 
 const SLUGS = provincias.map((provincia) => provincia.slug);
 const CLAVE = 'aulita-planificador-2027';
-const FILAS = 22;
 const VACIO: DatosDocente = { docente: '', escuela: '', alumnos: '', cumpleanos: '' };
 
-export default function PlanificadorGenerator({ variante = 'planificador' }: { variante?: VariantePlanificador }) {
-	const [opciones, setOpciones] = useState<OpcionesPlanificador>(() => opcionesDesdeParams(new URLSearchParams(), SLUGS, variante));
+function paramsDe(search: string) {
+	return new URLSearchParams(search.startsWith('?') ? search.slice(1) : search);
+}
+
+export default function PlanificadorGenerator({
+	variante = 'planificador',
+	search = '',
+}: {
+	variante?: VariantePlanificador;
+	search?: string;
+}) {
+	const [opciones, setOpciones] = useState<OpcionesPlanificador>(() => opcionesDesdeParams(paramsDe(search), SLUGS, variante));
 	const [datos, setDatos] = useState<DatosDocente>(VACIO);
-	const [hidratado, setHidratado] = useState(false);
 	const [aviso, setAviso] = useState('');
 	const [abierto, setAbierto] = useState(true);
 	const barra = useRef<HTMLDivElement>(null);
+	const saltearUrl = useRef(true);
+	const saltearGuardado = useRef(true);
+	const saltearPintado = useRef(true);
 	useBarraFija(barra);
 
 	const provincia = provincias.find((item) => item.slug === opciones.prov) ?? provincias.find((item) => item.slug === 'cordoba') ?? provincias[0];
@@ -59,20 +55,27 @@ export default function PlanificadorGenerator({ variante = 'planificador' }: { v
 	const { pdfHint, imprimir } = useImprimir(tituloPdf);
 
 	useEffect(() => {
-		setOpciones(opcionesDesdeParams(new URLSearchParams(window.location.search), SLUGS, variante));
-		setDatos(cargarDatos());
-		setHidratado(true);
-	}, [variante]);
+		const prop = search.startsWith('?') || search === '' ? search : `?${search}`;
+		if (window.location.search !== prop) setOpciones(opcionesDesdeParams(paramsDe(window.location.search), SLUGS, variante));
+		const locales = cargarDatos();
+		if (locales.docente || locales.escuela || locales.alumnos || locales.cumpleanos) setDatos(locales);
+	}, [search, variante]);
 
 	useEffect(() => {
-		if (!hidratado) return;
+		if (saltearUrl.current) {
+			saltearUrl.current = false;
+			return;
+		}
 		const consulta = paramsDesdeOpciones(opciones, variante);
 		const siguiente = `${location.pathname}?${consulta}`;
 		if (`${location.pathname}${location.search}` !== siguiente) history.replaceState(null, '', siguiente);
-	}, [opciones, hidratado, variante]);
+	}, [opciones, variante]);
 
 	useEffect(() => {
-		if (!hidratado) return;
+		if (saltearGuardado.current) {
+			saltearGuardado.current = false;
+			return;
+		}
 		try {
 			if (!datos.docente && !datos.escuela && !datos.alumnos && !datos.cumpleanos) {
 				localStorage.removeItem(CLAVE);
@@ -82,7 +85,7 @@ export default function PlanificadorGenerator({ variante = 'planificador' }: { v
 		} catch {
 			/* el navegador puede rechazar el almacenamiento */
 		}
-	}, [datos, hidratado]);
+	}, [datos]);
 
 	useEffect(() => {
 		const alVolver = () => setOpciones(opcionesDesdeParams(new URLSearchParams(location.search), SLUGS, variante));
@@ -90,81 +93,40 @@ export default function PlanificadorGenerator({ variante = 'planificador' }: { v
 		return () => window.removeEventListener('popstate', alVolver);
 	}, [variante]);
 
-	const claveHojas = `${variante}|${opciones.prov}|${opciones.nivel}|${opciones.grado}|${opciones.turno}|${opciones.periodos}|${opciones.secciones.join(',')}|${datos.alumnos}|${datos.cumpleanos}`;
-	const { completas, pedir } = useVistaImpresion(claveHojas);
+	useEffect(() => {
+		if (!provincia || !plan) return;
+		sincronizarAviso(provincia.slug, nombreCorto(provincia), sujetoProvincia(provincia), plan.estimados);
+	}, [provincia, plan]);
+
+	useEffect(() => {
+		if (saltearPintado.current) {
+			saltearPintado.current = false;
+			return;
+		}
+		let vivo = true;
+		void import('./planificador/vistas').then(({ pintarPlanificador }) => {
+			if (!vivo) return;
+			const destino = document.getElementById('vista-hojas');
+			if (!destino) return;
+			pintarPlanificador(destino, variante, opciones, datos, false);
+		});
+		return () => {
+			vivo = false;
+		};
+	}, [opciones, datos, variante]);
 
 	if (!provincia || !plan) return null;
 
 	const incluye = (id: SeccionPlanificador) => opciones.secciones.includes(id);
-	const alumnos = leerAlumnos(datos.alumnos);
-	const cumpleanos = leerCumpleanos(datos.cumpleanos);
-	const ctx: ContextoHoja = {
-		docente: datos.docente.trim(),
-		escuela: datos.escuela.trim(),
-		grado: etiquetaGrado(opciones.nivel, opciones.grado),
-		nivel: NIVEL_LABEL[opciones.nivel],
-		turno: etiquetaTurno(opciones.turno),
-		lugar: lugarProvincia(provincia),
-		provincia: nombreCorto(provincia),
-		slug: provincia.slug,
-		provisorio: plan.estimados,
-		organizacion: opciones.periodos === 'trimestres' ? 'Organización por trimestres' : 'Organización por cuatrimestres',
-		nivelId: opciones.nivel,
-	};
+	const total = totalPlanificador(opciones, plan, leerAlumnos(datos.alumnos));
 
-	const hojas: { id: string; nodo: ComponentChildren }[] = [];
-	if (incluye('portada')) hojas.push({ id: 'portada', nodo: <HojaPortada ctx={ctx} plan={plan} variante={variante} /> });
-	if (incluye('meses')) {
-		for (const mes of plan.mesesCiclo) {
-			hojas.push({
-				id: `mes-${mes.mes}`,
-				nodo: (
-					<HojaMes
-						ctx={ctx}
-						mes={mes}
-						mostrarActos={incluye('actos')}
-						mostrarCumpleanos={incluye('cumpleanos')}
-						cumpleanos={cumpleanos.filter((item) => item.mes === mes.mes)}
-					/>
-				),
-			});
-		}
-	} else if (incluye('cumpleanos')) {
-		hojas.push({
-			id: 'cumpleanos',
-			nodo: (
-				<HojaCumpleanos
-					ctx={ctx}
-					grupos={plan.mesesCiclo.map((mes) => ({
-						mes: mes.nombre,
-						items: cumpleanos.filter((item) => item.mes === mes.mes),
-					}))}
-				/>
-			),
-		});
-	}
-	if (incluye('actos') && !incluye('meses')) hojas.push({ id: 'actos', nodo: <HojaActos ctx={ctx} plan={plan} /> });
-	if (incluye('semanas')) {
-		for (const semana of plan.semanas) {
-			hojas.push({ id: `semana-${semana.desde}`, nodo: <HojaSemana ctx={ctx} semana={semana} /> });
-		}
-	}
-	if (incluye('planificacion')) hojas.push({ id: 'plan', nodo: <HojaPlan ctx={ctx} plan={plan} /> });
-	if (incluye('asistencia')) {
-		const paginas = trozos(alumnos);
-		paginas.forEach((nombres, indice) => {
-			hojas.push({
-				id: `asistencia-${indice}`,
-				nodo: <HojaAsistencia ctx={ctx} plan={plan} nombres={nombres} desde={indice * FILAS} />,
-			});
-		});
-	}
-
-	const visibles = completas ? hojas : hojas.slice(0, HOJAS_EN_VISTA);
-
-	function pedirImpresion(pdf: boolean) {
-		track(pdf ? 'pdf_click' : 'print_click', { tool: variante, hojas: hojas.length });
-		pedir(pdf, hojas.length, imprimir);
+	async function pedirImpresion(pdf: boolean) {
+		track(pdf ? 'pdf_click' : 'print_click', { tool: variante, hojas: total });
+		const destino = document.getElementById('vista-hojas');
+		if (!destino || total === 0) return;
+		const { pintarPlanificador } = await import('./planificador/vistas');
+		pintarPlanificador(destino, variante, opciones, datos, true);
+		imprimir(pdf);
 	}
 
 	function cambiarNivel(nivel: NivelPlanificador) {
@@ -189,7 +151,7 @@ export default function PlanificadorGenerator({ variante = 'planificador' }: { v
 			<button
 				type="button"
 				class="inline-flex min-h-11 items-center gap-2 rounded-control border border-borde bg-white px-4 py-2.5 text-sm font-semibold text-azul disabled:opacity-50"
-				disabled={hojas.length === 0}
+				disabled={total === 0}
 				onClick={() => pedirImpresion(false)}
 			>
 				<span aria-hidden="true">🖨</span>
@@ -199,11 +161,11 @@ export default function PlanificadorGenerator({ variante = 'planificador' }: { v
 				<button
 					type="button"
 					class="inline-flex min-h-11 items-center gap-2 rounded-control bg-sol px-4 py-2.5 text-sm font-semibold text-azul shadow-sm disabled:opacity-50"
-					disabled={hojas.length === 0}
+					disabled={total === 0}
 					onClick={() => pedirImpresion(true)}
 				>
 					<span aria-hidden="true">⬇</span>
-					Descargar PDF ({hojas.length} {hojas.length === 1 ? 'hoja' : 'hojas'})
+					Descargar PDF ({total} {total === 1 ? 'hoja' : 'hojas'})
 				</button>
 				{pdfHint && (
 					<p class="absolute bottom-full left-1/2 z-10 mb-2 w-max max-w-[min(16rem,calc(100vw-2rem))] -translate-x-1/2 rounded-control bg-azul px-3 py-2 text-center text-xs text-white">
@@ -215,18 +177,8 @@ export default function PlanificadorGenerator({ variante = 'planificador' }: { v
 	);
 
 	return (
-		<div>
-			{plan.estimados && (
-				<p class="no-print mb-4 rounded-card border border-sol bg-sol-50 px-4 py-3 text-sm leading-relaxed text-azul">
-					{sujetoProvincia(provincia)} todavía no publicó su calendario 2027. Usamos fechas provisorias y las actualizamos cuando salga. Las fechas oficiales están en el{' '}
-					<a class="font-semibold underline" href={`/calendario-escolar-2027/${provincia.slug}/`}>
-						calendario escolar 2027 de {nombreCorto(provincia)}
-					</a>
-					.
-				</p>
-			)}
-			<div class="grid items-start gap-6 xl:grid-cols-[300px_minmax(0,1fr)]">
-				<aside class="panel rounded-card border border-borde bg-white p-4 shadow-card">
+		<div class="plan-contents">
+			<aside class="panel rounded-card border border-borde bg-white p-4 shadow-card xl:col-start-1 xl:row-start-1 xl:row-span-2">
 					<button
 						type="button"
 						class="flex min-h-11 w-full items-center justify-between text-left text-sm font-semibold text-azul xl:hidden"
@@ -358,33 +310,14 @@ export default function PlanificadorGenerator({ variante = 'planificador' }: { v
 							)}
 						</div>
 					</div>
-				</aside>
-				<div class="min-w-0">
-					<div class="no-print mb-4 hidden flex-wrap justify-center gap-3 xl:flex">{botones}</div>
-					<div class="vista-plan rounded-card bg-celeste-50 p-3 sm:p-5">
-						{hojas.length === 0 ? (
-							<p class="py-16 text-center text-sm text-muted">Elegí al menos una sección para armar la hoja.</p>
-						) : (
-							<>
-								<AvisoVistaPrevia total={hojas.length} completas={completas} />
-								<div class="grilla-hojas grid gap-6 xl:grid-cols-2">
-									{visibles.map((hoja, indice) => (
-										<MarcoHoja key={hoja.id} corte={indice < visibles.length - 1}>
-											{hoja.nodo}
-										</MarcoHoja>
-									))}
-								</div>
-							</>
-						)}
-					</div>
+				<div
+					ref={barra}
+					class="barra-fija no-print fixed inset-x-0 bottom-0 z-30 flex flex-wrap items-center justify-center gap-2 border-t border-borde bg-white px-3 pt-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] xl:hidden"
+				>
+					{botones}
 				</div>
-			</div>
-			<div
-				ref={barra}
-				class="barra-fija no-print fixed inset-x-0 bottom-0 z-30 flex flex-wrap items-center justify-center gap-2 border-t border-borde bg-white px-3 pt-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] xl:hidden"
-			>
-				{botones}
-			</div>
+				</aside>
+			<div class="no-print mb-4 hidden flex-wrap justify-center gap-3 xl:col-start-2 xl:row-start-1 xl:flex">{botones}</div>
 		</div>
 	);
 }
@@ -422,17 +355,6 @@ function Segmentos({
 			</div>
 		</div>
 	);
-}
-
-function trozos(nombres: string[]): string[][] {
-	if (nombres.length === 0) return [Array.from({ length: FILAS }, () => '')];
-	const paginas: string[][] = [];
-	for (let i = 0; i < nombres.length; i += FILAS) {
-		const pagina = nombres.slice(i, i + FILAS);
-		while (pagina.length < FILAS) pagina.push('');
-		paginas.push(pagina);
-	}
-	return paginas;
 }
 
 function cargarDatos(): DatosDocente {

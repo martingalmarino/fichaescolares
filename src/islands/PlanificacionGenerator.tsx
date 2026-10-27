@@ -4,10 +4,7 @@ import { track } from '../lib/analytics';
 import {
 	AREAS_POR_NIVEL,
 	GRADOS,
-	NIVEL_LABEL,
-	etiquetaGrado,
 	gradoValido,
-	lugarProvincia,
 	nombreCorto,
 	opcionesPlanificacionDesdeParams,
 	paginasDeAreas,
@@ -19,20 +16,26 @@ import {
 	type OpcionesPlanificacion,
 	type OrientacionPlan,
 } from '../lib/planificador';
-import { AvisoVistaPrevia, HOJAS_EN_VISTA, useBarraFija, useImprimir, useVistaImpresion } from './preview';
-import { HojaPlanificacionAnual, MarcoHoja, type ContextoHoja } from './planificador/Hojas';
+import { sincronizarAviso } from './planificador/aviso';
+import { useBarraFija, useImprimir } from './preview';
 
 const SLUGS = provincias.map((provincia) => provincia.slug);
 const CLAVE = 'aulita-planificador-2027';
 const VACIO: DatosDocente = { docente: '', escuela: '', alumnos: '', cumpleanos: '' };
 
-export default function PlanificacionGenerator() {
-	const [opciones, setOpciones] = useState<OpcionesPlanificacion>(() => opcionesPlanificacionDesdeParams(new URLSearchParams(), SLUGS));
+function paramsDe(search: string) {
+	return new URLSearchParams(search.startsWith('?') ? search.slice(1) : search);
+}
+
+export default function PlanificacionGenerator({ search = '' }: { search?: string }) {
+	const [opciones, setOpciones] = useState<OpcionesPlanificacion>(() => opcionesPlanificacionDesdeParams(paramsDe(search), SLUGS));
 	const [datos, setDatos] = useState<DatosDocente>(VACIO);
-	const [hidratado, setHidratado] = useState(false);
 	const [aviso, setAviso] = useState('');
 	const [abierto, setAbierto] = useState(true);
 	const barra = useRef<HTMLDivElement>(null);
+	const saltearUrl = useRef(true);
+	const saltearGuardado = useRef(true);
+	const saltearPintado = useRef(true);
 	useBarraFija(barra);
 
 	const provincia = provincias.find((item) => item.slug === opciones.prov) ?? provincias.find((item) => item.slug === 'cordoba') ?? provincias[0];
@@ -41,20 +44,27 @@ export default function PlanificacionGenerator() {
 	const { pdfHint, imprimir } = useImprimir(tituloPdf);
 
 	useEffect(() => {
-		setOpciones(opcionesPlanificacionDesdeParams(new URLSearchParams(window.location.search), SLUGS));
-		setDatos(cargarDatos());
-		setHidratado(true);
-	}, []);
+		const prop = search.startsWith('?') || search === '' ? search : `?${search}`;
+		if (window.location.search !== prop) setOpciones(opcionesPlanificacionDesdeParams(paramsDe(window.location.search), SLUGS));
+		const locales = cargarDatos();
+		if (locales.docente || locales.escuela || locales.alumnos || locales.cumpleanos) setDatos(locales);
+	}, [search]);
 
 	useEffect(() => {
-		if (!hidratado) return;
+		if (saltearUrl.current) {
+			saltearUrl.current = false;
+			return;
+		}
 		const consulta = paramsPlanificacion(opciones);
 		const siguiente = `${location.pathname}?${consulta}`;
 		if (`${location.pathname}${location.search}` !== siguiente) history.replaceState(null, '', siguiente);
-	}, [opciones, hidratado]);
+	}, [opciones]);
 
 	useEffect(() => {
-		if (!hidratado) return;
+		if (saltearGuardado.current) {
+			saltearGuardado.current = false;
+			return;
+		}
 		try {
 			const previo = cargarDatos();
 			const siguiente = { ...previo, docente: datos.docente, escuela: datos.escuela };
@@ -66,7 +76,7 @@ export default function PlanificacionGenerator() {
 		} catch {
 			/* el navegador puede rechazar el almacenamiento */
 		}
-	}, [datos, hidratado]);
+	}, [datos]);
 
 	useEffect(() => {
 		const alVolver = () => setOpciones(opcionesPlanificacionDesdeParams(new URLSearchParams(location.search), SLUGS));
@@ -74,33 +84,41 @@ export default function PlanificacionGenerator() {
 		return () => window.removeEventListener('popstate', alVolver);
 	}, []);
 
-	const claveHojas = `${opciones.prov}|${opciones.nivel}|${opciones.grado}|${opciones.periodos}|${opciones.orientacion}|${opciones.areas.join(',')}`;
-	const { completas, pedir } = useVistaImpresion(claveHojas);
+	useEffect(() => {
+		if (!provincia || !plan) return;
+		sincronizarAviso(provincia.slug, nombreCorto(provincia), sujetoProvincia(provincia), plan.estimados);
+	}, [provincia, plan]);
+
+	useEffect(() => {
+		if (saltearPintado.current) {
+			saltearPintado.current = false;
+			return;
+		}
+		let vivo = true;
+		void import('./planificador/vistas').then(({ pintarPlanificacion }) => {
+			if (!vivo) return;
+			const destino = document.getElementById('vista-hojas');
+			if (!destino) return;
+			pintarPlanificacion(destino, opciones, datos, false);
+		});
+		return () => {
+			vivo = false;
+		};
+	}, [opciones, datos]);
 
 	if (!provincia || !plan) return null;
 
 	const catalogo = AREAS_POR_NIVEL[opciones.nivel];
 	const etiquetas = catalogo.filter((area) => opciones.areas.includes(area.id)).map((area) => area.label);
-	const paginas = paginasDeAreas(etiquetas, opciones.orientacion);
-	const ctx: ContextoHoja = {
-		docente: datos.docente.trim(),
-		escuela: datos.escuela.trim(),
-		grado: etiquetaGrado(opciones.nivel, opciones.grado),
-		nivel: NIVEL_LABEL[opciones.nivel],
-		turno: '',
-		lugar: lugarProvincia(provincia),
-		provincia: nombreCorto(provincia),
-		slug: provincia.slug,
-		provisorio: plan.estimados,
-		organizacion: opciones.periodos === 'trimestres' ? 'Organización por trimestres' : 'Organización por cuatrimestres',
-		nivelId: opciones.nivel,
-	};
+	const total = paginasDeAreas(etiquetas, opciones.orientacion).length;
 
-	const visibles = completas ? paginas : paginas.slice(0, HOJAS_EN_VISTA);
-
-	function pedirImpresion(pdf: boolean) {
-		track(pdf ? 'pdf_click' : 'print_click', { tool: 'planificacion', hojas: paginas.length });
-		pedir(pdf, paginas.length, imprimir);
+	async function pedirImpresion(pdf: boolean) {
+		track(pdf ? 'pdf_click' : 'print_click', { tool: 'planificacion', hojas: total });
+		const destino = document.getElementById('vista-hojas');
+		if (!destino || total === 0) return;
+		const { pintarPlanificacion } = await import('./planificador/vistas');
+		pintarPlanificacion(destino, opciones, datos, true);
+		imprimir(pdf);
 	}
 
 	function cambiarNivel(nivel: NivelPlanificador) {
@@ -134,7 +152,7 @@ export default function PlanificacionGenerator() {
 			<button
 				type="button"
 				class="inline-flex min-h-11 items-center gap-2 rounded-control border border-borde bg-white px-4 py-2.5 text-sm font-semibold text-azul disabled:opacity-50"
-				disabled={paginas.length === 0}
+				disabled={total === 0}
 				onClick={() => pedirImpresion(false)}
 			>
 				<span aria-hidden="true">🖨</span>
@@ -144,11 +162,11 @@ export default function PlanificacionGenerator() {
 				<button
 					type="button"
 					class="inline-flex min-h-11 items-center gap-2 rounded-control bg-sol px-4 py-2.5 text-sm font-semibold text-azul shadow-sm disabled:opacity-50"
-					disabled={paginas.length === 0}
+					disabled={total === 0}
 					onClick={() => pedirImpresion(true)}
 				>
 					<span aria-hidden="true">⬇</span>
-					Descargar PDF ({paginas.length} {paginas.length === 1 ? 'hoja' : 'hojas'})
+					Descargar PDF ({total} {total === 1 ? 'hoja' : 'hojas'})
 				</button>
 				{pdfHint && (
 					<p class="absolute bottom-full left-1/2 z-10 mb-2 w-max max-w-[min(16rem,calc(100vw-2rem))] -translate-x-1/2 rounded-control bg-azul px-3 py-2 text-center text-xs text-white">
@@ -160,18 +178,8 @@ export default function PlanificacionGenerator() {
 	);
 
 	return (
-		<div>
-			{plan.estimados && (
-				<p class="no-print mb-4 rounded-card border border-sol bg-sol-50 px-4 py-3 text-sm leading-relaxed text-azul">
-					{sujetoProvincia(provincia)} todavía no publicó su calendario 2027. Usamos fechas provisorias y las actualizamos cuando salga. Las fechas oficiales están en el{' '}
-					<a class="font-semibold underline" href={`/calendario-escolar-2027/${provincia.slug}/`}>
-						calendario escolar 2027 de {nombreCorto(provincia)}
-					</a>
-					.
-				</p>
-			)}
-			<div class="grid items-start gap-6 xl:grid-cols-[300px_minmax(0,1fr)]">
-				<aside class="panel rounded-card border border-borde bg-white p-4 shadow-card">
+		<div class="plan-contents">
+			<aside class="panel rounded-card border border-borde bg-white p-4 shadow-card xl:col-start-1 xl:row-start-1 xl:row-span-2">
 					<button
 						type="button"
 						class="flex min-h-11 w-full items-center justify-between text-left text-sm font-semibold text-azul xl:hidden"
@@ -290,40 +298,14 @@ export default function PlanificacionGenerator() {
 							)}
 						</div>
 					</div>
-				</aside>
-				<div class="min-w-0">
-					<div class="no-print mb-4 hidden flex-wrap justify-center gap-3 xl:flex">{botones}</div>
-					<div class="vista-plan rounded-card bg-celeste-50 p-3 sm:p-5">
-						{paginas.length === 0 ? (
-							<p class="py-16 text-center text-sm text-muted">Elegí al menos un área para armar la hoja.</p>
-						) : (
-							<>
-								<AvisoVistaPrevia total={paginas.length} completas={completas} />
-								<div class="grid gap-6">
-									{visibles.map((areas, indice) => (
-										<MarcoHoja key={`${opciones.orientacion}-${indice}`} corte={indice < visibles.length - 1} apaisada={opciones.orientacion === 'horizontal'}>
-											<HojaPlanificacionAnual
-												ctx={ctx}
-												plan={plan}
-												areas={areas}
-												orientacion={opciones.orientacion}
-												pagina={indice + 1}
-												total={paginas.length}
-											/>
-										</MarcoHoja>
-									))}
-								</div>
-							</>
-						)}
-					</div>
+				<div
+					ref={barra}
+					class="barra-fija no-print fixed inset-x-0 bottom-0 z-30 flex flex-wrap items-center justify-center gap-2 border-t border-borde bg-white px-3 pt-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] xl:hidden"
+				>
+					{botones}
 				</div>
-			</div>
-			<div
-				ref={barra}
-				class="barra-fija no-print fixed inset-x-0 bottom-0 z-30 flex flex-wrap items-center justify-center gap-2 border-t border-borde bg-white px-3 pt-2 pb-[max(0.5rem,env(safe-area-inset-bottom))] xl:hidden"
-			>
-				{botones}
-			</div>
+				</aside>
+			<div class="no-print mb-4 hidden flex-wrap justify-center gap-3 xl:col-start-2 xl:row-start-1 xl:flex">{botones}</div>
 		</div>
 	);
 }

@@ -1,4 +1,5 @@
 ---
+import AvisoProvisorio from '../components/AvisoProvisorio.astro';
 import Breadcrumbs from '../components/Breadcrumbs.astro';
 import Preguntas from '../components/Preguntas.astro';
 import {
@@ -9,6 +10,7 @@ import {
 	seoPlanificador,
 } from '../data/planificador-contenido';
 import PlanificadorGenerator from '../islands/PlanificadorGenerator.tsx';
+import { VistaPlanificador } from '../islands/planificador/vistas.tsx';
 import BaseLayout from '../layouts/BaseLayout.astro';
 import { metaEstaticas } from '../lib/meta';
 import { etiquetasJsonLd } from '../lib/seo';
@@ -48,7 +50,13 @@ const migas = [
 		</div>
 
 		<div class="mt-6">
-			<PlanificadorGenerator client:idle />
+			<AvisoProvisorio />
+			<div class="grid items-start gap-6 xl:grid-cols-[300px_minmax(0,1fr)]">
+				<PlanificadorGenerator client:idle search={Astro.url.search} />
+				<div id="vista-hojas" class="vista-plan min-w-0 rounded-card bg-celeste-50 p-3 sm:p-5 xl:col-start-2 xl:row-start-2">
+					<VistaPlanificador search={Astro.url.search} />
+				</div>
+			</div>
 		</div>
 
 		<section class="no-print mx-auto mt-12 max-w-3xl text-base leading-relaxed text-texto">

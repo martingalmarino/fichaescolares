@@ -12,6 +12,31 @@
 	--muted: #6b7280;
 	--borde: #e5e7eb;
 	--bg: #fbfdff;
+	/* Reservado desde el primer pintado. El aviso lo suelta al cerrarse. */
+	--fp-aviso: 12rem;
+}
+
+/* Métricas de Inter latin sobre Arial, para que el swap de la 700 no mueva el texto. */
+@font-face {
+	font-family: 'Inter Fallback';
+	src: local('Arial');
+	font-weight: 400;
+	font-style: normal;
+	size-adjust: 104.33%;
+	ascent-override: 92.86%;
+	descent-override: 23.12%;
+	line-gap-override: 0%;
+}
+
+@font-face {
+	font-family: 'Inter Fallback';
+	src: local('Arial Bold');
+	font-weight: 700;
+	font-style: normal;
+	size-adjust: 102.91%;
+	ascent-override: 94.13%;
+	descent-override: 23.44%;
+	line-gap-override: 0%;
 }
 
 html {
@@ -22,7 +47,7 @@ html {
 body {
 	background: var(--bg);
 	color: var(--texto);
-	font-family: Inter, system-ui, sans-serif;
+	font-family: Inter, 'Inter Fallback', system-ui, sans-serif;
 	padding-bottom: calc(var(--fp-barra, 0px) + var(--fp-aviso, 0px));
 }
 
@@ -35,6 +60,17 @@ body {
 
 html:has(.aviso-consentimiento) {
 	--fp-aviso: 12rem;
+}
+
+.aviso-consentimiento {
+	box-sizing: border-box;
+	min-height: 12rem;
+}
+
+/* La isla de opciones no ocupa celda: sus hijos entran en la grilla de la página. */
+astro-island:has(> .plan-contents),
+.plan-contents {
+	display: contents;
 }
 
 :where(p, li, a, h1, h2, h3, dd, figcaption) {
@@ -55,6 +91,7 @@ html:has(.aviso-consentimiento) {
 	container-type: inline-size;
 	width: 100%;
 	max-width: 210mm;
+	aspect-ratio: 210 / 297;
 	overflow-x: clip;
 }
 
@@ -68,6 +105,7 @@ html:has(.aviso-consentimiento) {
 
 .preview-frame:has(> .hoja-apaisada) {
 	max-width: 297mm;
+	aspect-ratio: 297 / 210;
 }
 
 .preview-frame > .a4.hoja-apaisada {
