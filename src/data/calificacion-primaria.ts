@@ -5,6 +5,34 @@ export const NORMA_NACIONAL = 'Res. CFE 174/12';
 
 export type ModoCalificacion = 'numero' | 'conceptual' | 'sin-datos';
 
+export type GrupoHub = 'escala' | 'conceptos';
+
+export interface EscalaNumeroHub {
+	tipo: 'numero';
+	desde: number;
+	hasta: number;
+	apruebaDesde: number;
+}
+
+export interface EscalaConceptoHub {
+	tipo: 'concepto';
+	items: readonly { texto: string; aprueba: boolean }[];
+}
+
+/** Presentación del hub. Los hechos (ciclo, aprueba, norma, modo) no cambian. */
+export interface FichaHub {
+	grupo: GrupoHub;
+	orden: number;
+	apruebaVisible?: string;
+	apruebaDetalle?: string;
+	/** Completa la frase «En [provincia] se aprueba con …». */
+	apruebaFrase: string;
+	viñetas?: readonly string[];
+	conceptos?: string;
+	escala?: EscalaNumeroHub | EscalaConceptoHub;
+	guia?: string;
+}
+
 export interface JurisdiccionCalificacion {
 	slug: string;
 	nombre: string;
@@ -21,6 +49,7 @@ export interface JurisdiccionCalificacion {
 	truncar?: boolean;
 	aviso?: string;
 	detalle?: string;
+	hub?: FichaHub;
 }
 
 const sinDatos = 'Sin datos oficiales publicados';
@@ -43,6 +72,16 @@ export const jurisdiccionesCalificacion: JurisdiccionCalificacion[] = [
 		max: 10,
 		aviso: 'La nota final la define la escuela con el informe final, no es un promedio automático.',
 		detalle: 'Trimestres más un informe final. La nota final no es un promedio.',
+		hub: {
+			grupo: 'escala',
+			orden: 1,
+			apruebaVisible: '7',
+			apruebaDetalle: 'o Bueno',
+			apruebaFrase: '7 o Bueno',
+			viñetas: ['1.º a 3.º: Desaprobado · Regular · Bueno · Muy bueno · Sobresaliente', 'Desde 4.º: 1 a 10'],
+			escala: { tipo: 'numero', desde: 1, hasta: 10, apruebaDesde: 7 },
+			guia: '/como-se-califica-en-primaria/provincia-de-buenos-aires/',
+		},
 	},
 	{
 		slug: 'caba',
@@ -53,6 +92,28 @@ export const jurisdiccionesCalificacion: JurisdiccionCalificacion[] = [
 		norma: 'Res. 2765/24',
 		modo: 'conceptual',
 		detalle: 'Escala vigente desde 2025.',
+		hub: {
+			grupo: 'escala',
+			orden: 2,
+			apruebaVisible: 'Alcanzado',
+			apruebaDetalle: '6-7 desde 4.º',
+			apruebaFrase: 'Alcanzado',
+			viñetas: [
+				'1.º a 3.º: solo conceptos',
+				'4.º a 7.º: Destacado (10) · Avanzado (8-9) · Alcanzado (6-7) · En proceso (4-5) · No alcanzó (1-3)',
+			],
+			escala: {
+				tipo: 'concepto',
+				items: [
+					{ texto: 'No alcanzó', aprueba: false },
+					{ texto: 'En proceso', aprueba: false },
+					{ texto: 'Alcanzado', aprueba: true },
+					{ texto: 'Avanzado', aprueba: true },
+					{ texto: 'Destacado', aprueba: true },
+				],
+			},
+			guia: '/como-se-califica-en-primaria/caba/',
+		},
 	},
 	{
 		slug: 'catamarca',
@@ -65,6 +126,14 @@ export const jurisdiccionesCalificacion: JurisdiccionCalificacion[] = [
 		apruebaCon: 6,
 		min: 1,
 		max: 10,
+		hub: {
+			grupo: 'escala',
+			orden: 7,
+			apruebaVisible: '6',
+			apruebaFrase: '6',
+			viñetas: ['1 a 10 con nota conceptual', 'Desde 2023'],
+			escala: { tipo: 'numero', desde: 1, hasta: 10, apruebaDesde: 6 },
+		},
 	},
 	vacia('chaco', 'Chaco'),
 	{
@@ -75,6 +144,12 @@ export const jurisdiccionesCalificacion: JurisdiccionCalificacion[] = [
 		aprueba: 'Sin nota numérica publicada',
 		norma: 'Circular 02/21',
 		modo: 'conceptual',
+		hub: {
+			grupo: 'conceptos',
+			orden: 1,
+			apruebaFrase: 'la escala conceptual En proceso, Logrado, Logrado destacado y Logrado sobresaliente',
+			conceptos: 'En proceso · Logrado · Logrado destacado · Logrado sobresaliente',
+		},
 	},
 	vacia('cordoba', 'Córdoba'),
 	vacia('corrientes', 'Corrientes'),
@@ -89,6 +164,14 @@ export const jurisdiccionesCalificacion: JurisdiccionCalificacion[] = [
 		apruebaCon: 6,
 		min: 6,
 		max: 10,
+		hub: {
+			grupo: 'escala',
+			orden: 6,
+			apruebaVisible: '6',
+			apruebaFrase: '6',
+			viñetas: ['Escala de 6 a 10', 'Debajo de 6: En proceso de apropiación de contenidos'],
+			escala: { tipo: 'numero', desde: 6, hasta: 10, apruebaDesde: 6 },
+		},
 	},
 	vacia('formosa', 'Formosa'),
 	{
@@ -99,6 +182,12 @@ export const jurisdiccionesCalificacion: JurisdiccionCalificacion[] = [
 		aprueba: 'Sin nota numérica publicada',
 		norma: '—',
 		modo: 'conceptual',
+		hub: {
+			grupo: 'conceptos',
+			orden: 2,
+			apruebaFrase: 'la escala conceptual Destacado, Esperado, En proceso y De inicio',
+			conceptos: 'Destacado · Esperado · En proceso · De inicio',
+		},
 	},
 	vacia('la-pampa', 'La Pampa'),
 	vacia('la-rioja', 'La Rioja'),
@@ -115,6 +204,14 @@ export const jurisdiccionesCalificacion: JurisdiccionCalificacion[] = [
 		max: 10,
 		truncar: true,
 		detalle: 'La nota del período es el promedio exacto. Dos períodos más una evaluación integradora. Vigente desde agosto de 2026.',
+		hub: {
+			grupo: 'escala',
+			orden: 3,
+			apruebaVisible: '7',
+			apruebaFrase: '7',
+			viñetas: ['1 a 10 en todos los grados', 'Dos decimales, sin redondeo'],
+			escala: { tipo: 'numero', desde: 1, hasta: 10, apruebaDesde: 7 },
+		},
 	},
 	vacia('misiones', 'Misiones'),
 	{
@@ -125,6 +222,12 @@ export const jurisdiccionesCalificacion: JurisdiccionCalificacion[] = [
 		aprueba: 'Sin nota numérica publicada',
 		norma: 'Res. 1398/14',
 		modo: 'conceptual',
+		hub: {
+			grupo: 'conceptos',
+			orden: 4,
+			apruebaFrase: 'una escala conceptual',
+			conceptos: 'Conceptual',
+		},
 	},
 	{
 		slug: 'rio-negro',
@@ -134,6 +237,12 @@ export const jurisdiccionesCalificacion: JurisdiccionCalificacion[] = [
 		aprueba: 'Sin nota numérica publicada',
 		norma: '—',
 		modo: 'conceptual',
+		hub: {
+			grupo: 'conceptos',
+			orden: 3,
+			apruebaFrase: 'la escala conceptual Destacado, Esperado, En proceso y De inicio',
+			conceptos: 'Destacado · Esperado · En proceso · De inicio',
+		},
 	},
 	{
 		slug: 'salta',
@@ -147,6 +256,15 @@ export const jurisdiccionesCalificacion: JurisdiccionCalificacion[] = [
 		min: 1,
 		max: 10,
 		detalle: 'Trimestres.',
+		hub: {
+			grupo: 'escala',
+			orden: 4,
+			apruebaVisible: '6',
+			apruebaDetalle: 'o Bueno',
+			apruebaFrase: '6 o Bueno',
+			viñetas: ['1.º a 3.º: Sobresaliente · Muy bueno · Bueno · Regular · Insatisfactorio', 'Desde 4.º: 1 a 10'],
+			escala: { tipo: 'numero', desde: 1, hasta: 10, apruebaDesde: 6 },
+		},
 	},
 	vacia('san-juan', 'San Juan'),
 	vacia('san-luis', 'San Luis'),
@@ -160,6 +278,15 @@ export const jurisdiccionesCalificacion: JurisdiccionCalificacion[] = [
 		norma: 'Decretos 181/09 y 182/09',
 		modo: 'conceptual',
 		detalle: 'De 1.º a 6.º la escala es conceptual. En 7.º es de 1 a 10.',
+		hub: {
+			grupo: 'escala',
+			orden: 5,
+			apruebaVisible: '6',
+			apruebaDetalle: 'o Satisfactorio',
+			apruebaFrase: '6 o Satisfactorio',
+			viñetas: ['1.º a 6.º: Excelente · Muy bueno · Bueno · Satisfactorio · No satisfactorio', '7.º: 1 a 10'],
+			escala: { tipo: 'numero', desde: 1, hasta: 10, apruebaDesde: 6 },
+		},
 	},
 	vacia('santiago-del-estero', 'Santiago del Estero'),
 	vacia('tierra-del-fuego', 'Tierra del Fuego, Antártida e Islas del Atlántico Sur'),
@@ -168,6 +295,37 @@ export const jurisdiccionesCalificacion: JurisdiccionCalificacion[] = [
 
 export function calificacionDe(slug: string): JurisdiccionCalificacion | undefined {
 	return jurisdiccionesCalificacion.find((item) => item.slug === slug);
+}
+
+export function normaCitada(norma: string): string {
+	const limpia = norma.trim();
+	return limpia === '' || limpia === '—' ? 'Sin norma citada' : limpia;
+}
+
+export function fraseAprobacion(item: JurisdiccionCalificacion): string {
+	if (!item.hub) return '';
+	return `En ${item.nombre} se aprueba con ${item.hub.apruebaFrase} (${normaCitada(item.norma)}).`;
+}
+
+export function ariaEscala(item: JurisdiccionCalificacion): string {
+	const escala = item.hub?.escala;
+	if (!escala) return '';
+	if (escala.tipo === 'numero') return `Escala del ${escala.desde} al ${escala.hasta}, aprueba con ${escala.apruebaDesde}`;
+	const conceptos = escala.items.map((concepto) => concepto.texto).join(', ');
+	return `Escala conceptual, aprueba con ${item.hub?.apruebaVisible}. Conceptos: ${conceptos}`;
+}
+
+export function jurisdiccionesHub(grupo: GrupoHub): JurisdiccionCalificacion[] {
+	return jurisdiccionesCalificacion.filter((item) => item.hub?.grupo === grupo).sort((a, b) => (a.hub?.orden ?? 0) - (b.hub?.orden ?? 0));
+}
+
+export function jurisdiccionesSinDatos(): JurisdiccionCalificacion[] {
+	return jurisdiccionesCalificacion.filter((item) => item.modo === 'sin-datos');
+}
+
+export function urlFichaProvincia(item: JurisdiccionCalificacion, origen: string, rutaHub: string): string {
+	if (item.hub?.guia) return `${origen}${item.hub.guia}`;
+	return `${origen}${rutaHub}#${item.slug}`;
 }
 
 export const equivalenciasCaba = [

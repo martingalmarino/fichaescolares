@@ -1,0 +1,98 @@
+---
+import { ariaEscala, fraseAprobacion, type JurisdiccionCalificacion } from '../data/calificacion-primaria';
+
+interface Props {
+	item: JurisdiccionCalificacion;
+}
+
+const { item } = Astro.props;
+const hub = item.hub;
+if (!hub) throw new Error(`Sin ficha de hub para ${item.slug}`);
+
+const frase = fraseAprobacion(item);
+const Etiqueta = hub.guia ? 'a' : 'div';
+const enlace = hub.guia ? { href: hub.guia } : {};
+const claseBase = 'flex h-full min-w-0 flex-col gap-2.5 rounded-card border border-borde bg-white p-4';
+const clase = hub.guia
+	? `${claseBase} border-l-4 border-l-celeste text-inherit no-underline hover:border-celeste focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-azul`
+	: claseBase;
+
+const escalaNumero = hub.escala?.tipo === 'numero' ? hub.escala : undefined;
+const numeros = escalaNumero ? Array.from({ length: escalaNumero.hasta - escalaNumero.desde + 1 }, (_, indice) => escalaNumero.desde + indice) : [];
+const apruebaDesde = escalaNumero?.apruebaDesde ?? 0;
+const columnas = hub.escala?.tipo === 'numero' ? numeros.length : hub.escala?.tipo === 'concepto' ? hub.escala.items.length : 0;
+---
+
+<li id={item.slug} class="scroll-mt-56 min-[700px]:scroll-mt-44">
+	<Etiqueta class={clase} {...enlace}>
+		{
+			hub.grupo === 'escala' ? (
+				<div class="flex items-start justify-between gap-3">
+					<h3 class="min-w-0 text-lg font-bold leading-tight text-azul">
+						{item.nombre}
+					</h3>
+					<p class="shrink-0 text-right leading-none">
+						<span class="block text-[11px] font-medium text-muted">Aprueba con</span>
+						<span class="mt-1 block text-[1.35rem] font-bold leading-none text-azul">{hub.apruebaVisible}</span>
+						{hub.apruebaDetalle && <span class="mt-1 block text-[11px] text-muted">{hub.apruebaDetalle}</span>}
+					</p>
+				</div>
+			) : (
+				<h3 class="text-lg font-bold leading-tight text-azul">
+					{item.nombre}
+				</h3>
+			)
+		}
+		{
+			hub.escala && (
+				<div
+					class="grid min-w-0 gap-[3px]"
+					style={`grid-template-columns:repeat(${columnas},minmax(0,1fr))`}
+					role="img"
+					aria-label={ariaEscala(item)}
+				>
+					{hub.escala.tipo === 'numero' &&
+						numeros.map((nota) => (
+							<span
+								aria-hidden="true"
+								class:list={[
+									'rounded py-1.5 text-center text-xs leading-none',
+									nota >= apruebaDesde
+										? 'bg-sol-50 font-semibold text-azul shadow-[inset_0_-3px_0_#f4a531]'
+										: 'bg-[#f3f4f6] font-medium text-[#4b5563]',
+								]}
+							>
+								{nota}
+							</span>
+						))}
+					{hub.escala.tipo === 'concepto' &&
+						hub.escala.items.map((concepto) => (
+							<span
+								aria-hidden="true"
+								class:list={[
+									'flex min-h-8 items-center justify-center rounded px-0.5 py-1 text-center text-[11px] leading-tight',
+									concepto.aprueba
+										? 'bg-sol-50 font-semibold text-azul shadow-[inset_0_-3px_0_#f4a531]'
+										: 'bg-[#f3f4f6] font-medium text-[#4b5563]',
+								]}
+							>
+								{concepto.texto}
+							</span>
+						))}
+				</div>
+			)
+		}
+		{
+			hub.viñetas && (
+				<ul class="m-0 list-disc space-y-1 pl-5 text-sm leading-snug">
+					{hub.viñetas.map((viñeta) => (
+						<li>{viñeta}</li>
+					))}
+				</ul>
+			)
+		}
+		{hub.conceptos && <p class="m-0 text-sm leading-snug">{hub.conceptos}</p>}
+		<p class="m-0 mt-auto text-[13px] leading-snug text-muted">{frase}</p>
+		{hub.guia && <p class="m-0 text-sm font-semibold text-[#327bac]">Ver guía completa →</p>}
+	</Etiqueta>
+</li>

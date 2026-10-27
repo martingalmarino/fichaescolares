@@ -132,6 +132,7 @@ export function paginaCalificacionJsonLd(entrada: {
 	migas: { name: string; url: string }[];
 	preguntas: { q: string; a: string }[];
 	dataset?: { name: string; description: string };
+	lista?: { name: string; url: string }[];
 }) {
 	const url = `${SITIO}${entrada.ruta}`;
 	const principal =
@@ -186,6 +187,19 @@ export function paginaCalificacionJsonLd(entrada: {
 			dateModified: entrada.actualizado,
 			url,
 			creator: { '@id': ID_ORGANIZACION },
+		});
+	}
+	if (entrada.lista?.length) {
+		graph.push({
+			'@type': 'ItemList',
+			name: 'Provincias con escala publicada',
+			numberOfItems: entrada.lista.length,
+			itemListElement: entrada.lista.map((item, indice) => ({
+				'@type': 'ListItem',
+				position: indice + 1,
+				name: item.name,
+				url: item.url,
+			})),
 		});
 	}
 	return { '@context': 'https://schema.org', '@graph': graph };
