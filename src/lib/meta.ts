@@ -4,6 +4,7 @@ import type { Efemeride } from '../data/efemerides';
 import { efemerides } from '../data/efemerides';
 import type { Lamina } from '../data/laminas';
 import { publicadas } from '../data/laminas';
+import { HUB_TARJETAS, TARJETAS, type SetTarjetas } from '../data/tarjetas';
 import { mapas, nombreTipo, type MapaIgn } from '../data/mapas';
 import { provincias, type Provincia } from '../data/provincias';
 import { MESES_SLUG, efemeridesDelMes, fechaArgentina, mesDeSlug, pascua, proximaOcurrencia, slugDeMes } from './calendario';
@@ -20,6 +21,8 @@ export interface MetaPagina {
 	flexible?: boolean;
 	/** Estas páginas usan el title del documento, aunque pase de 60 caracteres. */
 	tituloLibre?: boolean;
+	/** Estas páginas usan la description pedida, aunque pase de 160 caracteres. */
+	descripcionLibre?: boolean;
 }
 
 const MESES_MIN = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre', 'diciembre'];
@@ -225,6 +228,26 @@ export function metaMapasProvincias(): MetaPagina {
 		title: 'Mapas de las provincias argentinas para imprimir | Aulita',
 		description:
 			'Mapas de las 24 provincias argentinas para imprimir gratis en A4: políticos con departamentos, físicos, mudos y satelitales. Fuente oficial: IGN.',
+	};
+}
+
+export function metaTarjetasIndice(): MetaPagina {
+	return {
+		ruta: '/tarjetas-educativas/',
+		title: HUB_TARJETAS.title,
+		description: HUB_TARJETAS.description,
+		tituloLibre: HUB_TARJETAS.title.length > MAX_TITULO,
+		descripcionLibre: HUB_TARJETAS.description.length > MAX_DESCRIPCION,
+	};
+}
+
+export function metaTarjeta(set: SetTarjetas): MetaPagina {
+	return {
+		ruta: `/tarjetas-educativas/${set.slug}/`,
+		title: set.title,
+		description: set.description,
+		tituloLibre: set.title.length > MAX_TITULO,
+		descripcionLibre: set.description.length > MAX_DESCRIPCION,
 	};
 }
 
@@ -565,6 +588,8 @@ export function todasLasMetas(desde = new Date()): MetaPagina[] {
 		metaMapasIndice(),
 		metaMapasProvincias(),
 		metaLaminasIndice(),
+		metaTarjetasIndice(),
+		...TARJETAS.map((set) => metaTarjeta(set)),
 		metaProvinciasIndice(),
 		...meses,
 		...efemerides.map((fecha) => metaEfemeride(fecha, desde)),

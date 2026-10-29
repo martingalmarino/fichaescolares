@@ -1,0 +1,119 @@
+---
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Preguntas from '../../components/Preguntas.astro';
+import FiltroTarjetas from '../../islands/FiltroTarjetas';
+import { ENLACES_HUB, FAQ_HUB, HUB_TARJETAS, TARJETAS, USOS_HUB, claveArea, lineaSet, miniatura, nivelesDe } from '../../data/tarjetas';
+import { metaTarjetasIndice } from '../../lib/meta';
+import { ID_SITIO } from '../../lib/seo';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const meta = metaTarjetasIndice();
+const sitio = Astro.site ?? new URL(Astro.url.origin);
+const url = new URL('/tarjetas-educativas/', sitio).href;
+const jsonLd = {
+	'@context': 'https://schema.org',
+	'@graph': [
+		{
+			'@type': 'CollectionPage',
+			name: HUB_TARJETAS.h1,
+			description: meta.description,
+			url,
+			inLanguage: 'es-AR',
+			isPartOf: { '@id': ID_SITIO },
+			mainEntity: {
+				'@type': 'ItemList',
+				numberOfItems: TARJETAS.length,
+				itemListElement: TARJETAS.map((set, indice) => ({
+					'@type': 'ListItem',
+					position: indice + 1,
+					name: set.h1,
+					url: new URL(`/tarjetas-educativas/${set.slug}/`, sitio).href,
+				})),
+			},
+		},
+		{
+			'@type': 'BreadcrumbList',
+			itemListElement: [
+				{ '@type': 'ListItem', position: 1, name: 'Inicio', item: new URL('/', sitio).href },
+				{ '@type': 'ListItem', position: 2, name: 'Tarjetas educativas', item: url },
+			],
+		},
+		{
+			'@type': 'FAQPage',
+			mainEntity: FAQ_HUB.map((item) => ({
+				'@type': 'Question',
+				name: item.q,
+				acceptedAnswer: { '@type': 'Answer', text: item.a },
+			})),
+		},
+	],
+};
+---
+
+<BaseLayout title={meta.title} description={meta.description} keywords={HUB_TARJETAS.keywords.join(', ')} image="/tarjetas/abecedario-portada.webp" jsonLd={jsonLd}>
+	<article class="mx-auto max-w-6xl px-4 py-8">
+		<Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: 'Tarjetas educativas' }]} />
+		<h1 class="mt-4 text-3xl font-bold tracking-tight text-azul sm:text-4xl">{HUB_TARJETAS.h1}</h1>
+		<p class="mt-3 max-w-3xl text-base leading-relaxed text-muted">{HUB_TARJETAS.intro}</p>
+		<FiltroTarjetas client:idle />
+		<ul class="mt-8 grid gap-5 sm:grid-cols-2 lg:grid-cols-3">
+			{
+				TARJETAS.map((set) => {
+					const foto = miniatura(set);
+					return (
+						<li data-tarjeta data-niveles={nivelesDe(set).join(' ')} data-area={claveArea(set.area)}>
+							<a class="flex h-full flex-col overflow-hidden rounded-card border border-borde bg-white shadow-card transition hover:border-celeste" href={`/tarjetas-educativas/${set.slug}/`}>
+								<span class="flex h-44 justify-center overflow-hidden bg-celeste-50 px-4 pt-4 sm:h-52">
+									<img src={foto.src} alt={foto.alt} width="600" height="849" loading="lazy" decoding="async" class="w-[78%] rounded-t shadow-card" />
+								</span>
+								<span class="flex flex-1 flex-col gap-2 p-4">
+									<span class="text-lg font-bold text-azul">{set.titulo}</span>
+									<span class="text-sm text-muted">{lineaSet(set)}</span>
+									<span class="flex flex-wrap gap-1.5">
+										{set.chips.map((chip) => (
+											<span class="rounded-full border border-celeste-100 bg-celeste-50 px-2 py-0.5 text-xs text-azul">{chip}</span>
+										))}
+									</span>
+									<span class="mt-auto pt-2 text-sm font-semibold text-celeste">Ver y descargar PDF →</span>
+								</span>
+							</a>
+						</li>
+					);
+				})
+			}
+		</ul>
+
+		<section class="mt-12">
+			<h2 class="text-2xl font-bold tracking-tight text-azul">Cómo usarlas en el aula</h2>
+			<ul class="mt-4 grid gap-4 lg:grid-cols-3">
+				{
+					USOS_HUB.map((uso, indice) => (
+						<li class="rounded-card border border-borde bg-white p-4 shadow-card">
+							<h3 class="font-bold text-azul">
+								{indice + 1}. {uso.titulo}
+							</h3>
+							<p class="mt-2 text-sm leading-relaxed text-muted">{uso.texto}</p>
+						</li>
+					))
+				}
+			</ul>
+		</section>
+
+		<Preguntas preguntas={FAQ_HUB} abrirPrimera />
+
+		<section class="mt-12">
+			<h2 class="text-2xl font-bold tracking-tight text-azul">Otros recursos de Aulita</h2>
+			<ul class="mt-4 flex flex-wrap gap-3">
+				{
+					ENLACES_HUB.map((enlace) => (
+						<li>
+							<a class="inline-flex min-h-11 items-center rounded-card border border-borde bg-white px-4 text-sm font-semibold text-azul shadow-card hover:border-celeste" href={enlace.href}>
+								{enlace.texto}
+							</a>
+						</li>
+					))
+				}
+			</ul>
+		</section>
+	</article>
+</BaseLayout>

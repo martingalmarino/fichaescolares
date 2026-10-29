@@ -1,0 +1,38 @@
+{
+ "abecedario": {
+  "title": "Tarjetas del abecedario",
+  "cards": 27,
+  "pages": 5,
+  "overflowing_cards": 0
+ },
+ "numeros-1-al-20": {
+  "title": "Tarjetas de números del 1 al 20",
+  "cards": 20,
+  "pages": 4,
+  "overflowing_cards": 0
+ },
+ "vocales": {
+  "title": "Tarjetas de las vocales",
+  "cards": 5,
+  "pages": 2,
+  "overflowing_cards": 0
+ },
+ "silabas": {
+  "title": "Tarjetas de sílabas directas",
+  "cards": 16,
+  "pages": 3,
+  "overflowing_cards": 0
+ },
+ "colores-y-formas": {
+  "title": "Tarjetas de colores y formas",
+  "cards": 20,
+  "pages": 4,
+  "overflowing_cards": 0
+ },
+ "dias-y-meses": {
+  "title": "Tarjetas de los días de la semana y los meses del año",
+  "cards": 19,
+  "pages": 4,
+  "overflowing_cards": 0
+ }
+}

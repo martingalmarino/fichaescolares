@@ -1,0 +1,207 @@
+---
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Preguntas from '../../components/Preguntas.astro';
+import { TARJETAS, marcaContenido, relacionadasDe, tarjetaPorSlug } from '../../data/tarjetas';
+import { metaTarjeta } from '../../lib/meta';
+import { ID_ORGANIZACION } from '../../lib/seo';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+export function getStaticPaths() {
+	return TARJETAS.map((set) => ({
+		params: { slug: set.slug },
+		props: { slug: set.slug },
+	}));
+}
+
+interface Props {
+	slug: string;
+}
+
+const set = tarjetaPorSlug(Astro.props.slug);
+if (!set) throw new Error(`Tarjetas no publicadas: ${Astro.props.slug}`);
+const otras = relacionadasDe(set);
+const meta = metaTarjeta(set);
+const sitio = Astro.site ?? new URL(Astro.url.origin);
+const url = new URL(`/tarjetas-educativas/${set.slug}/`, sitio).href;
+const pdf = new URL(set.pdf, sitio).href;
+const portada = new URL(set.imagenes[0].src, sitio).href;
+const media = { '@type': 'MediaObject', contentUrl: pdf, encodingFormat: 'application/pdf' };
+const jsonLd = {
+	'@context': 'https://schema.org',
+	'@graph': [
+		{
+			'@type': 'LearningResource',
+			name: set.h1,
+			description: set.description,
+			url,
+			inLanguage: 'es-AR',
+			learningResourceType: 'Flashcard',
+			educationalLevel: set.nivel,
+			isAccessibleForFree: true,
+			encoding: media,
+			associatedMedia: media,
+			image: portada,
+			publisher: { '@type': 'Organization', '@id': ID_ORGANIZACION, name: 'Aulita' },
+			datePublished: set.fechaPublicacion,
+		},
+		{
+			'@type': 'FAQPage',
+			mainEntity: set.faqs.map((item) => ({
+				'@type': 'Question',
+				name: item.q,
+				acceptedAnswer: { '@type': 'Answer', text: item.a },
+			})),
+		},
+		{
+			'@type': 'BreadcrumbList',
+			itemListElement: [
+				{ '@type': 'ListItem', position: 1, name: 'Inicio', item: new URL('/', sitio).href },
+				{ '@type': 'ListItem', position: 2, name: 'Tarjetas educativas', item: new URL('/tarjetas-educativas/', sitio).href },
+				{ '@type': 'ListItem', position: 3, name: set.titulo, item: url },
+			],
+		},
+	],
+};
+const tarjetasTexto = set.enBlanco > 0 ? `${set.tarjetas} + ${set.enBlanco} en blanco` : String(set.tarjetas);
+---
+
+<BaseLayout title={meta.title} description={meta.description} keywords={set.keywords.join(', ')} image={set.imagenes[0].src} jsonLd={jsonLd}>
+	<link slot="head" rel="preload" as="image" href={set.imagenes[0].src} media="(min-width: 1024px)" fetchpriority="high" />
+	<article class="mx-auto max-w-6xl px-4 py-8">
+		<Breadcrumbs
+			items={[
+				{ label: 'Inicio', href: '/' },
+				{ label: 'Tarjetas educativas', href: '/tarjetas-educativas/' },
+				{ label: set.titulo },
+			]}
+		/>
+		<div class="mt-4 grid items-start gap-8 lg:grid-cols-[minmax(0,1.15fr)_minmax(0,1fr)] lg:gap-10">
+			<div class="min-w-0">
+				<h1 class="text-3xl font-bold tracking-tight text-azul sm:text-4xl">{set.h1}</h1>
+				<p class="mt-3 text-base leading-relaxed text-muted">{set.intro}</p>
+				<dl class="mt-5 grid grid-cols-2 gap-3">
+					<div class="rounded-card border border-borde bg-white px-3 py-3 shadow-card">
+						<dt class="text-xs text-muted">Tarjetas</dt>
+						<dd class="mt-1 text-sm font-bold text-azul">{tarjetasTexto}</dd>
+					</div>
+					<div class="rounded-card border border-borde bg-white px-3 py-3 shadow-card">
+						<dt class="text-xs text-muted">Páginas</dt>
+						<dd class="mt-1 text-sm font-bold text-azul">{set.paginas} (A4 vertical)</dd>
+					</div>
+					<div class="rounded-card border border-borde bg-white px-3 py-3 shadow-card">
+						<dt class="text-xs text-muted">Nivel</dt>
+						<dd class="mt-1 text-sm font-bold text-azul">{set.nivel}</dd>
+					</div>
+					<div class="rounded-card border border-borde bg-white px-3 py-3 shadow-card">
+						<dt class="text-xs text-muted">Formato</dt>
+						<dd class="mt-1 text-sm font-bold text-azul">PDF · {set.pesoKB} KB</dd>
+					</div>
+				</dl>
+				<a
+					class="mt-5 inline-flex min-h-12 w-full items-center justify-center rounded-control bg-sol px-5 text-base font-bold text-azul hover:brightness-95"
+					href={set.pdf}
+					download
+					data-descarga
+					data-set={set.slug}
+					data-archivo={set.pdf}
+				>
+					Descargar PDF gratis
+				</a>
+				<p class="mt-2 text-center text-sm text-muted">Sin registro. Se imprime bien en blanco y negro.</p>
+			</div>
+			<ul class:list={['grid min-w-0 grid-cols-2 gap-3 rounded-card bg-celeste-50 p-4', set.imagenes.length > 2 && 'lg:grid-cols-3']}>
+				{
+					set.imagenes.map((imagen, indice) => (
+						<li class:list={[indice === 2 && 'hidden lg:block']}>
+							<img
+								src={imagen.src}
+								alt={imagen.alt}
+								width="600"
+								height="849"
+								decoding="async"
+								loading="lazy"
+								class="h-auto w-full bg-white shadow-card"
+							/>
+						</li>
+					))
+				}
+			</ul>
+		</div>
+
+		<section class="mt-12">
+			<h2 class="text-2xl font-bold tracking-tight text-azul">{set.contenido.titulo}</h2>
+			<ul class="mt-4 flex flex-wrap gap-2">
+				{
+					set.contenido.items.map((item) => {
+						const partes = marcaContenido(item);
+						return (
+							<li class="rounded-md border border-borde bg-white px-2 py-1 text-sm">
+								{partes ? (
+									<>
+										<b class="text-celeste">{partes.marca}</b> {partes.resto}
+									</>
+								) : (
+									item
+								)}
+							</li>
+						);
+					})
+				}
+			</ul>
+		</section>
+
+		<section class="mt-12 max-w-3xl">
+			<h2 class="text-2xl font-bold tracking-tight text-azul">Cómo usarlas en el aula</h2>
+			<ol class="mt-4 list-decimal space-y-2 pl-5 text-base leading-relaxed">
+				{
+					set.usos.map((uso) => (
+						<li>
+							<b class="text-azul">{uso.titulo}:</b> {uso.texto}
+						</li>
+					))
+				}
+			</ol>
+		</section>
+
+		<Preguntas preguntas={set.faqs} abrirPrimera />
+
+		<section class="mt-12">
+			<h2 class="text-2xl font-bold tracking-tight text-azul">Seguí practicando</h2>
+			<ul class="mt-4 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+				{
+					otras.map((otra) => (
+						<li>
+							<a class="block h-full rounded-card border border-borde bg-white p-4 shadow-card hover:border-celeste" href={`/tarjetas-educativas/${otra.slug}/`}>
+								<span class="block font-bold text-azul">{otra.h1.replace(' para imprimir', '')}</span>
+								<span class="mt-1 block text-sm text-muted">PDF · {otra.nivel}</span>
+							</a>
+						</li>
+					))
+				}
+				{
+					set.enlacesAulita.map((enlace) => (
+						<li>
+							<a class="block h-full rounded-card border border-borde bg-white p-4 shadow-card hover:border-celeste" href={enlace.href}>
+								<span class="block font-bold text-azul">{enlace.texto}</span>
+								<span class="mt-1 block text-sm text-muted">{enlace.detalle}</span>
+							</a>
+						</li>
+					))
+				}
+			</ul>
+		</section>
+	</article>
+	<script is:inline>
+		document.addEventListener('click', (event) => {
+			const origen = event.target;
+			if (!(origen instanceof Element)) return;
+			const boton = origen.closest('[data-descarga]');
+			if (!(boton instanceof HTMLAnchorElement)) return;
+			const set = boton.getAttribute('data-set');
+			const archivo = boton.getAttribute('data-archivo');
+			if (!set || !archivo) return;
+			window.dataLayer = window.dataLayer || [];
+			window.dataLayer.push({ event: 'descarga_pdf', recurso: 'tarjetas', set: set, archivo: archivo });
+		});
+	</script>
+</BaseLayout>

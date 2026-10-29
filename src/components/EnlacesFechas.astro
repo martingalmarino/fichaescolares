@@ -27,6 +27,13 @@ const { herramienta = 'sopa-de-letras' } = Astro.props;
 		<a class="text-celeste hover:underline" href="/caligrafia/">caligrafía</a>,
 		<a class="text-celeste hover:underline" href="/laminas/">láminas</a>,
 		<a class="text-celeste hover:underline" href="/tablas-y-operaciones/">cuentas</a>
-		o al <a class="text-celeste hover:underline" href="/provincias/">índice de provincias</a>.
+		o al <a class="text-celeste hover:underline" href="/provincias/">índice de provincias</a>{
+			(herramienta === 'caligrafia' || herramienta === 'sopa-de-letras') && (
+				<>
+					{' '}
+					o <a class="text-celeste hover:underline" href="/tarjetas-educativas/abecedario/">Tarjetas del abecedario para imprimir</a>
+				</>
+			)
+		}.
 	</p>
 </nav>

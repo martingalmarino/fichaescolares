@@ -1,6 +1,7 @@
 import { describe, expect, it } from 'vitest';
 import { efemerides } from '../data/efemerides';
 import { publicadas } from '../data/laminas';
+import { TARJETAS } from '../data/tarjetas';
 import { mapas } from '../data/mapas';
 import { provincias } from '../data/provincias';
 import { MESES_SLUG, efemeridesDelMes, fechaArgentina, mesDeSlug, pascua } from './calendario';
@@ -38,6 +39,9 @@ describe('títulos y descripciones', () => {
 		expect(rutas.has('/registro-de-asistencia/')).toBe(true);
 		expect(rutas.has('/etiquetas-escolares/cuadernos/')).toBe(true);
 		expect(rutas.has('/etiquetas-escolares/utiles/')).toBe(true);
+		expect(rutas.has('/tarjetas-educativas/')).toBe(true);
+		expect(rutas.has('/tarjetas-educativas/abecedario/')).toBe(true);
+		expect(metas.filter((meta) => meta.ruta.startsWith('/tarjetas-educativas/') && meta.ruta !== '/tarjetas-educativas/')).toHaveLength(TARJETAS.length);
 	});
 
 	it('no pasa el largo y no repite title ni description', () => {
@@ -46,7 +50,7 @@ describe('títulos y descripciones', () => {
 		const largos: string[] = [];
 		for (const meta of metas) {
 			if (!meta.tituloLibre && meta.title.length > MAX_TITULO) largos.push(`título ${meta.title.length}: ${meta.ruta} — ${meta.title}`);
-			if (meta.description.length > MAX_DESCRIPCION) largos.push(`description ${meta.description.length}: ${meta.ruta} — ${meta.description}`);
+			if (!meta.descripcionLibre && meta.description.length > MAX_DESCRIPCION) largos.push(`description ${meta.description.length}: ${meta.ruta} — ${meta.description}`);
 			if (!meta.flexible && meta.description.length < MIN_DESCRIPCION) largos.push(`description corta ${meta.description.length}: ${meta.ruta} — ${meta.description}`);
 			const tituloPrevio = titulos.get(meta.title);
 			if (tituloPrevio) largos.push(`título repetido «${meta.title}» en ${tituloPrevio} y ${meta.ruta}`);

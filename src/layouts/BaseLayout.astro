@@ -92,6 +92,7 @@ const sitioLd = {
 		<link rel="icon" href="/favicon.ico" />
 		<link rel="manifest" href="/site.webmanifest" />
 		<title>{title}</title>
+		<slot name="head" />
 		{
 			adsense && (
 				<script
