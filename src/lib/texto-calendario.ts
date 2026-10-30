@@ -9,7 +9,36 @@ export { LEY_FERIADOS };
 export function ministerioDe(provincia: Provincia): string {
 	if (provincia.slug === 'caba') return 'Ministerio de Educación de la Ciudad de Buenos Aires';
 	if (provincia.slug === 'buenos-aires') return 'Ministerio de Educación de la provincia de Buenos Aires';
+	if (provincia.slug === 'mendoza') return 'Dirección General de Escuelas (DGE)';
 	return `Ministerio de Educación de ${nombreCalendario(provincia)}`;
+}
+
+/** Sujeto de la oración, con artículo. Mendoza publica por la DGE; el resto, por su ministerio. */
+export function sujetoOrganismo(provincia: Provincia): string {
+	if (provincia.slug === 'mendoza') return 'La Dirección General de Escuelas (DGE)';
+	if (provincia.slug === 'caba') return 'El Ministerio de Educación porteño';
+	if (provincia.slug === 'buenos-aires') return 'La Dirección General de Cultura y Educación (DGCyE)';
+	return `El Ministerio de Educación de ${nombreCalendario(provincia)}`;
+}
+
+export function organismoCorto(provincia: Provincia): string {
+	if (provincia.slug === 'mendoza') return 'la DGE';
+	if (provincia.slug === 'caba') return 'el Ministerio de Educación porteño';
+	if (provincia.slug === 'buenos-aires') return 'la DGCyE';
+	return 'el Ministerio de Educación';
+}
+
+export function keywordsProvincia(provincia: Provincia, anio: number): string[] {
+	const clave = nombreCalendario(provincia)
+		.normalize('NFD')
+		.replace(/\p{Diacritic}/gu, '')
+		.toLowerCase();
+	return [
+		`calendario escolar ${anio} ${clave}`,
+		`inicio de clases ${anio} ${clave}`,
+		`ciclo lectivo ${anio} ${clave}`,
+		`vacaciones de invierno ${anio} ${clave}`,
+	];
 }
 
 export function fechaActualizado(iso: string): string {
@@ -58,7 +87,7 @@ export function fraseProvincia(provincia: Provincia, jurisdiccion: Jurisdiccion,
 		return `En ${lugar} las clases ${anio} empiezan el <time datetime="${jurisdiccion.inicio}">${fechaCompleta(inicio.anio, inicio.mes, inicio.dia)}</time> y terminan el <time datetime="${jurisdiccion.fin}">${fechaCompleta(fin.anio, fin.mes, fin.dia)}</time>. Las vacaciones de invierno son del <time datetime="${jurisdiccion.invierno.desde}">${fechaCompleta(desde.anio, desde.mes, desde.dia)}</time> al <time datetime="${jurisdiccion.invierno.hasta}">${fechaCompleta(hasta.anio, hasta.mes, hasta.dia)}</time>.`;
 	}
 	const en = provincia.slug === 'caba' || provincia.slug === 'buenos-aires' ? lugar : nombreCalendario(provincia);
-	return `Las clases ${anio} en ${en} todavía no tienen fecha oficial: el ${ministerioDe(provincia)} aún no publicó el calendario. Abajo están los feriados nacionales ${anio} ya confirmados por ley.`;
+	return `Las clases ${anio} en ${en} todavía no tienen fecha oficial: ${sujetoOrganismo(provincia)} aún no publicó el calendario. Abajo están los feriados nacionales ${anio} ya confirmados por ley.`;
 }
 
 export function etiquetaFeriado(feriado: FeriadoCalculado): string {
@@ -83,20 +112,113 @@ function listaFeriados(anio: number): string {
 		.join('. ');
 }
 
+/** Una sola fecha de jurisdicción, repetida por nivel. Si no es oficial, las tres quedan a confirmar. */
+export function cuadroBuenosAires(jurisdiccion: Jurisdiccion) {
+	const oficial = jurisdiccion.estado === 'oficial';
+	const inicio = fechaTarjeta(oficial ? jurisdiccion.inicio : null);
+	const invierno = rangoTarjeta(oficial ? jurisdiccion.invierno.desde : null, oficial ? jurisdiccion.invierno.hasta : null);
+	const fin = fechaTarjeta(oficial ? jurisdiccion.fin : null);
+	return [
+		{ clave: 'Inicio de clases', inicial: inicio, primaria: inicio, secundaria: inicio },
+		{ clave: 'Vacaciones de invierno', inicial: invierno, primaria: invierno, secundaria: invierno },
+		{ clave: 'Fin de clases', inicial: fin, primaria: fin, secundaria: fin },
+	];
+}
+
+/** Respuesta directa bajo el H1 de la Provincia de Buenos Aires. 40 a 60 palabras si la DGCyE no publicó. */
+export function introBuenosAires(jurisdiccion: Jurisdiccion, anio: number): string {
+	if (jurisdiccion.estado === 'oficial' && jurisdiccion.inicio) {
+		return `¿Cuándo empiezan las clases en ${anio} en la Provincia de Buenos Aires? La DGCyE fijó el inicio el ${fechaTarjeta(jurisdiccion.inicio)}. El cuadro muestra las vacaciones de invierno y el fin de clases por nivel. La Ciudad de Buenos Aires publica otro calendario.`;
+	}
+	return `¿Cuándo empiezan las clases en ${anio} en la Provincia de Buenos Aires? La Dirección General de Cultura y Educación (DGCyE) todavía no publicó el calendario oficial. No hay fecha de inicio, de vacaciones de invierno ni de fin de clases, tampoco por nivel. Esta página no adelanta fechas estimadas.`;
+}
+
+export function preguntasBuenosAires(jurisdiccion: Jurisdiccion, anio: number): { q: string; a: string }[] {
+	const oficial = jurisdiccion.estado === 'oficial';
+	const caba = `La Ciudad Autónoma de Buenos Aires tiene otro calendario: <a href="/calendario-escolar-${anio}/caba/">calendario escolar ${anio} de CABA</a>.`;
+	const inicio =
+		oficial && jurisdiccion.inicio
+			? `El ciclo lectivo ${anio} en la Provincia de Buenos Aires empieza el ${fechaTarjeta(jurisdiccion.inicio)}, según la DGCyE. ${caba}`
+			: `La DGCyE todavía no publicó el inicio del ciclo lectivo ${anio} en la Provincia de Buenos Aires. No hay una fecha oficial ni una estimada. ${caba}`;
+	const invierno =
+		oficial && jurisdiccion.invierno.desde && jurisdiccion.invierno.hasta
+			? `Las vacaciones de invierno ${anio} en la Provincia de Buenos Aires van del ${fechaTarjeta(jurisdiccion.invierno.desde)} al ${fechaTarjeta(jurisdiccion.invierno.hasta)}, según la DGCyE.`
+			: `Las vacaciones de invierno ${anio} en la Provincia de Buenos Aires las fija la DGCyE. Todavía no hay fechas oficiales ni estimadas.`;
+	const fin =
+		oficial && jurisdiccion.fin
+			? `Las clases ${anio} en la Provincia de Buenos Aires terminan el ${fechaTarjeta(jurisdiccion.fin)}. La resolución cargada no distingue el fin de inicial, primaria y secundaria.`
+			: `La DGCyE todavía no publicó cuándo terminan las clases ${anio}, ni el fin por nivel (inicial, primaria y secundaria). En el cuadro figuran como a confirmar.`;
+	return [
+		{ q: `¿Cuándo empieza el ciclo lectivo ${anio} en PBA?`, a: inicio },
+		{ q: `¿Cuándo son las vacaciones de invierno ${anio} en Buenos Aires?`, a: invierno },
+		{ q: `¿Cuándo terminan las clases ${anio}?`, a: fin },
+	];
+}
+
+/** Respuesta directa bajo el H1 de CABA. 40 a 60 palabras si el ministerio porteño no publicó la Agenda Educativa. */
+export function introCaba(jurisdiccion: Jurisdiccion, anio: number): string {
+	if (jurisdiccion.estado === 'oficial' && jurisdiccion.inicio) {
+		return `La Agenda Educativa es el calendario oficial de la Ciudad de Buenos Aires. ¿Cuándo empiezan las clases en ${anio}? El Ministerio de Educación porteño fijó el inicio el ${fechaTarjeta(jurisdiccion.inicio)}. Las vacaciones de invierno y el fin del ciclo están en esta página, con la fuente de la Agenda Educativa ${anio}.`;
+	}
+	return `La Agenda Educativa es el calendario oficial de la Ciudad de Buenos Aires. ¿Cuándo empiezan las clases en ${anio}? El Ministerio de Educación porteño todavía no publicó la Agenda Educativa ${anio}. No hay fecha de inicio ni de vacaciones de invierno, y esta página no adelanta fechas estimadas.`;
+}
+
+export function inviernoCaba(jurisdiccion: Jurisdiccion, anio: number): string {
+	if (jurisdiccion.estado === 'oficial' && jurisdiccion.invierno.desde && jurisdiccion.invierno.hasta) {
+		return `Las vacaciones de invierno ${anio} en CABA van del ${fechaTarjeta(jurisdiccion.invierno.desde)} al ${fechaTarjeta(jurisdiccion.invierno.hasta)}, según la Agenda Educativa publicada por el Ministerio de Educación porteño.`;
+	}
+	return `Las vacaciones de invierno ${anio} en CABA todavía no tienen fecha. El Ministerio de Educación porteño no publicó la Agenda Educativa ${anio}, y esta página no muestra un receso estimado.`;
+}
+
+export function preguntasCaba(jurisdiccion: Jurisdiccion, anio: number): { q: string; a: string }[] {
+	const oficial = jurisdiccion.estado === 'oficial';
+	const provincia = `La Provincia de Buenos Aires tiene otro calendario: <a href="/calendario-escolar-${anio}/buenos-aires/">calendario escolar ${anio} de la Provincia de Buenos Aires</a>.`;
+	const queEs = oficial
+		? `Es el nombre oficial del calendario escolar de la Ciudad de Buenos Aires. La publica el Ministerio de Educación porteño. ${provincia}`
+		: `Es el nombre oficial del calendario escolar de la Ciudad de Buenos Aires. La publica el Ministerio de Educación porteño. La Agenda Educativa ${anio} todavía no salió, así que esta página no muestra fechas como oficiales. ${provincia}`;
+	const inicio =
+		oficial && jurisdiccion.inicio
+			? `Las clases ${anio} en CABA empiezan el ${fechaTarjeta(jurisdiccion.inicio)}, según la Agenda Educativa del Ministerio de Educación porteño.`
+			: `El Ministerio de Educación porteño todavía no publicó el inicio de clases ${anio}. No hay una fecha oficial ni una estimada.`;
+	const invierno =
+		oficial && jurisdiccion.invierno.desde && jurisdiccion.invierno.hasta
+			? `Las vacaciones de invierno ${anio} en CABA van del ${fechaTarjeta(jurisdiccion.invierno.desde)} al ${fechaTarjeta(jurisdiccion.invierno.hasta)}, según la Agenda Educativa.`
+			: `Todavía no hay fechas oficiales de las vacaciones de invierno ${anio} en CABA. El ministerio no publicó la Agenda Educativa ${anio}, y esta página no estima el receso.`;
+	return [
+		{ q: `¿Qué es la Agenda Educativa ${anio}?`, a: queEs },
+		{ q: `¿Cuándo empiezan las clases ${anio} en CABA?`, a: inicio },
+		{ q: `¿Cuándo son las vacaciones de invierno ${anio} en CABA?`, a: invierno },
+	];
+}
+
+/** Respuesta directa bajo el H1. 40 a 60 palabras si el organismo todavía no publicó fechas. */
+export function introProvincia(provincia: Provincia, jurisdiccion: Jurisdiccion, anio: number): string {
+	const lugar = lugarCalendario(provincia);
+	const sujeto = sujetoOrganismo(provincia);
+	if (jurisdiccion.estado === 'oficial' && jurisdiccion.inicio) {
+		return `¿Cuándo empiezan las clases en ${anio} en ${lugar}? ${sujeto} fijó el inicio el ${fechaTarjeta(jurisdiccion.inicio)}. En esta página están las vacaciones de invierno y el fin de clases de ese calendario oficial. No se adelantan fechas de otra fuente.`;
+	}
+	return `¿Cuándo empiezan las clases en ${anio} en ${lugar}? ${sujeto} todavía no publicó el calendario oficial. No hay fecha de inicio, de vacaciones de invierno ni de fin de clases. Esta página no adelanta fechas estimadas.`;
+}
+
 export function preguntasProvincia(provincia: Provincia, jurisdiccion: Jurisdiccion, anio: number): { q: string; a: string }[] {
+	if (provincia.slug === 'buenos-aires') return preguntasBuenosAires(jurisdiccion, anio);
+	if (provincia.slug === 'caba') return preguntasCaba(jurisdiccion, anio);
 	const lugar = lugarCalendario(provincia);
 	const nombre = nombreCalendario(provincia);
 	const ministerio = ministerioDe(provincia);
-	const pendiente = `El ${ministerio} todavía no lo publicó. Esta página se actualiza apenas salga la resolución oficial.`;
-	const inicio = jurisdiccion.estado === 'oficial' && jurisdiccion.inicio ? `Las clases ${anio} en ${lugar} empiezan el ${fechaTarjeta(jurisdiccion.inicio)}.` : pendiente;
+	const sujeto = sujetoOrganismo(provincia);
+	const segun = organismoCorto(provincia);
+	const pendiente = `${sujeto} todavía no lo publicó. No hay una fecha oficial ni una estimada.`;
+	const inicio = jurisdiccion.estado === 'oficial' && jurisdiccion.inicio ? `Las clases ${anio} en ${lugar} empiezan el ${fechaTarjeta(jurisdiccion.inicio)}, según ${segun}.` : pendiente;
 	const invierno =
 		jurisdiccion.estado === 'oficial' && jurisdiccion.invierno.desde && jurisdiccion.invierno.hasta
-			? `Las vacaciones de invierno ${anio} en ${lugar} son del ${fechaTarjeta(jurisdiccion.invierno.desde)} al ${fechaTarjeta(jurisdiccion.invierno.hasta)}.`
+			? `Las vacaciones de invierno ${anio} en ${lugar} son del ${fechaTarjeta(jurisdiccion.invierno.desde)} al ${fechaTarjeta(jurisdiccion.invierno.hasta)}, según ${segun}.`
 			: pendiente;
-	const fin = jurisdiccion.estado === 'oficial' && jurisdiccion.fin ? `Las clases ${anio} en ${lugar} terminan el ${fechaTarjeta(jurisdiccion.fin)}.` : pendiente;
+	const fin = jurisdiccion.estado === 'oficial' && jurisdiccion.fin ? `Las clases ${anio} en ${lugar} terminan el ${fechaTarjeta(jurisdiccion.fin)}, según ${segun}.` : pendiente;
 	const fuente = jurisdiccion.fuente
 		? `La fuente oficial es el <a href="${jurisdiccion.fuente}" rel="noopener noreferrer">${ministerio}</a>.`
-		: `Lo publica el ${ministerio}. Todavía no hay una resolución cargada en esta página.`;
+		: `${sujeto} lo publica. Todavía no hay una resolución cargada en esta página.`;
 	return [
 		{ q: `¿Cuándo empiezan las clases en ${nombre} en ${anio}?`, a: inicio },
 		{ q: `¿Cuándo son las vacaciones de invierno ${anio} en ${nombre}?`, a: invierno },

@@ -535,9 +535,11 @@ export function lugarCalendario(provincia: Provincia): string {
 }
 
 export function h1CalendarioProvincia(provincia: Provincia, anio: number): string {
+	if (provincia.slug === 'caba' && anio === 2027) return 'Agenda Educativa 2027 de CABA: calendario escolar de la Ciudad';
 	if (provincia.slug === 'caba') return `Calendario escolar ${anio} en la Ciudad de Buenos Aires`;
+	if (provincia.slug === 'buenos-aires' && anio === 2027) return 'Calendario escolar 2027 de la Provincia de Buenos Aires: inicio de clases y ciclo lectivo';
 	if (provincia.slug === 'buenos-aires') return `Calendario escolar ${anio} en la provincia de Buenos Aires`;
-	return `Calendario escolar ${anio} en ${nombreCalendario(provincia)}`;
+	return `Calendario escolar ${anio} de ${nombreCalendario(provincia)}: cuándo empiezan las clases`;
 }
 
 function diaMesCorto(iso: string): string {
@@ -560,11 +562,28 @@ export function metaCalendarioEscolar(anio: number): MetaPagina {
 }
 
 export function metaCalendarioProvincia(provincia: Provincia, jurisdiccion: Jurisdiccion, anio: number): MetaPagina {
+	if (provincia.slug === 'caba' && anio === 2027) {
+		return {
+			ruta: `/calendario-escolar-${anio}/${provincia.slug}/`,
+			title: 'Agenda Educativa 2027 CABA: calendario escolar porteño',
+			description:
+				'Agenda Educativa 2027 de la Ciudad de Buenos Aires: inicio de clases, vacaciones de invierno, feriados y fin del ciclo lectivo. Calendario para imprimir.',
+		};
+	}
+	if (provincia.slug === 'buenos-aires' && anio === 2027) {
+		return {
+			ruta: `/calendario-escolar-${anio}/${provincia.slug}/`,
+			title: 'Inicio de clases 2027 en Buenos Aires: calendario escolar',
+			description:
+				'Ciclo lectivo 2027 en la Provincia de Buenos Aires: cuándo empiezan las clases, vacaciones de invierno, feriados y fin de clases. Calendario para imprimir.',
+		};
+	}
 	const corto = nombreCalendario(provincia);
-	const largo = `Calendario escolar ${anio} ${corto}: inicio y vacaciones`;
-	const conMarca = `Calendario escolar ${anio} ${corto} | Aulita`;
-	const title = dentro(largo, MAX_TITULO) ? largo : dentro(conMarca, MAX_TITULO) ? conMarca : `Calendario escolar ${anio} ${corto}`;
+	const pedido = `Calendario escolar ${anio} ${corto}: inicio de clases`;
+	const sinEscolar = `Calendario ${anio} ${corto}: inicio de clases`;
+	const title = dentro(pedido, MAX_TITULO) ? pedido : dentro(sinEscolar, MAX_TITULO) ? sinEscolar : `Calendario escolar ${anio} ${corto}`;
 	const lugar = lugarCalendario(provincia);
+	const organo = provincia.slug === 'mendoza' ? 'la DGE' : 'el Ministerio de Educación';
 	const description =
 		jurisdiccion.estado === 'oficial' && jurisdiccion.inicio && jurisdiccion.fin && jurisdiccion.invierno.desde && jurisdiccion.invierno.hasta
 			? encajarCalendario([
@@ -572,10 +591,11 @@ export function metaCalendarioProvincia(provincia: Provincia, jurisdiccion: Juri
 					`Clases ${anio} en ${lugar}: inicio el ${diaMesCorto(jurisdiccion.inicio)}, vacaciones de invierno del ${diaMesCorto(jurisdiccion.invierno.desde)} al ${diaMesCorto(jurisdiccion.invierno.hasta)} y fin el ${diaMesCorto(jurisdiccion.fin)}.`,
 				])
 			: encajarCalendario([
-					`¿Cuándo empiezan las clases ${anio} en ${lugar}? Inicio, vacaciones de invierno, fin del ciclo y feriados ${anio}. Fechas oficiales apenas se publiquen.`,
-					`¿Cuándo empiezan las clases ${anio} en ${lugar}? Inicio, vacaciones de invierno y feriados ${anio}. Fechas oficiales apenas se publiquen.`,
-					`¿Cuándo empiezan las clases ${anio} en ${lugar}? Inicio, vacaciones de invierno y fin del ciclo. Fechas oficiales apenas se publiquen.`,
-					`Inicio de clases ${anio} en ${lugar}, vacaciones de invierno y fin del ciclo. Las fechas oficiales se publican apenas el ministerio las confirme.`,
+					`¿Cuándo empiezan las clases ${anio} en ${lugar}? Ciclo lectivo, vacaciones de invierno, feriados y fin de clases según ${organo}. Calendario para imprimir gratis.`,
+					`¿Cuándo empiezan las clases ${anio} en ${lugar}? Ciclo lectivo, vacaciones de invierno, feriados y fin de clases según ${organo}. Calendario para imprimir.`,
+					`¿Cuándo empiezan las clases ${anio} en ${lugar}? Inicio, vacaciones de invierno, feriados y fin de clases según ${organo}. Para imprimir gratis.`,
+					`¿Cuándo empiezan las clases ${anio} en ${lugar}? Inicio, vacaciones de invierno y fin de clases según ${organo}. Calendario para imprimir.`,
+					`Inicio de clases ${anio} en ${lugar}, vacaciones de invierno y fin del ciclo según ${organo}. Calendario para imprimir gratis.`,
 				]);
 	return { ruta: `/calendario-escolar-${anio}/${provincia.slug}/`, title, description };
 }

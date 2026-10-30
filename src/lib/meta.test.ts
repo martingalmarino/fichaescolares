@@ -125,24 +125,43 @@ describe('títulos y descripciones', () => {
 		expect(metaCalendarioEscolar(2027).description.length).toBeLessThanOrEqual(155);
 		const calendario = calendarioDe(2027);
 		const esperado = new Map<string, string>([
-			['buenos-aires', 'Calendario escolar 2027 Buenos Aires: inicio y vacaciones'],
-			['caba', 'Calendario escolar 2027 CABA: inicio y vacaciones'],
-			['cordoba', 'Calendario escolar 2027 Córdoba: inicio y vacaciones'],
-			['santiago-del-estero', 'Calendario escolar 2027 Santiago del Estero | Aulita'],
-			['tierra-del-fuego', 'Calendario escolar 2027 Tierra del Fuego | Aulita'],
-			['tucuman', 'Calendario escolar 2027 Tucumán: inicio y vacaciones'],
+			['buenos-aires', 'Inicio de clases 2027 en Buenos Aires: calendario escolar'],
+			['caba', 'Agenda Educativa 2027 CABA: calendario escolar porteño'],
+			['cordoba', 'Calendario escolar 2027 Córdoba: inicio de clases'],
+			['mendoza', 'Calendario escolar 2027 Mendoza: inicio de clases'],
+			['santiago-del-estero', 'Calendario 2027 Santiago del Estero: inicio de clases'],
+			['tierra-del-fuego', 'Calendario escolar 2027 Tierra del Fuego: inicio de clases'],
+			['tucuman', 'Calendario escolar 2027 Tucumán: inicio de clases'],
 		]);
 		for (const provincia of provincias) {
 			const meta = metaCalendarioProvincia(provincia, calendario.jurisdicciones[provincia.slug]!, 2027);
 			expect(meta.title.length, meta.title).toBeLessThanOrEqual(60);
-			expect(h1CalendarioProvincia(provincia, 2027).startsWith('Calendario escolar 2027 en ')).toBe(true);
+			if (provincia.slug === 'buenos-aires') {
+				expect(h1CalendarioProvincia(provincia, 2027)).toBe('Calendario escolar 2027 de la Provincia de Buenos Aires: inicio de clases y ciclo lectivo');
+				expect(meta.description).toBe(
+					'Ciclo lectivo 2027 en la Provincia de Buenos Aires: cuándo empiezan las clases, vacaciones de invierno, feriados y fin de clases. Calendario para imprimir.',
+				);
+			} else if (provincia.slug === 'caba') {
+				expect(h1CalendarioProvincia(provincia, 2027)).toBe('Agenda Educativa 2027 de CABA: calendario escolar de la Ciudad');
+				expect(meta.description).toBe(
+					'Agenda Educativa 2027 de la Ciudad de Buenos Aires: inicio de clases, vacaciones de invierno, feriados y fin del ciclo lectivo. Calendario para imprimir.',
+				);
+			} else {
+				expect(h1CalendarioProvincia(provincia, 2027)).toBe(`Calendario escolar 2027 de ${provincia.slug === 'tierra-del-fuego' ? 'Tierra del Fuego' : provincia.nombre}: cuándo empiezan las clases`);
+				expect(meta.description).toContain(provincia.slug === 'mendoza' ? 'según la DGE' : 'según el Ministerio de Educación');
+			}
+			if (provincia.slug === 'mendoza') {
+				expect(meta.description).toBe(
+					'¿Cuándo empiezan las clases 2027 en Mendoza? Ciclo lectivo, vacaciones de invierno, feriados y fin de clases según la DGE. Calendario para imprimir gratis.',
+				);
+			}
 			const titulo = esperado.get(provincia.slug);
 			if (titulo) expect(meta.title).toBe(titulo);
 			expect(meta.description.length, `${meta.ruta} ${meta.description}`).toBeGreaterThanOrEqual(140);
 			expect(meta.description.length, `${meta.ruta} ${meta.description}`).toBeLessThanOrEqual(155);
 		}
-		expect(h1CalendarioProvincia(provincias.find((provincia) => provincia.slug === 'caba')!, 2027)).toBe('Calendario escolar 2027 en la Ciudad de Buenos Aires');
-		expect(h1CalendarioProvincia(provincias.find((provincia) => provincia.slug === 'buenos-aires')!, 2027)).toBe('Calendario escolar 2027 en la provincia de Buenos Aires');
+		expect(metaCalendarioProvincia(provincias.find((provincia) => provincia.slug === 'caba')!, calendario.jurisdicciones.caba!, 2027).title.length).toBeLessThanOrEqual(60);
+		expect(metaCalendarioProvincia(provincias.find((provincia) => provincia.slug === 'buenos-aires')!, calendario.jurisdicciones['buenos-aires']!, 2027).title.length).toBeLessThanOrEqual(60);
 	});
 
 	it('deja el párrafo de cada provincia entre 80 y 100 palabras', () => {

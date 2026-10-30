@@ -2,7 +2,6 @@
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import CalendarioAnual from '../../components/CalendarioAnual.astro';
 import ListaFeriados from '../../components/ListaFeriados.astro';
-import Preguntas from '../../components/Preguntas.astro';
 import { calendarioDe, jurisdiccionDe, type Jurisdiccion } from '../../data/calendario-escolar';
 import { efemerides } from '../../data/efemerides';
 import { provincias, type Provincia } from '../../data/provincias';
@@ -13,8 +12,14 @@ import {
 	LEY_FERIADOS,
 	actualizadoVisible,
 	fechaActualizado,
+	cuadroBuenosAires,
 	fechaTarjeta,
-	fraseProvincia,
+	introBuenosAires,
+	introCaba,
+	introProvincia,
+	inviernoCaba,
+	keywordsProvincia,
+	sujetoOrganismo,
 	marcasReceso,
 	ministerioDe,
 	notaPuentes,
@@ -45,7 +50,28 @@ const meta = metaCalendarioProvincia(provincia, jurisdiccion, anio);
 const h1 = h1CalendarioProvincia(provincia, anio);
 const nombre = nombreCalendario(provincia);
 const actualizado = actualizadoVisible(calendario, jurisdiccion);
+const esPba = provincia.slug === 'buenos-aires';
+const esCaba = provincia.slug === 'caba';
 const preguntas = preguntasProvincia(provincia, jurisdiccion, anio);
+const cuadro = esPba ? cuadroBuenosAires(jurisdiccion) : [];
+const keywords = esPba
+	? [
+			'inicio de clases 2027 provincia de buenos aires',
+			'ciclo lectivo 2027 provincia de buenos aires',
+			'comienzo de clases 2027 provincia de buenos aires',
+			'calendario escolar 2027 provincia de buenos aires',
+			'vacaciones de invierno 2027 buenos aires',
+		].join(', ')
+	: esCaba
+		? [
+				'agenda educativa 2027',
+				'agenda educativa 2027 caba',
+				'calendario escolar 2027 caba',
+				'inicio de clases 2027 caba',
+				'vacaciones de invierno 2027 caba',
+				'ciclo lectivo 2027 ciudad de buenos aires',
+			].join(', ')
+		: keywordsProvincia(provincia, anio).join(', ');
 const sitio = Astro.site ?? new URL('https://www.aulita.com.ar');
 const url = new URL(meta.ruta, sitio).href;
 const indice = new URL(`/calendario-escolar-${anio}/`, sitio).href;
@@ -70,6 +96,7 @@ const webPage: Record<string, unknown> = {
 	isPartOf: { '@id': 'https://www.aulita.com.ar/#website' },
 	about: { '@type': 'AdministrativeArea', name: provincia.nombre },
 };
+if (esCaba) webPage.alternateName = `Agenda Educativa ${anio}`;
 if (jurisdiccion.fuente) {
 	webPage.citation = jurisdiccion.fuente;
 	webPage.isBasedOn = jurisdiccion.fuente;
@@ -97,7 +124,7 @@ const tarjetas = [
 ];
 ---
 
-<BaseLayout title={meta.title} description={meta.description} image={`/og/calendario-escolar-${anio}.svg`} jsonLd={jsonLd}>
+<BaseLayout title={meta.title} description={meta.description} keywords={keywords} image={`/og/calendario-escolar-${anio}.svg`} jsonLd={jsonLd}>
 	<article class="mx-auto max-w-6xl px-4 py-8">
 		<div class="no-print">
 			<Breadcrumbs
@@ -110,14 +137,20 @@ const tarjetas = [
 		</div>
 		<div class="hoja-calendario mt-4">
 			<h1 class="text-3xl font-bold tracking-tight text-azul sm:text-4xl">{h1}</h1>
-			<p class="no-print mt-3 max-w-3xl text-base leading-relaxed text-texto" set:html={fraseProvincia(provincia, jurisdiccion, anio)} />
+			<p class="no-print mt-3 max-w-3xl text-base leading-relaxed text-texto" set:html={esCaba ? introCaba(jurisdiccion, anio) : esPba ? introBuenosAires(jurisdiccion, anio) : introProvincia(provincia, jurisdiccion, anio)} />
 			<p class="no-print mt-2 text-sm text-muted">
-				Actualizado el <time datetime={actualizado}>{fechaActualizado(actualizado)}</time>
+				Actualizado: <time datetime={actualizado}>{fechaActualizado(actualizado)}</time>
 			</p>
 			{
 				jurisdiccion.estado === 'a-confirmar' ? (
 					<p class="no-print mt-4 rounded-card border border-sol bg-sol-50 px-4 py-3 text-sm leading-relaxed text-azul">
-						El {ministerioDe(provincia)} todavía no publicó el calendario {anio}. Mientras tanto te mostramos los feriados nacionales.
+						{esPba ? (
+							<>La Dirección General de Cultura y Educación (DGCyE) todavía no publicó el calendario {anio}. Las fechas del cuadro no son oficiales ni estimadas.</>
+						) : esCaba ? (
+							<>El Ministerio de Educación porteño todavía no publicó la Agenda Educativa {anio}. Las fechas de abajo no son oficiales ni estimadas.</>
+						) : (
+							<>{sujetoOrganismo(provincia)} todavía no publicó el calendario {anio}. Las fechas de abajo no son oficiales ni estimadas.</>
+						)}
 					</p>
 				) : (
 					jurisdiccion.fuente && (
@@ -141,6 +174,61 @@ const tarjetas = [
 					))
 				}
 			</ul>
+			{
+				esCaba && (
+					<section class="no-print mt-8 max-w-3xl" aria-labelledby="invierno-caba">
+						<h2 id="invierno-caba" class="text-2xl font-bold tracking-tight text-azul">Vacaciones de invierno {anio} en CABA</h2>
+						<p class="mt-3 text-base leading-relaxed text-texto">{inviernoCaba(jurisdiccion, anio)}</p>
+						<p class="mt-3 text-base leading-relaxed text-texto">
+							La Provincia de Buenos Aires tiene otro calendario.{' '}
+							<a class="text-celeste underline" href={`/calendario-escolar-${anio}/buenos-aires/`}>calendario escolar {anio} de la Provincia de Buenos Aires</a>.
+						</p>
+					</section>
+				)
+			}
+			{
+				esPba && (
+					<section class="no-print mt-8" aria-labelledby="cuadro-pba">
+						<h2 id="cuadro-pba" class="text-2xl font-bold tracking-tight text-azul">
+							Fechas clave por nivel
+						</h2>
+						<div class="mt-4 overflow-x-auto rounded-card border border-borde bg-white">
+							<table class="w-full min-w-[36rem] text-left text-sm">
+								<caption class="border-b border-borde px-3 py-3 text-left text-sm leading-relaxed text-muted">
+									{jurisdiccion.estado === 'oficial'
+										? 'La DGCyE publicó una fecha para la provincia. El archivo no trae un corte distinto por nivel, así que inicial, primaria y secundaria muestran la misma fecha oficial.'
+										: 'A confirmar en inicial, primaria y secundaria. La DGCyE todavía no publicó la resolución y esta tabla no trae fechas estimadas.'}
+								</caption>
+								<thead class="bg-celeste-50 text-azul">
+									<tr>
+										<th class="px-3 py-3 font-semibold" scope="col">Fecha clave</th>
+										<th class="px-3 py-3 font-semibold" scope="col">Inicial</th>
+										<th class="px-3 py-3 font-semibold" scope="col">Primaria</th>
+										<th class="px-3 py-3 font-semibold" scope="col">Secundaria</th>
+									</tr>
+								</thead>
+								<tbody>
+									{cuadro.map((fila) => (
+										<tr class="border-t border-borde">
+											<th class="px-3 py-3 font-semibold" scope="row">{fila.clave}</th>
+											<td class="px-3 py-3">{fila.inicial}</td>
+											<td class="px-3 py-3">{fila.primaria}</td>
+											<td class="px-3 py-3">{fila.secundaria}</td>
+										</tr>
+									))}
+								</tbody>
+							</table>
+						</div>
+						<p class="mt-3 max-w-3xl text-sm leading-relaxed text-muted">
+							La Ciudad Autónoma de Buenos Aires tiene otro calendario.{' '}
+							<a class="text-celeste underline" href={`/calendario-escolar-${anio}/caba/`}>
+								Calendario escolar {anio} de CABA
+							</a>
+							.
+						</p>
+					</section>
+				)
+			}
 			<div class="mt-10 flex flex-wrap items-center justify-between gap-3">
 				<h2 class="text-2xl font-bold tracking-tight text-azul">Calendario {anio} mes por mes</h2>
 				<button id="imprimir-calendario" type="button" class="no-print inline-flex min-h-11 items-center rounded-control bg-azul px-4 text-sm font-semibold text-white">
@@ -212,9 +300,15 @@ const tarjetas = [
 				)
 			}
 		</section>
-		<div class="no-print">
-			<Preguntas preguntas={preguntas} />
-		</div>
+		<section class="no-print mt-12 max-w-3xl" aria-labelledby="faq-titulo">
+			<h2 id="faq-titulo" class="text-2xl font-bold tracking-tight text-azul">Preguntas frecuentes</h2>
+			{preguntas.map((item) => (
+				<div class="mt-6">
+					<h3 class="text-xl font-bold tracking-tight text-azul">{item.q}</h3>
+					<p class="mt-2 text-base leading-relaxed text-muted" set:html={item.a} />
+				</div>
+			))}
+		</section>
 		<section class="no-print mt-12">
 			<h2 class="text-2xl font-bold tracking-tight text-azul">Ver también</h2>
 			<ul class="mt-4 flex flex-wrap gap-2 text-sm">
@@ -233,10 +327,17 @@ const tarjetas = [
 				<li><a class="inline-flex min-h-11 items-center rounded-control border border-borde bg-white px-3 text-celeste hover:border-celeste" href="/mapas/">Mapas escolares</a></li>
 			</ul>
 		</section>
-		<p class="no-print mt-10">
+		<p class="no-print mt-10 flex flex-wrap gap-3">
 			<a class="inline-flex min-h-11 items-center rounded-control bg-sol px-4 text-sm font-semibold text-azul" href={`/planificador-docente-2027/?prov=${provincia.slug}`}>
 				Armá tu planificador docente
 			</a>
+			{
+				(esPba || esCaba) && (
+					<a class="inline-flex min-h-11 items-center rounded-control border border-borde bg-white px-4 text-sm font-semibold text-celeste" href={`/agenda-docente-2027/?prov=${provincia.slug}`}>
+						Agenda docente 2027
+					</a>
+				)
+			}
 		</p>
 	</article>
 </BaseLayout>
