@@ -39,10 +39,8 @@ const keywords = [
 ];
 const sitio = Astro.site ?? new URL('https://www.aulita.com.ar');
 const url = new URL(meta.ruta, sitio).href;
-const filas = provincias
-	.map((provincia) => ({ provincia, jurisdiccion: calendario.jurisdicciones[provincia.slug]! }))
-	.sort((a, b) => a.provincia.slug.localeCompare(b.provincia.slug, 'es'));
 const oficiales = confirmadas(calendario);
+const mostrarTabla = oficiales > 0;
 const total = provincias.length;
 const avance = oficiales === 0 ? 1 : (oficiales / total) * 100;
 const feriados = feriadosDelAnio(anio);
@@ -66,19 +64,12 @@ const regiones = regionesEscolares.map((region) => ({
 }));
 const lista = itemListJsonLd(
 	`Calendario escolar ${anio} por provincia`,
-	filas.map((fila) => ({
-		name: nombreCalendario(fila.provincia),
-		url: new URL(`/calendario-escolar-${anio}/${fila.provincia.slug}/`, sitio).href,
-	})),
-);
-const listaGrilla = itemListJsonLd(
-	`Calendario escolar ${anio} de cada provincia`,
-	regiones.flatMap((region) =>
-		region.filas.map((fila) => ({
-			name: `Calendario escolar ${anio} ${nombreCalendario(fila.provincia)}`,
-			url: new URL(`/calendario-escolar-${anio}/${fila.provincia.slug}/`, sitio).href,
+	[...provincias]
+		.sort((a, b) => nombreCalendario(a).localeCompare(nombreCalendario(b), 'es'))
+		.map((provincia) => ({
+			name: nombreCalendario(provincia),
+			url: new URL(`/calendario-escolar-${anio}/${provincia.slug}/`, sitio).href,
 		})),
-	),
 );
 const faq = faqJsonLd(preguntas.map((item) => ({ q: item.q, a: textoPlano(item.a) })));
 const jsonLd = {
@@ -126,7 +117,9 @@ const jsonLd = {
 		<p class="max-w-3xl text-base leading-relaxed text-muted">
 			También podés armar el <a class="text-celeste underline" href="/planificador-docente-2027/">planificador docente</a>, imprimir la <a class="text-celeste underline" href="/agenda-docente-2027/">agenda docente</a> y ver las <a class="text-celeste underline" href="/efemerides/">efemérides</a>.
 		</p>
-		<section class="mt-10" aria-labelledby="resumen-provincias">
+		{
+			mostrarTabla && (
+				<section class="mt-10" aria-labelledby="resumen-provincias">
 			<h2 id="resumen-provincias" class="text-2xl font-bold tracking-tight text-azul">Inicio, invierno y fin por provincia</h2>
 			<div class="mt-4 overflow-x-auto rounded-card border border-borde bg-white">
 				<table class="w-full min-w-[40rem] text-left text-sm">
@@ -159,8 +152,12 @@ const jsonLd = {
 					</tbody>
 				</table>
 			</div>
-		</section>
-		<div id="grilla-provincias">
+				</section>
+			)
+		}
+		<section id="grilla-provincias" class="mt-6" aria-labelledby="grilla-titulo">
+			<h2 id="grilla-titulo" class="text-2xl font-bold tracking-tight text-azul">Calendario escolar {anio} por provincia</h2>
+			<p class="mt-2 max-w-3xl text-base leading-relaxed text-muted">Elegí tu provincia para ver el inicio de clases, las vacaciones de invierno y los feriados del ciclo lectivo {anio}.</p>
 			<div class="grilla-herramientas">
 				<label class="sr-only" for="buscar-provincia">Buscá tu provincia</label>
 				<input id="buscar-provincia" class="grilla-buscar" type="search" placeholder="Buscá tu provincia (ej.: Córdoba)" autocomplete="off" spellcheck="false" />
@@ -230,7 +227,7 @@ const jsonLd = {
 					</section>
 				))
 			}
-		</div>
+		</section>
 		<script is:inline type="module">
 			const raiz = document.querySelector('#grilla-provincias');
 			if (raiz instanceof HTMLElement) {
@@ -296,7 +293,6 @@ const jsonLd = {
 				))
 			}
 		</section>
-		<script type="application/ld+json" set:html={JSON.stringify(listaGrilla)} />
 	</article>
 </BaseLayout>
 
