@@ -116,7 +116,12 @@ describe('títulos y descripciones', () => {
 	});
 
 	it('arma los títulos del calendario escolar 2027', () => {
-		expect(metaCalendarioEscolar(2027).title).toBe('Calendario escolar 2027 Argentina por provincia');
+		expect(metaCalendarioEscolar(2027).title).toBe('Calendario escolar 2027 Argentina: inicio de clases');
+		expect(metaCalendarioEscolar(2027).title.length).toBeLessThanOrEqual(60);
+		expect(metaCalendarioEscolar(2027).description).toBe(
+			'¿Cuándo empiezan las clases en 2027? Inicio del ciclo lectivo, vacaciones de invierno y feriados por provincia. Elegí tu provincia y descargalo gratis.',
+		);
+		expect(metaCalendarioEscolar(2027).description.length).toBeGreaterThanOrEqual(140);
 		expect(metaCalendarioEscolar(2027).description.length).toBeLessThanOrEqual(155);
 		const calendario = calendarioDe(2027);
 		const esperado = new Map<string, string>([

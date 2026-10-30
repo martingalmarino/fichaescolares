@@ -113,32 +113,70 @@ export function preguntasProvincia(provincia: Provincia, jurisdiccion: Jurisdicc
 	];
 }
 
+function jurisdiccionesOficiales(calendario: CalendarioEscolar) {
+	return provincias.filter((provincia) => calendario.jurisdicciones[provincia.slug]?.estado === 'oficial');
+}
+
+/** Respuesta directa bajo el H1. 40 a 60 palabras cuando ninguna jurisdicción publicó fechas. */
+export function introCalendarioNacional(calendario: CalendarioEscolar): string {
+	const anio = calendario.anio;
+	const oficiales = jurisdiccionesOficiales(calendario).filter((provincia) => calendario.jurisdicciones[provincia.slug]?.inicio);
+	if (oficiales.length === 0) {
+		return `¿Cuándo empiezan las clases en ${anio}? Todavía no hay una fecha oficial: ninguna de las 24 jurisdicciones publicó su calendario. Cada provincia y la Ciudad de Buenos Aires fijan su propio inicio, y esta página no adelanta fechas estimadas. El inicio, las vacaciones de invierno y el fin del ciclo se cargan cuando sale la resolución de cada ministerio.`;
+	}
+	const inicios = oficiales.map((provincia) => calendario.jurisdicciones[provincia.slug]!.inicio!).sort();
+	const desde = fechaTarjeta(inicios[0] ?? null);
+	const hasta = fechaTarjeta(inicios[inicios.length - 1] ?? null);
+	const pendientes = provincias.length - oficiales.length;
+	if (pendientes === 0) {
+		return `¿Cuándo empiezan las clases en ${anio}? El inicio oficial va del ${desde} al ${hasta}, según la provincia. Las 24 jurisdicciones ya publicaron su calendario. En la tabla están el inicio, las vacaciones de invierno y el fin del ciclo de cada una.`;
+	}
+	return `¿Cuándo empiezan las clases en ${anio}? Donde ya hay calendario oficial, el inicio va del ${desde} al ${hasta}. ${pendientes} jurisdicciones todavía no lo publicaron y figuran como a confirmar, sin fechas estimadas. Elegí tu provincia para ver el detalle.`;
+}
+
+export function filasResumen(calendario: CalendarioEscolar) {
+	return provincias
+		.map((provincia) => {
+			const jurisdiccion = calendario.jurisdicciones[provincia.slug];
+			if (!jurisdiccion) throw new Error(`Falta el calendario de ${provincia.slug}`);
+			const oficial = jurisdiccion.estado === 'oficial';
+			return {
+				provincia,
+				href: `/calendario-escolar-${calendario.anio}/${provincia.slug}/`,
+				inicio: fechaTarjeta(oficial ? jurisdiccion.inicio : null),
+				invierno: rangoTarjeta(oficial ? jurisdiccion.invierno.desde : null, oficial ? jurisdiccion.invierno.hasta : null),
+				fin: fechaTarjeta(oficial ? jurisdiccion.fin : null),
+				estado: oficial ? 'Oficial' : 'A confirmar',
+			};
+		})
+		.sort((a, b) => nombreCalendario(a.provincia).localeCompare(nombreCalendario(b.provincia), 'es'));
+}
+
 export function preguntasNacional(calendario: CalendarioEscolar): { q: string; a: string }[] {
 	const anio = calendario.anio;
-	const oficiales = provincias.filter((provincia) => calendario.jurisdicciones[provincia.slug]?.estado === 'oficial');
+	const oficiales = jurisdiccionesOficiales(calendario);
+	const nombres = oficiales.map((provincia) => nombreCalendario(provincia)).join(', ');
 	const inicio =
 		oficiales.length === 0
-			? `Cada provincia y la Ciudad de Buenos Aires fijan su propio inicio de clases ${anio}. Ninguna publicó todavía el calendario, así que no hay una fecha única.`
-			: `Ya hay calendario oficial en ${oficiales.map((provincia) => nombreCalendario(provincia)).join(', ')}. El resto sigue a confirmar: cada ministerio publica el suyo.`;
+			? `Ninguna provincia ni la Ciudad de Buenos Aires publicó todavía el inicio del ciclo lectivo ${anio}. No hay una fecha única ni fechas estimadas en esta página.`
+			: `Ya hay inicio oficial en ${nombres}. El resto de las jurisdicciones sigue a confirmar, sin fechas estimadas.`;
 	const invierno =
 		oficiales.length === 0
-			? `Las vacaciones de invierno ${anio} también las define cada jurisdicción. Todavía no hay fechas oficiales cargadas.`
-			: `Las vacaciones de invierno ${anio} ya están publicadas en ${oficiales.map((provincia) => nombreCalendario(provincia)).join(', ')}. En el resto de las provincias siguen a confirmar.`;
+			? `Las vacaciones de invierno ${anio} las define cada jurisdicción. Todavía no hay fechas oficiales cargadas.`
+			: `Las vacaciones de invierno ${anio} ya están publicadas en ${nombres}. En el resto de las provincias siguen a confirmar.`;
+	const dias =
+		oficiales.length === provincias.length
+			? 'El Consejo Federal de Educación suele pautar 190 días de clase. La cantidad exacta la define cada ministerio provincial en su resolución.'
+			: `El Consejo Federal de Educación suele pautar 190 días de clase, pero el número de ${anio} lo fija cada provincia al publicar su calendario. Todavía no está cargado para todas las jurisdicciones.`;
+	const publicacion =
+		oficiales.length === 0
+			? `Cada ministerio de educación lo publica por su cuenta, en general entre noviembre y febrero. El calendario oficial ${anio} todavía no está publicado.`
+			: `Cada ministerio lo publica por su cuenta, en general entre noviembre y febrero. Ya hay calendario oficial en ${nombres}. El resto sigue a confirmar.`;
 	return [
-		{ q: `¿Cuándo empiezan las clases ${anio} en Argentina?`, a: inicio },
+		{ q: `¿Cuándo empieza el ciclo lectivo ${anio}?`, a: inicio },
 		{ q: `¿Cuándo son las vacaciones de invierno ${anio}?`, a: invierno },
-		{
-			q: '¿Cuántos días de clase tiene el ciclo lectivo?',
-			a: 'El Consejo Federal de Educación suele pautar 190 días de clase. La cantidad exacta y el calendario los define cada ministerio provincial.',
-		},
-		{
-			q: `¿Qué feriados hay en ${anio}?`,
-			a: `${listaFeriados(anio)}. Los fija la <a href="${LEY_FERIADOS}" rel="noopener noreferrer">Ley 27.399</a>. ${notaPuentes(anio) ?? ''}`,
-		},
-		{
-			q: '¿Cuándo publican las provincias su calendario?',
-			a: 'En general entre noviembre y febrero, antes de que empiecen las clases. Cada ministerio de educación lo publica por su cuenta.',
-		},
+		{ q: `¿Cuántos días de clase hay en ${anio}?`, a: dias },
+		{ q: '¿Cuándo se publica el calendario oficial?', a: publicacion },
 	];
 }
 

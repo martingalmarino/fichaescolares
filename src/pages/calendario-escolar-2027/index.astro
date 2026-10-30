@@ -1,7 +1,6 @@
 ---
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import ListaFeriados from '../../components/ListaFeriados.astro';
-import Preguntas from '../../components/Preguntas.astro';
 import { calendarioDe } from '../../data/calendario-escolar';
 import { provincias } from '../../data/provincias';
 import { feriadosDelAnio, partesIso } from '../../lib/calendario';
@@ -13,6 +12,8 @@ import {
 	confirmadas,
 	fechaActualizado,
 	fechaCorta,
+	filasResumen,
+	introCalendarioNacional,
 	notaPuentes,
 	preguntasNacional,
 	regionesEscolares,
@@ -24,7 +25,18 @@ const calendario = calendarioDe(2027);
 const anio = calendario.anio;
 const meta = metaCalendarioEscolar(anio);
 const actualizado = actualizadoVisible(calendario);
+const intro = introCalendarioNacional(calendario);
+const resumen = filasResumen(calendario);
 const preguntas = preguntasNacional(calendario);
+const keywords = [
+	'calendario escolar 2027',
+	'comienzo de clases 2027',
+	'inicio de clases 2027',
+	'ciclo lectivo 2027',
+	'cuándo comienzan las clases 2027',
+	'calendario escolar 2027 argentina',
+	'vacaciones de invierno 2027',
+];
 const sitio = Astro.site ?? new URL('https://www.aulita.com.ar');
 const url = new URL(meta.ruta, sitio).href;
 const filas = provincias
@@ -94,12 +106,13 @@ const jsonLd = {
 };
 ---
 
-<BaseLayout title={meta.title} description={meta.description} image={`/og/calendario-escolar-${anio}.svg`} jsonLd={jsonLd}>
+<BaseLayout title={meta.title} description={meta.description} keywords={keywords.join(', ')} image={`/og/calendario-escolar-${anio}.svg`} jsonLd={jsonLd}>
 	<article class="mx-auto max-w-6xl px-4 py-8">
 		<Breadcrumbs items={[{ label: 'Inicio', href: '/' }, { label: `Calendario escolar ${anio}` }]} />
-		<h1 class="mt-4 text-3xl font-bold tracking-tight text-azul sm:text-4xl">Calendario escolar {anio} en Argentina, por provincia</h1>
-		<p class="mt-3 max-w-[720px] text-base leading-relaxed text-muted">
-			Elegí tu provincia para ver inicio de clases, vacaciones de invierno y fin del ciclo. Cargamos cada fecha cuando sale la resolución oficial del ministerio.
+		<h1 class="mt-4 text-3xl font-bold tracking-tight text-azul sm:text-4xl">Calendario escolar {anio} en Argentina: cuándo empiezan las clases</h1>
+		<p class="mt-3 max-w-[720px] text-base leading-relaxed text-muted">{intro}</p>
+		<p class="mt-2 text-sm text-muted">
+			Actualizado: <time datetime={actualizado}>{fechaActualizado(actualizado)}</time>
 		</p>
 		<div class="grilla-barra">
 			<div class="grilla-progreso">
@@ -110,6 +123,43 @@ const jsonLd = {
 			</div>
 			<a class="grilla-cta" href="/planificador-docente-2027/">Armá tu planificador docente</a>
 		</div>
+		<p class="max-w-3xl text-base leading-relaxed text-muted">
+			También podés armar el <a class="text-celeste underline" href="/planificador-docente-2027/">planificador docente</a>, imprimir la <a class="text-celeste underline" href="/agenda-docente-2027/">agenda docente</a> y ver las <a class="text-celeste underline" href="/efemerides/">efemérides</a>.
+		</p>
+		<section class="mt-10" aria-labelledby="resumen-provincias">
+			<h2 id="resumen-provincias" class="text-2xl font-bold tracking-tight text-azul">Inicio, invierno y fin por provincia</h2>
+			<div class="mt-4 overflow-x-auto rounded-card border border-borde bg-white">
+				<table class="w-full min-w-[40rem] text-left text-sm">
+					<caption class="border-b border-borde px-3 py-3 text-left text-sm leading-relaxed text-muted">
+						Las 24 jurisdicciones. A confirmar: el ministerio todavía no publicó la resolución, y no hay fechas estimadas.
+					</caption>
+					<thead class="bg-celeste-50 text-azul">
+						<tr>
+							<th class="px-3 py-3 font-semibold" scope="col">Provincia</th>
+							<th class="px-3 py-3 font-semibold" scope="col">Inicio de clases</th>
+							<th class="px-3 py-3 font-semibold" scope="col">Vacaciones de invierno</th>
+							<th class="px-3 py-3 font-semibold" scope="col">Fin de clases</th>
+							<th class="px-3 py-3 font-semibold" scope="col">Estado</th>
+						</tr>
+					</thead>
+					<tbody>
+						{
+							resumen.map((fila) => (
+								<tr class="border-t border-borde">
+									<th class="px-3 py-3 font-semibold" scope="row">
+										<a class="text-celeste underline" href={fila.href}>{nombreCalendario(fila.provincia)}</a>
+									</th>
+									<td class="px-3 py-3">{fila.inicio}</td>
+									<td class="px-3 py-3">{fila.invierno}</td>
+									<td class="px-3 py-3">{fila.fin}</td>
+									<td class="px-3 py-3">{fila.estado}</td>
+								</tr>
+							))
+						}
+					</tbody>
+				</table>
+			</div>
+		</section>
 		<div id="grilla-provincias">
 			<div class="grilla-herramientas">
 				<label class="sr-only" for="buscar-provincia">Buscá tu provincia</label>
@@ -235,7 +285,17 @@ const jsonLd = {
 				El calendario escolar lo define el ministerio de educación de cada provincia y de la Ciudad de Buenos Aires. El Consejo Federal de Educación fija pautas comunes, como los 190 días de clase. Las resoluciones suelen publicarse entre noviembre y febrero, y esta página pasa cada jurisdicción a oficial cuando hay una fuente para citar.
 			</p>
 		</section>
-		<Preguntas preguntas={preguntas} />
+		<section class="mt-12 max-w-3xl" aria-labelledby="faq-titulo">
+			<h2 id="faq-titulo" class="text-2xl font-bold tracking-tight text-azul">Preguntas frecuentes</h2>
+			{
+				preguntas.map((item) => (
+					<div class="mt-6">
+						<h3 class="text-xl font-bold tracking-tight text-azul">{item.q}</h3>
+						<p class="mt-2 text-base leading-relaxed text-muted" set:html={item.a} />
+					</div>
+				))
+			}
+		</section>
 		<script type="application/ld+json" set:html={JSON.stringify(listaGrilla)} />
 	</article>
 </BaseLayout>

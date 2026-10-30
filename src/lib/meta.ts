@@ -551,11 +551,12 @@ function encajarCalendario(variantes: string[]): string {
 }
 
 export function metaCalendarioEscolar(anio: number): MetaPagina {
-	return {
-		ruta: `/calendario-escolar-${anio}/`,
-		title: `Calendario escolar ${anio} Argentina por provincia`,
-		description: `Calendario escolar ${anio} de las 24 jurisdicciones: inicio de clases, vacaciones de invierno, fin del ciclo y feriados. Actualizado con fuentes oficiales.`,
-	};
+	const title = anio === 2027 ? 'Calendario escolar 2027 Argentina: inicio de clases' : `Calendario escolar ${anio} Argentina por provincia`;
+	const description =
+		anio === 2027
+			? '¿Cuándo empiezan las clases en 2027? Inicio del ciclo lectivo, vacaciones de invierno y feriados por provincia. Elegí tu provincia y descargalo gratis.'
+			: `Calendario escolar ${anio} de las 24 jurisdicciones: inicio de clases, vacaciones de invierno, fin del ciclo y feriados. Actualizado con fuentes oficiales.`;
+	return { ruta: `/calendario-escolar-${anio}/`, title, description };
 }
 
 export function metaCalendarioProvincia(provincia: Provincia, jurisdiccion: Jurisdiccion, anio: number): MetaPagina {
