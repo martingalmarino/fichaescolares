@@ -61,7 +61,7 @@ const generadores = [
 	{
 		nombre: 'Tarjetas educativas para imprimir',
 		texto: 'Abecedario, vocales, sílabas, números, colores y días. Ocho por hoja A4.',
-		imagen: '/tarjetas/abecedario-pagina-1.webp',
+		icon: 'tarjetas' as const,
 		href: '/tarjetas-educativas/',
 	},
 	{
@@ -261,21 +261,7 @@ const checks = ['Formato A4', 'Con hoja de soluciones', 'Contenido argentino'];
 								href={herramienta.href}
 								class="block h-full rounded-card border border-borde bg-white p-5 shadow-card transition hover:border-celeste"
 							>
-								{
-									'imagen' in herramienta && herramienta.imagen ? (
-										<img
-											src={herramienta.imagen}
-											alt="Vista previa de las tarjetas del abecedario para imprimir"
-											width="600"
-											height="849"
-											loading="lazy"
-											decoding="async"
-											class="h-36 w-full rounded-control bg-celeste-50 object-cover object-top"
-										/>
-									) : (
-										<ToolIcon name={herramienta.icon} />
-									)
-								}
+								<ToolIcon name={herramienta.icon} />
 								<h3 class="mt-4 text-base font-semibold text-azul">{herramienta.nombre}</h3>
 								<p class="mt-1 text-sm leading-relaxed text-muted">{herramienta.texto}</p>
 							</a>
