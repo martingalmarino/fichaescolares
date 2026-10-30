@@ -82,6 +82,15 @@ describe('títulos y descripciones', () => {
 		expect(cordoba.description).toContain('PDF A4');
 		expect(cordoba.description).toContain('CC BY-SA 4.0');
 
+		const america = metaMapa(mapas.find((mapa) => mapa.slug === 'mapa-politico-de-america')!);
+		expect(america.title).toBe('Mapa político de América para imprimir (PDF gratis)');
+		expect(america.title.length).toBeLessThanOrEqual(60);
+		expect(america.description).toBe(
+			'Descargá gratis el mapa político de América con países y capitales, en A4 para imprimir. Versión con nombres de países, ideal para la escuela.',
+		);
+		expect(america.description.length).toBeGreaterThanOrEqual(140);
+		expect(america.description.length).toBeLessThanOrEqual(155);
+
 		const escarapela = metaLamina(publicadas.find((lamina) => lamina.slug === 'escarapela')!);
 		expect(escarapela.title).toBe('Escarapela argentina para colorear e imprimir | Aulita');
 		expect(escarapela.description).toContain('18 de mayo');

@@ -6,6 +6,7 @@ import type { Lamina } from '../data/laminas';
 import { publicadas } from '../data/laminas';
 import { HUB_TARJETAS, TARJETAS, type SetTarjetas } from '../data/tarjetas';
 import { mapas, nombreTipo, type MapaIgn } from '../data/mapas';
+import { seoMapa } from '../data/seo-mapas';
 import { provincias, type Provincia } from '../data/provincias';
 import { MESES_SLUG, efemeridesDelMes, fechaArgentina, mesDeSlug, pascua, proximaOcurrencia, slugDeMes } from './calendario';
 
@@ -405,6 +406,8 @@ function tipoYaEsta(titulo: string, tipo: string): boolean {
 }
 
 export function metaMapa(mapa: MapaIgn): MetaPagina {
+	const seo = seoMapa(mapa.slug);
+	if (seo) return { ruta: `/mapas/${mapa.slug}/`, title: seo.title, description: seo.description };
 	const title = tituloHasta(`${mapa.titulo} para imprimir | Mapas IGN | Aulita`, [
 		(texto) => texto.replace(' | Mapas IGN', ''),
 		(texto) => texto.replace(' para imprimir', ''),

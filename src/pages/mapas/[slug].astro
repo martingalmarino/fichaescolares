@@ -1,8 +1,10 @@
 ---
 import Anuncio from '../../components/Anuncio.astro';
 import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import Preguntas from '../../components/Preguntas.astro';
 import TarjetaMapa from '../../components/TarjetaMapa.astro';
-import { archivoMapa, mapas, mapasRelacionados, nombreCategoria, nombreTipo, type MapaIgn } from '../../data/mapas';
+import { archivoMapa, baseMapas, mapas, mapasRelacionados, nombreCategoria, nombreTipo, rutaMapa, type MapaIgn } from '../../data/mapas';
+import { notaMapa, schemaMapaAmerica, seoMapa } from '../../data/seo-mapas';
 import { metaMapa } from '../../lib/meta';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
@@ -19,23 +21,54 @@ interface Props {
 
 const { mapa } = Astro.props;
 const meta = metaMapa(mapa);
+const seo = seoMapa(mapa.slug);
+const nota = notaMapa(mapa.slug);
 const otros = mapasRelacionados(mapa);
 const pdf = mapa.pdf ? archivoMapa(mapa.slug, 'pdf') : null;
 const jpg = archivoMapa(mapa.slug, 'jpg');
 const grupo = mapa.provinciaNombre ?? nombreCategoria(mapa.categoria);
+const sitio = Astro.site ?? new URL(Astro.url.origin);
+const pagina = new URL(`/mapas/${mapa.slug}/`, sitio).href;
+const jsonLd = seo
+	? schemaMapaAmerica({
+			pagina,
+			pdf: new URL(rutaMapa(baseMapas(), mapa.slug, 'pdf'), sitio).href,
+			imagen: new URL(jpg, sitio).href,
+		})
+	: undefined;
+const migas = seo
+	? seo.migas
+	: [
+			{ label: 'Inicio', href: '/' },
+			{ label: 'Imprimibles', href: '/mapas/' },
+			{ label: 'Mapas', href: '/mapas/' },
+			{ label: mapa.titulo },
+		];
 ---
 
-<BaseLayout title={meta.title} description={meta.description}>
+<BaseLayout title={meta.title} description={meta.description} keywords={seo?.keywords.join(', ')} image={seo ? jpg : undefined} jsonLd={jsonLd}>
 	<article class="mx-auto max-w-6xl px-4 py-8">
-		<Breadcrumbs
-			items={[
-				{ label: 'Inicio', href: '/' },
-				{ label: 'Imprimibles', href: '/mapas/' },
-				{ label: 'Mapas', href: '/mapas/' },
-				{ label: mapa.titulo },
-			]}
-		/>
-		<h1 class="no-print mt-4 text-3xl font-bold tracking-tight text-azul sm:text-4xl">{mapa.titulo}</h1>
+		<Breadcrumbs items={migas} />
+		<h1 class="no-print mt-4 text-3xl font-bold tracking-tight text-azul sm:text-4xl">{seo?.h1 ?? mapa.titulo}</h1>
+		{
+			seo && (
+				<p class="no-print mt-3 max-w-3xl text-base leading-relaxed text-muted">{seo.intro}</p>
+			)
+		}
+		{
+			seo && (
+				<p class="no-print mt-3 max-w-3xl text-base leading-relaxed text-muted">
+					También podés imprimir el <a class="text-celeste underline" href={seo.enlaces.sur.href}>{seo.enlaces.sur.ancla}</a> y el <a class="text-celeste underline" href={seo.enlaces.mudo.href}>{seo.enlaces.mudo.ancla}</a>, o ver todos los <a class="text-celeste underline" href={seo.enlaces.indice.href}>{seo.enlaces.indice.ancla}</a>.
+				</p>
+			)
+		}
+		{
+			nota && (
+				<p class="no-print mt-3 max-w-3xl text-base leading-relaxed text-muted">
+					{nota.textoAntes}<a class="text-celeste underline" href={nota.href}>{nota.ancla}</a>{nota.textoDespues}
+				</p>
+			)
+		}
 		<div class="no-print mt-4 flex flex-wrap gap-2">
 			{
 				pdf && (
@@ -54,7 +87,7 @@ const grupo = mapa.provinciaNombre ?? nombreCategoria(mapa.categoria);
 			)
 		}
 		<div class="hoja-mapa mt-6 overflow-hidden rounded-card border border-borde bg-white p-3 shadow-card sm:p-6">
-			<img src={jpg} alt={mapa.titulo} width={mapa.ancho} height={mapa.alto} class="mx-auto h-auto max-h-[80vh] w-full object-contain" />
+			<img src={jpg} alt={seo ? `${seo.h1}, con países y capitales` : mapa.titulo} width={mapa.ancho} height={mapa.alto} class="mx-auto h-auto max-h-[80vh] w-full object-contain" />
 		</div>
 		<Anuncio />
 		<dl class="no-print mt-8 grid gap-4 text-sm sm:grid-cols-2 lg:grid-cols-3">
@@ -85,6 +118,7 @@ const grupo = mapa.provinciaNombre ?? nombreCategoria(mapa.categoria);
 				</dd>
 			</div>
 		</dl>
+		{seo && <Preguntas preguntas={seo.faqs} abrirPrimera />}
 		{
 			otros.length > 0 && (
 				<section class="no-print mt-12">
