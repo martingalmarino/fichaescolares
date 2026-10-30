@@ -3,7 +3,8 @@
  * (src/data/calendario-escolar/2027.json): estado "oficial", inicio,
  * invierno.desde, invierno.hasta, fin, fuente (https) y actualizado con la
  * fecha de hoy. El título, la descripción, el banner y las respuestas
- * salen de esos campos. Los cortes de período son opcionales y solo
+ * salen de esos campos. inicioSecundario y vueltaDocentes son opcionales
+ * y solo valen con estado oficial. Los cortes de período son opcionales y solo
  * valen con estado oficial: cortes.trimestres son el fin del primero y
  * del segundo, y cortes.cuatrimestres el fin del primero. Si no están,
  * el planificador reparte los días hábiles en partes parejas.
@@ -39,6 +40,10 @@ export interface Jurisdiccion {
 	fin: string | null;
 	fuente: string | null;
 	notas: string | null;
+	/** Inicio de secundaria, si la jurisdicción lo publica aparte del inicio general. */
+	inicioSecundario?: string | null;
+	/** Vuelta de los docentes, si la resolución la publica. */
+	vueltaDocentes?: string | null;
 	feriadosProvinciales: FechaNombrada[];
 	sinClases: (FechaNombrada | RangoNombrado)[];
 	actualizado?: string;
@@ -164,6 +169,12 @@ export function erroresCalendario(datos: unknown, slugs: string[]): string[] {
 			if (!invierno || invierno.desde !== null || invierno.hasta !== null) errores.push(`${anio}/${slug}: a-confirmar no puede tener vacaciones`);
 		}
 		if (item.notas !== null && typeof item.notas !== 'string') errores.push(`${anio}/${slug}: notas inválidas`);
+		for (const clave of ['inicioSecundario', 'vueltaDocentes'] as const) {
+			const extra = item[clave];
+			if (extra == null) continue;
+			if (!oficial) errores.push(`${anio}/${slug}: a-confirmar no puede tener ${clave}`);
+			else if (!fechaIso(extra, anio)) errores.push(`${anio}/${slug}: ${clave} inválido`);
+		}
 		if (item.actualizado !== undefined && !fechaIso(item.actualizado)) errores.push(`${anio}/${slug}: actualizado inválido`);
 		if (!Array.isArray(item.feriadosProvinciales) || item.feriadosProvinciales.some((feriado) => !fechaNombrada(feriado, anio))) {
 			errores.push(`${anio}/${slug}: feriado provincial inválido`);

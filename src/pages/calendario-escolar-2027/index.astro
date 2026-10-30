@@ -3,7 +3,7 @@ import Breadcrumbs from '../../components/Breadcrumbs.astro';
 import ListaFeriados from '../../components/ListaFeriados.astro';
 import { calendarioDe } from '../../data/calendario-escolar';
 import { provincias } from '../../data/provincias';
-import { feriadosDelAnio, partesIso } from '../../lib/calendario';
+import { fechaDiaMes, feriadosDelAnio, partesIso } from '../../lib/calendario';
 import { metaCalendarioEscolar, nombreCalendario } from '../../lib/meta';
 import { faqJsonLd, itemListJsonLd } from '../../lib/seo';
 import {
@@ -26,7 +26,7 @@ const anio = calendario.anio;
 const meta = metaCalendarioEscolar(anio);
 const actualizado = actualizadoVisible(calendario);
 const intro = introCalendarioNacional(calendario);
-const resumen = filasResumen(calendario);
+const resumen = filasResumen(calendario).filter((fila) => fila.estado === 'Oficial');
 const preguntas = preguntasNacional(calendario);
 const keywords = [
 	'calendario escolar 2027',
@@ -120,12 +120,11 @@ const jsonLd = {
 		{
 			mostrarTabla && (
 				<section class="mt-10" aria-labelledby="resumen-provincias">
-			<h2 id="resumen-provincias" class="text-2xl font-bold tracking-tight text-azul">Inicio, invierno y fin por provincia</h2>
+			<h2 id="resumen-provincias" class="text-2xl font-bold tracking-tight text-azul">Provincias con calendario {anio} oficial</h2>
+			<p class="mt-2 max-w-3xl text-base leading-relaxed text-muted">El resto todavía no publicó sus fechas; las agregamos apenas salgan.</p>
 			<div class="mt-4 overflow-x-auto rounded-card border border-borde bg-white">
 				<table class="w-full min-w-[40rem] text-left text-sm">
-					<caption class="border-b border-borde px-3 py-3 text-left text-sm leading-relaxed text-muted">
-						Las 24 jurisdicciones. A confirmar: el ministerio todavía no publicó la resolución, y no hay fechas estimadas.
-					</caption>
+					<caption class="sr-only">Jurisdicciones con calendario {anio} oficial</caption>
 					<thead class="bg-celeste-50 text-azul">
 						<tr>
 							<th class="px-3 py-3 font-semibold" scope="col">Provincia</th>
@@ -185,6 +184,14 @@ const jsonLd = {
 									<li data-provincia data-region={region.id} data-oficial={fila.publicado ? '1' : '0'} data-busqueda={`${nombre} ${fila.provincia.slug.replaceAll('-', ' ')}`}>
 										<a class:list={['grilla-tarjeta', fila.publicado && 'grilla-tarjeta-oficial']} href={`/calendario-escolar-${anio}/${fila.provincia.slug}/`} aria-label={`Calendario escolar ${anio} de ${nombre}`}>
 											<span class="grilla-nombre">{nombre}</span>
+											{fila.publicado && fila.inicio && (
+												<>
+													<span class="grilla-badge">Oficial</span>
+													<p class="grilla-inicio">
+														Inicio: <time datetime={fila.inicio}>{fechaDiaMes(partesIso(fila.inicio).dia, partesIso(fila.inicio).mes)}</time>
+													</p>
+												</>
+											)}
 											{fila.publicado && fila.inicio && fila.fin && fila.desde && fila.hasta ? (
 												<dl class="grilla-fechas">
 													<div>
@@ -217,7 +224,6 @@ const jsonLd = {
 											) : (
 												<p class="grilla-estado">Sin resolución {anio} todavía</p>
 											)}
-											{fila.publicado && <p class="grilla-estado grilla-estado-ok">Calendario oficial publicado</p>}
 											<span class="grilla-ir"><span class="grilla-ir-texto">Ver calendario</span> <span aria-hidden="true">→</span></span>
 										</a>
 									</li>
@@ -488,16 +494,30 @@ const jsonLd = {
 		line-height: 1.25;
 	}
 
+	.grilla-badge {
+		align-self: flex-start;
+		padding: 2px 8px;
+		border-radius: 999px;
+		background: #f4a531;
+		color: #1d3557;
+		font-size: 12px;
+		font-weight: 700;
+		line-height: 1.4;
+	}
+
+	.grilla-inicio {
+		margin: 0;
+		color: #1d3557;
+		font-size: 14px;
+		font-weight: 600;
+		line-height: 1.35;
+	}
+
 	.grilla-estado {
 		margin: 0;
 		color: #6b7280;
 		font-size: 14px;
 		line-height: 1.35;
-	}
-
-	.grilla-estado-ok {
-		color: #1d3557;
-		font-weight: 500;
 	}
 
 	.grilla-ir {
@@ -593,6 +613,8 @@ const jsonLd = {
 			line-height: 1;
 		}
 
+		.grilla-badge,
+		.grilla-inicio,
 		.grilla-fechas,
 		.grilla-estado {
 			grid-column: 1 / -1;

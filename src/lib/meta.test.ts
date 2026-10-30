@@ -126,7 +126,7 @@ describe('títulos y descripciones', () => {
 		const calendario = calendarioDe(2027);
 		const esperado = new Map<string, string>([
 			['buenos-aires', 'Inicio de clases 2027 en Buenos Aires: calendario escolar'],
-			['caba', 'Agenda Educativa 2027 CABA: calendario escolar porteño'],
+			['caba', 'Agenda Educativa 2027 CABA: clases del 1 de marzo al 17 de diciembre'],
 			['cordoba', 'Calendario escolar 2027 Córdoba: inicio de clases'],
 			['mendoza', 'Calendario escolar 2027 Mendoza: inicio de clases'],
 			['santiago-del-estero', 'Calendario 2027 Santiago del Estero: inicio de clases'],
@@ -135,17 +135,18 @@ describe('títulos y descripciones', () => {
 		]);
 		for (const provincia of provincias) {
 			const meta = metaCalendarioProvincia(provincia, calendario.jurisdicciones[provincia.slug]!, 2027);
-			expect(meta.title.length, meta.title).toBeLessThanOrEqual(60);
+			if (!meta.tituloLibre) expect(meta.title.length, meta.title).toBeLessThanOrEqual(60);
 			if (provincia.slug === 'buenos-aires') {
 				expect(h1CalendarioProvincia(provincia, 2027)).toBe('Calendario escolar 2027 de la Provincia de Buenos Aires: inicio de clases y ciclo lectivo');
 				expect(meta.description).toBe(
 					'Ciclo lectivo 2027 en la Provincia de Buenos Aires: cuándo empiezan las clases, vacaciones de invierno, feriados y fin de clases. Calendario para imprimir.',
 				);
 			} else if (provincia.slug === 'caba') {
-				expect(h1CalendarioProvincia(provincia, 2027)).toBe('Agenda Educativa 2027 de CABA: calendario escolar de la Ciudad');
+				expect(h1CalendarioProvincia(provincia, 2027)).toBe('Agenda Educativa 2027 de CABA: inicio de clases el 1 de marzo');
 				expect(meta.description).toBe(
-					'Agenda Educativa 2027 de la Ciudad de Buenos Aires: inicio de clases, vacaciones de invierno, feriados y fin del ciclo lectivo. Calendario para imprimir.',
+					'Oficial: en CABA las clases 2027 empiezan el lunes 1 de marzo (secundario el 3), el receso de invierno es del 19 al 30 de julio y terminan el 17 de diciembre.',
 				);
+				expect(meta.tituloLibre).toBe(true);
 			} else {
 				expect(h1CalendarioProvincia(provincia, 2027)).toBe(`Calendario escolar 2027 de ${provincia.slug === 'tierra-del-fuego' ? 'Tierra del Fuego' : provincia.nombre}: cuándo empiezan las clases`);
 				expect(meta.description).toContain(provincia.slug === 'mendoza' ? 'según la DGE' : 'según el Ministerio de Educación');
@@ -158,9 +159,11 @@ describe('títulos y descripciones', () => {
 			const titulo = esperado.get(provincia.slug);
 			if (titulo) expect(meta.title).toBe(titulo);
 			expect(meta.description.length, `${meta.ruta} ${meta.description}`).toBeGreaterThanOrEqual(140);
-			expect(meta.description.length, `${meta.ruta} ${meta.description}`).toBeLessThanOrEqual(155);
+			expect(meta.description.length, `${meta.ruta} ${meta.description}`).toBeLessThanOrEqual(provincia.slug === 'caba' ? MAX_DESCRIPCION : 155);
 		}
-		expect(metaCalendarioProvincia(provincias.find((provincia) => provincia.slug === 'caba')!, calendario.jurisdicciones.caba!, 2027).title.length).toBeLessThanOrEqual(60);
+		expect(metaCalendarioProvincia(provincias.find((provincia) => provincia.slug === 'caba')!, calendario.jurisdicciones.caba!, 2027).title).toBe(
+			'Agenda Educativa 2027 CABA: clases del 1 de marzo al 17 de diciembre',
+		);
 		expect(metaCalendarioProvincia(provincias.find((provincia) => provincia.slug === 'buenos-aires')!, calendario.jurisdicciones['buenos-aires']!, 2027).title.length).toBeLessThanOrEqual(60);
 	});
 

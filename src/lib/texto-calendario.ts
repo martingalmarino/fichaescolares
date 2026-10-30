@@ -46,6 +46,17 @@ export function fechaActualizado(iso: string): string {
 	return fechaDiaMes(dia, mes) + ` de ${anio}`;
 }
 
+/** «lunes 1 de marzo», sin el año. */
+function fechaSinAnio(iso: string): string {
+	const { anio, mes, dia } = partesIso(iso);
+	return fechaCompleta(anio, mes, dia).replace(` de ${anio}`, '');
+}
+
+function fechaBarra(iso: string): string {
+	const [anio, mes, dia] = iso.split('-');
+	return `${dia}/${mes}/${anio}`;
+}
+
 export function fechaTarjeta(iso: string | null): string {
 	if (!iso) return 'A confirmar';
 	const { anio, mes, dia } = partesIso(iso);
@@ -156,9 +167,23 @@ export function preguntasBuenosAires(jurisdiccion: Jurisdiccion, anio: number): 
 }
 
 /** Respuesta directa bajo el H1 de CABA. 40 a 60 palabras si el ministerio porteño no publicó la Agenda Educativa. */
-export function introCaba(jurisdiccion: Jurisdiccion, anio: number): string {
-	if (jurisdiccion.estado === 'oficial' && jurisdiccion.inicio) {
-		return `La Agenda Educativa es el calendario oficial de la Ciudad de Buenos Aires. ¿Cuándo empiezan las clases en ${anio}? El Ministerio de Educación porteño fijó el inicio el ${fechaTarjeta(jurisdiccion.inicio)}. Las vacaciones de invierno y el fin del ciclo están en esta página, con la fuente de la Agenda Educativa ${anio}.`;
+export function introCaba(jurisdiccion: Jurisdiccion, anio: number, actualizado?: string): string {
+	if (
+		jurisdiccion.estado === 'oficial' &&
+		jurisdiccion.inicio &&
+		jurisdiccion.fin &&
+		jurisdiccion.invierno.desde &&
+		jurisdiccion.invierno.hasta
+	) {
+		const secundario = jurisdiccion.inicioSecundario ? fechaSinAnio(jurisdiccion.inicioSecundario) : null;
+		const nivel = secundario
+			? `empiezan el ${fechaSinAnio(jurisdiccion.inicio)} en nivel inicial y primario, y el ${secundario} en secundario`
+			: `empiezan el ${fechaSinAnio(jurisdiccion.inicio)}`;
+		const docentes = jurisdiccion.vueltaDocentes
+			? ` Los docentes vuelven a las escuelas el ${fechaDiaMes(partesIso(jurisdiccion.vueltaDocentes).dia, partesIso(jurisdiccion.vueltaDocentes).mes)}.`
+			: '';
+		const fuente = actualizado ? ` Fuente: Gobierno de la Ciudad, ${fechaBarra(actualizado)}.` : '';
+		return `Las clases ${anio} en la Ciudad de Buenos Aires ${nivel}. El receso de invierno es del ${rangoTarjeta(jurisdiccion.invierno.desde, jurisdiccion.invierno.hasta)}, y el ciclo lectivo termina el ${fechaSinAnio(jurisdiccion.fin)}.${docentes}${fuente}`;
 	}
 	return `La Agenda Educativa es el calendario oficial de la Ciudad de Buenos Aires. ¿Cuándo empiezan las clases en ${anio}? El Ministerio de Educación porteño todavía no publicó la Agenda Educativa ${anio}. No hay fecha de inicio ni de vacaciones de invierno, y esta página no adelanta fechas estimadas.`;
 }
@@ -173,17 +198,27 @@ export function inviernoCaba(jurisdiccion: Jurisdiccion, anio: number): string {
 export function preguntasCaba(jurisdiccion: Jurisdiccion, anio: number): { q: string; a: string }[] {
 	const oficial = jurisdiccion.estado === 'oficial';
 	const provincia = `La Provincia de Buenos Aires tiene otro calendario: <a href="/calendario-escolar-${anio}/buenos-aires/">calendario escolar ${anio} de la Provincia de Buenos Aires</a>.`;
-	const queEs = oficial
-		? `Es el nombre oficial del calendario escolar de la Ciudad de Buenos Aires. La publica el Ministerio de Educación porteño. ${provincia}`
-		: `Es el nombre oficial del calendario escolar de la Ciudad de Buenos Aires. La publica el Ministerio de Educación porteño. La Agenda Educativa ${anio} todavía no salió, así que esta página no muestra fechas como oficiales. ${provincia}`;
-	const inicio =
-		oficial && jurisdiccion.inicio
-			? `Las clases ${anio} en CABA empiezan el ${fechaTarjeta(jurisdiccion.inicio)}, según la Agenda Educativa del Ministerio de Educación porteño.`
-			: `El Ministerio de Educación porteño todavía no publicó el inicio de clases ${anio}. No hay una fecha oficial ni una estimada.`;
-	const invierno =
-		oficial && jurisdiccion.invierno.desde && jurisdiccion.invierno.hasta
-			? `Las vacaciones de invierno ${anio} en CABA van del ${fechaTarjeta(jurisdiccion.invierno.desde)} al ${fechaTarjeta(jurisdiccion.invierno.hasta)}, según la Agenda Educativa.`
-			: `Todavía no hay fechas oficiales de las vacaciones de invierno ${anio} en CABA. El ministerio no publicó la Agenda Educativa ${anio}, y esta página no estima el receso.`;
+	if (oficial && jurisdiccion.inicio && jurisdiccion.fin && jurisdiccion.invierno.desde && jurisdiccion.invierno.hasta) {
+		const inicio = `Las clases ${anio} en CABA empiezan el ${fechaSinAnio(jurisdiccion.inicio)} en nivel inicial y primario. ${provincia}`;
+		const secundario = jurisdiccion.inicioSecundario
+			? `El secundario ${anio} en CABA empieza el ${fechaSinAnio(jurisdiccion.inicioSecundario)}.`
+			: `La resolución cargada no publica un inicio distinto para el secundario. ${jurisdiccion.notas ?? ''}`.trim();
+		const invierno = `Las vacaciones de invierno ${anio} en CABA van del ${fechaTarjeta(jurisdiccion.invierno.desde)} al ${fechaTarjeta(jurisdiccion.invierno.hasta)}, según la Agenda Educativa.`;
+		const fin = `Las clases ${anio} en CABA terminan el ${fechaSinAnio(jurisdiccion.fin)}.`;
+		const docentes = jurisdiccion.vueltaDocentes
+			? `Los docentes vuelven a las escuelas el ${fechaDiaMes(partesIso(jurisdiccion.vueltaDocentes).dia, partesIso(jurisdiccion.vueltaDocentes).mes)} de ${partesIso(jurisdiccion.vueltaDocentes).anio}.`
+			: (jurisdiccion.notas ?? 'La resolución cargada no fecha la vuelta de los docentes.');
+		return [
+			{ q: `¿Cuándo empiezan las clases ${anio} en CABA?`, a: inicio },
+			{ q: `¿Cuándo empieza el secundario ${anio} en CABA?`, a: secundario },
+			{ q: `¿Cuándo son las vacaciones de invierno ${anio} en CABA?`, a: invierno },
+			{ q: `¿Cuándo terminan las clases ${anio} en CABA?`, a: fin },
+			{ q: `¿Cuándo vuelven los docentes en ${anio}?`, a: docentes },
+		];
+	}
+	const queEs = `Es el nombre oficial del calendario escolar de la Ciudad de Buenos Aires. La publica el Ministerio de Educación porteño. La Agenda Educativa ${anio} todavía no salió, así que esta página no muestra fechas como oficiales. ${provincia}`;
+	const inicio = `El Ministerio de Educación porteño todavía no publicó el inicio de clases ${anio}. No hay una fecha oficial ni una estimada.`;
+	const invierno = `Todavía no hay fechas oficiales de las vacaciones de invierno ${anio} en CABA. El ministerio no publicó la Agenda Educativa ${anio}, y esta página no estima el receso.`;
 	return [
 		{ q: `¿Qué es la Agenda Educativa ${anio}?`, a: queEs },
 		{ q: `¿Cuándo empiezan las clases ${anio} en CABA?`, a: inicio },
@@ -253,6 +288,11 @@ export function introCalendarioNacional(calendario: CalendarioEscolar): string {
 	if (pendientes === 0) {
 		return `¿Cuándo empiezan las clases en ${anio}? El inicio oficial va del ${desde} al ${hasta}, según la provincia. Las 24 jurisdicciones ya publicaron su calendario. En la tabla están el inicio, las vacaciones de invierno y el fin del ciclo de cada una.`;
 	}
+	if (oficiales.length === 1) {
+		const unica = oficiales[0]!;
+		const lugar = unica.slug === 'caba' ? 'la Ciudad de Buenos Aires' : lugarCalendario(unica);
+		return `¿Cuándo empiezan las clases en ${anio}? En ${lugar} el inicio oficial es el ${desde}. ${pendientes} jurisdicciones todavía no publicaron el calendario y figuran como a confirmar, sin fechas estimadas. Elegí tu provincia para ver el detalle.`;
+	}
 	return `¿Cuándo empiezan las clases en ${anio}? Donde ya hay calendario oficial, el inicio va del ${desde} al ${hasta}. ${pendientes} jurisdicciones todavía no lo publicaron y figuran como a confirmar, sin fechas estimadas. Elegí tu provincia para ver el detalle.`;
 }
 
@@ -294,11 +334,28 @@ export function preguntasNacional(calendario: CalendarioEscolar): { q: string; a
 		oficiales.length === 0
 			? `Cada ministerio de educación lo publica por su cuenta, en general entre noviembre y febrero. El calendario oficial ${anio} todavía no está publicado.`
 			: `Cada ministerio lo publica por su cuenta, en general entre noviembre y febrero. Ya hay calendario oficial en ${nombres}. El resto sigue a confirmar.`;
+	const publicadas = oficiales.filter((provincia) => {
+		const item = calendario.jurisdicciones[provincia.slug];
+		return Boolean(item?.inicio && item.fin);
+	});
+	const frases = publicadas.map((provincia) => {
+		const item = calendario.jurisdicciones[provincia.slug]!;
+		const nombre = provincia.slug === 'caba' ? 'la Ciudad de Buenos Aires' : nombreCalendario(provincia);
+		const desde = partesIso(item.inicio!);
+		const hasta = partesIso(item.fin!);
+		return `${nombre} (clases del ${fechaDiaMes(desde.dia, desde.mes)} al ${fechaDiaMes(hasta.dia, hasta.mes)})`;
+	});
+	const lista = frases.length <= 1 ? (frases[0] ?? '') : `${frases.slice(0, -1).join(', ')} y ${frases.at(-1)}`;
+	const quienes =
+		frases.length === 0
+			? `Todavía ninguna provincia publicó el calendario escolar ${anio}.`
+			: `Por ahora, ${lista}.`;
 	return [
 		{ q: `¿Cuándo empieza el ciclo lectivo ${anio}?`, a: inicio },
 		{ q: `¿Cuándo son las vacaciones de invierno ${anio}?`, a: invierno },
 		{ q: `¿Cuántos días de clase hay en ${anio}?`, a: dias },
 		{ q: '¿Cuándo se publica el calendario oficial?', a: publicacion },
+		{ q: `¿Qué provincias ya publicaron el calendario escolar ${anio}?`, a: quienes },
 	];
 }
 

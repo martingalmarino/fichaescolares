@@ -1,6 +1,6 @@
 {
 	"anio": 2027,
-	"actualizado": "2026-10-23",
+	"actualizado": "2026-10-30",
 	"jurisdicciones": {
 		"buenos-aires": {
 			"estado": "a-confirmar",
@@ -16,15 +16,17 @@
 			"sinClases": []
 		},
 		"caba": {
-			"estado": "a-confirmar",
-			"inicio": null,
+			"estado": "oficial",
+			"inicio": "2027-03-01",
 			"invierno": {
-				"desde": null,
-				"hasta": null
+				"desde": "2027-07-19",
+				"hasta": "2027-07-30"
 			},
-			"fin": null,
-			"fuente": null,
-			"notas": null,
+			"fin": "2027-12-17",
+			"fuente": "https://buenosaires.gob.ar/noticias/ciclo-lectivo-2027-las-clases-en-la-ciudad-comenzaran-el-1-de-marzo-y-terminaran-el-17-de",
+			"notas": "Inicio 1 de marzo para nivel inicial y primario; el secundario empieza el miércoles 3 de marzo. Los docentes vuelven el 10 de febrero.",
+			"inicioSecundario": "2027-03-03",
+			"vueltaDocentes": "2027-02-10",
 			"feriadosProvinciales": [],
 			"sinClases": []
 		},

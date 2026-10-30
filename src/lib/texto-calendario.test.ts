@@ -18,29 +18,38 @@ describe('grilla del calendario', () => {
 		expect([...slugs].sort()).toEqual(provincias.map((provincia) => provincia.slug).sort());
 	});
 
-	it('responde el inicio 2027 sin fechas estimadas y arma la tabla de las 24', () => {
+	it('responde el inicio 2027 con CABA oficial y el resto a confirmar', () => {
 		const calendario = calendarioDe(2027);
 		const intro = introCalendarioNacional(calendario);
 		const palabras = contarPalabras(intro);
 		expect(palabras).toBeGreaterThanOrEqual(40);
 		expect(palabras).toBeLessThanOrEqual(60);
-		expect(intro).toContain('Todavía no hay una fecha oficial');
-		expect(intro).toContain('no adelanta fechas estimadas');
-		expect(intro).not.toMatch(/\d{1,2} de (enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre)/);
+		expect(intro).toContain('En la Ciudad de Buenos Aires el inicio oficial es el lunes 1 de marzo de 2027');
+		expect(intro).toContain('figuran como a confirmar, sin fechas estimadas');
 
 		const filas = filasResumen(calendario);
 		expect(filas).toHaveLength(24);
-		expect(filas.every((fila) => fila.estado === 'A confirmar')).toBe(true);
-		expect(filas.every((fila) => fila.inicio === 'A confirmar' && fila.invierno === 'A confirmar' && fila.fin === 'A confirmar')).toBe(true);
+		const caba = filas.find((fila) => fila.provincia.slug === 'caba');
+		expect(caba).toMatchObject({
+			estado: 'Oficial',
+			inicio: 'lunes 1 de marzo de 2027',
+			invierno: '19 al 30 de julio',
+			fin: 'viernes 17 de diciembre de 2027',
+		});
+		const pendientes = filas.filter((fila) => fila.provincia.slug !== 'caba');
+		expect(pendientes.every((fila) => fila.estado === 'A confirmar')).toBe(true);
+		expect(pendientes.every((fila) => fila.inicio === 'A confirmar' && fila.invierno === 'A confirmar' && fila.fin === 'A confirmar')).toBe(true);
 		expect(filas.map((fila) => fila.href).sort()).toEqual(provincias.map((provincia) => `/calendario-escolar-2027/${provincia.slug}/`).sort());
 
-		expect(preguntasNacional(calendario).map((item) => item.q)).toEqual([
+		const preguntas = preguntasNacional(calendario);
+		expect(preguntas.map((item) => item.q)).toEqual([
 			'¿Cuándo empieza el ciclo lectivo 2027?',
 			'¿Cuándo son las vacaciones de invierno 2027?',
 			'¿Cuántos días de clase hay en 2027?',
 			'¿Cuándo se publica el calendario oficial?',
+			'¿Qué provincias ya publicaron el calendario escolar 2027?',
 		]);
-		expect(preguntasNacional(calendario).every((item) => !/empiezan el \d/.test(item.a))).toBe(true);
+		expect(preguntas.at(-1)?.a).toBe('Por ahora, la Ciudad de Buenos Aires (clases del 1 de marzo al 17 de diciembre).');
 	});
 
 	it('responde el inicio 2027 de Buenos Aires sin fechas de la DGCyE', () => {
@@ -69,28 +78,27 @@ describe('grilla del calendario', () => {
 		expect(preguntas.every((item) => !/\d{1,2} de (enero|febrero)/.test(item.a))).toBe(true);
 	});
 
-	it('explica la Agenda Educativa 2027 de CABA sin fechas del ministerio porteño', () => {
+	it('explica la Agenda Educativa 2027 de CABA con las fechas oficiales', () => {
 		const jurisdiccion = calendarioDe(2027).jurisdicciones.caba!;
-		const intro = introCaba(jurisdiccion, 2027);
-		const palabras = contarPalabras(intro);
-		expect(palabras).toBeGreaterThanOrEqual(40);
-		expect(palabras).toBeLessThanOrEqual(60);
-		expect(intro).toContain('La Agenda Educativa es el calendario oficial');
-		expect(intro).toContain('todavía no publicó la Agenda Educativa 2027');
-		expect(intro).toContain('no adelanta fechas estimadas');
-		expect(intro).not.toMatch(/\d{1,2} de (enero|febrero|marzo|abril|mayo|junio|julio|agosto|septiembre|octubre|noviembre|diciembre)/);
+		const intro = introCaba(jurisdiccion, 2027, '2026-10-30');
+		expect(intro).toBe(
+			'Las clases 2027 en la Ciudad de Buenos Aires empiezan el lunes 1 de marzo en nivel inicial y primario, y el miércoles 3 de marzo en secundario. El receso de invierno es del 19 al 30 de julio, y el ciclo lectivo termina el viernes 17 de diciembre. Los docentes vuelven a las escuelas el 10 de febrero. Fuente: Gobierno de la Ciudad, 30/10/2026.',
+		);
 
-		expect(inviernoCaba(jurisdiccion, 2027)).toContain('todavía no tienen fecha');
-		expect(inviernoCaba(jurisdiccion, 2027)).not.toMatch(/\d{1,2} de (julio|agosto)/);
+		expect(inviernoCaba(jurisdiccion, 2027)).toContain('19 de julio de 2027');
+		expect(inviernoCaba(jurisdiccion, 2027)).toContain('30 de julio de 2027');
 
 		const preguntas = preguntasCaba(jurisdiccion, 2027);
 		expect(preguntas.map((item) => item.q)).toEqual([
-			'¿Qué es la Agenda Educativa 2027?',
 			'¿Cuándo empiezan las clases 2027 en CABA?',
+			'¿Cuándo empieza el secundario 2027 en CABA?',
 			'¿Cuándo son las vacaciones de invierno 2027 en CABA?',
+			'¿Cuándo terminan las clases 2027 en CABA?',
+			'¿Cuándo vuelven los docentes en 2027?',
 		]);
 		expect(preguntas[0]?.a).toContain('href="/calendario-escolar-2027/buenos-aires/"');
-		expect(preguntas.every((item) => !/empiezan el \d/.test(item.a))).toBe(true);
+		expect(preguntas[1]?.a).toContain('miércoles 3 de marzo');
+		expect(preguntas[4]?.a).toContain('10 de febrero de 2027');
 	});
 
 	it('responde el inicio de cada provincia sin fechas que el organismo no publicó', () => {

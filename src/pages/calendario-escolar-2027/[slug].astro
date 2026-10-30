@@ -21,7 +21,6 @@ import {
 	keywordsProvincia,
 	sujetoOrganismo,
 	marcasReceso,
-	ministerioDe,
 	notaPuentes,
 	preguntasProvincia,
 	provinciasVecinas,
@@ -47,7 +46,7 @@ const calendario = calendarioDe(2027);
 const { provincia, jurisdiccion } = Astro.props;
 const anio = calendario.anio;
 const meta = metaCalendarioProvincia(provincia, jurisdiccion, anio);
-const h1 = h1CalendarioProvincia(provincia, anio);
+const h1 = h1CalendarioProvincia(provincia, anio, jurisdiccion);
 const nombre = nombreCalendario(provincia);
 const actualizado = actualizadoVisible(calendario, jurisdiccion);
 const esPba = provincia.slug === 'buenos-aires';
@@ -64,12 +63,11 @@ const keywords = esPba
 		].join(', ')
 	: esCaba
 		? [
-				'agenda educativa 2027',
 				'agenda educativa 2027 caba',
 				'calendario escolar 2027 caba',
 				'inicio de clases 2027 caba',
 				'vacaciones de invierno 2027 caba',
-				'ciclo lectivo 2027 ciudad de buenos aires',
+				'cuando empiezan las clases 2027 en caba',
 			].join(', ')
 		: keywordsProvincia(provincia, anio).join(', ');
 const sitio = Astro.site ?? new URL('https://www.aulita.com.ar');
@@ -137,7 +135,7 @@ const tarjetas = [
 		</div>
 		<div class="hoja-calendario mt-4">
 			<h1 class="text-3xl font-bold tracking-tight text-azul sm:text-4xl">{h1}</h1>
-			<p class="no-print mt-3 max-w-3xl text-base leading-relaxed text-texto" set:html={esCaba ? introCaba(jurisdiccion, anio) : esPba ? introBuenosAires(jurisdiccion, anio) : introProvincia(provincia, jurisdiccion, anio)} />
+			<p class="no-print mt-3 max-w-3xl text-base leading-relaxed text-texto" set:html={esCaba ? introCaba(jurisdiccion, anio, actualizado) : esPba ? introBuenosAires(jurisdiccion, anio) : introProvincia(provincia, jurisdiccion, anio)} />
 			<p class="no-print mt-2 text-sm text-muted">
 				Actualizado: <time datetime={actualizado}>{fechaActualizado(actualizado)}</time>
 			</p>
@@ -154,10 +152,9 @@ const tarjetas = [
 					</p>
 				) : (
 					jurisdiccion.fuente && (
-						<p class="no-print mt-4 text-sm text-muted">
-							Fuente oficial:{' '}
-							<a class="text-celeste underline" href={jurisdiccion.fuente} rel="noopener noreferrer">
-								{ministerioDe(provincia)}
+						<p class="no-print mt-4">
+							<a class="inline-flex min-h-11 items-center rounded-full bg-sol px-4 text-sm font-bold text-azul" href={jurisdiccion.fuente} rel="noopener noreferrer">
+								Calendario oficial
 							</a>
 						</p>
 					)
@@ -174,6 +171,11 @@ const tarjetas = [
 					))
 				}
 			</ul>
+			{
+				jurisdiccion.notas && (
+					<p class="no-print mt-4 max-w-3xl text-sm leading-relaxed text-muted">{jurisdiccion.notas}</p>
+				)
+			}
 			{
 				esCaba && (
 					<section class="no-print mt-8 max-w-3xl" aria-labelledby="invierno-caba">
@@ -246,11 +248,6 @@ const tarjetas = [
 				/>
 			</div>
 		</div>
-		{
-			jurisdiccion.notas && (
-				<p class="no-print mt-4 text-sm leading-relaxed text-muted">{jurisdiccion.notas}</p>
-			)
-		}
 		<section class="no-print mt-12">
 			<h2 class="text-2xl font-bold tracking-tight text-azul">Efemérides escolares {anio} por mes</h2>
 			<p class="mt-2 max-w-3xl text-sm leading-relaxed text-muted">

@@ -64,6 +64,15 @@ describe('ciclo lectivo', () => {
 		expect(oficial.inicio.estado).toBe('oficial');
 	});
 
+	it('toma las fechas oficiales de CABA', () => {
+		const ciclo = cicloDe('caba');
+		expect(ciclo.provisorio).toBe(false);
+		expect(ciclo.inicio).toEqual({ iso: '2027-03-01', estado: 'oficial' });
+		expect(ciclo.invierno.desde).toEqual({ iso: '2027-07-19', estado: 'oficial' });
+		expect(ciclo.invierno.hasta).toEqual({ iso: '2027-07-30', estado: 'oficial' });
+		expect(ciclo.fin).toEqual({ iso: '2027-12-17', estado: 'oficial' });
+	});
+
 	it('lee la misma jurisdicción que el calendario y se actualiza si pasa a oficial', () => {
 		const jurisdiccion = jurisdiccionDe(calendarioDe(2027), 'cordoba');
 		const ciclo = cicloDe('cordoba');

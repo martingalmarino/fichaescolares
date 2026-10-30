@@ -3,18 +3,30 @@ import { provincias } from './provincias';
 import { calendarioVigente, erroresCalendario, vecinasDe } from './calendario-escolar';
 
 describe('calendario escolar', () => {
-	it('arranca 2027 con las 24 jurisdicciones a confirmar y sin fechas inventadas', () => {
+	it('carga 2027 con CABA oficial y el resto a confirmar, sin fechas inventadas', () => {
 		expect(calendarioVigente.anio).toBe(2027);
-		expect(calendarioVigente.actualizado).toBe('2026-10-23');
+		expect(calendarioVigente.actualizado).toBe('2026-10-30');
 		expect(Object.keys(calendarioVigente.jurisdicciones)).toHaveLength(24);
+		expect(calendarioVigente.jurisdicciones.caba).toMatchObject({
+			estado: 'oficial',
+			inicio: '2027-03-01',
+			invierno: { desde: '2027-07-19', hasta: '2027-07-30' },
+			fin: '2027-12-17',
+			fuente: 'https://buenosaires.gob.ar/noticias/ciclo-lectivo-2027-las-clases-en-la-ciudad-comenzaran-el-1-de-marzo-y-terminaran-el-17-de',
+			inicioSecundario: '2027-03-03',
+			vueltaDocentes: '2027-02-10',
+			feriadosProvinciales: [],
+			sinClases: [],
+		});
 		for (const provincia of provincias) {
+			expect(vecinasDe(provincia.slug).length).toBeGreaterThan(0);
+			if (provincia.slug === 'caba') continue;
 			const jurisdiccion = calendarioVigente.jurisdicciones[provincia.slug];
 			expect(jurisdiccion?.estado, provincia.slug).toBe('a-confirmar');
 			expect(jurisdiccion?.inicio).toBeNull();
 			expect(jurisdiccion?.fin).toBeNull();
 			expect(jurisdiccion?.fuente).toBeNull();
 			expect(jurisdiccion?.invierno).toEqual({ desde: null, hasta: null });
-			expect(vecinasDe(provincia.slug).length).toBeGreaterThan(0);
 		}
 	});
 

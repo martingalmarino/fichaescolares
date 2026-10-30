@@ -534,7 +534,9 @@ export function lugarCalendario(provincia: Provincia): string {
 	return nombreCalendario(provincia);
 }
 
-export function h1CalendarioProvincia(provincia: Provincia, anio: number): string {
+export function h1CalendarioProvincia(provincia: Provincia, anio: number, jurisdiccion?: Pick<Jurisdiccion, 'estado'>): string {
+	const estado = jurisdiccion?.estado ?? calendarios.find((item) => item.anio === anio)?.jurisdicciones[provincia.slug]?.estado;
+	if (provincia.slug === 'caba' && anio === 2027 && estado === 'oficial') return 'Agenda Educativa 2027 de CABA: inicio de clases el 1 de marzo';
 	if (provincia.slug === 'caba' && anio === 2027) return 'Agenda Educativa 2027 de CABA: calendario escolar de la Ciudad';
 	if (provincia.slug === 'caba') return `Calendario escolar ${anio} en la Ciudad de Buenos Aires`;
 	if (provincia.slug === 'buenos-aires' && anio === 2027) return 'Calendario escolar 2027 de la Provincia de Buenos Aires: inicio de clases y ciclo lectivo';
@@ -562,6 +564,15 @@ export function metaCalendarioEscolar(anio: number): MetaPagina {
 }
 
 export function metaCalendarioProvincia(provincia: Provincia, jurisdiccion: Jurisdiccion, anio: number): MetaPagina {
+	if (provincia.slug === 'caba' && anio === 2027 && jurisdiccion.estado === 'oficial') {
+		return {
+			ruta: `/calendario-escolar-${anio}/${provincia.slug}/`,
+			title: 'Agenda Educativa 2027 CABA: clases del 1 de marzo al 17 de diciembre',
+			description:
+				'Oficial: en CABA las clases 2027 empiezan el lunes 1 de marzo (secundario el 3), el receso de invierno es del 19 al 30 de julio y terminan el 17 de diciembre.',
+			tituloLibre: true,
+		};
+	}
 	if (provincia.slug === 'caba' && anio === 2027) {
 		return {
 			ruta: `/calendario-escolar-${anio}/${provincia.slug}/`,
