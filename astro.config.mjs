@@ -16,6 +16,7 @@ for (const archivo of readdirSync(carpeta).filter((nombre) => nombre.endsWith('.
 	const datos = JSON.parse(readFileSync(join(carpeta, archivo), 'utf8'));
 	const base = `https://www.aulita.com.ar/calendario-escolar-${datos.anio}/`;
 	lastmodCalendario.set(base, datos.actualizado);
+	lastmodCalendario.set(`https://www.aulita.com.ar/vacaciones-de-invierno-${datos.anio}/`, datos.actualizado);
 	for (const [slug, jurisdiccion] of Object.entries(datos.jurisdicciones)) {
 		const fecha = jurisdiccion && typeof jurisdiccion === 'object' && 'actualizado' in jurisdiccion && jurisdiccion.actualizado ? String(jurisdiccion.actualizado) : datos.actualizado;
 		lastmodCalendario.set(`${base}${slug}/`, fecha);

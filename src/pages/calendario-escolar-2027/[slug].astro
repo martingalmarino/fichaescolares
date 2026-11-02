@@ -17,7 +17,6 @@ import {
 	introBuenosAires,
 	introCaba,
 	introProvincia,
-	inviernoCaba,
 	keywordsProvincia,
 	sujetoOrganismo,
 	marcasReceso,
@@ -26,6 +25,7 @@ import {
 	provinciasVecinas,
 	rangoTarjeta,
 	textoPlano,
+	textoSeccionInvierno,
 } from '../../lib/texto-calendario';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
@@ -177,18 +177,6 @@ const tarjetas = [
 				)
 			}
 			{
-				esCaba && (
-					<section class="no-print mt-8 max-w-3xl" aria-labelledby="invierno-caba">
-						<h2 id="invierno-caba" class="text-2xl font-bold tracking-tight text-azul">Vacaciones de invierno {anio} en CABA</h2>
-						<p class="mt-3 text-base leading-relaxed text-texto">{inviernoCaba(jurisdiccion, anio)}</p>
-						<p class="mt-3 text-base leading-relaxed text-texto">
-							La Provincia de Buenos Aires tiene otro calendario.{' '}
-							<a class="text-celeste underline" href={`/calendario-escolar-${anio}/buenos-aires/`}>calendario escolar {anio} de la Provincia de Buenos Aires</a>.
-						</p>
-					</section>
-				)
-			}
-			{
 				esPba && (
 					<section class="no-print mt-8" aria-labelledby="cuadro-pba">
 						<h2 id="cuadro-pba" class="text-2xl font-bold tracking-tight text-azul">
@@ -231,6 +219,21 @@ const tarjetas = [
 					</section>
 				)
 			}
+			<section id="invierno" class="no-print mt-8 max-w-3xl" aria-labelledby="invierno-titulo">
+				<h2 id="invierno-titulo" class="text-2xl font-bold tracking-tight text-azul">Vacaciones de invierno {anio} en {nombre}</h2>
+				<p class="mt-3 text-base leading-relaxed text-texto">{textoSeccionInvierno(provincia, jurisdiccion, anio)}</p>
+				{
+					esCaba && (
+						<p class="mt-3 text-base leading-relaxed text-texto">
+							La Provincia de Buenos Aires tiene otro calendario.{' '}
+							<a class="text-celeste underline" href={`/calendario-escolar-${anio}/buenos-aires/`}>calendario escolar {anio} de la Provincia de Buenos Aires</a>.
+						</p>
+					)
+				}
+				<p class="mt-3 text-base leading-relaxed text-texto">
+					<a class="text-celeste underline" href={`/vacaciones-de-invierno-${anio}/`}>Ver las vacaciones de invierno de todas las provincias</a>.
+				</p>
+			</section>
 			<div class="mt-10 flex flex-wrap items-center justify-between gap-3">
 				<h2 class="text-2xl font-bold tracking-tight text-azul">Calendario {anio} mes por mes</h2>
 				<button id="imprimir-calendario" type="button" class="no-print inline-flex min-h-11 items-center rounded-control bg-azul px-4 text-sm font-semibold text-white">

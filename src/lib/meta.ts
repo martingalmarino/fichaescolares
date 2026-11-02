@@ -563,6 +563,28 @@ export function metaCalendarioEscolar(anio: number): MetaPagina {
 	return { ruta: `/calendario-escolar-${anio}/`, title, description };
 }
 
+export function metaVacacionesInvierno(anio: number): MetaPagina {
+	const calendario = calendarios.find((item) => item.anio === anio);
+	const oficiales = provincias.filter((provincia) => {
+		const item = calendario?.jurisdicciones[provincia.slug];
+		return item?.estado === 'oficial' && item.invierno.desde && item.invierno.hasta;
+	});
+	const title = `Vacaciones de invierno ${anio}: fechas por provincia en Argentina`;
+	let description = `¿Cuándo son las vacaciones de invierno ${anio}? Fechas del receso invernal en las 24 provincias. Actualizado.`;
+	if (oficiales.length === 1 && oficiales[0]?.slug === 'caba' && calendario?.jurisdicciones.caba?.invierno.desde && calendario.jurisdicciones.caba.invierno.hasta) {
+		const desde = Number(calendario.jurisdicciones.caba.invierno.desde.slice(8));
+		const hasta = Number(calendario.jurisdicciones.caba.invierno.hasta.slice(8));
+		description = `¿Cuándo son las vacaciones de invierno ${anio}? Fechas del receso invernal en las 24 provincias. CABA ya confirmó del ${desde} al ${hasta} de julio. Actualizado.`;
+	} else if (oficiales.length > 0) {
+		const nombres = oficiales.map((provincia) => (provincia.slug === 'caba' ? 'CABA' : provincia.nombre)).join(', ');
+		description = encajarCalendario([
+			`¿Cuándo son las vacaciones de invierno ${anio}? Fechas del receso invernal en las 24 provincias. Ya confirmaron: ${nombres}. Actualizado.`,
+			`¿Cuándo son las vacaciones de invierno ${anio}? Receso invernal por provincia. Ya confirmaron: ${nombres}. Actualizado.`,
+		]);
+	}
+	return { ruta: `/vacaciones-de-invierno-${anio}/`, title, description, tituloLibre: true };
+}
+
 export function metaCalendarioProvincia(provincia: Provincia, jurisdiccion: Jurisdiccion, anio: number): MetaPagina {
 	if (provincia.slug === 'caba' && anio === 2027 && jurisdiccion.estado === 'oficial') {
 		return {
@@ -633,6 +655,7 @@ export function todasLasMetas(desde = new Date()): MetaPagina[] {
 		...provincias.map((provincia) => metaProvincia(provincia, mapas.some((mapa) => mapa.provincia?.replaceAll('_', '-') === provincia.slug))),
 		...calendarios.flatMap((calendario) => [
 			metaCalendarioEscolar(calendario.anio),
+			metaVacacionesInvierno(calendario.anio),
 			...provincias.map((provincia) => metaCalendarioProvincia(provincia, calendario.jurisdicciones[provincia.slug]!, calendario.anio)),
 		]),
 	];

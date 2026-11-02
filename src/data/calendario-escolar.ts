@@ -50,9 +50,18 @@ export interface Jurisdiccion {
 	cortes?: CortesPeriodo;
 }
 
+/** Turnos de invierno que anuncia el Consejo Federal de Educación, si salieron. */
+export interface CfeInvierno {
+	turnos: { nombre: string; desde: string; hasta: string }[];
+	fuente: string | null;
+	notas: string | null;
+}
+
 export interface CalendarioEscolar {
 	anio: number;
 	actualizado: string;
+	/** null hasta que el CFE publique los turnos de invierno. */
+	cfeInvierno?: CfeInvierno | null;
 	jurisdicciones: Record<string, Jurisdiccion>;
 }
 
@@ -141,6 +150,29 @@ export function erroresCalendario(datos: unknown, slugs: string[]): string[] {
 	if (!calendario || !Number.isInteger(calendario.anio)) return ['el calendario no tiene año'];
 	const anio = calendario.anio as number;
 	if (!fechaIso(calendario.actualizado)) errores.push(`${anio}: actualizado no es una fecha`);
+	if (calendario.cfeInvierno !== undefined && calendario.cfeInvierno !== null) {
+		const cfe = registro(calendario.cfeInvierno);
+		if (!cfe || !Array.isArray(cfe.turnos) || cfe.turnos.length === 0) {
+			errores.push(`${anio}: cfeInvierno inválido`);
+		} else {
+			for (const turno of cfe.turnos) {
+				const item = registro(turno);
+				if (
+					!item ||
+					typeof item.nombre !== 'string' ||
+					!item.nombre.trim() ||
+					!fechaIso(item.desde, anio) ||
+					!fechaIso(item.hasta, anio) ||
+					String(item.desde) > String(item.hasta)
+				) {
+					errores.push(`${anio}: turno de cfeInvierno inválido`);
+					break;
+				}
+			}
+			if (cfe.fuente !== null && !https(cfe.fuente)) errores.push(`${anio}: fuente de cfeInvierno inválida`);
+			if (cfe.notas !== null && typeof cfe.notas !== 'string') errores.push(`${anio}: notas de cfeInvierno inválidas`);
+		}
+	}
 	const jurisdicciones = registro(calendario.jurisdicciones);
 	if (!jurisdicciones) return [...errores, `${anio}: faltan las jurisdicciones`];
 	for (const slug of slugs) {

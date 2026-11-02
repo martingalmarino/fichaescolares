@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { calendarioDe } from '../data/calendario-escolar';
 import { provincias } from '../data/provincias';
 import { contarPalabras } from './meta';
-import { cuadroBuenosAires, fechaCorta, filasResumen, introBuenosAires, introCaba, introCalendarioNacional, introProvincia, inviernoCaba, keywordsProvincia, preguntasBuenosAires, preguntasCaba, preguntasNacional, preguntasProvincia, regionesEscolares } from './texto-calendario';
+import { cuadroBuenosAires, fechaCorta, filasResumen, filasVacacionesInvierno, introBuenosAires, introCaba, introCalendarioNacional, introProvincia, introVacacionesInvierno, inviernoCaba, keywordsProvincia, preguntasBuenosAires, preguntasCaba, preguntasNacional, preguntasProvincia, preguntasVacacionesInvierno, regionesEscolares } from './texto-calendario';
 
 describe('grilla del calendario', () => {
 	it('formatea la fecha corta de la tarjeta', () => {
@@ -127,5 +127,43 @@ describe('grilla del calendario', () => {
 			'ciclo lectivo 2027 mendoza',
 			'vacaciones de invierno 2027 mendoza',
 		]);
+	});
+});
+
+describe('vacaciones de invierno 2027', () => {
+	it('lista las 24 jurisdicciones y marca CABA oficial del 19 al 30 de julio', () => {
+		const calendario = calendarioDe(2027);
+		expect(calendario.cfeInvierno).toBeNull();
+		const regiones = filasVacacionesInvierno(calendario);
+		const filas = regiones.flatMap((region) => region.filas);
+		expect(filas).toHaveLength(24);
+		expect(new Set(filas.map((fila) => fila.provincia.slug)).size).toBe(24);
+		const caba = filas.find((fila) => fila.provincia.slug === 'caba');
+		expect(caba).toMatchObject({
+			oficial: true,
+			estado: 'Oficial',
+			receso: '19 al 30 de julio',
+			href: '/calendario-escolar-2027/caba/#invierno',
+		});
+		expect(filas.filter((fila) => fila.oficial)).toHaveLength(1);
+		expect(filas.filter((fila) => !fila.oficial).every((fila) => fila.receso === 'A confirmar')).toBe(true);
+		const centro = regiones.find((region) => region.id === 'centro')!;
+		expect(centro.filas[0]?.provincia.slug).toBe('caba');
+		const intro = introVacacionesInvierno(calendario);
+		expect(intro).toContain('Ciudad de Buenos Aires');
+		expect(intro).toContain('19 al 30 de julio');
+		const preguntas = preguntasVacacionesInvierno(calendario);
+		expect(preguntas.map((item) => item.q)).toEqual([
+			'¿Cuándo son las vacaciones de invierno 2027?',
+			'¿Cuándo son las vacaciones de invierno 2027 en Buenos Aires?',
+			'¿Cuándo son las vacaciones de invierno 2027 en CABA?',
+			'¿Cuándo son las vacaciones de invierno 2027 en Córdoba?',
+			'¿Cuándo son las vacaciones de invierno 2027 en Santa Fe?',
+			'¿Cuánto duran las vacaciones de invierno?',
+			'¿Qué provincias ya confirmaron las vacaciones de invierno 2027?',
+		]);
+		expect(preguntas.find((item) => item.q.includes('CABA'))?.a).toContain('19 al 30 de julio');
+		expect(preguntas.find((item) => item.q.includes('Córdoba'))?.a).toContain('Todavía no está confirmado');
+		expect(preguntas.find((item) => item.q.includes('confirmaron'))?.a).toContain('CABA');
 	});
 });

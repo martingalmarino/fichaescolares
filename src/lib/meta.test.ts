@@ -6,7 +6,7 @@ import { mapas } from '../data/mapas';
 import { provincias } from '../data/provincias';
 import { MESES_SLUG, efemeridesDelMes, fechaArgentina, mesDeSlug, pascua } from './calendario';
 import { calendarioDe } from '../data/calendario-escolar';
-import { MAX_DESCRIPCION, MAX_TITULO, MIN_DESCRIPCION, contarPalabras, h1CalendarioProvincia, htmlProvincia, introMes, metaCalendarioEscolar, metaCalendarioProvincia, metaEfemeride, metaLamina, metaMapa, metaProvincia, todasLasMetas } from './meta';
+import { MAX_DESCRIPCION, MAX_TITULO, MIN_DESCRIPCION, contarPalabras, h1CalendarioProvincia, htmlProvincia, introMes, metaCalendarioEscolar, metaCalendarioProvincia, metaEfemeride, metaLamina, metaMapa, metaProvincia, metaVacacionesInvierno, todasLasMetas } from './meta';
 
 describe('títulos y descripciones', () => {
 	const metas = todasLasMetas(new Date('2026-10-23T12:00:00-03:00'));
@@ -26,6 +26,7 @@ describe('títulos y descripciones', () => {
 		expect(metas.filter((meta) => meta.ruta.startsWith('/efemerides/') && !MESES_SLUG.some((mes) => meta.ruta === `/efemerides/${mes}/`) && meta.ruta !== '/efemerides/')).toHaveLength(efemerides.length);
 		expect(metas.filter((meta) => meta.ruta.startsWith('/calendario-escolar-2027/'))).toHaveLength(25);
 		expect(rutas.has('/calendario-escolar-2027/cordoba/')).toBe(true);
+		expect(rutas.has('/vacaciones-de-invierno-2027/')).toBe(true);
 		expect(rutas.has('/como-se-califica-en-primaria/')).toBe(true);
 		expect(rutas.has('/como-se-califica-en-primaria/provincia-de-buenos-aires/')).toBe(true);
 		expect(rutas.has('/como-se-califica-en-primaria/caba/')).toBe(true);
@@ -123,6 +124,12 @@ describe('títulos y descripciones', () => {
 		);
 		expect(metaCalendarioEscolar(2027).description.length).toBeGreaterThanOrEqual(140);
 		expect(metaCalendarioEscolar(2027).description.length).toBeLessThanOrEqual(155);
+		expect(metaVacacionesInvierno(2027).title).toBe('Vacaciones de invierno 2027: fechas por provincia en Argentina');
+		expect(metaVacacionesInvierno(2027).description).toBe(
+			'¿Cuándo son las vacaciones de invierno 2027? Fechas del receso invernal en las 24 provincias. CABA ya confirmó del 19 al 30 de julio. Actualizado.',
+		);
+		expect(metaVacacionesInvierno(2027).description.length).toBeGreaterThanOrEqual(140);
+		expect(metaVacacionesInvierno(2027).description.length).toBeLessThanOrEqual(MAX_DESCRIPCION);
 		const calendario = calendarioDe(2027);
 		const esperado = new Map<string, string>([
 			['buenos-aires', 'Inicio de clases 2027 en Buenos Aires: calendario escolar'],

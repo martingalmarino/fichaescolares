@@ -1,0 +1,303 @@
+---
+import Breadcrumbs from '../../components/Breadcrumbs.astro';
+import { calendarioDe } from '../../data/calendario-escolar';
+import { provincias } from '../../data/provincias';
+import { metaVacacionesInvierno, nombreCalendario } from '../../lib/meta';
+import { faqJsonLd, itemListJsonLd } from '../../lib/seo';
+import {
+	actualizadoVisible,
+	confirmadas,
+	fechaActualizado,
+	filasVacacionesInvierno,
+	introVacacionesInvierno,
+	preguntasVacacionesInvierno,
+	textoCfeInvierno,
+	textoPlano,
+} from '../../lib/texto-calendario';
+import BaseLayout from '../../layouts/BaseLayout.astro';
+
+const calendario = calendarioDe(2027);
+const anio = calendario.anio;
+const meta = metaVacacionesInvierno(anio);
+const actualizado = actualizadoVisible(calendario);
+const intro = introVacacionesInvierno(calendario);
+const preguntas = preguntasVacacionesInvierno(calendario);
+const regiones = filasVacacionesInvierno(calendario);
+const cfe = textoCfeInvierno(calendario);
+const oficiales = confirmadas(calendario);
+const total = provincias.length;
+const avance = oficiales === 0 ? 1 : (oficiales / total) * 100;
+const keywords = [
+	'vacaciones de invierno 2027',
+	'vacaciones de invierno 2027 argentina',
+	'receso invernal 2027',
+	'cuando son las vacaciones de invierno 2027',
+	'vacaciones de invierno 2027 buenos aires',
+	'vacaciones de invierno 2027 caba',
+	'vacaciones de invierno 2027 santa fe',
+	'vacaciones de invierno 2027 cordoba',
+];
+const sitio = Astro.site ?? new URL('https://www.aulita.com.ar');
+const url = new URL(meta.ruta, sitio).href;
+const calendarioUrl = new URL(`/calendario-escolar-${anio}/`, sitio).href;
+const lista = itemListJsonLd(
+	`Vacaciones de invierno ${anio} por provincia`,
+	[...provincias]
+		.sort((a, b) => nombreCalendario(a).localeCompare(nombreCalendario(b), 'es'))
+		.map((provincia) => ({
+			name: nombreCalendario(provincia),
+			url: new URL(`/calendario-escolar-${anio}/${provincia.slug}/`, sitio).href,
+		})),
+);
+const faq = faqJsonLd(preguntas.map((item) => ({ q: item.q, a: textoPlano(item.a) })));
+const eventos = provincias
+	.filter((provincia) => {
+		const item = calendario.jurisdicciones[provincia.slug];
+		return item?.estado === 'oficial' && item.invierno.desde && item.invierno.hasta;
+	})
+	.map((provincia) => {
+		const item = calendario.jurisdicciones[provincia.slug]!;
+		const corto = provincia.slug === 'caba' ? 'CABA' : nombreCalendario(provincia);
+		return {
+			'@type': 'Event',
+			name: `Vacaciones de invierno ${anio} – ${corto}`,
+			startDate: item.invierno.desde,
+			endDate: item.invierno.hasta,
+			eventAttendanceMode: 'https://schema.org/OnlineEventAttendanceMode',
+			location: { '@type': 'AdministrativeArea', name: provincia.nombre },
+			url: new URL(`/calendario-escolar-${anio}/${provincia.slug}/#invierno`, sitio).href,
+			organizer: { '@id': 'https://www.aulita.com.ar/#organization' },
+		};
+	});
+const jsonLd = {
+	'@context': 'https://schema.org',
+	'@graph': [
+		{
+			'@type': 'WebPage',
+			name: meta.title,
+			url,
+			inLanguage: 'es-AR',
+			dateModified: actualizado,
+			isPartOf: { '@id': 'https://www.aulita.com.ar/#website' },
+			about: { '@type': 'Country', name: 'Argentina' },
+		},
+		{
+			'@type': 'BreadcrumbList',
+			itemListElement: [
+				{ '@type': 'ListItem', position: 1, name: 'Inicio', item: new URL('/', sitio).href },
+				{ '@type': 'ListItem', position: 2, name: `Calendario escolar ${anio}`, item: calendarioUrl },
+				{ '@type': 'ListItem', position: 3, name: `Vacaciones de invierno ${anio}`, item: url },
+			],
+		},
+		{ '@type': 'FAQPage', mainEntity: faq.mainEntity },
+		{ '@type': 'ItemList', name: lista.name, numberOfItems: lista.numberOfItems, itemListElement: lista.itemListElement },
+		...eventos,
+	],
+};
+---
+
+<BaseLayout title={meta.title} description={meta.description} keywords={keywords.join(', ')} image={`/og/calendario-escolar-${anio}.svg`} jsonLd={jsonLd}>
+	<article class="mx-auto max-w-6xl px-4 py-8">
+		<Breadcrumbs
+			items={[
+				{ label: 'Inicio', href: '/' },
+				{ label: `Calendario escolar ${anio}`, href: `/calendario-escolar-${anio}/` },
+				{ label: `Vacaciones de invierno ${anio}` },
+			]}
+		/>
+		<h1 class="mt-4 text-3xl font-bold tracking-tight text-azul sm:text-4xl">Vacaciones de invierno {anio} en Argentina: fechas por provincia</h1>
+		<p class="mt-3 max-w-[720px] text-base leading-relaxed text-muted">{intro}</p>
+		<p class="mt-2 text-sm text-muted">
+			Actualizado: <time datetime={actualizado}>{fechaActualizado(actualizado)}</time>
+		</p>
+		<div class="invierno-barra">
+			<div class="invierno-progreso">
+				<p>
+					<strong>{oficiales} de {total} jurisdicciones</strong> confirmadas · actualizado el <time datetime={actualizado}>{fechaActualizado(actualizado)}</time>
+				</p>
+				<div class="invierno-pista" aria-hidden="true"><span class="invierno-avance" style={`width: ${avance}%`}></span></div>
+			</div>
+			<a class="invierno-cta" href="/planificador-docente-2027/">Armá tu planificador docente</a>
+		</div>
+		{
+			cfe && (
+				<p class="mt-4 rounded-card border border-sol bg-sol-50 px-4 py-3 text-sm leading-relaxed text-azul">
+					{cfe}
+					{calendario.cfeInvierno?.fuente && (
+						<>
+							{' '}
+							<a class="font-semibold underline" href={calendario.cfeInvierno.fuente} rel="noopener noreferrer">
+								Fuente del CFE
+							</a>
+						</>
+					)}
+				</p>
+			)
+		}
+		<section class="mt-10" aria-labelledby="tabla-invierno">
+			<h2 id="tabla-invierno" class="text-2xl font-bold tracking-tight text-azul">Fechas del receso de invierno {anio} por provincia</h2>
+			<p class="mt-2 max-w-3xl text-base leading-relaxed text-muted">Solo el receso invernal. Para inicio, fin de clases y feriados, abrí el calendario de cada provincia.</p>
+			{
+				regiones.map((region) => (
+					<section class="mt-8" aria-labelledby={`invierno-${region.id}`}>
+						<h3 id={`invierno-${region.id}`} class="text-lg font-bold tracking-tight text-azul">
+							{region.nombre}
+						</h3>
+						<div class="mt-3 overflow-x-auto rounded-card border border-borde bg-white">
+							<table class="w-full min-w-[32rem] text-left text-sm">
+								<caption class="sr-only">Vacaciones de invierno {anio} en {region.nombre}</caption>
+								<thead class="bg-celeste-50 text-azul">
+									<tr>
+										<th class="px-3 py-3 font-semibold" scope="col">Provincia</th>
+										<th class="px-3 py-3 font-semibold" scope="col">Receso de invierno</th>
+										<th class="px-3 py-3 font-semibold" scope="col">Estado</th>
+									</tr>
+								</thead>
+								<tbody>
+									{region.filas.map((fila) => (
+										<tr class="border-t border-borde">
+											<th class="px-3 py-3 font-semibold" scope="row">
+												<a class="text-celeste underline" href={fila.href}>
+													{nombreCalendario(fila.provincia)}
+												</a>
+												{fila.oficial && fila.jurisdiccion.fuente && (
+													<>
+														{' '}
+														<a class="text-xs font-normal text-muted underline" href={fila.jurisdiccion.fuente} rel="noopener noreferrer">
+															fuente
+														</a>
+													</>
+												)}
+											</th>
+											<td class="px-3 py-3">{fila.receso}</td>
+											<td class="px-3 py-3">
+												{fila.oficial ? <span class="invierno-badge">Oficial</span> : 'A confirmar'}
+											</td>
+										</tr>
+									))}
+								</tbody>
+							</table>
+						</div>
+					</section>
+				))
+			}
+		</section>
+		<p class="mt-10">
+			<a class="invierno-cta" href="/planificador-docente-2027/">Armá tu planificador docente 2027</a>
+		</p>
+		<section class="mt-12 max-w-3xl">
+			<h2 class="text-2xl font-bold tracking-tight text-azul">¿Quién define las vacaciones de invierno?</h2>
+			<p class="mt-3 text-base leading-relaxed text-texto">
+				Las vacaciones de invierno las define el ministerio de educación de cada provincia y de la Ciudad de Buenos Aires. El Consejo Federal de Educación suele coordinar turnos comunes, pero la resolución final es provincial. Esta página solo carga fechas cuando hay una fuente oficial para citar; no estima ni adelanta el receso.
+			</p>
+		</section>
+		<section class="mt-12 max-w-3xl" aria-labelledby="faq-titulo">
+			<h2 id="faq-titulo" class="text-2xl font-bold tracking-tight text-azul">Preguntas frecuentes</h2>
+			{
+				preguntas.map((item) => (
+					<div class="mt-6">
+						<h3 class="text-xl font-bold tracking-tight text-azul">{item.q}</h3>
+						<p class="mt-2 text-base leading-relaxed text-muted" set:html={item.a} />
+					</div>
+				))
+			}
+		</section>
+		<p class="mt-10 text-base leading-relaxed text-muted">
+			También está el <a class="text-celeste underline" href={`/calendario-escolar-${anio}/`}>calendario escolar {anio} completo</a> con inicio, fin de clases y feriados.
+		</p>
+	</article>
+</BaseLayout>
+
+<style>
+	.invierno-barra {
+		display: flex;
+		gap: 16px;
+		align-items: center;
+		flex-wrap: wrap;
+		margin: 18px 0;
+		min-height: 4.5rem;
+	}
+
+	.invierno-progreso {
+		flex: 1;
+		min-width: min(100%, 240px);
+		background: #fff4e2;
+		border-radius: 10px;
+		padding: 12px 14px;
+		font-size: 14px;
+		line-height: 1.4;
+		color: #1d3557;
+	}
+
+	.invierno-progreso p {
+		margin: 0;
+	}
+
+	.invierno-pista {
+		height: 6px;
+		margin-top: 8px;
+		border-radius: 3px;
+		background: #fde3b5;
+		overflow: hidden;
+	}
+
+	.invierno-avance {
+		display: block;
+		height: 6px;
+		border-radius: 3px;
+		background: #f4a531;
+	}
+
+	.invierno-cta {
+		display: inline-flex;
+		min-height: 44px;
+		align-items: center;
+		justify-content: center;
+		flex: none;
+		padding: 12px 18px;
+		border-radius: 8px;
+		background: #1d3557;
+		color: #fff;
+		font-weight: 600;
+		text-decoration: none;
+		white-space: nowrap;
+	}
+
+	.invierno-cta:hover {
+		background: #16304f;
+	}
+
+	.invierno-badge {
+		display: inline-block;
+		padding: 2px 8px;
+		border-radius: 999px;
+		background: #f4a531;
+		color: #1d3557;
+		font-size: 12px;
+		font-weight: 700;
+		line-height: 1.4;
+	}
+
+	.invierno-cta:focus-visible {
+		outline: 2px solid #327bac;
+		outline-offset: 2px;
+	}
+
+	@media (max-width: 600px) {
+		.invierno-barra {
+			flex-direction: column;
+			align-items: stretch;
+		}
+
+		.invierno-progreso,
+		.invierno-cta {
+			width: 100%;
+			min-width: 0;
+		}
+
+		.invierno-cta {
+			white-space: normal;
+			text-align: center;
+		}
+	}
+</style>

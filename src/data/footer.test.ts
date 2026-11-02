@@ -12,6 +12,7 @@ describe('pie', () => {
 		expect(hrefs).toContain('/registro-de-asistencia/');
 		expect(hrefs).toContain('/mapas/');
 		expect(hrefs).toContain('/calendario-escolar-2027/');
+		expect(hrefs).toContain('/vacaciones-de-invierno-2027/');
 		expect(hrefs.some((href) => href.startsWith('/provincias/'))).toBe(false);
 		expect(proximasFooter).toHaveLength(6);
 		expect(columnas).toHaveLength(4);

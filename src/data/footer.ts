@@ -69,6 +69,7 @@ export const columnas: ColumnaFooter[] = [
 			{ label: 'Mapas escolares IGN', href: '/mapas/' },
 			{ label: 'Mapas por provincia', href: '/mapas/provincias/' },
 			{ label: `Calendario escolar ${calendarioVigente.anio}`, href: `/calendario-escolar-${calendarioVigente.anio}/` },
+			{ label: `Vacaciones de invierno ${calendarioVigente.anio}`, href: `/vacaciones-de-invierno-${calendarioVigente.anio}/` },
 		],
 	},
 	{

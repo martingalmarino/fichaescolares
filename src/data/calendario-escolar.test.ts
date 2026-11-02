@@ -6,6 +6,7 @@ describe('calendario escolar', () => {
 	it('carga 2027 con CABA oficial y el resto a confirmar, sin fechas inventadas', () => {
 		expect(calendarioVigente.anio).toBe(2027);
 		expect(calendarioVigente.actualizado).toBe('2026-10-30');
+		expect(calendarioVigente.cfeInvierno).toBeNull();
 		expect(Object.keys(calendarioVigente.jurisdicciones)).toHaveLength(24);
 		expect(calendarioVigente.jurisdicciones.caba).toMatchObject({
 			estado: 'oficial',

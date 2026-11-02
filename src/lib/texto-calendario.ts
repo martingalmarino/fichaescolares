@@ -384,3 +384,115 @@ export function actualizadoVisible(calendario: CalendarioEscolar, jurisdiccion?:
 export function marcasReceso(jurisdiccion: Jurisdiccion): { iso: string; nombre: string }[] {
 	return recesosDe(jurisdiccion);
 }
+
+function inviernoConfirmado(jurisdiccion: Jurisdiccion | undefined): boolean {
+	return Boolean(jurisdiccion?.estado === 'oficial' && jurisdiccion.invierno.desde && jurisdiccion.invierno.hasta);
+}
+
+/** Filas de la tabla nacional de vacaciones de invierno, por región. Oficiales primero. */
+export function filasVacacionesInvierno(calendario: CalendarioEscolar) {
+	return regionesEscolares.map((region) => ({
+		...region,
+		filas: region.slugs
+			.map((slug) => {
+				const provincia = provincias.find((item) => item.slug === slug);
+				if (!provincia) throw new Error(`Falta la provincia ${slug}`);
+				const jurisdiccion = calendario.jurisdicciones[slug];
+				if (!jurisdiccion) throw new Error(`Falta el calendario de ${slug}`);
+				const oficial = inviernoConfirmado(jurisdiccion);
+				return {
+					provincia,
+					jurisdiccion,
+					href: `/calendario-escolar-${calendario.anio}/${slug}/#invierno`,
+					receso: oficial ? rangoTarjeta(jurisdiccion.invierno.desde, jurisdiccion.invierno.hasta) : 'A confirmar',
+					estado: oficial ? 'Oficial' : 'A confirmar',
+					oficial,
+				};
+			})
+			.sort((a, b) => {
+				if (a.oficial !== b.oficial) return a.oficial ? -1 : 1;
+				return nombreCalendario(a.provincia).localeCompare(nombreCalendario(b.provincia), 'es');
+			}),
+	}));
+}
+
+/** Respuesta directa bajo el H1 de vacaciones de invierno. */
+export function introVacacionesInvierno(calendario: CalendarioEscolar): string {
+	const anio = calendario.anio;
+	const oficiales = provincias.filter((provincia) => inviernoConfirmado(calendario.jurisdicciones[provincia.slug]));
+	const base = `Las vacaciones de invierno ${anio} en Argentina son de dos semanas y cada provincia define sus fechas.`;
+	if (oficiales.length === 0) {
+		return `${base} Todavía ninguna jurisdicción publicó el receso; esta página no adelanta fechas estimadas.`;
+	}
+	const frases = oficiales.map((provincia) => {
+		const item = calendario.jurisdicciones[provincia.slug]!;
+		const lugar = provincia.slug === 'caba' ? 'la Ciudad de Buenos Aires' : nombreCalendario(provincia);
+		return `${lugar} confirmó su receso del ${rangoTarjeta(item.invierno.desde, item.invierno.hasta)}`;
+	});
+	const confirmadas =
+		frases.length === 1 ? frases[0]! : `${frases.slice(0, -1).join('; ')}; y ${frases.at(-1)}`;
+	const pendientes = provincias.length - oficiales.length;
+	if (pendientes === 0) {
+		return `${base} Ya hay fechas oficiales en las 24 jurisdicciones.`;
+	}
+	if (oficiales.length === 1) {
+		return `${base} Por ahora ${confirmadas}; el resto de las provincias todavía no publicó su calendario ${anio}.`;
+	}
+	return `${base} Por ahora ${confirmadas}. ${pendientes} jurisdicciones todavía no publicaron el calendario ${anio}.`;
+}
+
+function respuestaInviernoProvincia(calendario: CalendarioEscolar, slug: string, etiqueta: string): string {
+	const jurisdiccion = calendario.jurisdicciones[slug];
+	if (inviernoConfirmado(jurisdiccion) && jurisdiccion) {
+		const segun = slug === 'caba' ? 'la Agenda Educativa' : organismoCorto(provincias.find((item) => item.slug === slug)!);
+		return `Las vacaciones de invierno ${calendario.anio} en ${etiqueta} van del ${rangoTarjeta(jurisdiccion.invierno.desde, jurisdiccion.invierno.hasta)}, según ${segun}.`;
+	}
+	return `Todavía no está confirmado; lo actualizamos apenas el ministerio publique el calendario ${calendario.anio}.`;
+}
+
+export function preguntasVacacionesInvierno(calendario: CalendarioEscolar): { q: string; a: string }[] {
+	const anio = calendario.anio;
+	const oficiales = provincias.filter((provincia) => inviernoConfirmado(calendario.jurisdicciones[provincia.slug]));
+	const nombres = oficiales.map((provincia) => nombreCalendario(provincia));
+	const cuando =
+		oficiales.length === 0
+			? `Las vacaciones de invierno ${anio} las define cada jurisdicción. Todavía no hay fechas oficiales cargadas.`
+			: oficiales.length === 1
+				? `Por ahora solo ${nombres[0]} confirmó el receso: del ${rangoTarjeta(calendario.jurisdicciones[oficiales[0]!.slug]!.invierno.desde, calendario.jurisdicciones[oficiales[0]!.slug]!.invierno.hasta)}. El resto sigue a confirmar.`
+				: `Ya hay fechas oficiales en ${nombres.join(', ')}. En el resto de las provincias el receso sigue a confirmar.`;
+	const quienes =
+		oficiales.length === 0
+			? `Todavía ninguna provincia confirmó las vacaciones de invierno ${anio}.`
+			: `Por ahora, ${nombres.join(', ')}.`;
+	return [
+		{ q: `¿Cuándo son las vacaciones de invierno ${anio}?`, a: cuando },
+		{ q: `¿Cuándo son las vacaciones de invierno ${anio} en Buenos Aires?`, a: respuestaInviernoProvincia(calendario, 'buenos-aires', 'la Provincia de Buenos Aires') },
+		{ q: `¿Cuándo son las vacaciones de invierno ${anio} en CABA?`, a: respuestaInviernoProvincia(calendario, 'caba', 'CABA') },
+		{ q: `¿Cuándo son las vacaciones de invierno ${anio} en Córdoba?`, a: respuestaInviernoProvincia(calendario, 'cordoba', 'Córdoba') },
+		{ q: `¿Cuándo son las vacaciones de invierno ${anio} en Santa Fe?`, a: respuestaInviernoProvincia(calendario, 'santa-fe', 'Santa Fe') },
+		{
+			q: '¿Cuánto duran las vacaciones de invierno?',
+			a: 'Suelen durar dos semanas. Cada ministerio provincial fija las fechas exactas del receso; esta página no estima turnos ni adelanta fechas.',
+		},
+		{ q: `¿Qué provincias ya confirmaron las vacaciones de invierno ${anio}?`, a: quienes },
+	];
+}
+
+export function textoCfeInvierno(calendario: CalendarioEscolar): string | null {
+	const cfe = calendario.cfeInvierno;
+	if (!cfe || cfe.turnos.length === 0) return null;
+	const turnos = cfe.turnos.map((turno) => `${turno.nombre}: del ${rangoTarjeta(turno.desde, turno.hasta)}`).join('; ');
+	const notas = cfe.notas ? ` ${cfe.notas}` : '';
+	return `El Consejo Federal de Educación anunció turnos de invierno ${calendario.anio}: ${turnos}.${notas}`;
+}
+
+/** Texto corto de la sección de invierno en cada página de provincia. */
+export function textoSeccionInvierno(provincia: Provincia, jurisdiccion: Jurisdiccion, anio: number): string {
+	if (provincia.slug === 'caba') return inviernoCaba(jurisdiccion, anio);
+	const lugar = lugarCalendario(provincia);
+	const segun = organismoCorto(provincia);
+	if (jurisdiccion.estado === 'oficial' && jurisdiccion.invierno.desde && jurisdiccion.invierno.hasta) {
+		return `Las vacaciones de invierno ${anio} en ${lugar} son del ${fechaTarjeta(jurisdiccion.invierno.desde)} al ${fechaTarjeta(jurisdiccion.invierno.hasta)}, según ${segun}.`;
+	}
+	return `Las vacaciones de invierno ${anio} en ${lugar} todavía no tienen fecha. ${sujetoOrganismo(provincia)} no publicó el calendario ${anio}, y esta página no muestra un receso estimado.`;
+}
