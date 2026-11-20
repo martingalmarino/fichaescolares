@@ -1,6 +1,6 @@
 {
 	"anio": 2027,
-	"actualizado": "2026-10-30",
+	"actualizado": "2026-11-20",
 	"cfeInvierno": null,
 	"jurisdicciones": {
 		"buenos-aires": {
@@ -28,6 +28,7 @@
 			"notas": "Inicio 1 de marzo para nivel inicial y primario; el secundario empieza el miércoles 3 de marzo. Los docentes vuelven el 10 de febrero.",
 			"inicioSecundario": "2027-03-03",
 			"vueltaDocentes": "2027-02-10",
+			"actualizado": "2026-10-30",
 			"feriadosProvinciales": [],
 			"sinClases": []
 		},
@@ -71,15 +72,17 @@
 			"sinClases": []
 		},
 		"cordoba": {
-			"estado": "a-confirmar",
-			"inicio": null,
+			"estado": "oficial",
+			"inicio": "2027-03-01",
 			"invierno": {
-				"desde": null,
-				"hasta": null
+				"desde": "2027-07-12",
+				"hasta": "2027-07-23"
 			},
-			"fin": null,
-			"fuente": null,
-			"notas": null,
+			"fin": "2027-12-17",
+			"fuente": "https://boletinoficial.cba.gov.ar/wp-content/4p96humuzp/2026/11/1_Secc_201126.pdf",
+			"notas": "Docentes y directivos se reincorporan el 15/2; Formación Situada 16–18/2; exámenes previos y libres 22–24/2; ambientación 25–26/2; fin de la primera etapa 8/7; mínimo 190 días de clases.",
+			"vueltaDocentes": "2027-02-15",
+			"actualizado": "2026-11-20",
 			"feriadosProvinciales": [],
 			"sinClases": []
 		},

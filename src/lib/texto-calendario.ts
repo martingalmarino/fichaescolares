@@ -41,6 +41,19 @@ export function keywordsProvincia(provincia: Provincia, anio: number): string[] 
 	];
 }
 
+/** La resolución 197/2026 fija la vuelta a clases el lunes posterior al receso. */
+const VUELTA_CORDOBA_2027 = '2027-07-26';
+
+export function keywordsCordoba(anio: number): string[] {
+	return [
+		`calendario escolar ${anio} córdoba`,
+		`inicio de clases ${anio} córdoba`,
+		`vacaciones de invierno ${anio} córdoba`,
+		`fin de clases ${anio} córdoba`,
+		'resolución 197/2026',
+	];
+}
+
 export function fechaActualizado(iso: string): string {
 	const { anio, mes, dia } = partesIso(iso);
 	return fechaDiaMes(dia, mes) + ` de ${anio}`;
@@ -226,6 +239,44 @@ export function preguntasCaba(jurisdiccion: Jurisdiccion, anio: number): { q: st
 	];
 }
 
+/** Respuesta directa bajo el H1 de Córdoba cuando la Resolución 197/2026 está cargada. */
+export function introCordoba(jurisdiccion: Jurisdiccion, anio: number): string {
+	if (jurisdiccion.estado === 'oficial' && jurisdiccion.inicio && jurisdiccion.fin && jurisdiccion.invierno.desde && jurisdiccion.invierno.hasta) {
+		return `Las clases ${anio} en Córdoba comienzan el ${fechaSinAnio(jurisdiccion.inicio)} y terminan el ${fechaSinAnio(jurisdiccion.fin)}. Las vacaciones de invierno son del ${rangoTarjeta(jurisdiccion.invierno.desde, jurisdiccion.invierno.hasta)}, según la Resolución 197/2026 del Ministerio de Educación.`;
+	}
+	return `¿Cuándo empiezan las clases en ${anio} en Córdoba? El Ministerio de Educación de Córdoba todavía no publicó el calendario oficial. No hay fecha de inicio, de vacaciones de invierno ni de fin de clases. Esta página no adelanta fechas estimadas.`;
+}
+
+export function preguntasCordoba(jurisdiccion: Jurisdiccion, anio: number): { q: string; a: string }[] {
+	const oficial = jurisdiccion.estado === 'oficial' && jurisdiccion.inicio && jurisdiccion.fin && jurisdiccion.invierno.desde && jurisdiccion.invierno.hasta;
+	if (!oficial || !jurisdiccion.inicio || !jurisdiccion.fin || !jurisdiccion.invierno.desde || !jurisdiccion.invierno.hasta) {
+		return preguntasGenericas(provincias.find((provincia) => provincia.slug === 'cordoba')!, jurisdiccion, anio);
+	}
+	const docentes = jurisdiccion.vueltaDocentes
+		? `Los docentes y directivos se reincorporan el ${fechaSinAnio(jurisdiccion.vueltaDocentes)} de ${partesIso(jurisdiccion.vueltaDocentes).anio}.`
+		: 'La resolución cargada no fecha la vuelta de los docentes.';
+	const vueltaClases = anio === 2027 ? ` Las clases vuelven el ${fechaSinAnio(VUELTA_CORDOBA_2027)}.` : '';
+	return [
+		{
+			q: `¿Cuándo empiezan las clases ${anio} en Córdoba?`,
+			a: `Las clases ${anio} en Córdoba empiezan el ${fechaSinAnio(jurisdiccion.inicio)} para Inicial, Primario, Secundario y modalidades, según la Resolución 197/2026.`,
+		},
+		{
+			q: `¿Cuándo son las vacaciones de invierno ${anio} en Córdoba?`,
+			a: `Las vacaciones de invierno ${anio} en Córdoba son del ${rangoTarjeta(jurisdiccion.invierno.desde, jurisdiccion.invierno.hasta)}.${vueltaClases}`,
+		},
+		{
+			q: `¿Cuándo terminan las clases ${anio} en Córdoba?`,
+			a: `Las clases ${anio} en Córdoba terminan el ${fechaSinAnio(jurisdiccion.fin)}, según la Resolución 197/2026.`,
+		},
+		{ q: '¿Cuándo vuelven los docentes?', a: docentes },
+		{
+			q: '¿Cuántos días de clase hay?',
+			a: `El calendario escolar ${anio} de Córdoba fija un mínimo de 190 días de clase, según la Resolución 197/2026.`,
+		},
+	];
+}
+
 /** Respuesta directa bajo el H1. 40 a 60 palabras si el organismo todavía no publicó fechas. */
 export function introProvincia(provincia: Provincia, jurisdiccion: Jurisdiccion, anio: number): string {
 	const lugar = lugarCalendario(provincia);
@@ -239,6 +290,11 @@ export function introProvincia(provincia: Provincia, jurisdiccion: Jurisdiccion,
 export function preguntasProvincia(provincia: Provincia, jurisdiccion: Jurisdiccion, anio: number): { q: string; a: string }[] {
 	if (provincia.slug === 'buenos-aires') return preguntasBuenosAires(jurisdiccion, anio);
 	if (provincia.slug === 'caba') return preguntasCaba(jurisdiccion, anio);
+	if (provincia.slug === 'cordoba' && jurisdiccion.estado === 'oficial') return preguntasCordoba(jurisdiccion, anio);
+	return preguntasGenericas(provincia, jurisdiccion, anio);
+}
+
+function preguntasGenericas(provincia: Provincia, jurisdiccion: Jurisdiccion, anio: number): { q: string; a: string }[] {
 	const lugar = lugarCalendario(provincia);
 	const nombre = nombreCalendario(provincia);
 	const ministerio = ministerioDe(provincia);
@@ -292,6 +348,11 @@ export function introCalendarioNacional(calendario: CalendarioEscolar): string {
 		const unica = oficiales[0]!;
 		const lugar = unica.slug === 'caba' ? 'la Ciudad de Buenos Aires' : lugarCalendario(unica);
 		return `¿Cuándo empiezan las clases en ${anio}? En ${lugar} el inicio oficial es el ${desde}. ${pendientes} jurisdicciones todavía no publicaron el calendario y figuran como a confirmar, sin fechas estimadas. Elegí tu provincia para ver el detalle.`;
+	}
+	if (desde === hasta) {
+		const lugares = oficiales.map((provincia) => (provincia.slug === 'caba' ? 'la Ciudad de Buenos Aires' : lugarCalendario(provincia)));
+		const donde = lugares.length === 2 ? `${lugares[0]} y en ${lugares[1]}` : lugares.join(', ');
+		return `¿Cuándo empiezan las clases en ${anio}? En ${donde} el inicio oficial es el ${desde}. ${pendientes} jurisdicciones todavía no publicaron el calendario y figuran como a confirmar, sin fechas estimadas. Elegí tu provincia para ver el detalle.`;
 	}
 	return `¿Cuándo empiezan las clases en ${anio}? Donde ya hay calendario oficial, el inicio va del ${desde} al ${hasta}. ${pendientes} jurisdicciones todavía no lo publicaron y figuran como a confirmar, sin fechas estimadas. Elegí tu provincia para ver el detalle.`;
 }
@@ -444,6 +505,9 @@ export function introVacacionesInvierno(calendario: CalendarioEscolar): string {
 function respuestaInviernoProvincia(calendario: CalendarioEscolar, slug: string, etiqueta: string): string {
 	const jurisdiccion = calendario.jurisdicciones[slug];
 	if (inviernoConfirmado(jurisdiccion) && jurisdiccion) {
+		if (slug === 'cordoba' && calendario.anio === 2027) {
+			return `Las vacaciones de invierno ${calendario.anio} en Córdoba van del ${rangoTarjeta(jurisdiccion.invierno.desde, jurisdiccion.invierno.hasta)}. Las clases vuelven el ${fechaSinAnio(VUELTA_CORDOBA_2027)}, según la Resolución 197/2026.`;
+		}
 		const segun = slug === 'caba' ? 'la Agenda Educativa' : organismoCorto(provincias.find((item) => item.slug === slug)!);
 		return `Las vacaciones de invierno ${calendario.anio} en ${etiqueta} van del ${rangoTarjeta(jurisdiccion.invierno.desde, jurisdiccion.invierno.hasta)}, según ${segun}.`;
 	}
@@ -489,6 +553,10 @@ export function textoCfeInvierno(calendario: CalendarioEscolar): string | null {
 /** Texto corto de la sección de invierno en cada página de provincia. */
 export function textoSeccionInvierno(provincia: Provincia, jurisdiccion: Jurisdiccion, anio: number): string {
 	if (provincia.slug === 'caba') return inviernoCaba(jurisdiccion, anio);
+	if (provincia.slug === 'cordoba' && jurisdiccion.estado === 'oficial' && jurisdiccion.invierno.desde && jurisdiccion.invierno.hasta) {
+		const vuelta = anio === 2027 ? ` Las clases vuelven el ${fechaSinAnio(VUELTA_CORDOBA_2027)}.` : '';
+		return `Las vacaciones de invierno ${anio} en Córdoba son del ${rangoTarjeta(jurisdiccion.invierno.desde, jurisdiccion.invierno.hasta)}.${vuelta} Según la Resolución 197/2026 del Ministerio de Educación.`;
+	}
 	const lugar = lugarCalendario(provincia);
 	const segun = organismoCorto(provincia);
 	if (jurisdiccion.estado === 'oficial' && jurisdiccion.invierno.desde && jurisdiccion.invierno.hasta) {

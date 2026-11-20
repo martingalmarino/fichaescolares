@@ -538,6 +538,7 @@ export function h1CalendarioProvincia(provincia: Provincia, anio: number, jurisd
 	const estado = jurisdiccion?.estado ?? calendarios.find((item) => item.anio === anio)?.jurisdicciones[provincia.slug]?.estado;
 	if (provincia.slug === 'caba' && anio === 2027 && estado === 'oficial') return 'Agenda Educativa 2027 de CABA: inicio de clases el 1 de marzo';
 	if (provincia.slug === 'caba' && anio === 2027) return 'Agenda Educativa 2027 de CABA: calendario escolar de la Ciudad';
+	if (provincia.slug === 'cordoba' && anio === 2027 && estado === 'oficial') return 'Calendario escolar 2027 en Córdoba (oficial)';
 	if (provincia.slug === 'caba') return `Calendario escolar ${anio} en la Ciudad de Buenos Aires`;
 	if (provincia.slug === 'buenos-aires' && anio === 2027) return 'Calendario escolar 2027 de la Provincia de Buenos Aires: inicio de clases y ciclo lectivo';
 	if (provincia.slug === 'buenos-aires') return `Calendario escolar ${anio} en la provincia de Buenos Aires`;
@@ -556,10 +557,15 @@ function encajarCalendario(variantes: string[]): string {
 
 export function metaCalendarioEscolar(anio: number): MetaPagina {
 	const title = anio === 2027 ? 'Calendario escolar 2027 Argentina: inicio de clases' : `Calendario escolar ${anio} Argentina por provincia`;
+	const calendario = calendarios.find((item) => item.anio === anio);
+	const cabaOficial = calendario?.jurisdicciones.caba?.estado === 'oficial';
+	const cordobaOficial = calendario?.jurisdicciones.cordoba?.estado === 'oficial';
 	const description =
-		anio === 2027
-			? '¿Cuándo empiezan las clases en 2027? Inicio del ciclo lectivo, vacaciones de invierno y feriados por provincia. Elegí tu provincia y descargalo gratis.'
-			: `Calendario escolar ${anio} de las 24 jurisdicciones: inicio de clases, vacaciones de invierno, fin del ciclo y feriados. Actualizado con fuentes oficiales.`;
+		anio === 2027 && cabaOficial && cordobaOficial
+			? '¿Cuándo empiezan las clases en 2027? CABA y Córdoba publicaron el calendario oficial. Inicio, vacaciones de invierno y fin de ciclo por provincia.'
+			: anio === 2027
+				? '¿Cuándo empiezan las clases en 2027? Inicio del ciclo lectivo, vacaciones de invierno y feriados por provincia. Elegí tu provincia y descargalo gratis.'
+				: `Calendario escolar ${anio} de las 24 jurisdicciones: inicio de clases, vacaciones de invierno, fin del ciclo y feriados. Actualizado con fuentes oficiales.`;
 	return { ruta: `/calendario-escolar-${anio}/`, title, description };
 }
 
@@ -571,9 +577,19 @@ export function metaVacacionesInvierno(anio: number): MetaPagina {
 	});
 	const title = `Vacaciones de invierno ${anio}: fechas por provincia en Argentina`;
 	let description = `¿Cuándo son las vacaciones de invierno ${anio}? Fechas del receso invernal en las 24 provincias. Actualizado.`;
-	if (oficiales.length === 1 && oficiales[0]?.slug === 'caba' && calendario?.jurisdicciones.caba?.invierno.desde && calendario.jurisdicciones.caba.invierno.hasta) {
-		const desde = Number(calendario.jurisdicciones.caba.invierno.desde.slice(8));
-		const hasta = Number(calendario.jurisdicciones.caba.invierno.hasta.slice(8));
+	const caba = calendario?.jurisdicciones.caba;
+	const cordoba = calendario?.jurisdicciones.cordoba;
+	const recesoJulio = (desde: string | null | undefined, hasta: string | null | undefined) => {
+		if (!desde || !hasta || !desde.startsWith(`${anio}-07-`) || !hasta.startsWith(`${anio}-07-`)) return null;
+		return `${Number(desde.slice(8))} al ${Number(hasta.slice(8))} de julio`;
+	};
+	const recesoCaba = caba?.estado === 'oficial' ? recesoJulio(caba.invierno.desde, caba.invierno.hasta) : null;
+	const recesoCordoba = cordoba?.estado === 'oficial' ? recesoJulio(cordoba.invierno.desde, cordoba.invierno.hasta) : null;
+	if (recesoCaba && recesoCordoba) {
+		description = `¿Cuándo son las vacaciones de invierno ${anio}? CABA del ${recesoCaba} y Córdoba del ${recesoCordoba}. El resto de las provincias, a confirmar.`;
+	} else if (oficiales.length === 1 && oficiales[0]?.slug === 'caba' && recesoCaba) {
+		const desde = Number(caba?.invierno.desde?.slice(8));
+		const hasta = Number(caba?.invierno.hasta?.slice(8));
 		description = `¿Cuándo son las vacaciones de invierno ${anio}? Fechas del receso invernal en las 24 provincias. CABA ya confirmó del ${desde} al ${hasta} de julio. Actualizado.`;
 	} else if (oficiales.length > 0) {
 		const nombres = oficiales.map((provincia) => (provincia.slug === 'caba' ? 'CABA' : provincia.nombre)).join(', ');
@@ -601,6 +617,14 @@ export function metaCalendarioProvincia(provincia: Provincia, jurisdiccion: Juri
 			title: 'Agenda Educativa 2027 CABA: calendario escolar porteño',
 			description:
 				'Agenda Educativa 2027 de la Ciudad de Buenos Aires: inicio de clases, vacaciones de invierno, feriados y fin del ciclo lectivo. Calendario para imprimir.',
+		};
+	}
+	if (provincia.slug === 'cordoba' && anio === 2027 && jurisdiccion.estado === 'oficial') {
+		return {
+			ruta: `/calendario-escolar-${anio}/${provincia.slug}/`,
+			title: 'Calendario escolar 2027 Córdoba: inicio, vacaciones y fin',
+			description:
+				'Calendario escolar 2027 oficial de Córdoba: inicio el 1 de marzo, vacaciones de invierno del 12 al 23 de julio y fin el 17 de diciembre. Resolución 197/2026.',
 		};
 	}
 	if (provincia.slug === 'buenos-aires' && anio === 2027) {

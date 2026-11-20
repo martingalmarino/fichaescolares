@@ -120,13 +120,13 @@ describe('títulos y descripciones', () => {
 		expect(metaCalendarioEscolar(2027).title).toBe('Calendario escolar 2027 Argentina: inicio de clases');
 		expect(metaCalendarioEscolar(2027).title.length).toBeLessThanOrEqual(60);
 		expect(metaCalendarioEscolar(2027).description).toBe(
-			'¿Cuándo empiezan las clases en 2027? Inicio del ciclo lectivo, vacaciones de invierno y feriados por provincia. Elegí tu provincia y descargalo gratis.',
+			'¿Cuándo empiezan las clases en 2027? CABA y Córdoba publicaron el calendario oficial. Inicio, vacaciones de invierno y fin de ciclo por provincia.',
 		);
 		expect(metaCalendarioEscolar(2027).description.length).toBeGreaterThanOrEqual(140);
 		expect(metaCalendarioEscolar(2027).description.length).toBeLessThanOrEqual(155);
 		expect(metaVacacionesInvierno(2027).title).toBe('Vacaciones de invierno 2027: fechas por provincia en Argentina');
 		expect(metaVacacionesInvierno(2027).description).toBe(
-			'¿Cuándo son las vacaciones de invierno 2027? Fechas del receso invernal en las 24 provincias. CABA ya confirmó del 19 al 30 de julio. Actualizado.',
+			'¿Cuándo son las vacaciones de invierno 2027? CABA del 19 al 30 de julio y Córdoba del 12 al 23 de julio. El resto de las provincias, a confirmar.',
 		);
 		expect(metaVacacionesInvierno(2027).description.length).toBeGreaterThanOrEqual(140);
 		expect(metaVacacionesInvierno(2027).description.length).toBeLessThanOrEqual(MAX_DESCRIPCION);
@@ -134,7 +134,7 @@ describe('títulos y descripciones', () => {
 		const esperado = new Map<string, string>([
 			['buenos-aires', 'Inicio de clases 2027 en Buenos Aires: calendario escolar'],
 			['caba', 'Agenda Educativa 2027 CABA: clases del 1 de marzo al 17 de diciembre'],
-			['cordoba', 'Calendario escolar 2027 Córdoba: inicio de clases'],
+			['cordoba', 'Calendario escolar 2027 Córdoba: inicio, vacaciones y fin'],
 			['mendoza', 'Calendario escolar 2027 Mendoza: inicio de clases'],
 			['santiago-del-estero', 'Calendario 2027 Santiago del Estero: inicio de clases'],
 			['tierra-del-fuego', 'Calendario escolar 2027 Tierra del Fuego: inicio de clases'],
@@ -154,6 +154,11 @@ describe('títulos y descripciones', () => {
 					'Oficial: en CABA las clases 2027 empiezan el lunes 1 de marzo (secundario el 3), el receso de invierno es del 19 al 30 de julio y terminan el 17 de diciembre.',
 				);
 				expect(meta.tituloLibre).toBe(true);
+			} else if (provincia.slug === 'cordoba') {
+				expect(h1CalendarioProvincia(provincia, 2027)).toBe('Calendario escolar 2027 en Córdoba (oficial)');
+				expect(meta.description).toBe(
+					'Calendario escolar 2027 oficial de Córdoba: inicio el 1 de marzo, vacaciones de invierno del 12 al 23 de julio y fin el 17 de diciembre. Resolución 197/2026.',
+				);
 			} else {
 				expect(h1CalendarioProvincia(provincia, 2027)).toBe(`Calendario escolar 2027 de ${provincia.slug === 'tierra-del-fuego' ? 'Tierra del Fuego' : provincia.nombre}: cuándo empiezan las clases`);
 				expect(meta.description).toContain(provincia.slug === 'mendoza' ? 'según la DGE' : 'según el Ministerio de Educación');
@@ -166,7 +171,7 @@ describe('títulos y descripciones', () => {
 			const titulo = esperado.get(provincia.slug);
 			if (titulo) expect(meta.title).toBe(titulo);
 			expect(meta.description.length, `${meta.ruta} ${meta.description}`).toBeGreaterThanOrEqual(140);
-			expect(meta.description.length, `${meta.ruta} ${meta.description}`).toBeLessThanOrEqual(provincia.slug === 'caba' ? MAX_DESCRIPCION : 155);
+			expect(meta.description.length, `${meta.ruta} ${meta.description}`).toBeLessThanOrEqual(provincia.slug === 'caba' || provincia.slug === 'cordoba' ? MAX_DESCRIPCION : 155);
 		}
 		expect(metaCalendarioProvincia(provincias.find((provincia) => provincia.slug === 'caba')!, calendario.jurisdicciones.caba!, 2027).title).toBe(
 			'Agenda Educativa 2027 CABA: clases del 1 de marzo al 17 de diciembre',
