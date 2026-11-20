@@ -16,7 +16,9 @@ import {
 	fechaTarjeta,
 	introBuenosAires,
 	introCaba,
+	introCordoba,
 	introProvincia,
+	keywordsCordoba,
 	keywordsProvincia,
 	sujetoOrganismo,
 	marcasReceso,
@@ -51,6 +53,7 @@ const nombre = nombreCalendario(provincia);
 const actualizado = actualizadoVisible(calendario, jurisdiccion);
 const esPba = provincia.slug === 'buenos-aires';
 const esCaba = provincia.slug === 'caba';
+const esCordoba = provincia.slug === 'cordoba';
 const preguntas = preguntasProvincia(provincia, jurisdiccion, anio);
 const cuadro = esPba ? cuadroBuenosAires(jurisdiccion) : [];
 const keywords = esPba
@@ -69,7 +72,9 @@ const keywords = esPba
 				'vacaciones de invierno 2027 caba',
 				'cuando empiezan las clases 2027 en caba',
 			].join(', ')
-		: keywordsProvincia(provincia, anio).join(', ');
+		: esCordoba && jurisdiccion.estado === 'oficial'
+			? keywordsCordoba(anio).join(', ')
+			: keywordsProvincia(provincia, anio).join(', ');
 const sitio = Astro.site ?? new URL('https://www.aulita.com.ar');
 const url = new URL(meta.ruta, sitio).href;
 const indice = new URL(`/calendario-escolar-${anio}/`, sitio).href;
@@ -135,7 +140,7 @@ const tarjetas = [
 		</div>
 		<div class="hoja-calendario mt-4">
 			<h1 class="text-3xl font-bold tracking-tight text-azul sm:text-4xl">{h1}</h1>
-			<p class="no-print mt-3 max-w-3xl text-base leading-relaxed text-texto" set:html={esCaba ? introCaba(jurisdiccion, anio, actualizado) : esPba ? introBuenosAires(jurisdiccion, anio) : introProvincia(provincia, jurisdiccion, anio)} />
+			<p class="no-print mt-3 max-w-3xl text-base leading-relaxed text-texto" set:html={esCaba ? introCaba(jurisdiccion, anio, actualizado) : esPba ? introBuenosAires(jurisdiccion, anio) : esCordoba ? introCordoba(jurisdiccion, anio) : introProvincia(provincia, jurisdiccion, anio)} />
 			<p class="no-print mt-2 text-sm text-muted">
 				Actualizado: <time datetime={actualizado}>{fechaActualizado(actualizado)}</time>
 			</p>
@@ -227,6 +232,16 @@ const tarjetas = [
 						<p class="mt-3 text-base leading-relaxed text-texto">
 							La Provincia de Buenos Aires tiene otro calendario.{' '}
 							<a class="text-celeste underline" href={`/calendario-escolar-${anio}/buenos-aires/`}>calendario escolar {anio} de la Provincia de Buenos Aires</a>.
+						</p>
+					)
+				}
+				{
+					esCordoba && (
+						<p class="mt-3 text-base leading-relaxed text-texto">
+							La Ciudad de Buenos Aires tiene otro calendario.{' '}
+							<a class="text-celeste underline" href={`/calendario-escolar-${anio}/caba/`}>Calendario escolar {anio} de CABA</a>.
+							{' '}El resto de las provincias está en el{' '}
+							<a class="text-celeste underline" href={`/calendario-escolar-${anio}/`}>calendario escolar {anio}</a>.
 						</p>
 					)
 				}

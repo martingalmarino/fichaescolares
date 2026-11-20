@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { calendarioDe } from '../data/calendario-escolar';
 import { provincias } from '../data/provincias';
 import { contarPalabras } from './meta';
-import { cuadroBuenosAires, fechaCorta, filasResumen, filasVacacionesInvierno, introBuenosAires, introCaba, introCalendarioNacional, introProvincia, introVacacionesInvierno, inviernoCaba, keywordsProvincia, preguntasBuenosAires, preguntasCaba, preguntasNacional, preguntasProvincia, preguntasVacacionesInvierno, regionesEscolares } from './texto-calendario';
+import { cuadroBuenosAires, fechaCorta, filasResumen, filasVacacionesInvierno, introBuenosAires, introCaba, introCalendarioNacional, introCordoba, introProvincia, introVacacionesInvierno, inviernoCaba, keywordsCordoba, keywordsProvincia, preguntasBuenosAires, preguntasCaba, preguntasCordoba, preguntasNacional, preguntasProvincia, preguntasVacacionesInvierno, regionesEscolares } from './texto-calendario';
 
 describe('grilla del calendario', () => {
 	it('formatea la fecha corta de la tarjeta', () => {
@@ -18,13 +18,13 @@ describe('grilla del calendario', () => {
 		expect([...slugs].sort()).toEqual(provincias.map((provincia) => provincia.slug).sort());
 	});
 
-	it('responde el inicio 2027 con CABA oficial y el resto a confirmar', () => {
+	it('responde el inicio 2027 con CABA y Córdoba oficiales y el resto a confirmar', () => {
 		const calendario = calendarioDe(2027);
 		const intro = introCalendarioNacional(calendario);
 		const palabras = contarPalabras(intro);
 		expect(palabras).toBeGreaterThanOrEqual(40);
 		expect(palabras).toBeLessThanOrEqual(60);
-		expect(intro).toContain('En la Ciudad de Buenos Aires el inicio oficial es el lunes 1 de marzo de 2027');
+		expect(intro).toContain('En la Ciudad de Buenos Aires y en Córdoba el inicio oficial es el lunes 1 de marzo de 2027');
 		expect(intro).toContain('figuran como a confirmar, sin fechas estimadas');
 
 		const filas = filasResumen(calendario);
@@ -36,7 +36,14 @@ describe('grilla del calendario', () => {
 			invierno: '19 al 30 de julio',
 			fin: 'viernes 17 de diciembre de 2027',
 		});
-		const pendientes = filas.filter((fila) => fila.provincia.slug !== 'caba');
+		const cordoba = filas.find((fila) => fila.provincia.slug === 'cordoba');
+		expect(cordoba).toMatchObject({
+			estado: 'Oficial',
+			inicio: 'lunes 1 de marzo de 2027',
+			invierno: '12 al 23 de julio',
+			fin: 'viernes 17 de diciembre de 2027',
+		});
+		const pendientes = filas.filter((fila) => fila.provincia.slug !== 'caba' && fila.provincia.slug !== 'cordoba');
 		expect(pendientes.every((fila) => fila.estado === 'A confirmar')).toBe(true);
 		expect(pendientes.every((fila) => fila.inicio === 'A confirmar' && fila.invierno === 'A confirmar' && fila.fin === 'A confirmar')).toBe(true);
 		expect(filas.map((fila) => fila.href).sort()).toEqual(provincias.map((provincia) => `/calendario-escolar-2027/${provincia.slug}/`).sort());
@@ -49,7 +56,9 @@ describe('grilla del calendario', () => {
 			'¿Cuándo se publica el calendario oficial?',
 			'¿Qué provincias ya publicaron el calendario escolar 2027?',
 		]);
-		expect(preguntas.at(-1)?.a).toBe('Por ahora, la Ciudad de Buenos Aires (clases del 1 de marzo al 17 de diciembre).');
+		expect(preguntas.at(-1)?.a).toBe(
+			'Por ahora, la Ciudad de Buenos Aires (clases del 1 de marzo al 17 de diciembre) y Córdoba (clases del 1 de marzo al 17 de diciembre).',
+		);
 	});
 
 	it('responde el inicio 2027 de Buenos Aires sin fechas de la DGCyE', () => {
@@ -101,10 +110,39 @@ describe('grilla del calendario', () => {
 		expect(preguntas[4]?.a).toContain('10 de febrero de 2027');
 	});
 
+	it('explica el calendario oficial 2027 de Córdoba', () => {
+		const jurisdiccion = calendarioDe(2027).jurisdicciones.cordoba!;
+		expect(introCordoba(jurisdiccion, 2027)).toBe(
+			'Las clases 2027 en Córdoba comienzan el lunes 1 de marzo y terminan el viernes 17 de diciembre. Las vacaciones de invierno son del 12 al 23 de julio, según la Resolución 197/2026 del Ministerio de Educación.',
+		);
+		const preguntas = preguntasCordoba(jurisdiccion, 2027);
+		expect(preguntas.map((item) => item.q)).toEqual([
+			'¿Cuándo empiezan las clases 2027 en Córdoba?',
+			'¿Cuándo son las vacaciones de invierno 2027 en Córdoba?',
+			'¿Cuándo terminan las clases 2027 en Córdoba?',
+			'¿Cuándo vuelven los docentes?',
+			'¿Cuántos días de clase hay?',
+		]);
+		expect(preguntas[0]?.a).toContain('lunes 1 de marzo');
+		expect(preguntas[1]?.a).toContain('12 al 23 de julio');
+		expect(preguntas[1]?.a).toContain('lunes 26 de julio');
+		expect(preguntas[2]?.a).toContain('viernes 17 de diciembre');
+		expect(preguntas[3]?.a).toContain('lunes 15 de febrero de 2027');
+		expect(preguntas[4]?.a).toContain('190');
+		expect(preguntas.map((item) => item.a).join(' ')).not.toMatch(/a confirmar/i);
+		expect(keywordsCordoba(2027)).toEqual([
+			'calendario escolar 2027 córdoba',
+			'inicio de clases 2027 córdoba',
+			'vacaciones de invierno 2027 córdoba',
+			'fin de clases 2027 córdoba',
+			'resolución 197/2026',
+		]);
+	});
+
 	it('responde el inicio de cada provincia sin fechas que el organismo no publicó', () => {
 		const calendario = calendarioDe(2027);
 		for (const provincia of provincias) {
-			if (provincia.slug === 'caba' || provincia.slug === 'buenos-aires') continue;
+			if (provincia.slug === 'caba' || provincia.slug === 'buenos-aires' || provincia.slug === 'cordoba') continue;
 			const jurisdiccion = calendario.jurisdicciones[provincia.slug]!;
 			const intro = introProvincia(provincia, jurisdiccion, 2027);
 			const palabras = contarPalabras(intro);
@@ -145,13 +183,23 @@ describe('vacaciones de invierno 2027', () => {
 			receso: '19 al 30 de julio',
 			href: '/calendario-escolar-2027/caba/#invierno',
 		});
-		expect(filas.filter((fila) => fila.oficial)).toHaveLength(1);
+		const cordoba = filas.find((fila) => fila.provincia.slug === 'cordoba');
+		expect(cordoba).toMatchObject({
+			oficial: true,
+			estado: 'Oficial',
+			receso: '12 al 23 de julio',
+			href: '/calendario-escolar-2027/cordoba/#invierno',
+		});
+		expect(filas.filter((fila) => fila.oficial)).toHaveLength(2);
 		expect(filas.filter((fila) => !fila.oficial).every((fila) => fila.receso === 'A confirmar')).toBe(true);
 		const centro = regiones.find((region) => region.id === 'centro')!;
 		expect(centro.filas[0]?.provincia.slug).toBe('caba');
+		expect(centro.filas[1]?.provincia.slug).toBe('cordoba');
 		const intro = introVacacionesInvierno(calendario);
 		expect(intro).toContain('Ciudad de Buenos Aires');
 		expect(intro).toContain('19 al 30 de julio');
+		expect(intro).toContain('Córdoba');
+		expect(intro).toContain('12 al 23 de julio');
 		const preguntas = preguntasVacacionesInvierno(calendario);
 		expect(preguntas.map((item) => item.q)).toEqual([
 			'¿Cuándo son las vacaciones de invierno 2027?',
@@ -163,7 +211,10 @@ describe('vacaciones de invierno 2027', () => {
 			'¿Qué provincias ya confirmaron las vacaciones de invierno 2027?',
 		]);
 		expect(preguntas.find((item) => item.q.includes('CABA'))?.a).toContain('19 al 30 de julio');
-		expect(preguntas.find((item) => item.q.includes('Córdoba'))?.a).toContain('Todavía no está confirmado');
+		expect(preguntas.find((item) => item.q.includes('Córdoba'))?.a).toContain('12 al 23 de julio');
+		expect(preguntas.find((item) => item.q.includes('Córdoba'))?.a).toContain('lunes 26 de julio');
+		expect(preguntas.find((item) => item.q.includes('Córdoba'))?.a).not.toMatch(/a confirmar/i);
 		expect(preguntas.find((item) => item.q.includes('confirmaron'))?.a).toContain('CABA');
+		expect(preguntas.find((item) => item.q.includes('confirmaron'))?.a).toContain('Córdoba');
 	});
 });
