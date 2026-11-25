@@ -25,6 +25,7 @@ describe('grilla del calendario', () => {
 		expect(palabras).toBeGreaterThanOrEqual(40);
 		expect(palabras).toBeLessThanOrEqual(60);
 		expect(intro).toContain('En la Ciudad de Buenos Aires y en Córdoba el inicio oficial es el lunes 1 de marzo de 2027');
+		expect(intro).toContain('Santa Fe anunció el mismo inicio, sin resolución');
 		expect(intro).toContain('figuran como a confirmar, sin fechas estimadas');
 
 		const filas = filasResumen(calendario);
@@ -43,7 +44,14 @@ describe('grilla del calendario', () => {
 			invierno: '12 al 23 de julio',
 			fin: 'viernes 17 de diciembre de 2027',
 		});
-		const pendientes = filas.filter((fila) => fila.provincia.slug !== 'caba' && fila.provincia.slug !== 'cordoba');
+		const santaFe = filas.find((fila) => fila.provincia.slug === 'santa-fe');
+		expect(santaFe).toMatchObject({
+			estado: 'Anunciado',
+			inicio: 'lunes 1 de marzo de 2027',
+			invierno: 'desde el 12 de julio',
+			fin: 'A definir',
+		});
+		const pendientes = filas.filter((fila) => fila.provincia.slug !== 'caba' && fila.provincia.slug !== 'cordoba' && fila.provincia.slug !== 'santa-fe');
 		expect(pendientes.every((fila) => fila.estado === 'A confirmar')).toBe(true);
 		expect(pendientes.every((fila) => fila.inicio === 'A confirmar' && fila.invierno === 'A confirmar' && fila.fin === 'A confirmar')).toBe(true);
 		expect(filas.map((fila) => fila.href).sort()).toEqual(provincias.map((provincia) => `/calendario-escolar-2027/${provincia.slug}/`).sort());
@@ -56,8 +64,10 @@ describe('grilla del calendario', () => {
 			'¿Cuándo se publica el calendario oficial?',
 			'¿Qué provincias ya publicaron el calendario escolar 2027?',
 		]);
+		expect(preguntas[0]?.a).toContain('Santa Fe anunció el inicio el lunes 1 de marzo de 2027, sin resolución');
+		expect(preguntas[1]?.a).toContain('En Santa Fe el receso está previsto desde el lunes 12 de julio de 2027, sin fecha de fin');
 		expect(preguntas.at(-1)?.a).toBe(
-			'Por ahora, la Ciudad de Buenos Aires (clases del 1 de marzo al 17 de diciembre) y Córdoba (clases del 1 de marzo al 17 de diciembre).',
+			'Por ahora, la Ciudad de Buenos Aires (clases del 1 de marzo al 17 de diciembre) y Córdoba (clases del 1 de marzo al 17 de diciembre). Santa Fe anunció fechas del ciclo y todavía no publicó una resolución.',
 		);
 	});
 
@@ -142,7 +152,7 @@ describe('grilla del calendario', () => {
 	it('responde el inicio de cada provincia sin fechas que el organismo no publicó', () => {
 		const calendario = calendarioDe(2027);
 		for (const provincia of provincias) {
-			if (provincia.slug === 'caba' || provincia.slug === 'buenos-aires' || provincia.slug === 'cordoba') continue;
+			if (provincia.slug === 'caba' || provincia.slug === 'buenos-aires' || provincia.slug === 'cordoba' || provincia.slug === 'santa-fe') continue;
 			const jurisdiccion = calendario.jurisdicciones[provincia.slug]!;
 			const intro = introProvincia(provincia, jurisdiccion, 2027);
 			const palabras = contarPalabras(intro);
@@ -165,6 +175,28 @@ describe('grilla del calendario', () => {
 			'ciclo lectivo 2027 mendoza',
 			'vacaciones de invierno 2027 mendoza',
 		]);
+	});
+
+	it('explica el anuncio parcial del ciclo lectivo 2027 de Santa Fe', () => {
+		const santaFe = provincias.find((provincia) => provincia.slug === 'santa-fe')!;
+		const jurisdiccion = calendarioDe(2027).jurisdicciones['santa-fe']!;
+		const intro = introProvincia(santaFe, jurisdiccion, 2027);
+		expect(intro).toContain('¿Cuándo empiezan las clases 2027 en Santa Fe?');
+		expect(intro).toContain('lunes 1 de marzo de 2027');
+		expect(intro).toContain('anunciado por el Ministerio de Educación de Santa Fe');
+		expect(intro).toContain('previsto desde el lunes 12 de julio de 2027');
+		expect(intro).toContain('está a definir');
+		expect(intro).toContain('Todavía no hay resolución');
+		expect(intro).not.toMatch(/23 de julio/);
+		const preguntas = preguntasProvincia(santaFe, jurisdiccion, 2027);
+		expect(preguntas[0]?.q).toBe('¿Cuándo empiezan las clases 2027 en Santa Fe?');
+		expect(preguntas[0]?.a).toContain('lunes 1 de marzo de 2027');
+		expect(preguntas[1]?.a).toContain('previstas desde el lunes 12 de julio de 2027');
+		expect(preguntas[1]?.a).not.toMatch(/23 de julio/);
+		expect(preguntas[2]?.a).toContain('está a definir');
+		expect(preguntas[2]?.a).toContain('190');
+		expect(preguntas[3]?.a).toContain('No.');
+		expect(preguntas.map((item) => item.a).join(' ')).not.toMatch(/es el calendario oficial/i);
 	});
 });
 
@@ -191,7 +223,13 @@ describe('vacaciones de invierno 2027', () => {
 			href: '/calendario-escolar-2027/cordoba/#invierno',
 		});
 		expect(filas.filter((fila) => fila.oficial)).toHaveLength(2);
-		expect(filas.filter((fila) => !fila.oficial).every((fila) => fila.receso === 'A confirmar')).toBe(true);
+		const santaFe = filas.find((fila) => fila.provincia.slug === 'santa-fe');
+		expect(santaFe).toMatchObject({
+			oficial: false,
+			estado: 'Previsto',
+			receso: 'desde el 12 de julio',
+		});
+		expect(filas.filter((fila) => !fila.oficial && fila.estado !== 'Previsto').every((fila) => fila.receso === 'A confirmar' && fila.estado === 'A confirmar')).toBe(true);
 		const centro = regiones.find((region) => region.id === 'centro')!;
 		expect(centro.filas[0]?.provincia.slug).toBe('caba');
 		expect(centro.filas[1]?.provincia.slug).toBe('cordoba');
@@ -210,6 +248,8 @@ describe('vacaciones de invierno 2027', () => {
 			'¿Cuánto duran las vacaciones de invierno?',
 			'¿Qué provincias ya confirmaron las vacaciones de invierno 2027?',
 		]);
+		expect(preguntas.find((item) => item.q.includes('Santa Fe'))?.a).toContain('previsto desde el lunes 12 de julio de 2027');
+		expect(preguntas.find((item) => item.q.includes('Santa Fe'))?.a).not.toMatch(/23 de julio/);
 		expect(preguntas.find((item) => item.q.includes('CABA'))?.a).toContain('19 al 30 de julio');
 		expect(preguntas.find((item) => item.q.includes('Córdoba'))?.a).toContain('12 al 23 de julio');
 		expect(preguntas.find((item) => item.q.includes('Córdoba'))?.a).toContain('lunes 26 de julio');

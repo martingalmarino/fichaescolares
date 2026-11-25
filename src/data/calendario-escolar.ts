@@ -8,6 +8,10 @@
  * valen con estado oficial: cortes.trimestres son el fin del primero y
  * del segundo, y cortes.cuatrimestres el fin del primero. Si no están,
  * el planificador reparte los días hábiles en partes parejas.
+ * Un calendario a-confirmar puede traer un anuncio parcial (inicio,
+ * invierno.desde y/o fin, con invierno.hasta en null si no se publicó)
+ * solo si la fuente es https. Sin ninguna fecha, la fuente sigue en null.
+ * Eso no lo vuelve oficial: el planificador sigue con el ciclo de ejemplo.
  * Para 2028: copiá el JSON, sumalo al array `archivos` y copiá la carpeta
  * src/pages/calendario-escolar-2027/ con el año nuevo en la ruta.
  */
@@ -196,9 +200,26 @@ export function erroresCalendario(datos: unknown, slugs: string[]): string[] {
 			}
 			if (!fechaIso(item.fin, anio)) errores.push(`${anio}/${slug}: fin oficial inválido`);
 			if (!https(item.fuente)) errores.push(`${anio}/${slug}: la fuente oficial tiene que ser https`);
-		} else {
-			if (item.inicio !== null || item.fin !== null || item.fuente !== null) errores.push(`${anio}/${slug}: a-confirmar no puede tener fechas ni fuente`);
-			if (!invierno || invierno.desde !== null || invierno.hasta !== null) errores.push(`${anio}/${slug}: a-confirmar no puede tener vacaciones`);
+		} else if (invierno) {
+			const inicioOk = item.inicio === null || fechaIso(item.inicio, anio);
+			const finOk = item.fin === null || fechaIso(item.fin, anio);
+			const desdeOk = invierno.desde === null || fechaIso(invierno.desde, anio);
+			const hastaOk = invierno.hasta === null || fechaIso(invierno.hasta, anio);
+			if (!inicioOk) errores.push(`${anio}/${slug}: inicio anunciado inválido`);
+			if (!finOk) errores.push(`${anio}/${slug}: fin anunciado inválido`);
+			if (!desdeOk || !hastaOk) errores.push(`${anio}/${slug}: invierno anunciado inválido`);
+			if (invierno.hasta !== null && (invierno.desde === null || !desdeOk || !hastaOk || String(invierno.desde) > String(invierno.hasta))) {
+				errores.push(`${anio}/${slug}: el receso anunciado necesita desde y hasta en orden`);
+			}
+			if (item.inicio !== null && item.fin !== null && inicioOk && finOk && String(item.inicio) > String(item.fin)) {
+				errores.push(`${anio}/${slug}: el inicio anunciado es posterior al fin`);
+			}
+			const hayFecha = item.inicio !== null || item.fin !== null || invierno.desde !== null || invierno.hasta !== null;
+			if (hayFecha) {
+				if (!https(item.fuente)) errores.push(`${anio}/${slug}: la fuente del anuncio tiene que ser https`);
+			} else if (item.fuente !== null) {
+				errores.push(`${anio}/${slug}: a-confirmar sin fechas no puede tener fuente`);
+			}
 		}
 		if (item.notas !== null && typeof item.notas !== 'string') errores.push(`${anio}/${slug}: notas inválidas`);
 		for (const clave of ['inicioSecundario', 'vueltaDocentes'] as const) {

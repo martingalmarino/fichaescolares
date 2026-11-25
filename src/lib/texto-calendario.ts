@@ -84,6 +84,69 @@ export function rangoTarjeta(desde: string | null, hasta: string | null): string
 	return `${fechaDiaMes(inicio.dia, inicio.mes)} al ${fechaDiaMes(fin.dia, fin.mes)}`;
 }
 
+/** Fechas que el ministerio anunció y que todavía no son el calendario oficial. */
+export function fechasAnunciadas(jurisdiccion: Jurisdiccion | undefined): boolean {
+	if (!jurisdiccion || jurisdiccion.estado === 'oficial') return false;
+	return Boolean(jurisdiccion.inicio || jurisdiccion.fin || jurisdiccion.invierno.desde || jurisdiccion.invierno.hasta);
+}
+
+/** «12 al 23 de julio», o «desde el 12 de julio» si no se anunció el fin. */
+export function textoReceso(desde: string | null, hasta: string | null): string {
+	if (desde && hasta) return rangoTarjeta(desde, hasta);
+	if (desde) {
+		const inicio = partesIso(desde);
+		return `desde el ${fechaDiaMes(inicio.dia, inicio.mes)}`;
+	}
+	return 'A confirmar';
+}
+
+export function tarjetasFechas(provincia: Provincia, jurisdiccion: Jurisdiccion): { etiqueta: string; valor: string; detalle: string | null }[] {
+	const anunciado = fechasAnunciadas(jurisdiccion);
+	const visible = anunciado || jurisdiccion.estado === 'oficial';
+	const invierno = jurisdiccion.invierno;
+	let valorInvierno = 'A confirmar';
+	let detalleInvierno: string | null = null;
+	if (invierno.desde && invierno.hasta) {
+		valorInvierno = rangoTarjeta(invierno.desde, invierno.hasta);
+		if (anunciado) detalleInvierno = 'Previsto';
+	} else if (invierno.desde) {
+		valorInvierno = `Previsto desde el ${fechaTarjeta(invierno.desde)}`;
+		detalleInvierno = 'La fecha de fin no se anunció';
+	}
+	return [
+		{
+			etiqueta: 'Inicio de clases',
+			valor: fechaTarjeta(visible ? jurisdiccion.inicio : null),
+			detalle: anunciado && jurisdiccion.inicio ? `Anunciado por el ${ministerioDe(provincia)}` : null,
+		},
+		{
+			etiqueta: 'Vacaciones de invierno',
+			valor: visible ? valorInvierno : 'A confirmar',
+			detalle: detalleInvierno,
+		},
+		{
+			etiqueta: 'Fin del ciclo lectivo',
+			valor: jurisdiccion.fin ? fechaTarjeta(jurisdiccion.fin) : anunciado ? 'A definir' : 'A confirmar',
+			detalle: null,
+		},
+	];
+}
+
+/** Aviso de un anuncio que todavía no es resolución. */
+export function avisoAnuncio(provincia: Provincia, jurisdiccion: Jurisdiccion): string {
+	const partes: string[] = [];
+	if (jurisdiccion.inicio) partes.push(`${sujetoOrganismo(provincia)} anunció el inicio de clases para el ${fechaTarjeta(jurisdiccion.inicio)}.`);
+	partes.push('Todavía no hay resolución.');
+	if (jurisdiccion.invierno.desde && !jurisdiccion.invierno.hasta) {
+		partes.push(`El receso de invierno está previsto desde el ${fechaTarjeta(jurisdiccion.invierno.desde)} y no se anunció la fecha de fin.`);
+	} else if (jurisdiccion.invierno.desde && jurisdiccion.invierno.hasta) {
+		partes.push(`El receso de invierno previsto es del ${rangoTarjeta(jurisdiccion.invierno.desde, jurisdiccion.invierno.hasta)}.`);
+	}
+	if (!jurisdiccion.fin) partes.push('El fin del ciclo está a definir.');
+	partes.push('Estas fechas no son el calendario oficial.');
+	return partes.join(' ');
+}
+
 const MESES_GRILLA = ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'] as const;
 
 /** «1 mar», «11 dic». Para las tarjetas de la grilla nacional. */
@@ -103,6 +166,15 @@ export const regionesEscolares = [
 
 export function fraseProvincia(provincia: Provincia, jurisdiccion: Jurisdiccion, anio: number): string {
 	const lugar = lugarCalendario(provincia);
+	if (fechasAnunciadas(jurisdiccion) && jurisdiccion.inicio) {
+		const inicio = partesIso(jurisdiccion.inicio);
+		const invierno =
+			jurisdiccion.invierno.desde && !jurisdiccion.invierno.hasta
+				? ` El receso de invierno está previsto desde el <time datetime="${jurisdiccion.invierno.desde}">${fechaCompleta(partesIso(jurisdiccion.invierno.desde).anio, partesIso(jurisdiccion.invierno.desde).mes, partesIso(jurisdiccion.invierno.desde).dia)}</time>.`
+				: '';
+		const fin = jurisdiccion.fin ? '' : ' El fin del ciclo está a definir.';
+		return `En ${lugar} las clases ${anio} empiezan el <time datetime="${jurisdiccion.inicio}">${fechaCompleta(inicio.anio, inicio.mes, inicio.dia)}</time>, anunciado por el ${ministerioDe(provincia)}.${invierno}${fin} Todavía no hay resolución.`;
+	}
 	if (jurisdiccion.estado === 'oficial' && jurisdiccion.inicio && jurisdiccion.fin && jurisdiccion.invierno.desde && jurisdiccion.invierno.hasta) {
 		const inicio = partesIso(jurisdiccion.inicio);
 		const fin = partesIso(jurisdiccion.fin);
@@ -281,6 +353,14 @@ export function preguntasCordoba(jurisdiccion: Jurisdiccion, anio: number): { q:
 export function introProvincia(provincia: Provincia, jurisdiccion: Jurisdiccion, anio: number): string {
 	const lugar = lugarCalendario(provincia);
 	const sujeto = sujetoOrganismo(provincia);
+	if (provincia.slug === 'santa-fe' && fechasAnunciadas(jurisdiccion) && jurisdiccion.inicio) {
+		const invierno =
+			jurisdiccion.invierno.desde && !jurisdiccion.invierno.hasta
+				? ` El receso de invierno está previsto desde el ${fechaTarjeta(jurisdiccion.invierno.desde)}; no se anunció el fin.`
+				: '';
+		const fin = jurisdiccion.fin ? '' : ' El fin del ciclo lectivo está a definir.';
+		return `¿Cuándo empiezan las clases ${anio} en Santa Fe? El ${fechaTarjeta(jurisdiccion.inicio)}, anunciado por el ${ministerioDe(provincia)}.${invierno}${fin} Todavía no hay resolución.`;
+	}
 	if (jurisdiccion.estado === 'oficial' && jurisdiccion.inicio) {
 		return `¿Cuándo empiezan las clases en ${anio} en ${lugar}? ${sujeto} fijó el inicio el ${fechaTarjeta(jurisdiccion.inicio)}. En esta página están las vacaciones de invierno y el fin de clases de ese calendario oficial. No se adelantan fechas de otra fuente.`;
 	}
@@ -291,7 +371,37 @@ export function preguntasProvincia(provincia: Provincia, jurisdiccion: Jurisdicc
 	if (provincia.slug === 'buenos-aires') return preguntasBuenosAires(jurisdiccion, anio);
 	if (provincia.slug === 'caba') return preguntasCaba(jurisdiccion, anio);
 	if (provincia.slug === 'cordoba' && jurisdiccion.estado === 'oficial') return preguntasCordoba(jurisdiccion, anio);
+	if (provincia.slug === 'santa-fe' && fechasAnunciadas(jurisdiccion)) return preguntasSantaFe(jurisdiccion, anio);
 	return preguntasGenericas(provincia, jurisdiccion, anio);
+}
+
+export function preguntasSantaFe(jurisdiccion: Jurisdiccion, anio: number): { q: string; a: string }[] {
+	const fuente = jurisdiccion.fuente
+		? `El anuncio está en <a href="${jurisdiccion.fuente}" rel="noopener noreferrer">Rafaela Noticias</a>. El calendario oficial lo publica el Ministerio de Educación de Santa Fe y todavía no hay resolución.`
+		: 'El Ministerio de Educación de Santa Fe publica el calendario oficial. Todavía no hay resolución.';
+	const invierno = jurisdiccion.invierno.desde
+		? `Están previstas desde el ${fechaTarjeta(jurisdiccion.invierno.desde)}, la semana posterior al 9 de julio. No se anunció la fecha de fin del receso y la oficialización sigue pendiente.`
+		: `El Ministerio de Educación de Santa Fe todavía no anunció las vacaciones de invierno ${anio}.`;
+	return [
+		{
+			q: `¿Cuándo empiezan las clases ${anio} en Santa Fe?`,
+			a: `El ${fechaTarjeta(jurisdiccion.inicio)}. Lo anunció el Ministerio de Educación de Santa Fe el 24 de noviembre de 2026. Todavía no hay resolución, así que no es la fecha oficial del calendario.`,
+		},
+		{ q: `¿Cuándo son las vacaciones de invierno ${anio} en Santa Fe?`, a: invierno },
+		{
+			q: `¿Cuándo terminan las clases ${anio} en Santa Fe?`,
+			a: `El fin del ciclo lectivo ${anio} en Santa Fe está a definir. La meta anunciada son 190 días de clase y el Ministerio todavía no publicó la fecha de cierre.`,
+		},
+		{
+			q: `¿El calendario escolar ${anio} de Santa Fe ya es oficial?`,
+			a: 'No. El ministro de Educación José Goity anunció el inicio el 24 de noviembre de 2026, en la inauguración de la EETP N.º 481. El receso de invierno quedó previsto y todavía no hay resolución.',
+		},
+		{
+			q: `¿Qué feriados nacionales hay en ${anio}?`,
+			a: `${listaFeriados(anio)}. Los fija la <a href="${LEY_FERIADOS}" rel="noopener noreferrer">Ley 27.399</a>. ${notaPuentes(anio) ?? ''}`,
+		},
+		{ q: `¿Dónde se publicó el anuncio del ciclo lectivo ${anio} de Santa Fe?`, a: fuente },
+	];
 }
 
 function preguntasGenericas(provincia: Provincia, jurisdiccion: Jurisdiccion, anio: number): { q: string; a: string }[] {
@@ -330,31 +440,59 @@ function jurisdiccionesOficiales(calendario: CalendarioEscolar) {
 	return provincias.filter((provincia) => calendario.jurisdicciones[provincia.slug]?.estado === 'oficial');
 }
 
+function provinciasAnunciadas(calendario: CalendarioEscolar): Provincia[] {
+	return provincias.filter((provincia) => fechasAnunciadas(calendario.jurisdicciones[provincia.slug]));
+}
+
+function clausulaAnuncio(calendario: CalendarioEscolar, anunciadas: Provincia[], oficiales: Provincia[]): string {
+	if (anunciadas.length === 0) return '';
+	const iniciosOficiales = oficiales.map((provincia) => calendario.jurisdicciones[provincia.slug]?.inicio).filter((inicio): inicio is string => Boolean(inicio));
+	const mismo =
+		anunciadas.length === 1 &&
+		iniciosOficiales.length > 0 &&
+		iniciosOficiales.every((inicio) => inicio === calendario.jurisdicciones[anunciadas[0]!.slug]?.inicio);
+	if (mismo) return `${nombreCalendario(anunciadas[0]!)} anunció el mismo inicio, sin resolución.`;
+	const nombres = anunciadas.map((provincia) => nombreCalendario(provincia));
+	const lista = nombres.length === 1 ? nombres[0]! : `${nombres.slice(0, -1).join(', ')} y ${nombres.at(-1)}`;
+	return `${lista} ${anunciadas.length === 1 ? 'anunció fechas' : 'anunciaron fechas'}, sin resolución.`;
+}
+
+function cierrePendientes(calendario: CalendarioEscolar, anunciadas: Provincia[], oficiales: Provincia[], pendientes: number): string {
+	const aviso = clausulaAnuncio(calendario, anunciadas, oficiales);
+	if (aviso) return `${aviso} ${pendientes} jurisdicciones figuran como a confirmar, sin fechas estimadas. Elegí tu provincia para ver el detalle.`;
+	return `${pendientes} jurisdicciones todavía no publicaron el calendario y figuran como a confirmar, sin fechas estimadas. Elegí tu provincia para ver el detalle.`;
+}
+
 /** Respuesta directa bajo el H1. 40 a 60 palabras cuando ninguna jurisdicción publicó fechas. */
 export function introCalendarioNacional(calendario: CalendarioEscolar): string {
 	const anio = calendario.anio;
 	const oficiales = jurisdiccionesOficiales(calendario).filter((provincia) => calendario.jurisdicciones[provincia.slug]?.inicio);
+	const anunciadas = provinciasAnunciadas(calendario);
+	const pendientes = provincias.length - oficiales.length - anunciadas.length;
 	if (oficiales.length === 0) {
-		return `¿Cuándo empiezan las clases en ${anio}? Todavía no hay una fecha oficial: ninguna de las 24 jurisdicciones publicó su calendario. Cada provincia y la Ciudad de Buenos Aires fijan su propio inicio, y esta página no adelanta fechas estimadas. El inicio, las vacaciones de invierno y el fin del ciclo se cargan cuando sale la resolución de cada ministerio.`;
+		if (anunciadas.length === 0) {
+			return `¿Cuándo empiezan las clases en ${anio}? Todavía no hay una fecha oficial: ninguna de las 24 jurisdicciones publicó su calendario. Cada provincia y la Ciudad de Buenos Aires fijan su propio inicio, y esta página no adelanta fechas estimadas. El inicio, las vacaciones de invierno y el fin del ciclo se cargan cuando sale la resolución de cada ministerio.`;
+		}
+		return `¿Cuándo empiezan las clases en ${anio}? Todavía no hay calendario oficial. ${cierrePendientes(calendario, anunciadas, oficiales, pendientes)}`;
 	}
 	const inicios = oficiales.map((provincia) => calendario.jurisdicciones[provincia.slug]!.inicio!).sort();
 	const desde = fechaTarjeta(inicios[0] ?? null);
 	const hasta = fechaTarjeta(inicios[inicios.length - 1] ?? null);
-	const pendientes = provincias.length - oficiales.length;
-	if (pendientes === 0) {
+	if (pendientes === 0 && anunciadas.length === 0) {
 		return `¿Cuándo empiezan las clases en ${anio}? El inicio oficial va del ${desde} al ${hasta}, según la provincia. Las 24 jurisdicciones ya publicaron su calendario. En la tabla están el inicio, las vacaciones de invierno y el fin del ciclo de cada una.`;
 	}
+	const cierre = cierrePendientes(calendario, anunciadas, oficiales, pendientes);
 	if (oficiales.length === 1) {
 		const unica = oficiales[0]!;
 		const lugar = unica.slug === 'caba' ? 'la Ciudad de Buenos Aires' : lugarCalendario(unica);
-		return `¿Cuándo empiezan las clases en ${anio}? En ${lugar} el inicio oficial es el ${desde}. ${pendientes} jurisdicciones todavía no publicaron el calendario y figuran como a confirmar, sin fechas estimadas. Elegí tu provincia para ver el detalle.`;
+		return `¿Cuándo empiezan las clases en ${anio}? En ${lugar} el inicio oficial es el ${desde}. ${cierre}`;
 	}
 	if (desde === hasta) {
 		const lugares = oficiales.map((provincia) => (provincia.slug === 'caba' ? 'la Ciudad de Buenos Aires' : lugarCalendario(provincia)));
 		const donde = lugares.length === 2 ? `${lugares[0]} y en ${lugares[1]}` : lugares.join(', ');
-		return `¿Cuándo empiezan las clases en ${anio}? En ${donde} el inicio oficial es el ${desde}. ${pendientes} jurisdicciones todavía no publicaron el calendario y figuran como a confirmar, sin fechas estimadas. Elegí tu provincia para ver el detalle.`;
+		return `¿Cuándo empiezan las clases en ${anio}? En ${donde} el inicio oficial es el ${desde}. ${cierre}`;
 	}
-	return `¿Cuándo empiezan las clases en ${anio}? Donde ya hay calendario oficial, el inicio va del ${desde} al ${hasta}. ${pendientes} jurisdicciones todavía no lo publicaron y figuran como a confirmar, sin fechas estimadas. Elegí tu provincia para ver el detalle.`;
+	return `¿Cuándo empiezan las clases en ${anio}? Donde ya hay calendario oficial, el inicio va del ${desde} al ${hasta}. ${cierre}`;
 }
 
 export function filasResumen(calendario: CalendarioEscolar) {
@@ -363,13 +501,14 @@ export function filasResumen(calendario: CalendarioEscolar) {
 			const jurisdiccion = calendario.jurisdicciones[provincia.slug];
 			if (!jurisdiccion) throw new Error(`Falta el calendario de ${provincia.slug}`);
 			const oficial = jurisdiccion.estado === 'oficial';
+			const anunciado = fechasAnunciadas(jurisdiccion);
 			return {
 				provincia,
 				href: `/calendario-escolar-${calendario.anio}/${provincia.slug}/`,
-				inicio: fechaTarjeta(oficial ? jurisdiccion.inicio : null),
-				invierno: rangoTarjeta(oficial ? jurisdiccion.invierno.desde : null, oficial ? jurisdiccion.invierno.hasta : null),
-				fin: fechaTarjeta(oficial ? jurisdiccion.fin : null),
-				estado: oficial ? 'Oficial' : 'A confirmar',
+				inicio: fechaTarjeta(oficial || anunciado ? jurisdiccion.inicio : null),
+				invierno: oficial || anunciado ? textoReceso(jurisdiccion.invierno.desde, jurisdiccion.invierno.hasta) : 'A confirmar',
+				fin: jurisdiccion.fin ? fechaTarjeta(jurisdiccion.fin) : anunciado ? 'A definir' : 'A confirmar',
+				estado: oficial ? 'Oficial' : anunciado ? 'Anunciado' : 'A confirmar',
 			};
 		})
 		.sort((a, b) => nombreCalendario(a.provincia).localeCompare(nombreCalendario(b.provincia), 'es'));
@@ -378,15 +517,31 @@ export function filasResumen(calendario: CalendarioEscolar) {
 export function preguntasNacional(calendario: CalendarioEscolar): { q: string; a: string }[] {
 	const anio = calendario.anio;
 	const oficiales = jurisdiccionesOficiales(calendario);
+	const anunciadas = provinciasAnunciadas(calendario);
 	const nombres = oficiales.map((provincia) => nombreCalendario(provincia)).join(', ');
+	const fraseInicioAnunciado = anunciadas
+		.filter((provincia) => calendario.jurisdicciones[provincia.slug]?.inicio)
+		.map((provincia) => `${nombreCalendario(provincia)} anunció el inicio el ${fechaTarjeta(calendario.jurisdicciones[provincia.slug]!.inicio)}, sin resolución`)
+		.join('. ');
+	const previstos = anunciadas.filter((provincia) => {
+		const item = calendario.jurisdicciones[provincia.slug];
+		return Boolean(item?.invierno.desde && !item.invierno.hasta);
+	});
+	const frasePrevisto = previstos
+		.map((provincia) => `En ${nombreCalendario(provincia)} el receso está previsto desde el ${fechaTarjeta(calendario.jurisdicciones[provincia.slug]!.invierno.desde)}, sin fecha de fin`)
+		.join('. ');
 	const inicio =
 		oficiales.length === 0
-			? `Ninguna provincia ni la Ciudad de Buenos Aires publicó todavía el inicio del ciclo lectivo ${anio}. No hay una fecha única ni fechas estimadas en esta página.`
-			: `Ya hay inicio oficial en ${nombres}. El resto de las jurisdicciones sigue a confirmar, sin fechas estimadas.`;
+			? fraseInicioAnunciado
+				? `${fraseInicioAnunciado}. El resto de las jurisdicciones sigue a confirmar, sin fechas estimadas.`
+				: `Ninguna provincia ni la Ciudad de Buenos Aires publicó todavía el inicio del ciclo lectivo ${anio}. No hay una fecha única ni fechas estimadas en esta página.`
+			: `Ya hay inicio oficial en ${nombres}.${fraseInicioAnunciado ? ` ${fraseInicioAnunciado}.` : ''} El resto de las jurisdicciones sigue a confirmar, sin fechas estimadas.`;
 	const invierno =
 		oficiales.length === 0
-			? `Las vacaciones de invierno ${anio} las define cada jurisdicción. Todavía no hay fechas oficiales cargadas.`
-			: `Las vacaciones de invierno ${anio} ya están publicadas en ${nombres}. En el resto de las provincias siguen a confirmar.`;
+			? frasePrevisto
+				? `${frasePrevisto}. En el resto de las provincias el receso sigue a confirmar.`
+				: `Las vacaciones de invierno ${anio} las define cada jurisdicción. Todavía no hay fechas oficiales cargadas.`
+			: `Las vacaciones de invierno ${anio} ya están publicadas en ${nombres}.${frasePrevisto ? ` ${frasePrevisto}.` : ''} En el resto de las provincias siguen a confirmar.`;
 	const dias =
 		oficiales.length === provincias.length
 			? 'El Consejo Federal de Educación suele pautar 190 días de clase. La cantidad exacta la define cada ministerio provincial en su resolución.'
@@ -407,10 +562,14 @@ export function preguntasNacional(calendario: CalendarioEscolar): { q: string; a
 		return `${nombre} (clases del ${fechaDiaMes(desde.dia, desde.mes)} al ${fechaDiaMes(hasta.dia, hasta.mes)})`;
 	});
 	const lista = frases.length <= 1 ? (frases[0] ?? '') : `${frases.slice(0, -1).join(', ')} y ${frases.at(-1)}`;
-	const quienes =
+	const quienesBase =
 		frases.length === 0
 			? `Todavía ninguna provincia publicó el calendario escolar ${anio}.`
 			: `Por ahora, ${lista}.`;
+	const quienes =
+		anunciadas.length === 0
+			? quienesBase
+			: `${quienesBase} ${anunciadas.map((provincia) => nombreCalendario(provincia)).join(', ')} anunció fechas del ciclo y todavía no publicó una resolución.`;
 	return [
 		{ q: `¿Cuándo empieza el ciclo lectivo ${anio}?`, a: inicio },
 		{ q: `¿Cuándo son las vacaciones de invierno ${anio}?`, a: invierno },
@@ -461,17 +620,20 @@ export function filasVacacionesInvierno(calendario: CalendarioEscolar) {
 				const jurisdiccion = calendario.jurisdicciones[slug];
 				if (!jurisdiccion) throw new Error(`Falta el calendario de ${slug}`);
 				const oficial = inviernoConfirmado(jurisdiccion);
+				const previsto = !oficial && Boolean(jurisdiccion.invierno.desde);
 				return {
 					provincia,
 					jurisdiccion,
 					href: `/calendario-escolar-${calendario.anio}/${slug}/#invierno`,
-					receso: oficial ? rangoTarjeta(jurisdiccion.invierno.desde, jurisdiccion.invierno.hasta) : 'A confirmar',
-					estado: oficial ? 'Oficial' : 'A confirmar',
+					receso: oficial || previsto ? textoReceso(jurisdiccion.invierno.desde, jurisdiccion.invierno.hasta) : 'A confirmar',
+					estado: oficial ? 'Oficial' : previsto ? 'Previsto' : 'A confirmar',
 					oficial,
 				};
 			})
 			.sort((a, b) => {
-				if (a.oficial !== b.oficial) return a.oficial ? -1 : 1;
+				const peso = (fila: { oficial: boolean; estado: string }) => (fila.oficial ? 0 : fila.estado === 'Previsto' ? 1 : 2);
+				const diferencia = peso(a) - peso(b);
+				if (diferencia !== 0) return diferencia;
 				return nombreCalendario(a.provincia).localeCompare(nombreCalendario(b.provincia), 'es');
 			}),
 	}));
@@ -481,9 +643,22 @@ export function filasVacacionesInvierno(calendario: CalendarioEscolar) {
 export function introVacacionesInvierno(calendario: CalendarioEscolar): string {
 	const anio = calendario.anio;
 	const oficiales = provincias.filter((provincia) => inviernoConfirmado(calendario.jurisdicciones[provincia.slug]));
+	const parciales = provincias.filter((provincia) => {
+		const item = calendario.jurisdicciones[provincia.slug];
+		return Boolean(item && item.estado !== 'oficial' && item.invierno.desde && !item.invierno.hasta);
+	});
 	const base = `Las vacaciones de invierno ${anio} en Argentina son de dos semanas y cada provincia define sus fechas.`;
+	const extra = parciales
+		.map((provincia) => {
+			const desde = calendario.jurisdicciones[provincia.slug]!.invierno.desde!;
+			const partes = partesIso(desde);
+			return `${nombreCalendario(provincia)} tiene previsto el receso desde el ${fechaDiaMes(partes.dia, partes.mes)}, sin fecha de fin`;
+		})
+		.join('; ');
 	if (oficiales.length === 0) {
-		return `${base} Todavía ninguna jurisdicción publicó el receso; esta página no adelanta fechas estimadas.`;
+		if (!extra) return `${base} Todavía ninguna jurisdicción publicó el receso; esta página no adelanta fechas estimadas.`;
+		const pendientes = provincias.length - parciales.length;
+		return `${base} ${extra}. ${pendientes} jurisdicciones todavía no publicaron el calendario ${anio}.`;
 	}
 	const frases = oficiales.map((provincia) => {
 		const item = calendario.jurisdicciones[provincia.slug]!;
@@ -492,18 +667,22 @@ export function introVacacionesInvierno(calendario: CalendarioEscolar): string {
 	});
 	const confirmadas =
 		frases.length === 1 ? frases[0]! : `${frases.slice(0, -1).join('; ')}; y ${frases.at(-1)}`;
-	const pendientes = provincias.length - oficiales.length;
-	if (pendientes === 0) {
+	const pendientes = provincias.length - oficiales.length - parciales.length;
+	const previsto = extra ? ` ${extra}.` : '';
+	if (pendientes === 0 && !extra) {
 		return `${base} Ya hay fechas oficiales en las 24 jurisdicciones.`;
 	}
 	if (oficiales.length === 1) {
-		return `${base} Por ahora ${confirmadas}; el resto de las provincias todavía no publicó su calendario ${anio}.`;
+		return `${base} Por ahora ${confirmadas}.${previsto} ${pendientes} jurisdicciones todavía no publicaron el calendario ${anio}.`;
 	}
-	return `${base} Por ahora ${confirmadas}. ${pendientes} jurisdicciones todavía no publicaron el calendario ${anio}.`;
+	return `${base} Por ahora ${confirmadas}.${previsto} ${pendientes} jurisdicciones todavía no publicaron el calendario ${anio}.`;
 }
 
 function respuestaInviernoProvincia(calendario: CalendarioEscolar, slug: string, etiqueta: string): string {
 	const jurisdiccion = calendario.jurisdicciones[slug];
+	if (jurisdiccion && jurisdiccion.estado !== 'oficial' && jurisdiccion.invierno.desde && !jurisdiccion.invierno.hasta) {
+		return `El receso de invierno ${calendario.anio} en ${etiqueta} está previsto desde el ${fechaTarjeta(jurisdiccion.invierno.desde)}. No se anunció la fecha de fin y todavía no hay resolución.`;
+	}
 	if (inviernoConfirmado(jurisdiccion) && jurisdiccion) {
 		if (slug === 'cordoba' && calendario.anio === 2027) {
 			return `Las vacaciones de invierno ${calendario.anio} en Córdoba van del ${rangoTarjeta(jurisdiccion.invierno.desde, jurisdiccion.invierno.hasta)}. Las clases vuelven el ${fechaSinAnio(VUELTA_CORDOBA_2027)}, según la Resolución 197/2026.`;
@@ -559,6 +738,9 @@ export function textoSeccionInvierno(provincia: Provincia, jurisdiccion: Jurisdi
 	}
 	const lugar = lugarCalendario(provincia);
 	const segun = organismoCorto(provincia);
+	if (jurisdiccion.estado !== 'oficial' && jurisdiccion.invierno.desde && !jurisdiccion.invierno.hasta) {
+		return `Las vacaciones de invierno ${anio} en ${lugar} están previstas desde el ${fechaTarjeta(jurisdiccion.invierno.desde)}. ${sujetoOrganismo(provincia)} no anunció la fecha de fin y todavía no hay resolución.`;
+	}
 	if (jurisdiccion.estado === 'oficial' && jurisdiccion.invierno.desde && jurisdiccion.invierno.hasta) {
 		return `Las vacaciones de invierno ${anio} en ${lugar} son del ${fechaTarjeta(jurisdiccion.invierno.desde)} al ${fechaTarjeta(jurisdiccion.invierno.hasta)}, según ${segun}.`;
 	}

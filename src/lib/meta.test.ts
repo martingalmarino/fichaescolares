@@ -126,7 +126,7 @@ describe('títulos y descripciones', () => {
 		expect(metaCalendarioEscolar(2027).description.length).toBeLessThanOrEqual(155);
 		expect(metaVacacionesInvierno(2027).title).toBe('Vacaciones de invierno 2027: fechas por provincia en Argentina');
 		expect(metaVacacionesInvierno(2027).description).toBe(
-			'¿Cuándo son las vacaciones de invierno 2027? CABA del 19 al 30 de julio y Córdoba del 12 al 23 de julio. El resto de las provincias, a confirmar.',
+			'¿Cuándo son las vacaciones de invierno 2027? CABA del 19 al 30 de julio y Córdoba del 12 al 23 de julio. Santa Fe, previsto desde el 12 de julio.',
 		);
 		expect(metaVacacionesInvierno(2027).description.length).toBeGreaterThanOrEqual(140);
 		expect(metaVacacionesInvierno(2027).description.length).toBeLessThanOrEqual(MAX_DESCRIPCION);
@@ -135,6 +135,7 @@ describe('títulos y descripciones', () => {
 			['buenos-aires', 'Inicio de clases 2027 en Buenos Aires: calendario escolar'],
 			['caba', 'Agenda Educativa 2027 CABA: clases del 1 de marzo al 17 de diciembre'],
 			['cordoba', 'Calendario escolar 2027 Córdoba: inicio, vacaciones y fin'],
+			['santa-fe', 'Inicio de clases 2027 Santa Fe: ciclo lectivo'],
 			['mendoza', 'Calendario escolar 2027 Mendoza: inicio de clases'],
 			['santiago-del-estero', 'Calendario 2027 Santiago del Estero: inicio de clases'],
 			['tierra-del-fuego', 'Calendario escolar 2027 Tierra del Fuego: inicio de clases'],
@@ -159,6 +160,13 @@ describe('títulos y descripciones', () => {
 				expect(meta.description).toBe(
 					'Calendario escolar 2027 oficial de Córdoba: inicio el 1 de marzo, vacaciones de invierno del 12 al 23 de julio y fin el 17 de diciembre. Resolución 197/2026.',
 				);
+			} else if (provincia.slug === 'santa-fe') {
+				expect(h1CalendarioProvincia(provincia, 2027)).toBe('Ciclo lectivo 2027 en Santa Fe: inicio de clases el 1 de marzo');
+				expect(meta.title.length).toBeLessThanOrEqual(60);
+				expect(meta.description).toBe(
+					'¿Cuándo empiezan las clases 2027 en Santa Fe? Anunciado: 1 de marzo. Receso de invierno previsto desde el 12 de julio. Fin del ciclo lectivo a definir.',
+				);
+				expect(meta.description.length).toBeLessThanOrEqual(158);
 			} else {
 				expect(h1CalendarioProvincia(provincia, 2027)).toBe(`Calendario escolar 2027 de ${provincia.slug === 'tierra-del-fuego' ? 'Tierra del Fuego' : provincia.nombre}: cuándo empiezan las clases`);
 				expect(meta.description).toContain(provincia.slug === 'mendoza' ? 'según la DGE' : 'según el Ministerio de Educación');
