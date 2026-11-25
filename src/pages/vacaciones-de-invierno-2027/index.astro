@@ -160,7 +160,7 @@ const jsonLd = {
 												<a class="text-celeste underline" href={fila.href}>
 													{nombreCalendario(fila.provincia)}
 												</a>
-												{fila.oficial && fila.jurisdiccion.fuente && (
+												{fila.jurisdiccion.fuente && (
 													<>
 														{' '}
 														<a class="text-xs font-normal text-muted underline" href={fila.jurisdiccion.fuente} rel="noopener noreferrer">
@@ -171,7 +171,13 @@ const jsonLd = {
 											</th>
 											<td class="px-3 py-3">{fila.receso}</td>
 											<td class="px-3 py-3">
-												{fila.oficial ? <span class="invierno-badge">Oficial</span> : 'A confirmar'}
+												{fila.oficial ? (
+													<span class="invierno-badge">Oficial</span>
+												) : fila.estado === 'Previsto' ? (
+													<span class="invierno-badge invierno-badge-previsto">Previsto</span>
+												) : (
+													'A confirmar'
+												)}
 											</td>
 										</tr>
 									))}
@@ -188,7 +194,7 @@ const jsonLd = {
 		<section class="mt-12 max-w-3xl">
 			<h2 class="text-2xl font-bold tracking-tight text-azul">¿Quién define las vacaciones de invierno?</h2>
 			<p class="mt-3 text-base leading-relaxed text-texto">
-				Las vacaciones de invierno las define el ministerio de educación de cada provincia y de la Ciudad de Buenos Aires. El Consejo Federal de Educación suele coordinar turnos comunes, pero la resolución final es provincial. Esta página solo carga fechas cuando hay una fuente oficial para citar; no estima ni adelanta el receso.
+				Las vacaciones de invierno las define el ministerio de educación de cada provincia y de la Ciudad de Buenos Aires. El Consejo Federal de Educación suele coordinar turnos comunes, pero la resolución final es provincial. Una fecha figura como oficial cuando hay resolución. Si el ministerio solo anunció el inicio del receso, queda como previsto y no se completa el fin. Esta página no estima fechas.
 			</p>
 		</section>
 		<section class="mt-12 max-w-3xl" aria-labelledby="faq-titulo">
@@ -276,6 +282,11 @@ const jsonLd = {
 		font-size: 12px;
 		font-weight: 700;
 		line-height: 1.4;
+	}
+
+	.invierno-badge-previsto {
+		background: #eef7fd;
+		box-shadow: inset 0 0 0 1px #9ec9e6;
 	}
 
 	.invierno-cta:focus-visible {

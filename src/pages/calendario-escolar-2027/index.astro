@@ -26,7 +26,7 @@ const anio = calendario.anio;
 const meta = metaCalendarioEscolar(anio);
 const actualizado = actualizadoVisible(calendario);
 const intro = introCalendarioNacional(calendario);
-const resumen = filasResumen(calendario).filter((fila) => fila.estado === 'Oficial');
+const resumen = filasResumen(calendario).filter((fila) => fila.estado === 'Oficial' || fila.estado === 'Anunciado');
 const preguntas = preguntasNacional(calendario);
 const keywords = [
 	'calendario escolar 2027',
@@ -40,7 +40,7 @@ const keywords = [
 const sitio = Astro.site ?? new URL('https://www.aulita.com.ar');
 const url = new URL(meta.ruta, sitio).href;
 const oficiales = confirmadas(calendario);
-const mostrarTabla = oficiales > 0;
+const mostrarTabla = resumen.length > 0;
 const total = provincias.length;
 const avance = oficiales === 0 ? 1 : (oficiales / total) * 100;
 const feriados = feriadosDelAnio(anio);
@@ -57,8 +57,9 @@ const regiones = regionesEscolares.map((region) => ({
 			const desde = jurisdiccion.invierno.desde;
 			const hasta = jurisdiccion.invierno.hasta;
 			const publicado = jurisdiccion.estado === 'oficial' && Boolean(inicio && fin && desde && hasta);
+			const anunciado = jurisdiccion.estado !== 'oficial' && Boolean(inicio || fin || desde || hasta);
 			const invierno = publicado && desde && hasta ? partesIso(desde).mes === partesIso(hasta).mes : false;
-			return { provincia, jurisdiccion, publicado, invierno, inicio, fin, desde, hasta };
+			return { provincia, jurisdiccion, publicado, anunciado, invierno, inicio, fin, desde, hasta };
 		})
 		.sort((a, b) => nombreCalendario(a.provincia).localeCompare(nombreCalendario(b.provincia), 'es')),
 }));
@@ -122,11 +123,11 @@ const jsonLd = {
 		{
 			mostrarTabla && (
 				<section class="mt-10" aria-labelledby="resumen-provincias">
-			<h2 id="resumen-provincias" class="text-2xl font-bold tracking-tight text-azul">Provincias con calendario {anio} oficial</h2>
-			<p class="mt-2 max-w-3xl text-base leading-relaxed text-muted">El resto todavía no publicó sus fechas; las agregamos apenas salgan.</p>
+			<h2 id="resumen-provincias" class="text-2xl font-bold tracking-tight text-azul">Provincias con fechas del calendario {anio}</h2>
+			<p class="mt-2 max-w-3xl text-base leading-relaxed text-muted">Oficial cuando hay resolución. Anunciado cuando el ministerio dio una fecha y todavía no la formalizó. El resto se suma cuando se publica.</p>
 			<div class="mt-4 overflow-x-auto rounded-card border border-borde bg-white">
 				<table class="w-full min-w-[40rem] text-left text-sm">
-					<caption class="sr-only">Jurisdicciones con calendario {anio} oficial</caption>
+					<caption class="sr-only">Jurisdicciones con fechas del calendario {anio}</caption>
 					<thead class="bg-celeste-50 text-azul">
 						<tr>
 							<th class="px-3 py-3 font-semibold" scope="col">Provincia</th>
@@ -194,6 +195,14 @@ const jsonLd = {
 													</p>
 												</>
 											)}
+											{fila.anunciado && fila.inicio && (
+												<>
+													<span class="grilla-badge grilla-badge-anuncio">Anunciado</span>
+													<p class="grilla-inicio">
+														Inicio: <time datetime={fila.inicio}>{fechaDiaMes(partesIso(fila.inicio).dia, partesIso(fila.inicio).mes)}</time>
+													</p>
+												</>
+											)}
 											{fila.publicado && fila.inicio && fila.fin && fila.desde && fila.hasta ? (
 												<dl class="grilla-fechas">
 													<div>
@@ -223,6 +232,24 @@ const jsonLd = {
 														</dd>
 													</div>
 												</dl>
+											) : fila.anunciado ? (
+												<p class="grilla-estado">
+													{fila.desde ? (
+														<>
+															Invierno previsto desde el <time datetime={fila.desde}>{fechaDiaMes(partesIso(fila.desde).dia, partesIso(fila.desde).mes)}</time>
+														</>
+													) : (
+														'Invierno a confirmar'
+													)}
+													{' · '}
+													{fila.fin ? (
+														<>
+															fin <time datetime={fila.fin}>{fechaDiaMes(partesIso(fila.fin).dia, partesIso(fila.fin).mes)}</time>
+														</>
+													) : (
+														'fin a definir'
+													)}
+												</p>
 											) : (
 												<p class="grilla-estado">Sin resolución {anio} todavía</p>
 											)}
@@ -505,6 +532,11 @@ const jsonLd = {
 		font-size: 12px;
 		font-weight: 700;
 		line-height: 1.4;
+	}
+
+	.grilla-badge-anuncio {
+		background: #eef7fd;
+		box-shadow: inset 0 0 0 1px #9ec9e6;
 	}
 
 	.grilla-inicio {

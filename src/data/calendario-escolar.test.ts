@@ -5,7 +5,7 @@ import { calendarioVigente, erroresCalendario, vecinasDe } from './calendario-es
 describe('calendario escolar', () => {
 	it('carga 2027 con CABA y Córdoba oficiales y el resto a confirmar, sin fechas inventadas', () => {
 		expect(calendarioVigente.anio).toBe(2027);
-		expect(calendarioVigente.actualizado).toBe('2026-11-20');
+		expect(calendarioVigente.actualizado).toBe('2026-11-25');
 		expect(calendarioVigente.cfeInvierno).toBeNull();
 		expect(Object.keys(calendarioVigente.jurisdicciones)).toHaveLength(24);
 		expect(calendarioVigente.jurisdicciones.caba).toMatchObject({
@@ -33,9 +33,17 @@ describe('calendario escolar', () => {
 			feriadosProvinciales: [],
 			sinClases: [],
 		});
+		expect(calendarioVigente.jurisdicciones['santa-fe']).toMatchObject({
+			estado: 'a-confirmar',
+			inicio: '2027-03-01',
+			invierno: { desde: '2027-07-12', hasta: null },
+			fin: null,
+			fuente: 'https://www.rafaelanoticias.com/educacion/ya-tiene-fecha-el-inicio-de-clases-2027-en-santa-fe-pero-falta-un-dato-clave.htm',
+			actualizado: '2026-11-25',
+		});
 		for (const provincia of provincias) {
 			expect(vecinasDe(provincia.slug).length).toBeGreaterThan(0);
-			if (provincia.slug === 'caba' || provincia.slug === 'cordoba') continue;
+			if (provincia.slug === 'caba' || provincia.slug === 'cordoba' || provincia.slug === 'santa-fe') continue;
 			const jurisdiccion = calendarioVigente.jurisdicciones[provincia.slug];
 			expect(jurisdiccion?.estado, provincia.slug).toBe('a-confirmar');
 			expect(jurisdiccion?.inicio).toBeNull();
@@ -43,6 +51,26 @@ describe('calendario escolar', () => {
 			expect(jurisdiccion?.fuente).toBeNull();
 			expect(jurisdiccion?.invierno).toEqual({ desde: null, hasta: null });
 		}
+	});
+
+	it('acepta un anuncio parcial con fuente https y rechaza fechas sin fuente', () => {
+		const slugs = provincias.map((provincia) => provincia.slug);
+		const copia = structuredClone(calendarioVigente);
+		copia.jurisdicciones['entre-rios'] = {
+			estado: 'a-confirmar',
+			inicio: '2027-03-01',
+			invierno: { desde: '2027-07-12', hasta: null },
+			fin: null,
+			fuente: null,
+			notas: null,
+			feriadosProvinciales: [],
+			sinClases: [],
+		};
+		expect(erroresCalendario(copia, slugs).some((error) => error.includes('entre-rios') && error.includes('fuente'))).toBe(true);
+		copia.jurisdicciones['entre-rios']!.fuente = 'https://www.ejemplo.test/anuncio';
+		expect(erroresCalendario(copia, slugs)).toEqual([]);
+		copia.jurisdicciones['entre-rios']!.invierno = { desde: null, hasta: '2027-07-23' };
+		expect(erroresCalendario(copia, slugs).some((error) => error.includes('entre-rios'))).toBe(true);
 	});
 
 	it('rechaza un oficial sin fuente y una jurisdicción de más', () => {

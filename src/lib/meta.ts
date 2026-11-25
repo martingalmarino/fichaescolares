@@ -534,11 +534,15 @@ export function lugarCalendario(provincia: Provincia): string {
 	return nombreCalendario(provincia);
 }
 
-export function h1CalendarioProvincia(provincia: Provincia, anio: number, jurisdiccion?: Pick<Jurisdiccion, 'estado'>): string {
+export function h1CalendarioProvincia(provincia: Provincia, anio: number, jurisdiccion?: Pick<Jurisdiccion, 'estado'> & { inicio?: string | null }): string {
 	const estado = jurisdiccion?.estado ?? calendarios.find((item) => item.anio === anio)?.jurisdicciones[provincia.slug]?.estado;
 	if (provincia.slug === 'caba' && anio === 2027 && estado === 'oficial') return 'Agenda Educativa 2027 de CABA: inicio de clases el 1 de marzo';
 	if (provincia.slug === 'caba' && anio === 2027) return 'Agenda Educativa 2027 de CABA: calendario escolar de la Ciudad';
 	if (provincia.slug === 'cordoba' && anio === 2027 && estado === 'oficial') return 'Calendario escolar 2027 en Córdoba (oficial)';
+	if (provincia.slug === 'santa-fe' && anio === 2027 && estado !== 'oficial') {
+		const inicio = jurisdiccion && 'inicio' in jurisdiccion ? jurisdiccion.inicio : calendarios.find((item) => item.anio === anio)?.jurisdicciones['santa-fe']?.inicio;
+		if (inicio) return 'Ciclo lectivo 2027 en Santa Fe: inicio de clases el 1 de marzo';
+	}
 	if (provincia.slug === 'caba') return `Calendario escolar ${anio} en la Ciudad de Buenos Aires`;
 	if (provincia.slug === 'buenos-aires' && anio === 2027) return 'Calendario escolar 2027 de la Provincia de Buenos Aires: inicio de clases y ciclo lectivo';
 	if (provincia.slug === 'buenos-aires') return `Calendario escolar ${anio} en la provincia de Buenos Aires`;
@@ -586,7 +590,14 @@ export function metaVacacionesInvierno(anio: number): MetaPagina {
 	const recesoCaba = caba?.estado === 'oficial' ? recesoJulio(caba.invierno.desde, caba.invierno.hasta) : null;
 	const recesoCordoba = cordoba?.estado === 'oficial' ? recesoJulio(cordoba.invierno.desde, cordoba.invierno.hasta) : null;
 	if (recesoCaba && recesoCordoba) {
-		description = `¿Cuándo son las vacaciones de invierno ${anio}? CABA del ${recesoCaba} y Córdoba del ${recesoCordoba}. El resto de las provincias, a confirmar.`;
+		const santaFe = calendario?.jurisdicciones['santa-fe'];
+		const desdeSantaFe =
+			santaFe && santaFe.estado !== 'oficial' && santaFe.invierno.desde?.startsWith(`${anio}-07-`) && !santaFe.invierno.hasta
+				? Number(santaFe.invierno.desde.slice(8))
+				: null;
+		description = desdeSantaFe
+			? `¿Cuándo son las vacaciones de invierno ${anio}? CABA del ${recesoCaba} y Córdoba del ${recesoCordoba}. Santa Fe, previsto desde el ${desdeSantaFe} de julio.`
+			: `¿Cuándo son las vacaciones de invierno ${anio}? CABA del ${recesoCaba} y Córdoba del ${recesoCordoba}. El resto de las provincias, a confirmar.`;
 	} else if (oficiales.length === 1 && oficiales[0]?.slug === 'caba' && recesoCaba) {
 		const desde = Number(caba?.invierno.desde?.slice(8));
 		const hasta = Number(caba?.invierno.hasta?.slice(8));
@@ -625,6 +636,14 @@ export function metaCalendarioProvincia(provincia: Provincia, jurisdiccion: Juri
 			title: 'Calendario escolar 2027 Córdoba: inicio, vacaciones y fin',
 			description:
 				'Calendario escolar 2027 oficial de Córdoba: inicio el 1 de marzo, vacaciones de invierno del 12 al 23 de julio y fin el 17 de diciembre. Resolución 197/2026.',
+		};
+	}
+	if (provincia.slug === 'santa-fe' && anio === 2027 && jurisdiccion.estado !== 'oficial' && jurisdiccion.inicio) {
+		return {
+			ruta: `/calendario-escolar-${anio}/${provincia.slug}/`,
+			title: 'Inicio de clases 2027 Santa Fe: ciclo lectivo',
+			description:
+				'¿Cuándo empiezan las clases 2027 en Santa Fe? Anunciado: 1 de marzo. Receso de invierno previsto desde el 12 de julio. Fin del ciclo lectivo a definir.',
 		};
 	}
 	if (provincia.slug === 'buenos-aires' && anio === 2027) {

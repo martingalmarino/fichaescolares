@@ -1,6 +1,6 @@
 {
 	"anio": 2027,
-	"actualizado": "2026-11-20",
+	"actualizado": "2026-11-25",
 	"cfeInvierno": null,
 	"jurisdicciones": {
 		"buenos-aires": {
@@ -270,14 +270,15 @@
 		},
 		"santa-fe": {
 			"estado": "a-confirmar",
-			"inicio": null,
+			"inicio": "2027-03-01",
 			"invierno": {
-				"desde": null,
+				"desde": "2027-07-12",
 				"hasta": null
 			},
 			"fin": null,
-			"fuente": null,
-			"notas": null,
+			"fuente": "https://www.rafaelanoticias.com/educacion/ya-tiene-fecha-el-inicio-de-clases-2027-en-santa-fe-pero-falta-un-dato-clave.htm",
+			"notas": "El ministro de Educación José Goity anunció el 24 de noviembre de 2026, en la inauguración de la EETP N.º 481, que las clases empiezan el lunes 1 de marzo de 2027. El receso de invierno está previsto desde el lunes 12 de julio, la semana posterior al 9 de julio; no se anunció la fecha de fin. El fin del ciclo está a definir. La meta son 190 días de clase. Todavía no hay resolución.",
+			"actualizado": "2026-11-25",
 			"feriadosProvinciales": [],
 			"sinClases": []
 		},
